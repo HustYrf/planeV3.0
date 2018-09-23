@@ -20,7 +20,9 @@ body {
   font-size:13px; 
   direction: ltr;
 }
-
+::-ms-clear,::-ms-reveal{
+  display:none;
+}
 /***
 General typography 
 ***/
@@ -889,8 +891,6 @@ Page title
 ***/
 .container-fluid{
     padding: 0 !important;
-    
-  
 }
 .page-title {
   padding-left: 20px;
@@ -2949,6 +2949,8 @@ Dashboard container
 ***/
 #dashboard {
   overflow: hidden;
+  position:relative !important;
+  min-height: 790px !important;
 }
 
 /***
