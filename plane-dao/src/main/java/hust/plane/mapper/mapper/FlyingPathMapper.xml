@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hust.plane.mapper.mapper.FlyingPathMapper">
+	<resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.FlyingPath">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<id column="Airport_Z" property="airportZ" jdbcType="INTEGER" />
+		<id column="Airport_A" property="airportA" jdbcType="INTEGER" />
+		<result column="Name" property="name" jdbcType="VARCHAR" />
+		<result column="PathData" property="pathdata" jdbcType="VARCHAR" />
+		<result column="Description" property="description" jdbcType="VARCHAR" />
+		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="hust.plane.mapper.pojo.FlyingPath"
+		extends="BaseResultMap">
+		<result column="HeightData" property="heightdata" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_list"> id,Airport_Z,Airport_A,Name,AsText(PathData) as	PathData,Description,CreateTime,UpdateTime
+	</sql>
+	
+	<select id="selectByFlyingPathVO" parameterType="hust.plane.mapper.pojo.FlyingPath"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_list" />
+		from K_FlyingPath
+		WHERE 1=1
+		<if test="id != null"> AND id = #{id}
+		</if>
+	</select>
+
+	<insert id="insertFlyingPath" parameterType="hust.plane.mapper.pojo.FlyingPath">
+		insert into
+		K_FlyingPath(Name,Description,CreateTime,UpdateTime,PathData)
+		values
+		(#{name,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP},GeomFromText(#{pathdata,jdbcType=VARCHAR}))
+	</insert>
+
+	<select id="selectByFlyingPathId" parameterType="hust.plane.mapper.pojo.FlyingPath"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_list" />
+		from K_FlyingPath
+		WHERE id = #{id}
+	</select>
+
+	<select id="flyingPathCount" resultType="java.lang.Integer"
+		parameterType="hust.plane.mapper.pojo.FlyingPath">
+		select count(1) from K_FlyingPath
+		WHERE 1=1
+		<if test="id != null">
+			AND id = #{id}
+		</if>
+	</select>
+
+	<select id="queryFlyingPathPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_list" />
+		from K_FlyingPath
+		WHERE 1=1
+		<if test="param1.id != null">
+			AND id = #{param1.id}
+		</if>
+		ORDER BY CreateTime DESC
+		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
+		jdbcType=INTEGER}
+	</select>
+
+	<select id="findAllFlyingPath" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_list" />
+		from K_FlyingPath
+	</select>
+
+	<delete id="deleteFlyingPath" parameterType="hust.plane.mapper.pojo.FlyingPath">
+		delete from K_FlyingPath
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<select id="getNameById" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select Name
+		from K_FlyingPath
+		where id=#{id,,jdbcType=INTEGER}
+	</select>
+</mapper>

@@ -1,0 +1,237 @@
+<!-- 页面导航栏页面 -->
+<!-- BEGIN SIDEBAR -->
+
+<div class="page-sidebar nav-collapse collapse">
+
+	<!-- BEGIN SIDEBAR MENU -->
+
+	<ul class="page-sidebar-menu">
+
+		<li>
+			<div class="sidebar-toggler hidden-phone"></div>
+		</li>
+
+		<!--<li>-->
+		<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+		<!--
+			<form class="sidebar-search">
+				<div class="input-box">
+					<a href="javascript:;" class="remove"></a>
+					<input type="text" placeholder="查找功能..." />
+					<input type="button" class="submit" value=" " />
+				</div>
+			</form> 
+		-->
+		<!-- END RESPONSIVE QUICK SEARCH FORM -->
+		<!--</li>-->
+<!--  我的任务 -->
+<#if curNav ??>
+     <#if curNav =="createTask" || curNav =="taskAllList" || curNav =="home">
+      <li class="active">
+     <#else>
+      <li class="">
+     </#if>
+        <a href="javascript:;">
+            <i class="icon-home"></i>
+            <span class="title">我的任务</span>
+
+             <#if curNav =="createTask" || curNav =="taskAllList" || curNav =="home">
+              <span class="selected"></span>
+             <#else>
+              <span class=""></span>
+             </#if>
+            <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+            <li><a href="${s.base}/home.action">主页</a></li>
+            <li><a href="${s.base}/toTaskCreate.action">创建任务</a></li>
+            <li><a href="${s.base}/taskPageList.action">任务一览</a></li>
+        </ul>
+    </li>
+</#if>
+
+
+<#if curNav ??>
+    <#if  curNav =="routeList" || curNav =="routeImport">
+        <li class="active">
+    <#else>
+        <li class="">
+    </#if>
+    <a href="javascript:;">
+        <i class="icon-cogs"></i>
+        <span class="title">光缆路由</span>
+        <#if  curNav =="routeList" || curNav =="routeImport">
+               <span class="selected"></span>
+         <#else>
+               <span class=""></span>
+         </#if>
+        <span class="arrow "></span>
+    </a>
+        <ul class="sub-menu">
+            <li><a href="${s.base}/routeImport.action">路由导入</a></li>
+            <li><a href="${s.base}/routeList.action">路由一览</a></li>
+        </ul>
+    </li>
+</#if>
+
+
+<#if curNav ??>
+    <#if curNav =="flyPathList" || curNav =="setFlyPath">
+        <li class="active">
+    <#else>
+        <li class="">
+    </#if>
+    	<a href="javascript:;">
+        <i class="icon-bookmark-empty"></i>
+        <span class="title">飞巡路经</span>
+            <#if curNav =="flyPathList" || curNav =="setFlyPath">
+                   <span class="selected"></span>
+            <#else>
+                   <span class=""></span>
+            </#if>
+        <span class="arrow "></span>
+        </a>
+            <ul class="sub-menu">
+                <li><a href="#">设定路经</a></li>
+                <li><a href="#">路经一览</a></li>
+            </ul>
+    </li>
+</#if>
+
+
+<#if curNav??>
+    <#if curNav =="planeAllList">
+         <li class="active">
+    <#else >
+         <li class="">
+    </#if>
+	<a href="javascript:;">
+        <i class="icon-table"></i>
+        <span class="title">设施管理</span>
+         <#if curNav =="planeAllList">
+                   <span class="selected"></span>
+         <#else>
+                   <span class=""></span>
+         </#if>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li><a href="${s.base}/planeList.action">无人机查看</a></li>
+        <li><a href="#">无人机注册</a></li>
+        <li><a href="#">三盯摄像头</a></li>
+        <li><a href="#">摄像头注册</a></li>
+    </ul>
+   </li>
+</#if>
+
+
+<#if curNav??>
+    <#if curNav =="alarmList" || curNav =="alarmhistory" || curNav =="importAlarm">
+        <li class="active">
+    <#else >
+        <li class="">
+    </#if>
+    	<a href="javascript:;">
+            <i class="icon-briefcase"></i>
+            <span class="title">告警历史</span>
+               <#if curNav =="alarmList" || curNav =="alarmhistory" || curNav =="importAlarm">
+                   <span class="selected"></span>
+              <#else>
+                   <span class=""></span>
+              </#if>
+            <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+            <li><a href="${s.base}/alarmList.action">告警历史</a></li>
+        </ul>
+       </li>
+</#if>
+
+
+<#if curNav??>
+    <#if curNav =="taskStatistics" || curNav == "flyingPathStatistics" >
+    <li class="active">
+        <#else >
+    <li class="">
+        </#if>
+    <a href="javascript:;">
+        <i class="icon-map-marker"></i>
+        <span class="title">数据汇总</span>
+         <#if curNav =="taskStatistics" || curNav == "flyingPathStatistics" >
+               <span class="selected"></span>
+           <#else>
+               <span class=""></span>
+           </#if>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li><a href="#">任务汇总</a></li>
+        <li><a href="#">飞巡路经汇总</a></li>
+    </ul>
+    </li>
+</#if>
+
+
+<#if curNav??>
+    <#if curNav =="usersEdit" || curNav =="usersBind">
+    <li class="active">
+    <#else >
+    <li class="">
+    </#if>
+    <a href="javascript:;">
+        <i class="icon-gift"></i>
+        <span class="title">用户管理</span>
+        <#if curNav =="usersEdit" || curNav =="usersBind">
+               <span class="selected"></span>
+         <#else>
+               <span class=""></span>
+         </#if>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li><a href="#">用户增删改</a></li>
+        <li><a href="#">用户组绑定</a></li>
+    </ul>
+    </li>
+</#if>
+
+
+<#if curNav??>
+    <#if curNav =="profileEdit" || curNav =="logout" || curNav =="passwordEdit">
+    <li class="active">
+    <#else >
+    <li class="">
+    </#if>
+    <a href="javascript:;">
+    <i class="icon-sitemap"></i>
+    <span class="title">我的账号</span>
+    <#if curNav =="profileEdit" || curNav =="logout" || curNav =="passwordEdit">
+               <span class="selected"></span>
+    <#else>
+               <span class=""></span>
+    </#if>
+    <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li>
+            <a href="javascript:;">修改信息
+                <span class="arrow"></span>
+            </a>
+
+            <ul class="sub-menu">
+
+                <li><a href="#">修改密码</a></li>
+                <li><a href="#">上传头像</a></li>
+                <li><a href="#">修改个人信息</a></li>
+
+            </ul>
+        </li>
+    </ul>
+ </li>
+</#if>
+
+
+</ul>
+	<!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->

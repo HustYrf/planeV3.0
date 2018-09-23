@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+
+    <title>无人机通信巡检系统</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
+
+
+    <link rel="shortcut icon" href="media/image/favicon.ico"/>
+
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+    <style>
+    </style>
+
+</head>
+<body class="page-header-fixed">
+<#include "common/header.html" />
+<div class="page-container">
+    <#include "common/nav.html" />
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+
+            <!-- END BEGIN STYLE CUSTOMIZER -->
+
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+            <!--  下面这块内容是在页面写死的  -->
+            <h4 class="page-title">主页
+                <small>无人机通信巡检系统</small>
+            </h4>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="index.html">GIS路由</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">主页</a></li>
+            </ul>
+
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+
+        <!-- END PAGE HEADER-->
+        <div id="dashboard">
+            <div id="container" style="position:relative;min-height: 790px;"></div>
+
+            <!-- UI组件库 1.0 -->
+            <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+            <script type="text/javascript">
+                //闪烁点
+                //just some colors
+                var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
+                var routeStatusCode = ['一干路由', '二干路由', '混合路由'];
+                //var Imgsrc = ['start1-32.png', 'start2-32.png', 'start3-32.png'];
+                var routeList = [{
+                    routeid: '2',
+                    status: '0',
+                    routepath: [
+                        [107.79962, 23.06691], // 2144  起飞点
+                        [107.79985, 23.06666], // 2143
+                        [107.80006, 23.06645], // 2142
+                        [107.80033, 23.06617], // 2141
+                        [107.80079, 23.06568], // 2140
+                        [107.80103, 23.06544], // 2139
+                        [107.80121, 23.06524], // 2138
+                        [107.80143, 23.06500], // 2137
+                        [107.80164, 23.06481], // 2136
+                        [107.80214, 23.06427], // 2135
+                        [107.80226, 23.06413], // 2134+2
+                        [107.80245, 23.06394], // 2134+1
+                        [107.80264, 23.06376], // 2134
+                        [107.80283, 23.06354], // 2133
+                        [107.80310, 23.06329], // 2132
+                        [107.80330, 23.06305], // 2131
+                        [107.80338, 23.06280], // 2130
+                        [107.80345, 23.06262], // 2129
+                        [107.80349, 23.06253], // 2128
+                        [107.80363, 23.06209], // 2127
+                        [107.80367, 23.06200], // 2126
+                        [107.80370, 23.06188], // 2125
+                        [107.80373, 23.06178], // 2124
+                        [107.80386, 23.06140], // 2123
+                        [107.80396, 23.06104], // 2122
+                        [107.80402, 23.06079], // 2121
+                        [107.80412, 23.06069], // 2120
+                        [107.80436, 23.06050], // 2119
+                        [107.80465, 23.06029], // 2118
+                        [107.80486, 23.06015], // 2117
+                        [107.80520, 23.05990], // 2116
+                        [107.80543, 23.05976], // 2116+2
+                        [107.80568, 23.05958], // 2116+1
+                        [107.80607, 23.05926], // 2115
+                        [107.80645, 23.05895], // 2114
+                        [107.80674, 23.05875], // 2113
+                        [107.80708, 23.05849], // 2112
+                        [107.80736, 23.05829], // 2111
+                        [107.80767, 23.05807], // 2110 折返点
+                    ],
+                    descripte: '这是一条一干路由,无人机路过',
+                    updatetime: '2018-8-1',
+                    type: '1',
+                }];
+                var alarmList = [{
+                    alarmid: '1',
+                    image: 'res/i/bing.png',
+                    planeid: '1',
+                    descripte: '这是一个告警点',
+                    updatetime: '2018-7-5',
+                    createTime: '2018-8-5',
+                    alongda: [107.79962, 23.06691],
+                    position: '107.79962, 23.06691',
+
+                }];
+                //创建一个地图
+                var map = new AMap.Map('container', {
+                    resizeEnable: true,
+                    center: routeList[0].routepath[0],
+                    zoom: 13
+                });
+
+                map.plugin(["AMap.Scale"], function () { //加载比例尺插件
+                    var scale = new AMap.Scale({
+                        visible: true,
+                        position: 'LB',
+
+                    });
+                    map.addControl(scale);
+                    scale.show();
+                });
+
+
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,
+                    offset: new AMap.Pixel(20, -35)
+                });
+
+                function showrouteList(RouteList) {
+                    for (var i = 0; i < routeList.length; i++) {
+                        var polyline = new AMap.Polyline({
+                            map: map,
+                            path: RouteList[i].routepath, //设置线覆盖物路径
+                            strokeColor: colors[parseInt(5 / 2)], //线颜色
+                            strokeOpacity: 1, //线透明度
+                            strokeWeight: 5, //线宽
+                            strokeStyle: "solid", //线样式
+                            strokeDasharray: [10, 5] //补充线样式
+                        });
+                    }
+                }
+
+                showrouteList(routeList);
+
+                AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+
+
+                    for (var i = 0; i < alarmList.length; i++) {
+                        //启动页面
+                        var dangerPoint = new SimpleMarker({
+                            //前景文字
+                            iconLabel: {
+                                innerHTML: '<i>危</i>', //设置文字内容
+                                style: {
+                                    color: 'white' //设置文字颜色
+                                }
+                            },
+                            //图标主题
+                            iconTheme: 'default',
+                            //背景图标样式
+                            iconStyle: 'red',
+                            //...其他Marker选项...，不包括content
+                            map: map,
+                            position: [107.79962, 23.06691]
+                        });
+
+                        var title = '告警点编号：<span>' + alarmList[i].alarmid + '</span>';
+                        var content = [];
+                        content.push("描述：" + alarmList[i].descripte);
+                        content.push("更新时间：" + alarmList[i].updatetime);
+                        content.push("<img src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530789395974&di=2bd17bc4551781dae15490dbab36b48c&imgtype=0&src=http%3A%2F%2Fimg008.hc360.cn%2Fm7%2FM0E%2FA5%2F5E%2FwKhQpFXihEuEC2tbAAAAAO5sgVM784.jpg' class='alarmImg'>");
+
+                        dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
+                        dangerPoint.on('click', markerClick);
+
+
+                    }
+                });
+
+                //构建自定义信息窗体
+                function createInfoWindow(title, content) {
+                    var info = document.createElement("div");
+                    info.className = "info";
+
+                    //可以通过下面的方式修改自定义窗体的宽高
+                    //info.style.width = "400px";
+                    // 定义顶部标题
+                    var top = document.createElement("div");
+                    var titleD = document.createElement("div");
+                    var closeX = document.createElement("img");
+                    top.className = "info-top";
+                    titleD.innerHTML = title;
+                    closeX.src = "res/i/close2.gif";
+                    closeX.onclick = closeInfoWindow;
+
+                    top.appendChild(titleD);
+                    top.appendChild(closeX);
+                    info.appendChild(top);
+
+                    // 定义中部内容
+                    var middle = document.createElement("div");
+                    middle.className = "info-middle";
+                    middle.style.backgroundColor = 'white';
+                    middle.innerHTML = content;
+                    info.appendChild(middle);
+                    return info;
+                }
+
+                //打开信息窗体
+                function markerClick(e) {
+                    infoWindow.setContent(e.target.content);
+                    infoWindow.open(map, e.target.getPosition());
+                }
+
+                //关闭信息窗体
+                function closeInfoWindow() {
+                    map.clearInfoWindow();
+                }
+            </script>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTAINER-->
+</div>
+
+<!-- END PAGE -->
+
+
+<script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+<script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="media/js/app.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+    });
+
+</script>
+</body>
+</html>

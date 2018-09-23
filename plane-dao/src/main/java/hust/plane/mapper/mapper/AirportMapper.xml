@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hust.plane.mapper.mapper.AirportMapper">
+	<resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Airport">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="Name" property="name" jdbcType="VARCHAR" />
+		<result column="Position" property="position" jdbcType="VARCHAR" />
+		<result column="Radius" property="radius" jdbcType="REAL" />
+		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+		<result column="Description" property="description" jdbcType="VARCHAR" />
+		<result column="Type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="getAllAirport" resultMap="BaseResultMap">
+		select
+		id,Name,AsText(Position) as	Position,Radius,CreateTime,UpdateTime,Description,Type
+		from K_Airport
+	</select>
+
+	<insert id="insertAirport" parameterType="hust.plane.mapper.pojo.Airport">
+		insert into K_Airport
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				Name,
+			</if>
+			<if test="position != null">
+				Position,
+			</if>
+			<if test="radius != null">
+				Radius,
+			</if>
+			<if test="createtime != null">
+				CreateTime,
+			</if>
+			<if test="updatetime != null">
+				UpdateTime,
+			</if>
+			<if test="description != null">
+				Description,
+			</if>
+			<if test="type != null">
+				Type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				GeomFromText(#{position,jdbcType=VARCHAR}),
+			</if>
+			<if test="radius != null">
+				#{radius,jdbcType=REAL},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+</mapper>

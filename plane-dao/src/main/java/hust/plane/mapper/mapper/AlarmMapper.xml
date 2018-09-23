@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hust.plane.mapper.mapper.AlarmMapper">
+    <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Alarm">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="Task_id" property="taskId" jdbcType="INTEGER"/>
+        <result column="ImageUrl" property="imageurl" jdbcType="VARCHAR"/>
+        <result column="Position" property="position" jdbcType="VARCHAR"/>
+        <result column="Description" property="description" jdbcType="VARCHAR"/>
+        <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP"/>
+        <result column="Status" property="status" jdbcType="INTEGER"/>
+        <result column="InfoName" property="infoname" jdbcType="VARCHAR"/>
+        <result column="Route_id" property="routeId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, Task_id, ImageUrl, AsText(Position) as Position,Description,CreateTime,UpdateTime,Status,InfoName,Route_id
+    </sql>
+    <sql id="Info_Column_List">
+        id,ImageUrl,Description
+    </sql>
+    <select id="selectALLAlarm" resultMap="BaseResultMap">
+		select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
+		from K_Alarm 
+		where 
+		Status ="1"
+	</select>
+
+    <select id="selectAllAlarmByCreateTimeDesc" resultMap="BaseResultMap">
+        select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
+		from K_Alarm 
+		order by CreateTime DESC
+    </select>
+
+    <select id="alarmCount" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Alarm">
+        select count(1) from K_Alarm
+        WHERE 1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="status != null">
+            AND Status = #{status}
+        </if>
+    </select>
+
+    <select id="queryAlarmPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Alarm
+        WHERE 1=1
+        <if test="param1.id != null">
+            AND id = #{param1.id}
+        </if>
+        <if test="param1.status != null">
+            AND Status = #{param1.status }
+        </if>
+        ORDER BY CreateTime DESC
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectInfoById" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.String">
+        select
+        <include refid="Info_Column_List"/>
+        from K_Alarm
+        where id=#{id}
+    </select>
+
+
+    <select id="getAlarmsByTaskId" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Alarm
+        where Task_id=#{taskId}
+    </select>
+
+    <update id="updateByAlarmId" parameterType="java.lang.String">
+    	update K_Alarm set Status=0 where id=#{id}
+    </update>
+
+    <update id="updateDesByAlarmId">
+        update K_Alarm set DESCRIPTOR = #{param2} where id = #{param1}
+    </update>
+
+    <insert id="insertAlarmSelective" parameterType="hust.plane.mapper.pojo.Alarm">
+        insert into K_Alarm
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="taskId != null">
+                Task_id,
+            </if>
+            <if test="imageurl != null">
+                ImageUrl,
+            </if>
+            <if test="position != null">
+                Position,
+            </if>
+            <if test="description != null">
+                Description,
+            </if>
+            <if test="createtime != null">
+                CreateTime,
+            </if>
+            <if test="updatetime != null">
+                UpdateTime,
+            </if>
+            <if test="status != null">
+                Status,
+            </if>
+            <if test="infoname != null">
+                InfoName,
+            </if>
+            <if test="routeId != null">
+                Route_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=INTEGER},
+            </if>
+            <if test="imageurl != null">
+                #{imageurl,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=OTHER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="infoname != null">
+                #{infoname,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null">
+                #{routeId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>
