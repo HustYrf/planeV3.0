@@ -122,7 +122,7 @@ public class TaskServiceImpl implements TaskService {
 			}
 		} else {
 
-			if(task2.getStatus == 0){   //如果处于创建状态，才能更新
+			if(task2.getStatus() == 0){   //如果处于创建状态，才能更新
 				task.setId(task2.getId());
 				if (taskMapper.updateByPrimaryKeySelective(task) == 1) {
 					return true;
