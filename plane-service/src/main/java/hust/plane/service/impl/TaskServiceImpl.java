@@ -121,10 +121,15 @@ public class TaskServiceImpl implements TaskService {
 				return false;
 			}
 		} else {
-			task.setId(task2.getId());
-			if (taskMapper.updateByPrimaryKeySelective(task) == 1) {
-				return true;
-			} else {
+
+			if(task2.getStatus() == 0){   //如果处于创建状态，才能更新
+				task.setId(task2.getId());
+				if (taskMapper.updateByPrimaryKeySelective(task) == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			}else{                   //其他状态就不能更新
 				return false;
 			}
 

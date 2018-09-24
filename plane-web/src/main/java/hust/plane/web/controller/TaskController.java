@@ -205,6 +205,7 @@ public class TaskController {
 		// 初始状态为0创建
         task.setStatus(0);
 		task.setFinishstatus(0);
+
 		// 设置状态未完成
 		if (taskServiceImpl.saveTask(task) == true) {
 			return JsonView.render(1, "任务创建成功");
