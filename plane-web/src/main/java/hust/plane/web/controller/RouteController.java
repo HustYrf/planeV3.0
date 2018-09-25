@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hust.plane.constant.WebConst;
+import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.InfoTplData;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.QueryRouteVO;
@@ -99,9 +99,9 @@ public class RouteController {
         return "route";
     }
 
-    //显示全部路由线路
-    @RequestMapping("/routeList")
-    public String egetAllRoute(Model model) {
+    //在地图上显示全部路由线路
+    @RequestMapping("/routeMap")
+    public String mapAllRoute(Model model) {
         List<Route> allRoute = routeServiceImpl.getAllRoute();
         List<RouteVO> routeList = new ArrayList<RouteVO>();
         for (int i = 0; i < allRoute.size(); i++) {
@@ -109,8 +109,33 @@ public class RouteController {
             routeList.add(routeVo);
         }
         model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
+        model.addAttribute("curNav", "routeMap");
+        return "routeMap";
+    }
+
+    //查询所有的路由 列表  分页查询
+    @RequestMapping("/routeList")
+    public String listAllRoute(Route route, TailPage<Route> page, Model model) {
+
+
+        if(route.getName()=="" || route.getName()==null)
+        {
+            route.setName(null);
+        }else {
+            model.addAttribute("findname",route.getName());
+        }
+        if(route.getType()==null || route.getType() == -1){
+            route.setType(null);
+        }else{
+            model.addAttribute("selectStatus",route.getType());
+        }
+
+        page = routeServiceImpl.queryRouteWithPage(route,page);
+
+        model.addAttribute("page",page);
         model.addAttribute("curNav", "routeList");
         return "routeList";
+
     }
 
     // 跳转到路由路径

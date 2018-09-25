@@ -36,19 +36,21 @@ public class FileController {
 		// 记录有错误的文件名字，并返回前台
 		List<String> errfile = new ArrayList<String>();
 		List<String> succfile = new ArrayList<String>();
-		
+		String 	basepath = request.getSession().getServletContext().getRealPath("");
 		if (files.length > 0) {
 			for (int i = 0; i < files.length; i++) {
 				String fileName = files[i].getOriginalFilename();// 获取到上传文件的名字
 				File f = null; // 把MultipartFile转化成File
-				if (files[i].getSize() <= 0) {
-					errfile.add(fileName + "内容为空；");
+				if (files[i].getSize() <= 0 || files.equals("")) {
+					errfile.add(fileName + "文件内容为空；");
 				} else {
 					InputStream ins;
 					try {
 						ins = files[i].getInputStream();
-						f = new File(fileName);
+
+						f = new File(basepath+fileName);
 						ExcelUtil.inputStreamToFile(ins, f);
+
 						if (FileServiceImpl.insertRoute(f) == false) {
 							errfile.add(fileName + "的格式错误或路由名称重复");
 						}else {
@@ -66,10 +68,10 @@ public class FileController {
 		}
 		String reString="";
 		if(succfile.size()>0) {
-			reString = reString + succfile.toString().replace("[", "").replace("]", "")+"等导入成功!</br>";	
+			reString = reString + succfile.toString().replace("[", "").replace("]", "")+",等文件导入成功!</br>";
 		}
 		if(errfile.size()>0) {
-			reString = reString + errfile.toString().replace("[", "").replace("]", "")+"等导入失败。";
+			reString = reString + errfile.toString().replace("[", "").replace("]", "")+",等文件导入失败。";
 		}
 		
 		return JsonView.render(0, reString);

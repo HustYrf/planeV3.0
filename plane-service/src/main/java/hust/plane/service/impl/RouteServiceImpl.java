@@ -3,6 +3,7 @@ package hust.plane.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import hust.plane.utils.page.TailPage;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,5 +41,19 @@ public class RouteServiceImpl implements RouteService {
         
         return routeList;
       
+    }
+
+    @Override
+    public TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page) {
+
+        int count = routeMapper.routeCount(route);
+        page.setItemsTotalCount(count);
+        List<Route> routeList = routeMapper.queryFlyingPathPage(route, page);
+        page.setItems(routeList);
+        return page;
+
+
+
+
     }
 }

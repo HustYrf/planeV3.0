@@ -52,7 +52,7 @@
 
 
 <#if curNav ??>
-    <#if  curNav =="routeList" || curNav =="routeImport">
+    <#if  curNav =="routeList" || curNav =="routeImport" ||  curNav =="routeMap">
         <li class="active">
     <#else>
         <li class="">
@@ -60,7 +60,7 @@
     <a href="javascript:;">
         <i class="icon-cogs"></i>
         <span class="title">光缆路由</span>
-        <#if  curNav =="routeList" || curNav =="routeImport">
+        <#if  curNav =="routeList" || curNav =="routeImport" ||  curNav =="routeMap">
                <span class="selected"></span>
          <#else>
                <span class=""></span>
@@ -69,6 +69,7 @@
     </a>
         <ul class="sub-menu">
             <li><a href="${s.base}/routeImport.action">路由导入</a></li>
+            <li><a href="${s.base}/routeMap.action">路由地图</a></li>
             <li><a href="${s.base}/routeList.action">路由一览</a></li>
         </ul>
     </li>
