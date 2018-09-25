@@ -189,7 +189,6 @@ public class IndexController {
 	 */
 	@RequestMapping(value = "/passwordEdit")
 	public String editPwd(Model mv) {
-
 		mv.addAttribute("curNav", "passwordEdit");
 		return "passwordEdit";
 	}
