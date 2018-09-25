@@ -160,7 +160,7 @@ public class PlaneUtils {
         }
     }
     public static void main(String[] args) {
-		System.out.println(MD5encode("黄攀123"));
+		System.out.println(MD5encode("孙珊123"));
 	}
 
 }
