@@ -559,6 +559,20 @@ public class DateKit {
             return newDate;
         }
 
+    public static Date get4HoursLater(){
+        Date date = new Date();
+        Date newDate = (Date)date.clone();
+        long time = newDate.getTime() / 1000L + 7200L + 7200L;
+        newDate.setTime(time * 1000L);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            newDate = format.parse(format.format(newDate));
+        } catch (Exception var6) {
+            System.out.println(var6.getMessage());
+        }
+
+        return newDate;
+    }
 
         public static Date getNowTime() {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

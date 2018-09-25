@@ -58,4 +58,10 @@
 		from K_Uav
 		where id=#{id,,jdbcType=INTEGER}
 	</select>
+	<select id="getUavById" parameterType="java.lang.Integer" 	resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from K_Uav
+		where id=#{id,,jdbcType=INTEGER}
+	</select>
 </mapper>

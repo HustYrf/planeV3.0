@@ -12,4 +12,5 @@ public interface UavMapper {
 	List<Uav> selectByPlaneStatus(int status);
 	Uav getPlaneByPlane(Uav uav);
 	String getNameById(Integer id);
+	Uav getUavById(Integer id);
 }

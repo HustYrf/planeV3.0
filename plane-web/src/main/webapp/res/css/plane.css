@@ -1,3 +1,41 @@
 .modal{
     display:none;
 }
+.modal .modal-icon {
+    vertical-align: middle;
+    font-size: 4em;
+    float: left;
+    margin-right: .25em;
+}
+
+.modal:focus {
+    outline: none;
+}
+
+.modal .modal-header h3 {
+    font-size: .95em;
+}
+
+.modal .modal-footer {
+    padding: .5em;
+}
+
+.modal .modal-center {
+    padding: .5em;
+    text-align: center;
+}
+
+.modal .modal-body {
+    padding: 2em;
+}
+
+.modal p {
+    margin: 0em;
+    line-height: 1.5em;
+}
+.modal-dialog{
+    margin-top: 0px;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0px 20px;
+}

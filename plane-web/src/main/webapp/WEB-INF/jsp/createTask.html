@@ -122,10 +122,10 @@
 
                         <div class="portlet-title">
                             <div class="caption"><i class="icon-reorder"></i>创建任务</div>
-                      <#--      <div class="tools">
+                             <div class="tools">
                                 <a href="javascript:;" class="collapse"></a>
-                                <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                                <a href="javascript:;" class="reload"></a>
+                              <#--  <a href="#portlet-config" data-toggle="modal" class="config"></a>-->
+                              <#--  <a href="javascript:;" class="reload"></a>-->
                                 <a href="javascript:;" class="remove"></a>
                             </div>-->
                         </div>
@@ -211,6 +211,13 @@
                                     </div>
                                 </div>
 
+                                <div class="control-group">
+                                    <label class="control-label" >任务计划完成时间</label>
+                                    <div class="controls">
+                                        <input type="datetime-local" class="m-wrap span8" id="planendtime">
+                                    </div>
+                                </div>
+
                                 <div class="form-actions">
                                     <button type="button" class="btn blue" onclick="createtTask()" style="margin:auto 20px;"><i class="icon-pushpin"></i>创建</button>
                                     <button type="button" class="btn btn-default" onclick="submitTask()"><i class="icon-ok"></i>提交</button>
@@ -251,14 +258,23 @@
 
     window.onload=function(){
         App.init();
-    	var settime = '${taskvo.planstarttime?datetime!}';	   
-	    if(settime==null || settime==""){
+    	var settime1 = '${taskvo.planstarttime?datetime!}';
+	    if(settime1==null || settime1==""){
 	    	//设置当前时间
 	    	//$("#planstarttime").valueAsDate = new Date();
 	    }else{
-	    	realtime = settime.substring(0,16).replace(" ","T");
+	    	realtime = settime1.substring(0,16).replace(" ","T");
 	    	$("#planstarttime").val(realtime);		    	
-	    }	
+	    }
+
+        var settime2 = '${taskvo.planendtime?datetime!}';
+        if(settime2==null || settime2==""){
+            //设置当前时间
+            //$("#planstarttime").valueAsDate = new Date();
+        }else{
+            realtime = settime2.substring(0,16).replace(" ","T");
+            $("#planendtime").val(realtime);
+        }
     }
 
 	function Redirect() {  
@@ -278,7 +294,10 @@
 		
 		var flyingpathid = $("#flyingpathid").val();
 		var planstarttime = $("#planstarttime").val().toString();
+		var plansendtime = $("#planendtime").val().toString();
+
 		planstarttime = planstarttime.replace("T"," ") + ":00";
+        plansendtime = plansendtime.replace("T"," ") + ":00";
 		console.log(planstarttime);
 		$.ajax({
 		    type: "POST",
@@ -291,6 +310,7 @@
 		        "uavId":uavId,
 		        "flyingpathId":flyingpathid,
 		        "planstarttime":planstarttime,
+                "plansendtime":plansendtime,
 		    },
 		    success: function (result) {
 		        if (result.errcode == 1) {
@@ -320,8 +340,12 @@
 		var uavId = $("#uavId").val();
 		
 		var flyingpathid = $("#flyingpathid").val();
+
         var planstarttime = $("#planstarttime").val().toString();
+        var plansendtime = $("#planendtime").val().toString();
+
         planstarttime = planstarttime.replace("T"," ") + ":00";
+        plansendtime = plansendtime.replace("T"," ") + ":00";
 		
 		$.ajax({
 		    type: "POST",
@@ -334,6 +358,7 @@
 		        "uavId":uavId,
 		        "flyingpathId":flyingpathid,
 		        "planstarttime":planstarttime,
+                "plansendtime":plansendtime,
 		    },
 		    success: function (result) {
 		        if (result.errcode == 1) {

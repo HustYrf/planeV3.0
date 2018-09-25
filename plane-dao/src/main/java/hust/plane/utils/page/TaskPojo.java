@@ -7,14 +7,24 @@ public class TaskPojo {
 	private Task task;
 	
 	private String userCreatorName;
-	
+
 	private String userAName;
 	
 	private String userZName;
 	
 	private String uavName;
+
+	private String deviceId;
 	
 	private String flyingPathName;
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
 
 	public String getUavName() {
 		return uavName;

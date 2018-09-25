@@ -84,6 +84,10 @@ public class TaskController {
 			task2 = taskServiceImpl.getTaskByTask(task);
 			if (task2.getPlanstarttime() == null) {
 				task2.setPlanstarttime(DateKit.get2HoursLater());
+				task2.setPlanendtime(DateKit.get4HoursLater());
+			}
+			if(task2.getPlanendtime() == null){
+
 			}
 			if (task2.getUserA() != null) {
 				taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
@@ -93,6 +97,7 @@ public class TaskController {
 			}
 		} else {
 			taskVO.setPlanstarttime(DateKit.get2HoursLater());
+			taskVO.setPlanendtime(DateKit.get4HoursLater());
 		}
 
 		taskVO.setTaskVo(task2);
@@ -146,6 +151,9 @@ public class TaskController {
 		if (taskVO.getPlanstarttime() != null) {
 			task.setPlanstarttime(taskVO.getPlanstarttime());
 		}
+		if(taskVO.getPlanendtime()!=null){
+			task.setPlanendtime(taskVO.getPlanendtime());
+		}
 		task.setName(taskVO.getName());
 		task.setCreatetime(new Date());
 		task.setUsercreator(createUser.getId());
@@ -198,6 +206,9 @@ public class TaskController {
 		}
 		if (taskVO.getPlanstarttime() != null) {
 			task.setPlanstarttime(taskVO.getPlanstarttime());
+		}
+		if(taskVO.getPlanendtime()!=null){
+			task.setPlanendtime(taskVO.getPlanendtime());
 		}
 		task.setName(taskVO.getName());
 		task.setCreatetime(new Date());
