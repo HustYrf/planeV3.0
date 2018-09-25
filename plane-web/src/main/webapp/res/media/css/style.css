@@ -1238,7 +1238,7 @@ Portlets
 .portlet.yellow > .portlet-title .caption, .portlet-title.yellow .caption,
 .portlet.red > .portlet-title .caption, .portlet-title.red .caption,
 .portlet.purple > .portlet-title .caption, .portlet-title.purple .caption,
-.portlet.grey > .portlet-title .caption, .portlet-title.dark-grey .caption, {
+.portlet.grey > .portlet-title .caption, .portlet-title.dark-grey .caption{
   color: #fff;
 }
 
@@ -2271,7 +2271,7 @@ form legend,
   padding: 0 !important;
   margin: 0 !important;
   margin-top: 8px !important;
-  margin-right: 15px !important;
+  margin-right: 25px !important;
 }
 
 .controls > .radio.line,
