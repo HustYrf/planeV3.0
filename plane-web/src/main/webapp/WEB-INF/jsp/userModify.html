@@ -39,7 +39,7 @@
             <div class="control-group">
                 <label class="control-label" style="white-space:nowrap">用户名：</label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="addUsername" id="addUsername"  placeholder="请输入用户名" required/>
+                    <input type="text" class="form-control" name="addUsername" id="addUsername"  placeholder="请输入用户名"  required/>
                 </div>
             </div>
             <div class="control-group">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" style="white-space:nowrap">用户邮箱:</label>
+                <label class="control-label" style="white-space:nowrap">用户邮箱：</label>
                 <div class="controls">
                     <input type="Email" class="form-control" name="addUserEmail" id="addUserEmail"
                            placeholder="请输入用户邮箱">
@@ -93,11 +93,130 @@
             </div>
         </form>
     </div>
+    <div id="alertDiv1"></div>
     <div class="modal-footer">
+        <button class="btn blue" id="addUserButton">新建</button>
         <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
-        <button class="btn blue">保存</button>
     </div>
 </div>
+<!--修改模态框-->
+<div id="userModifyModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 id="myModalLabel1">用户修改</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="userModify" method="post" enctype="multipart/form-data">
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户编号：</label>
+                <div class="controls">
+                    <input type="text" id="modifyUserId" name="modify_userid" class="form-control"
+                           readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户工号：</label>
+                <div class="controls">
+                    <input type="text" id="modifyUserNumber" name="modify_userNumber" class="form-control"
+                           readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户名：</label>
+                <div class="controls">
+                    <input type="text" id="modifyUsername" name="modify_username" class="form-control"
+                           readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户昵称：</label>
+                <div class="controls">
+                    <input type="text" class="form-control" id="Nickname" name="Nickname"
+                           placeholder="输入用户昵称" required/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户邮箱：</label>
+                <div class="controls">
+                    <input type="email" class="form-control" id="Email" name="Email"
+                           aria-describedby="emailHelp" placeholder="输入用户邮箱" required/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">电话号码：</label>
+                <div class="controls">
+                    <input type="text" class="form-control" id="phone"
+                           placeholder="输入电话号码" maxlength="13" required/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="alertDiv"></div>
+    <div class="modal-footer">
+        <button class="btn blue" name="modifyUser" id="modify">修改</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!--修改模态框-->
+<!--删除模态框-->
+<div id="deleteUserModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 id="myModalLabel1">提示</h4>
+    </div>
+    <div class="modal-body">
+        <span style="font-size:2rem;"><b>确定删除该用户？</b></span>
+    </div>
+    <div id="alertDiv"></div>
+    <div class="modal-footer">
+        <button class="btn blue" data-dismiss="modal" id="ensureDelUser">确定</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!--删除模态框-->
+<!--用户用户组绑定-->
+<div id="userAuthorityModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 id="myModalLabel1">用户组绑定</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="userAuthorityModify" method="post" enctype="multipart/form-data">
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户编号：</label>
+                <div class="controls">
+                    <input type="text" id="authorityUserId" name="authority_userid" class="form-control" readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户名称：</label>
+                <div class="controls">
+                    <input type="text" id="authorityUsername" name="authority_username" class="form-control"  readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户组：</label>
+                <div class="controls">
+                    <label class="checkbox inline">
+                        <input type="checkbox" name="authority" id="inlineCheckbox1" value="viewer">浏览组
+                    </label>
+                    <label class="checkbox inline">
+                        <input type="checkbox" name="authority" id="inlineCheckbox2" value="admin">管理组
+                    </label>
+                    <label class="checkbox inline">
+                        <input type="checkbox"  name="authority" id="inlineCheckbox3" value="ipqc">巡检组
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="alertAuthorityDiv"></div>
+    <div class="modal-footer">
+        <button class="btn blue" name="userAuth" id="modifyAuthority">修改</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!--用户用户组绑定-->
 <#include "common/header.html" />
 <div class="page-container">
     <#include "common/nav.html" />
@@ -167,9 +286,9 @@
                                     <td><#if user.updatetime??>${user.updatetime}</#if></td>
                                     <#if !Session["super_administrator"]?exists>
                                     <td>
-                                        <button type="button" class="btn purple"  onclick="modUser(${user.id},'${user.worknumber}','${user.name}')">修改</button>
-                                        <button type="button" class="btn red"   onclick="delUser(${user.id})">删除</button>
-                                        <button type="button" class="btn blue"  onclick="userAuthority(${user.id},'${user.name}')">权限</button>
+                                        <button type="button" class="btn purple" href="#userModifyModal" data-toggle="modal" onclick="modUser(${user.id},'${user.worknumber}','${user.name}')">修改</button>
+                                        <button type="button" id="delUserButton" class="btn red"  onclick="delUser(${user.id})">删除</button>
+                                        <button type="button" class="btn blue"  href="#userAuthorityModal" data-toggle="modal" onclick="userAuthority(${user.id},'${user.name}')">权限</button>
                                     </td>
                                 </#if>
                                 </tr>
@@ -223,7 +342,8 @@
 
     function delUser(uid) {
         userID = uid;
-        Modal.show('deleteUserModal');
+        $("#delUserButton").attr('href','#deleteUserModal');
+        $("#delUserButton").attr('data-toggle','modal');
     }
 
     function modUser(uid, workNumber,uname) {
@@ -327,7 +447,7 @@
                 authorityArray[i++] = this.value;
             }
         });
-        $("#addUserButton").attr('disabled','true');
+        // $("#addUserButton").attr('disabled','true');
         $.ajax({
             url: "${s.base}/addUser.action",
             type: "POST",
