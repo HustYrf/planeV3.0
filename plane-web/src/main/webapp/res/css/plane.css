@@ -14,6 +14,8 @@
 
 .modal .modal-header h3 {
     font-size: .95em;
+    padding-left: 2em;
+
 }
 
 .modal .modal-footer {
@@ -33,9 +35,4 @@
     margin: 0em;
     line-height: 1.5em;
 }
-.modal-dialog{
-    margin-top: 0px;
-    display: table-cell;
-    vertical-align: middle;
-    margin: 0px 20px;
-}
+

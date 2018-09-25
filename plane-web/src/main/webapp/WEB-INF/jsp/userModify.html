@@ -24,6 +24,8 @@
     <script src="${s.base}/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="${s.base}/media/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${s.base}/media/js/app.js" type="text/javascript"></script>
+
+    <script src="${s.base}/res/js/plane.js" type="text/javascript"></script>
 </head>
 <body class="page-header-fixed">
 <!-- Modal -->
@@ -255,7 +257,7 @@
                 }
             }
         });
-    })
+    });
 
     $("#modifyAuthority").click(function () {
         var id = $("#authorityUserId").attr('placeholder');
@@ -284,7 +286,7 @@
                 }
             }
         })
-    })
+    });
 
     $("#modify").click(function () {
         var id = $("#modifyUserId").attr('placeholder');
@@ -311,7 +313,7 @@
                 }
             }
         });
-    })
+    });
 
     function addUser() {
         Modal.show('addUserModal');
@@ -340,7 +342,7 @@
                 }
             }
         });
-    })
+    });
 
     document.getElementById("phone").onkeyup = function() {
         var text_len = this.value.length;

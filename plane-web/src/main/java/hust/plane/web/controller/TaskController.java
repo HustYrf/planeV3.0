@@ -84,10 +84,9 @@ public class TaskController {
 			task2 = taskServiceImpl.getTaskByTask(task);
 			if (task2.getPlanstarttime() == null) {
 				task2.setPlanstarttime(DateKit.get2HoursLater());
-				task2.setPlanendtime(DateKit.get4HoursLater());
 			}
 			if(task2.getPlanendtime() == null){
-
+				task2.setPlanendtime(DateKit.get4HoursLater());
 			}
 			if (task2.getUserA() != null) {
 				taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
