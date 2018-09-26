@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>无人机位置</title>
+<link rel="icon" type="image/png" href="i/ico.png" sizes="16x16">
+
+	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
+     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<style>
+.headerUav{
+  position:absolute;
+  z-index:99;
+  width:400px;;
+  height:50px;
+  margin:0 auto;
+  text-align:center;
+  background-color:red;
+  left:50%;
+  line-height:50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius:10px;
+  -moz-border-radius:10px; /* 老的 Firefox */
+  opacity:0.7;
+  color:#fff;
+  margin-top:20px;
+}
+</style>
+<body>
+<div class="headerUav">
+<font size="4">飞机状态：飞行中</font>
+</div>
+<div id="container"></div>
+           
+        <!-- UI组件库 1.0 -->
+        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script type="text/javascript">
+           
+			var uavdata = ${uav};
+            //创建地图
+            var map = new AMap.Map('container', {
+                zoom: 12,
+                center: uavdata.position, //中心点坐标
+            });
+            map.plugin(["AMap.Scale"],function(){    //加载比例尺插件      
+     	       var scale = new AMap.Scale({
+     	        visible: true,
+     			position:'LB',
+     			}); 
+     	        map.addControl(scale);  
+     	        scale.show();
+     	 	});
+            
+            
+	        var uavMarker = new AMap.Marker({
+	                map: map,
+                    position: uavdata.position,
+                    icon: new AMap.Icon({
+                        size: new AMap.Size(32, 32), //图标大小
+                        image: 'i/fly-32.png',
+                        offset: new AMap.Pixel(-16, -16) // 相对于基点的偏移位置
+                    }),
+             });
+	        
+	        
+	        
+	        //然后在下面进行位置轮询
+	  			  	        
+
+		        /* var infoWindow = new AMap.InfoWindow({
+	            isCustom: true,
+	            offset: new AMap.Pixel(20, -25)
+	            }); */
+                //实例化信息窗体
+               /*  var title = '无人机编号:<span>' + data[i].name + '</span>';
+                var content = [];
+                content.push("状态：" + statusDec);
+                content.push("描述：" + data[i].description);
+                content.push("创建时间：" + data[i].updatetime);
+
+                markeritem.content = createInfoWindow(title, content.join("<br/>"));
+                markeritem.on('click', markerClick);
+
+                markerlist[data[i].status].push(markeritem);
+            } */
+
+            /* function markerClick(e) {
+                infoWindow.setContent(e.target.content);
+                infoWindow.open(map, e.target.getPosition());
+            }
+
+
+            //选中无人机类型进行显示,并且展示相关列表
+            function showplane(index) {
+            	
+                var disRouteCheckbox = document.getElementById("optionsRadios" + index);
+                if (disRouteCheckbox.checked == true) {
+                    map.add(markerlist[statuscode[index]]);
+
+                } else {
+                    map.remove(markerlist[statuscode[index]]);
+                }
+                document.getElementById("my-list").innerHTML = "";
+                var flaglist = [];
+                var innHTML = "";
+                for (var i = 0; i < 4; i++) {
+                    var checkfg = document.getElementById("optionsRadios" + i);
+                    if (checkfg.checked == true) {
+                        flaglist.push(i);
+                    }
+                }
+               
+                for (var j = 0; j < data.length; j++) {
+
+                    if (flaglist.indexOf(data[j].status) >= 0) {
+                        var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机编号：'
+                        + data[j].name + '&nbsp;&nbsp;状态：' + Statusdec[data[j].status] 
+                        + '<br>更新时间：' + data[j].updatetime 
+                        + '<br>描述：' + data[j].description 
+                        + '<br>SIM卡1：' + data[j].phoneone
+                        + '<br>SIM卡2：' + data[j].phonetwo
+                        + '</li>';
+                       
+                        innHTML = innHTML + str;
+                    }
+                }
+
+                document.getElementById("my-list").innerHTML = innHTML;
+            }
+
+
+            function showPlan(e, positionX, positionY) {
+                var posi = [positionX, positionY];
+                var lilist = document.getElementById('my-list')
+                var eles = lilist.getElementsByTagName('li');
+                
+                for(var i=0;i<eles.length;i++){
+                	
+                	eles[i].className = 'poibox';
+                }
+                e.className ='poibox selected';
+                       
+                map.panTo(posi);
+            }
+
+          
+            //构建自定义信息窗体
+            function createInfoWindow(title, content) {
+                var info = document.createElement("div");
+                info.className = "info";
+
+                //可以通过下面的方式修改自定义窗体的宽高
+                info.style.width = "240px";
+                // 定义顶部标题
+                var top = document.createElement("div");
+                var titleD = document.createElement("div");
+                var closeX = document.createElement("img");
+                top.className = "info-top";
+                titleD.innerHTML = title;
+                closeX.src = "res/i/close2.gif";
+                closeX.onclick = closeInfoWindow;
+
+                top.appendChild(titleD);
+                top.appendChild(closeX);
+                info.appendChild(top);
+
+                // 定义中部内容
+                var middle = document.createElement("div");
+                middle.className = "info-middle";
+                middle.style.backgroundColor = 'white';
+                middle.innerHTML = content;
+                info.appendChild(middle);
+                return info;
+            }
+
+            //关闭信息窗体
+            function closeInfoWindow() {
+                map.clearInfoWindow();
+            } */
+           
+        </script>
+ 		</div>
+	</body>
+</html>
