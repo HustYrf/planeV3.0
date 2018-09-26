@@ -35,12 +35,61 @@
     <div class="modal-body">
         <span style="font-size:2rem;"><b>该告警已处理</b></span>
     </div>
-    <div id="alertDiv"></div>
     <div class="modal-footer">
         <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
     </div>
 </div>
 <!-- Modal -->
+<!-- 历史告警弹出层 -start -->
+<div id="alarmHistoryModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 id="myModalLabel4">告警点详细信息</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" style="width:100%">
+            告警点描述：<span id="descripte"></span>
+        </div>
+        <img id="infoImg" src="" style="width:100%;">
+    </div>
+    <div class="modal-footer">
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!-- 历史告警弹出层 -end -->
+<!-- 告警描述弹出层 -start -->
+<div id="alarmDescriptModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4>告警描述修改</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="alarmDescriptForm" method="post" enctype="multipart/form-data">
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">告警编号：</label>
+                <div class="controls">
+                    <input type="text" class="form-control"  id="alarmDesId" placeholder="" readonly="readonly">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">告警描述：</label>
+                <div class="controls">
+                    <input type="text" class="form-control"   name="alarmDes" id="alarmDes" placeholder="请输入该告警点的描述">
+                </div>
+            </div>
+        </form>
+        <div id="ocAlertTip" class="alert alert-success f-16" style="display:none;"><span id="al_info"></span>
+            <button type="button" class="close"  onclick="closeAlert()">
+                <span aria-hidden="true">×</span>
+            </button></div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn blue" type="button" id="modifyAlaDes">修改</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!-- 告警描述弹出层 -end -->
 <#include "common/header.html" />
 <div class="page-container">
     <#include "common/nav.html" />
@@ -164,7 +213,6 @@
                     } else {
                         $('#al_info').html(result.message);
                         $('#ocAlertTip').css('display', 'block');
-                        setTimeout(showAlarmModel,1000);
                     }
                 }
             });
@@ -172,7 +220,8 @@
     }
 
     function modifyDes(alarmId) {
-        Modal.show("alarmDescriptModal");
+        $("#modalShow").attr('href','#alarmDescriptModal');
+        document.getElementById('modalShow').click();
         modifyAlarmDes(alarmId);
     }
 
@@ -192,6 +241,7 @@
             }
         );
     }
+
     function showDetail(id) {
         //发送ajax请求
         $.ajax({
@@ -206,7 +256,8 @@
                     $("#descripte").html(result.data.body);
                     var img = result.data.img;
                     $("#infoImg").attr("src", img);
-                    Modal.show('alarmHistoryModal');
+                    $("#modalShow").attr('href','#alarmHistoryModal');
+                    document.getElementById('modalShow').click();
                 } else {
                     showAlert(result.message);
                 }

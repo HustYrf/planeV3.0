@@ -49,7 +49,8 @@ public class UserController {
 
 
     @RequestMapping(value = "toUserCreate", method = RequestMethod.GET)
-    public String userModify(TailPage<UserPojo> page, Model model, @RequestParam(required = false) Integer GroupId, @RequestParam(required = false) String userName) {
+    public String userModify(TailPage<UserPojo> page, Model model, @RequestParam(required = false) Integer GroupId,
+                             @RequestParam(required = false) String userName,@RequestParam(required = false) String pageNum) {
         if (GroupId == null || GroupId == 0) {
             GroupId = null;
         }
@@ -57,7 +58,7 @@ public class UserController {
             if (StringUtils.isBlank(userName)) {
                 userName = WebConst.SEARCH_NO_USERNAME;
             }
-            page = userService.getUserByGroupIdOruserNameWithPage(GroupId, userName, page);
+            page = userService.getUserByGroupIdOruserNameWithPage(GroupId, userName, page,pageNum);
         } else {
             page = userService.getAllUserWithPage(page);
         }

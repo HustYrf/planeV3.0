@@ -25,9 +25,10 @@
 </#if>
 <script type="text/javascript">
 	function _queryPage(page){
-		if(page != undefined){
-			$('#_id_pageNum').val(page);
-		}
+        if(page == undefined){
+            page = 1;
+        }
+        $('#_id_pageNum').val(page);
 		var query = $('#queryPageForm').attr('queryPage');
 		if(query && Number(query) == 1){
 			queryPage(page);
