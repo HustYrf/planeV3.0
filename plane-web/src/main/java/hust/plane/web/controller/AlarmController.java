@@ -72,7 +72,7 @@ public class AlarmController {
         model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmList));
         model.addAttribute("curNav", "alarmList");
-        return "alarmList";
+        return "alarmHistory";
     }
 
     /**

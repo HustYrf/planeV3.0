@@ -78,7 +78,7 @@
     </update>
 
     <update id="updateDesByAlarmId">
-        update K_Alarm set DESCRIPTOR = #{param2} where id = #{param1}
+        update K_Alarm set Description = #{param2} where id = #{param1}
     </update>
 
     <insert id="insertAlarmSelective" parameterType="hust.plane.mapper.pojo.Alarm">

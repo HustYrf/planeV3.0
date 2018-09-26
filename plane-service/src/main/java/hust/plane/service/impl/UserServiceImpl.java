@@ -304,7 +304,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page) {
+    public TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page,String pageNum) {
         if (groupId == null && StringUtils.isBlank(userName)) {
             LOGGER.error("查询条件有误");
             throw new TipException("查询条件有误");
@@ -315,6 +315,9 @@ public class UserServiceImpl implements UserService {
                 userIdList = user_has_groupKeyMapper.getAllGroup();
             } else {
                 int count = user_has_groupKeyMapper.selectCountWithGroupId(groupId);
+                if (pageNum != null && Integer.valueOf(pageNum) > (count / TailPage.DEFAULT_PAGE_SIZE + 1)) {
+                    page.setPageNum(1);
+                }
                 userIdList = user_has_groupKeyMapper.getUserIdByGroupId(groupId, page);
                 page.setItemsTotalCount(count);
             }
@@ -383,6 +386,9 @@ public class UserServiceImpl implements UserService {
                     userVoList.add(userPojo);
                 }
             }
+//            if(pageNum!=null&&Integer.valueOf(pageNum)>(page.getPageNum())){
+//                page.setPageNum(1);
+//            }
             page.setItems(userVoList);
         }
         return page;
