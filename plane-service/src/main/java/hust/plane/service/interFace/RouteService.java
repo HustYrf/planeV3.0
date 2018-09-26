@@ -18,4 +18,6 @@ public interface RouteService {
     Route getRouteById(Integer id);
 
     Route getRouteByName(String name);
+
+    int getNumOfRouteByType(int i);
 }
