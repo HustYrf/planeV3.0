@@ -18,4 +18,8 @@ public interface FlyingPathService {
 	boolean deleteFlyingPath(FlyingPath flyingPath);
 
 	FlyingPath selectByFlyingPathId(Integer id);
+
+	FlyingPath selectByFlyingPathIdWithoutData(Integer id);
+
+	String getNameById(Integer id);
 }

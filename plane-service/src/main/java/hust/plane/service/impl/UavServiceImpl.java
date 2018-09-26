@@ -42,5 +42,10 @@ public class UavServiceImpl implements UavService{
 		return uavMapper.getPlaneByPlane(uav);
 	}
 
+	@Override
+	public String getNameById(Integer id) {
+		return uavMapper.getNameById(id);
+	}
+
 
 }

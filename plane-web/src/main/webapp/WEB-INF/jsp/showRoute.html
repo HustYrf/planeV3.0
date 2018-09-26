@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>路由详情</title>
+    <link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+    <link href="res/css/common.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="block span6">
+                <div id="container"></div>
+                <!-- UI组件库 1.0 -->
+                <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+                <script type="text/javascript">
+
+                    var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
+                    var routeStatusCode = ['一干路由', '二干路由', '混合路由'];
+
+                    var  route =${routedata};
+
+                    //创建一个地图
+                    var map = new AMap.Map('container', {
+                        resizeEnable: true,
+                        center: route.routepathdata[0],
+                        zoom: 15
+                    });
+                    map.plugin(["AMap.Scale"],function(){    //加载比例尺插件
+                        var scale = new AMap.Scale({
+                            visible: true,
+                            position:'LB',
+                        });
+                        map.addControl(scale);
+                        scale.show();
+                    });
+                    var infoWindow = new AMap.InfoWindow({
+                        isCustom: true,
+                        offset: new AMap.Pixel(20, -35)
+                    });
+
+                    var polyline = new AMap.Polyline({
+                        map: map,
+                        path: route.routepathdata, //设置线覆盖物路径
+                        strokeColor: colors[Number(route.type)], //线颜色, //线颜色
+                        strokeOpacity: 1, //线透明度
+                        strokeWeight: 3, //线宽
+                        strokeStyle: "solid", //线样式
+                        strokeDasharray: [10, 5] //补充线样式
+                    });
+
+
+                    AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+
+                        //启动页面
+                        var start = new SimpleMarker({
+                            //前景文字
+                            map: map,
+                            iconLabel: {
+                                innerHTML: '<i>起</i>', //设置文字内容
+                                style: {
+                                    color: 'white' //设置文字颜色
+                                }
+                            },
+                            iconTheme: 'fresh',
+                            //背景图标样式
+                            iconStyle: 'darkblue',
+                            position: route.routepathdata[0],
+                            animation: 'AMAP_ANIMATION_DROP',
+                        });
+                        var title = '路由编号：<span>' + route.id + '</span>';
+                        var content = [];
+                        content.push("名称：" + route.name );
+                        content.push("路由类型："+routeStatusCode[Number(route.type)])
+                        content.push("描述：" + route.description );
+                        content.push("创建时间：" + route.createtime );
+
+                        start.content = createInfoWindow(title, content.join("<br/>"));
+                        start.on('click', markerClick);
+
+
+                        var pos = route.routepathdata.length - 1;
+                        var end = new SimpleMarker({
+                            //前景文字
+                            map: map,
+                            iconLabel: {
+                                innerHTML: '<i>终</i>', //设置文字内容
+                                style: {
+                                    color: 'white' //设置文字颜色
+                                }
+                            },
+                            iconTheme: 'fresh',
+                            //背景图标样式
+                            iconStyle: 'orange',
+                            position: route.routepathdata[pos],
+                            animation: 'AMAP_ANIMATION_DROP',
+                        });
+                        var title = '路由编号：<span>' + route.id + '</span>';
+                        var content = [];
+                        content.push("名称：" + route.name );
+                        content.push("路由类型："+routeStatusCode[Number(route.type)])
+                        content.push("描述：" + route.description );
+                        content.push("创建时间：" + route.createtime);
+                        end.content = createInfoWindow(title, content.join("<br/>"));
+                        end.on('click', markerClick);
+
+                    });
+
+                    //构建自定义信息窗体
+                    function createInfoWindow(title, content) {
+                        var info = document.createElement("div");
+                        info.className = "info";
+
+                        //可以通过下面的方式修改自定义窗体的宽高
+                        //info.style.width = "400px";
+                        // 定义顶部标题
+                        var top = document.createElement("div");
+                        var titleD = document.createElement("div");
+                        var closeX = document.createElement("img");
+                        top.className = "info-top";
+                        titleD.innerHTML = title;
+                        closeX.src = "res/i/close2.gif";
+                        closeX.onclick = closeInfoWindow;
+
+                        top.appendChild(titleD);
+                        top.appendChild(closeX);
+                        info.appendChild(top);
+
+                        // 定义中部内容
+                        var middle = document.createElement("div");
+                        middle.className = "info-middle";
+                        middle.style.backgroundColor = 'white';
+                        middle.innerHTML = content;
+                        info.appendChild(middle);
+                        return info;
+                    }
+                    //打开信息窗体
+                    function markerClick(e) {
+
+                        infoWindow.setContent(e.target.content);
+                        infoWindow.open(map, e.target.getPosition());
+
+                    }
+                    //关闭信息窗体
+                    function closeInfoWindow() {
+                        map.clearInfoWindow();
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

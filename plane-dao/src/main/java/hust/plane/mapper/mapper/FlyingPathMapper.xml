@@ -46,22 +46,30 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="selectByFlyingPathIdWithoutData" parameterType="hust.plane.mapper.pojo.FlyingPath"
+			resultMap="BaseResultMap">
+		select
+		id,Airport_Z,Airport_A,Name,Description,CreateTime,UpdateTime
+		from K_FlyingPath
+		WHERE id = #{id}
+	</select>
+
 	<select id="flyingPathCount" resultType="java.lang.Integer"
 		parameterType="hust.plane.mapper.pojo.FlyingPath">
 		select count(1) from K_FlyingPath
 		WHERE 1=1
-		<if test="id != null">
-			AND id = #{id}
+		<if test="name != null">
+			AND Name LIKE "%"#{name,jdbcType=VARCHAR}"%"
 		</if>
 	</select>
 
 	<select id="queryFlyingPathPage" resultMap="BaseResultMap">
 		SELECT
-		<include refid="Base_Column_list" />
+		id,Airport_Z,Airport_A,Name,Description,CreateTime,UpdateTime
 		from K_FlyingPath
 		WHERE 1=1
-		<if test="param1.id != null">
-			AND id = #{param1.id}
+		<if test="param1.name != null">
+			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
 		</if>
 		ORDER BY CreateTime DESC
 		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
@@ -70,7 +78,7 @@
 
 	<select id="findAllFlyingPath" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_list" />
+		id,Airport_Z,Airport_A,Name,Description,CreateTime,UpdateTime
 		from K_FlyingPath
 	</select>
 

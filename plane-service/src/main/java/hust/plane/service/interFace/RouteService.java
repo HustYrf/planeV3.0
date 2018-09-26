@@ -12,4 +12,10 @@ public interface RouteService {
     List<Route> getRouteByNameAndType(String name, int type);
 
     TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page);
+
+    boolean deleteRouteById(Integer id);
+
+    Route getRouteById(Integer id);
+
+    Route getRouteByName(String name);
 }

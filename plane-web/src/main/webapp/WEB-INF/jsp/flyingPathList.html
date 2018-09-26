@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>路由一览</title>
+    <title>路径一览</title>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,16 +43,16 @@
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
             <!--  下面这块内容是在页面写死的  -->
-            <h4 class="page-title">光缆路由
-                <small>路由一览</small>
+            <h4 class="page-title">飞巡路径
+                <small>路径一览</small>
             </h4>
             <ul class="breadcrumb">
                 <li>
                     <i class="icon-home"></i>
-                    <a href="#">光缆路由</a>
+                    <a href="#">飞巡路径</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="#">>路由一览</a></li>
+                <li><a href="${s.base}/doGetFlyingPathList.action">路径一览</a></li>
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
@@ -66,7 +66,7 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
                             <div class="portlet box blue">
                                 <div class="portlet-title">
-                                    <div class="caption"><i class="icon-edit"></i>路由列表</div>
+                                    <div class="caption"><i class="icon-edit"></i>路径列表</div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"></a>
                                     <#--  <a href="#portlet-config" data-toggle="modal" class="config"></a>-->
@@ -76,45 +76,41 @@
                                 </div>
                                 <div class="portlet-body">
                                     <div class="" style="float: right;" >
-                                        <select  name="type" class="select2-container" style="margin-bottom: 8px;">
-                                            <option value=-1>全部</option>
-                                            <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if> >混合路由</option>
-                                            <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if> >一干路由</option>
-                                            <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if> >二干路由</option>
-                                        </select>
-                                        <input name="name" type="text" value="${findname!}" class="search-text" placeholder="请输入路由名称" style="margin-bottom: 8px;">
+                                        <input name="name" type="text" value="${findname!}" class="search-text" placeholder="请输入飞行路径名称" style="margin-bottom: 8px;">
                                         <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 8px;">
-                                       <#-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 3px;">创建时间逆序查看</button>-->
                                     </div>
                                     <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1">
                                         <thead>
                                         <tr>
-                                            <th>路由编号${findname!}</th>
-                                            <th>路由名称</th>
-                                            <th>类型</th>
-                                            <th>导入时间</th>
+                                            <th>飞行路径编号</th>
+                                            <th>飞行路径名称</th>
                                             <th>描述</th>
+                                            <th>创建时间</th>
+                                            <th>更新时间</th>
+                                            <th>地理位置</th>
+                                            <#if !Session["super_administrator"]?exists>
                                             <th>操作</th>
+                                            </#if>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                                <#if page.items?exists && ((page.items)?size gt 0)>
-                                                    <#list page.items as routepojo>
-                                                    <tr class="">
-                                                        <td>${routepojo.id!}</td>
-                                                        <td><a target="_blank" href="${s.base}/showRouteDetail.action?name=${routepojo.name!}">${routepojo.name!}</a></td>
-                                                        <td>
-                                                            <#if routepojo.type == 0> 混合路由
-                                                                <#elseif routepojo.type == 1> 一干路由
-                                                            <#elseif routepojo.type == 2> 二干路由
-                                                            </#if>
-                                                        </td>
-                                                        <td>${routepojo.createtime?datetime!}</td>
-                                                        <td>${routepojo.description!}</td>
-                                                        <td><a class="btn" onclick="deleteRoute(${routepojo.id})">删除</a></td>
+                                               <#if (page.items)?? && ((page.items)?size gt 0)>
+                                                <#list page.items as planepath>
+                                                    <td>${planepath.id}</td>
+                                                    <td>${planepath.name}</td>
+                                                    <td>${planepath.description}</td>
+                                                    <td>${planepath.createtime?datetime}</td>
+                                                    <td>${planepath.updatetime?datetime}</td>
+                                                    <td><a href="${s.base}/showPlanePath.action?id=${planepath.id}" target="_blank">详细信息</a></td>
+                                                    <#if !Session["super_administrator"]?exists>
+                                                    <td>
+                                                        <a href="${s.base}/toTaskCreate?flyingpathId=${planepath.id}" class="btn btn-primary btn-sm">创建任务</a>
+                                                        <a class="btn btn-primary btn-sm" onclick='deletePlanePath("${planepath.id!}")'>删除路径</a>
+                                                        <a class="btn btn-primary btn-sm" onclick='exportPlanePath(${planepath.id!},${planepath.heightdata!})' style="cursor: pointer;">导出路径</a></td>
+                                                    </#if>
                                                     </tr>
-                                                    </#list>
-                                                </#if>
+                                                </#list>
+                                               </#if>
                                         </tbody>
                                     </table>
                                     <p><#include "common/tailPage.html"/></p>
@@ -129,9 +125,8 @@
 </div>
 
 </div>
-<!-- 提示信息模态框 -->
-
-<div class="modal" id="ocDialogModal" tabindex="-1" aria-hidden="true">
+<!--  返回消息弹出框  开始-->
+<div class="modal" id="_ocDialogModal" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper small">
         <div class="modal-dialog w-4" >
             <div class="modal-content">
@@ -140,14 +135,13 @@
                     <h4 class="modal-title">提示信息</h4>
                 </div>
                 <div class="modal-body">
-                    <div><span class="color-oc f-16 oc-content" id="resText">删除成功成功！</span></div>
+                    <div><span class="color-oc f-16 oc-content" id="msg">删除飞行路径成功！</span></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
+<!--  返回消息弹出框  结束-->
 <!-- 信息删除确认 -->
 <div class="modal" id="deleltconfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -157,52 +151,58 @@
                 <h4 class="modal-title">删除确认</h4>
             </div>
             <div class="modal-body">
-                <p>您确认要删除该条路由吗？</p>
+                <p>您确认要删除该飞行路径吗？</p>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="routeid"/>    <!-- 用于隐藏信息 -->
+                <input type="hidden" id="planepathid"/>    <!-- 用于隐藏信息 -->
                 <button type="button" class="btn blue" data-dismiss="modal">取消</button>
                 <a  onclick="urlSubmit()" class="btn red" data-dismiss="modal">确定</a>
             </div>
         </div>
     </div>
 </div>
-
 <!-- 信息删除确认 -->
 </div>
+
 <script type="text/javascript">
     jQuery(document).ready(function () {
         App.init();
     });
+    function exportPlanePath(id,heigth){
+        if(heigth==null || height==""){
+            Modal.show('_ocDialogModal');
+            document.getElementById("msg").innerHTML="缺少高度数据，无法导出";
+
+        }else{
+            //导出飞行路径
+        }
+    }
 
     function urlSubmit(){
 
-
         $.ajax({
             type: "post",
-            url: "${s.base}/deleteRoute.action",
+            url: "${s.base}/deletePlanePath.action",
             data: {
-                'id':$('#routeid').val(),
+                'id':$('#planepathid').val(),
             },
             success: function (result) {
+
                 if (result.errcode == 0 && result.message == "SUCCESS") {
-                    Modal.show('ocDialogModal');
-                    $("#resText").text(result.data);
+                    Modal.show('_ocDialogModal');
+                    document.getElementById("msg").innerHTML=result.data;
                     setTimeout("window.location.reload()",2000);
 
                 }
-            },error:function(){
-                Modal.show('ocDialogModal');
-                $("#resText").text("删除出错，请刷新重试!");
-                //document.getElementById("resText").innerHTML="删除出错，请刷新重试!";
             }
         });
     }
-    function deleteRoute(routeid){
 
-        $('#routeid').val(routeid);
-        Modal.show('deleltconfirmModel');
-    }
+function deletePlanePath(id){
+
+    $('#planepathid').val(id);
+    $('#deleltconfirmModel').modal();
+}
 
 </script>
 </body>

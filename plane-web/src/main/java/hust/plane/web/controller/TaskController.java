@@ -77,37 +77,45 @@ public class TaskController {
 		// 回收者
 		// 无人机编号
 		// 飞行路线
-		User aUser = PlaneUtils.getLoginUser(request);
 		Task task2 = new Task();
 		TaskVO taskVO = new TaskVO();
-		if (task.getId() != null && task.getId() != 0) { // 判断对象是否为空
-			task2 = taskServiceImpl.getTaskByTask(task);
-			if (task2.getPlanstarttime() == null) {
-				task2.setPlanstarttime(DateKit.get2HoursLater());
-			}
-			if(task2.getPlanendtime() == null){
-				task2.setPlanendtime(DateKit.get4HoursLater());
-			}
-			if (task2.getUserA() != null) {
-				taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
-			}
-			if (task2.getUserZ() != null) {
-				taskVO.setUserZName(userServiceImpl.getNameByUserId(task2.getUserZ()));
-			}
-		} else {
-			taskVO.setPlanstarttime(DateKit.get2HoursLater());
-			taskVO.setPlanendtime(DateKit.get4HoursLater());
-		}
-
-		taskVO.setTaskVo(task2);
+		FlyingPath flyingPath = new FlyingPath();
 
 		List<Uav> uavs = uavServiceImpl.getAllPlane();
 		List<FlyingPath> planePaths = flyingPathServiceImpl.findAllFlyingPath();
 
-		model.addAttribute("usercreator", aUser);
 		model.addAttribute("uavs", uavs);
 		model.addAttribute("planePaths", planePaths);
 
+		if(task.getFlyingpathId()!=null && task.getFlyingpathId()!=0){
+			flyingPath = flyingPathServiceImpl.selectByFlyingPathIdWithoutData(task.getFlyingpathId());
+			taskVO.setPlanstarttime(DateKit.get2HoursLater());
+			taskVO.setPlanendtime(DateKit.get4HoursLater());
+		}else {
+			if (task.getId() != null && task.getId() != 0) { // 判断对象是否为空
+				task2 = taskServiceImpl.getTaskByTask(task);
+				if (task2.getPlanstarttime() == null) {
+					task2.setPlanstarttime(DateKit.get2HoursLater());
+				}
+				if(task2.getPlanendtime() == null){
+					task2.setPlanendtime(DateKit.get4HoursLater());
+				}
+				if (task2.getUserA() != null) {
+					taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
+				}
+				if (task2.getUserZ() != null) {
+					taskVO.setUserZName(userServiceImpl.getNameByUserId(task2.getUserZ()));
+				}
+				if(task2.getFlyingpathId()!=null){
+					taskVO.setFlyingpathName(flyingPathServiceImpl.getNameById(task2.getFlyingpathId()));
+				}
+				if(task2.getUavId()!=null){
+					taskVO.setUavName(uavServiceImpl.getNameById(task2.getUavId()));
+				}
+			}
+			taskVO.setTaskVO(task2);
+		}
+		model.addAttribute("flyingPath", flyingPath);
 		model.addAttribute("taskvo", taskVO);
 		model.addAttribute("curNav", "createTask");
 

@@ -74,16 +74,16 @@
                             </div>
                             <div class="portlet-body">
                                 <div class="" style="float: right;" >
-                                        <select  name="finishstatus" class="select2-container" style="margin-bottom: 3px;">
+                                        <select  name="finishstatus" class="select2-container" style="margin-bottom: 8px;">
                                             <option value=-1>全部</option>
                                             <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if> >已完成</option>
                                             <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if> >未完成</option>
                                         </select>
-                                        <input name="name" type="text" value="" class="search-text" placeholder=" 请输入任务名称" style="margin-bottom: 3px;">
-                                        <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 3px;">
-                                        <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 3px;">创建时间逆序查看</button>
+                                        <input name="name" type="text" value="" class="search-text" placeholder=" 请输入任务名称" style="margin-bottom: 8px;">
+                                        <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 8px;">
+                                        <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 8px;">创建时间逆序查看</button>
                                 </div>
-                                <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1">
+                                <table class="table table-striped table-hover table-bordered dataTable " id="sample_editable_1">
                                     <thead>
                                     <tr>
                                         <th>任务编号</th>
@@ -103,7 +103,7 @@
                                     <tbody>
                                 <#if page.items?exists && ((page.items)?size gt 0)>
                                     <#list page.items as taskpojo>
-                                    <tr class="info">
+                                    <tr>
                                         <td>${taskpojo.task.id!}</td>
                                         <td>${taskpojo.task.name!}</td>
                                         <td>${taskpojo.userCreatorName!}</td>
@@ -249,7 +249,7 @@
                     <a  onclick="urlSubmit()" class="btn red" data-dismiss="modal">确定</a>
                 </div>
             </div>
-        <input type="text" id="taskid" style="display:none" />
+             <input type="text" id="taskid" style="display:none" />
     </div>
 </div>
 

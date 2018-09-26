@@ -82,5 +82,19 @@
         ORDER BY CreateTime DESC
         LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,jdbcType=INTEGER}
     </select>
-    
+    <delete id="deleteRouteById" parameterType="java.lang.Integer">
+        delete
+        from K_Route
+        where id=#{id,jdbcType=INTEGER}
+    </delete>
+    <select id="getRouteById" parameterType="java.lang.Integer" resultMap="ResultMapWithPathData">
+        select id,Name,AsText(RoutePathData) as RoutePathData,Description,CreateTime,type
+        from K_Route
+        where  id=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="getRouteByName" parameterType="java.lang.Integer" resultMap="ResultMapWithPathData">
+        select id,Name,AsText(RoutePathData) as RoutePathData,Description,CreateTime,type
+        from K_Route
+        where  Name=#{name,jdbcType=INTEGER}
+    </select>
 </mapper>

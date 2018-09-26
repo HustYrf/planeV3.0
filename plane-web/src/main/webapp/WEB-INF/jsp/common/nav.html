@@ -69,7 +69,7 @@
     </a>
         <ul class="sub-menu">
             <li><a href="${s.base}/routeImport.action">路由导入</a></li>
-            <li><a href="${s.base}/routeMap.action">路由地图</a></li>
+          <#--  <li><a href="${s.base}/routeMap.action">路由地图</a></li>-->
             <li><a href="${s.base}/routeList.action">路由一览</a></li>
         </ul>
     </li>
@@ -85,7 +85,7 @@
     	<a href="javascript:;">
         <i class="icon-bookmark-empty"></i>
         <span class="title">飞巡路经</span>
-            <#if curNav =="flyPathList" || curNav =="setFlyPath">
+            <#if curNav =="flyingPathList" || curNav =="setFlyingPath">
                    <span class="selected"></span>
             <#else>
                    <span class=""></span>
@@ -93,8 +93,8 @@
         <span class="arrow "></span>
         </a>
             <ul class="sub-menu">
-                <li><a href="#">设定路经</a></li>
-                <li><a href="#">路经一览</a></li>
+                <li><a href="${s.base}/setFlyingPath.action">设定路经</a></li>
+                <li><a href="${s.base}/doGetFlyingPathList.action">路经一览</a></li>
             </ul>
     </li>
 </#if>

@@ -54,7 +54,7 @@ public class FlyingPathController {
 	}
 	
 	//返回设定飞行路径页面，返回所有路由数据，并在前台显示
-	@RequestMapping("/setFlyPath")
+	@RequestMapping("/setFlyingPath")
 	public String doSetFlyPath(Model model) {
 		List<Route> allRoute = routeServiceImpl.getAllRoute();
 		List<RouteVO> routeList = new ArrayList<RouteVO>();
@@ -66,7 +66,7 @@ public class FlyingPathController {
 		
 		model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
 		model.addAttribute("curNav","setFlyPath");
-		return "setFlyPath";
+		return "setFlyingPath";
 	}
 	
 	//获取前台传输的路径字符串
@@ -84,18 +84,17 @@ public class FlyingPathController {
 	}
 	
 	 //查询所有的飞行路径列表  分页查询
-	@RequestMapping("/doGetFlyPathList")
-	public String doGetFlyPathListQueryPage(FlyingPath flyingPath, String status,TailPage<FlyingPath> page, Model model) {
+	@RequestMapping("/doGetFlyingPathList")
+	public String doGetFlyPathListQueryPage(FlyingPath flyingPath,TailPage<FlyingPath> page, Model model) {
 		
-    	/*if(flyingPath.getId()==null)
-    	{
-    		flyingPath.setId(0);
-    	}*/
-        model.addAttribute("selectStatus",status);
+    	if(flyingPath.getName()==null || flyingPath.getName()==""){
+    		flyingPath.setName(null);
+		}
+        model.addAttribute("findname",flyingPath.getName());
         page = flyingPathServiceImpl.queryFlyingPathWithPage(flyingPath,page);
         model.addAttribute("page",page);
-        model.addAttribute("curNav", "flyPathList");
-        return "planePathList";
+        model.addAttribute("curNav", "flyingPathList");
+        return "flyingPathList";
 		
 		
 	}

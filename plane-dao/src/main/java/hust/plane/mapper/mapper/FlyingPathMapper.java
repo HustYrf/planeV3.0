@@ -24,5 +24,8 @@ public interface FlyingPathMapper {
 
 	int deleteFlyingPath(FlyingPath flyingPath);
 
-	String getNameById(Integer id); 
+	String getNameById(Integer id);
+
+    FlyingPath selectByFlyingPathIdWithoutData(Integer id);
+
 }
