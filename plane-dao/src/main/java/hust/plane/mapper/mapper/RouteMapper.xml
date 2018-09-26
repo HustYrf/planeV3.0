@@ -5,14 +5,16 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="Name" property="name" jdbcType="VARCHAR" />
     <result column="Type" property="type" jdbcType="INTEGER" />
-    <result column="RoutePathData" property="routepathdata" jdbcType="VARCHAR" />
     <result column="Description" property="description" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
+    <resultMap id="ResultMapWithPathData" type="hust.plane.mapper.pojo.Route" extends="BaseResultMap">
+        <result column="RoutePathData" property="routepathdata" jdbcType="VARCHAR" />
+    </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="hust.plane.mapper.pojo.Route" extends="BaseResultMap" >
     <result column="FlagData" property="flagdata" jdbcType="LONGVARCHAR" />
   </resultMap>
-  
+    <sql id="Base_Column_list"> id,Name,Type,Description,CreateTime	</sql>
     <select id="selectALLRoute" resultMap="BaseResultMap">
 		select id,Name,AsText(RoutePathData) as RoutePathData,Description,CreateTime,type
 		from K_Route 
@@ -54,6 +56,31 @@
      <select id="countByName" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(1) from K_Route
         where Name  = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="routeCount" parameterType="hust.plane.mapper.pojo.Route"
+            resultType="java.lang.Integer">
+        select count(*) from K_Route
+        where 1=1
+        <if test="name != null">
+            and Name LIKE "%"#{name,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="type != null">
+            and Type = #{type,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="queryFlyingPathPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_list" />
+        from K_Route
+        WHERE 1=1
+        <if test="param1.name != null">
+            AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="param1.type != null">
+            AND Type = #{param1.type,jdbcType=INTEGER}
+        </if>
+        ORDER BY CreateTime DESC
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,jdbcType=INTEGER}
     </select>
     
 </mapper>
