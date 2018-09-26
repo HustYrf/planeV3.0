@@ -27,6 +27,20 @@
 </head>
 <body class="page-header-fixed">
 <!-- Modal -->
+<div id="deleteAlarmModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 id="myModalLabel2">提示</h4>
+    </div>
+    <div class="modal-body">
+        <span style="font-size:2rem;"><b>该告警已处理</b></span>
+    </div>
+    <div id="alertDiv"></div>
+    <div class="modal-footer">
+        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
+<!-- Modal -->
 <#include "common/header.html" />
 <div class="page-container">
     <#include "common/nav.html" />
@@ -57,16 +71,16 @@
                             <div class="caption"><i class="icon-edit"></i>告警列表</div>
                         </div>
                         <div class="portlet-body">
-                            <div class="clearfix">
-                                <div class="btn-group">
-
-                                </div>
-                                <div class="btn-group pull-right">
-                                    <button id="sample_editable_1_new" class="btn green" href="#myModal1" data-toggle="modal">
-                                        <i class="icon-plus"></i>新增告警
-                                    </button>
-                                </div>
-                            </div>
+                            <div class="" style="float: right;" >
+                                <select  name="finishstatus" class="select2-container" style="margin-bottom: 3px;">
+                                    <option value=-1>全部</option>
+                                    <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if>>已处理告警</option>
+                                    <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>未处理告警</option>
+                            </select>
+                            <input  name="inputId" type="text" value="" class="search-text" placeholder=" 请输入告警编号" style="margin-bottom: 3px;">
+                            <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 3px;">
+                            <button type="button" style="display: none" id="modalShow"  data-toggle="modal"></button>
+                        </div>
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
                                 <th>告警编号</th>
@@ -126,7 +140,79 @@
     });
 </script>
 
-<script type="text/javascript">
+<script>
+    function showAlarmModel() {
+        window.location.reload();
+    }
+
+    function modifyAlarmDes(id) {
+        $("#alarmDesId").attr("placeholder",id);
+        $("#modifyAlaDes").click(function () {
+            var descript = $("#alarmDes").val();
+            $.ajax({
+                url: "modifyAlarmDes",
+                type: "POST",
+                data: {
+                    id: id,
+                    description: descript
+                },
+                success: function (result) {
+                    if (result.errcode == 0 && result.message == "SUCCESS") {
+                        $('#al_info').html("描述信息修改成功！");
+                        $('#ocAlertTip').css('display', 'block');
+                        setTimeout(showAlarmModel,1000);
+                    } else {
+                        $('#al_info').html(result.message);
+                        $('#ocAlertTip').css('display', 'block');
+                        setTimeout(showAlarmModel,1000);
+                    }
+                }
+            });
+        })
+    }
+
+    function modifyDes(alarmId) {
+        Modal.show("alarmDescriptModal");
+        modifyAlarmDes(alarmId);
+    }
+
+    function dealsAlarm(id)
+    {
+        $.ajax(
+            {
+                type:'post',
+                url:'${s.base}/dealWithAlarm.action',
+                data:{"id":id},
+                success: function(e)
+                {
+                    $("#modalShow").attr('href','#deleteAlarmModal');
+                    document.getElementById('modalShow').click();
+                    setTimeout(showAlarmModel,2000);
+                }
+            }
+        );
+    }
+    function showDetail(id) {
+        //发送ajax请求
+        $.ajax({
+            type: 'POST',
+            url: '${s.base}/alarmInfo.action',
+            data: {
+                id: id
+            },
+            async: true,
+            success: function (result) {
+                if (result.errcode == 0 && result.message == "SUCCESS") {
+                    $("#descripte").html(result.data.body);
+                    var img = result.data.img;
+                    $("#infoImg").attr("src", img);
+                    Modal.show('alarmHistoryModal');
+                } else {
+                    showAlert(result.message);
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>
