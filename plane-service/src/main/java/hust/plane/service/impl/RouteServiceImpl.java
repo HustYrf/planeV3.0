@@ -56,4 +56,16 @@ public class RouteServiceImpl implements RouteService {
 
 
     }
+
+	@Override
+	public int getNumOfRouteByType(int i) {
+		Route route = new Route();
+		route.setType(i);
+		int count = routeMapper.routeCount(route);
+		if(count !=0)
+		{
+			return count;
+		}
+		return 0;
+	}
 }

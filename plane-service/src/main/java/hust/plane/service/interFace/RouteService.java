@@ -12,4 +12,6 @@ public interface RouteService {
     List<Route> getRouteByNameAndType(String name, int type);
 
     TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page);
+
+	int getNumOfRouteByType(int i);
 }
