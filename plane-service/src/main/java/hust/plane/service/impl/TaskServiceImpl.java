@@ -80,8 +80,8 @@ public class TaskServiceImpl implements TaskService {
         if (task.getUsercreator() != null) {
             createCriteria.andUsercreatorEqualTo(task.getUsercreator());
         }
-        if (task.getName() != null) {
-            createCriteria.andNameEqualTo(task.getName());
+        if(task.getName()!=null){
+            createCriteria.andNameLike(task.getName());
         }
         int itemsTotalCount = taskMapper.countByExample(example);
 
@@ -200,7 +200,15 @@ public class TaskServiceImpl implements TaskService {
         if (task.getUsercreator() != null) {
             createCriteria.andUsercreatorEqualTo(task.getUsercreator());
         }
+        if(task.getName()!=null){
+            createCriteria.andNameLike(task.getName());
+        }
         int itemsTotalCount = taskMapper.countByExample(example);
+
+        // 避免 搜索结果的分页页码数大于数据条数
+        if (page.getPageNum() != 0 && page.getPageNum() > (itemsTotalCount / TailPage.DEFAULT_PAGE_SIZE + 1)) {
+            page.setPageNum(1);
+        }
 
         // 包装数据
         List<TaskPojo> items = null;

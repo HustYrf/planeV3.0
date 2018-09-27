@@ -410,7 +410,7 @@
 			AND UserCreator = #{param1.usercreator}
 		</if>
 		<if test="param1.name != null">
-			AND Name = #{param1.name}
+			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
 		</if>
 		<if test="param1.finishstatus != null">
 			AND FinishStatus = #{param1.finishstatus}
@@ -455,7 +455,7 @@
 			AND UserCreator = #{param1.usercreator}
 		</if>
 		<if test="param1.name != null">
-			AND Name = #{param1.name}
+			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
 		</if>
 		<if test="param1.finishstatus != null">
 			AND FinishStatus = #{param1.finishstatus}

@@ -87,19 +87,15 @@ public class TaskController {
 		model.addAttribute("uavs", uavs);
 		model.addAttribute("planePaths", planePaths);
 
+		taskVO.setPlanstarttime(DateKit.get2HoursLater());
+		taskVO.setPlanendtime(DateKit.get4HoursLater());
+
 		if(task.getFlyingpathId()!=null && task.getFlyingpathId()!=0){
 			flyingPath = flyingPathServiceImpl.selectByFlyingPathIdWithoutData(task.getFlyingpathId());
-			taskVO.setPlanstarttime(DateKit.get2HoursLater());
-			taskVO.setPlanendtime(DateKit.get4HoursLater());
 		}else {
 			if (task.getId() != null && task.getId() != 0) { // 判断对象是否为空
 				task2 = taskServiceImpl.getTaskByTask(task);
-				if (task2.getPlanstarttime() == null) {
-					task2.setPlanstarttime(DateKit.get2HoursLater());
-				}
-				if(task2.getPlanendtime() == null){
-					task2.setPlanendtime(DateKit.get4HoursLater());
-				}
+
 				if (task2.getUserA() != null) {
 					taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
 				}
