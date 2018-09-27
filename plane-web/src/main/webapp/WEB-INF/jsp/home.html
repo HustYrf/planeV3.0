@@ -16,7 +16,8 @@
     <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
-
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
@@ -32,7 +33,6 @@
     <div class="page-content">
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
-
             <!-- END BEGIN STYLE CUSTOMIZER -->
 
             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
@@ -50,7 +50,6 @@
                 </li>
                 <li><a href="#">主页</a></li>
             </ul>
-
             <!-- END PAGE TITLE & BREADCRUMB-->
         </div>
 
@@ -58,7 +57,13 @@
         <div id="dashboard"   style="position:relative;min-height: 790px;">
 
             <div id="container" ></div>
-
+            <div class="input-card" style="width:24rem;">
+                <div class="input-item">
+                    <label>卫星图层：</label>
+                    <button class="btn" id="add-satellite-layer" style="margin-right:1rem;">添加卫星图层</button>
+                    <button class="btn" id="remove-satellite-layer">删除卫星图层</button>
+                </div>
+            </div>
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
@@ -132,7 +137,18 @@
                     center: routeList[0].routepath[0],
                     zoom: 13
                 });
+                // 构造官方卫星、路网图层
+                var satelliteLayer = new AMap.TileLayer.Satellite();
+                map.add([satelliteLayer]);
 
+                //事件绑定
+                document.querySelector("#add-satellite-layer").onclick = function() {
+                    map.add(satelliteLayer);
+                }
+
+                document.querySelector("#remove-satellite-layer").onclick = function() {
+                    map.remove(satelliteLayer);
+                }
                 map.plugin(["AMap.Scale"], function () { //加载比例尺插件
                     var scale = new AMap.Scale({
                         visible: true,
