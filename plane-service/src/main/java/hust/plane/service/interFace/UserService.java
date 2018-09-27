@@ -25,7 +25,6 @@ public interface UserService {
 
 //    int modifyUserRoleAndDes(Integer userid, String role, String descripte);
 
- 
 
 //    TailPage<User> getUserByRoleOrIdWithPage(String searchUserStatus, String searchUserId, TailPage<User> page);
 
@@ -33,10 +32,10 @@ public interface UserService {
 
     boolean reduceTasknumByUser(User user);
 
-	User getUserById(Integer userbid);
+    User getUserById(Integer userbid);
 
     List<User> fuzzySearchWithUser(String queryString);
-    
+
     int modifyUpdateTimeWithUserName(String name);
 
     String getNameByUserId(Integer id);
@@ -44,12 +43,12 @@ public interface UserService {
     int updateSelectiveWithUserId(Integer id, String nickName, String email, String phoneNumber);
 
     boolean updateByUser(User user);
-    
+
     int addUserWithInfo(String addUsername, String addUserPaw, String addUserWorkNumber, String addUserNickname, String addUserEmail, String addUserPhone);
 
-    TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page,String pageNum);
+    TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page, String pageNum);
 
-	User getUserByName(String userAname);
+    User getUserByName(String userAname);
 
     Integer getUserIdByName(String addUsername);
 

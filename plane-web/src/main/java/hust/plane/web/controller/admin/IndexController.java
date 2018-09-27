@@ -158,8 +158,7 @@ public class IndexController {
 	/**
 	 * 用户退出登陆
 	 *
-	 * @param [request,
-	 *            response, session]
+	 * @param [request， response, session]
 	 * @return void
 	 * @author rfYang
 	 * @date 2018/7/3 18:07
@@ -254,10 +253,10 @@ public class IndexController {
 			    request.getSession().removeAttribute(WebConst.LOGIN_SESSION_KEY);
 			    request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user3);
 			    
-			    return JsonView.render(0, "修改成功");
+			    return JsonView.render(0, "个人信息修改成功");
 			}
 		else
-			return JsonView.render(0, "修改失败");
+			return JsonView.render(0, "个人信息修改失败");
 	}
 
 	@RequestMapping(value = "/doPasswordEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
@@ -267,7 +266,7 @@ public class IndexController {
 		try {
 			userService.modifyPwd(request, oldpassword, password);
 		} catch (Exception e) {
-			String msg = "更改失败";
+			String msg = "密码更改失败";
 			if (e instanceof TipException) {
 				msg = e.getMessage();
 			} else {
@@ -275,7 +274,7 @@ public class IndexController {
 			}
 			return JsonView.render(1, msg);
 		}
-		return JsonView.render(0, "修改成功");
+		return JsonView.render(0, "密码修改成功");
 	}
 
 }

@@ -47,6 +47,10 @@ public class RouteServiceImpl implements RouteService {
     public TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page) {
 
         int count = routeMapper.routeCount(route);
+        // 避免 搜索结果的分页页码数大于数据条数
+        if (page.getPageNum() != 0 && page.getPageNum() > (count / TailPage.DEFAULT_PAGE_SIZE + 1)) {
+            page.setPageNum(1);
+        }
         page.setItemsTotalCount(count);
         List<Route> routeList = routeMapper.queryFlyingPathPage(route, page);
         page.setItems(routeList);

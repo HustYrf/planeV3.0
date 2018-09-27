@@ -65,6 +65,10 @@ public class FlyingPathServiceImpl implements FlyingPathService {
 	public TailPage<FlyingPath> queryFlyingPathWithPage(FlyingPath flyingPath, TailPage<FlyingPath> page) {
 
 		int count = flyingPathMapper.flyingPathCount(flyingPath);
+		// 避免 搜索结果的分页页码数大于数据条数
+		if (page.getPageNum() != 0 && page.getPageNum() > (count / TailPage.DEFAULT_PAGE_SIZE + 1)) {
+			page.setPageNum(1);
+		}
 		page.setItemsTotalCount(count);
 		List<FlyingPath> flyingPaths = flyingPathMapper.queryFlyingPathPage(flyingPath, page);
 
