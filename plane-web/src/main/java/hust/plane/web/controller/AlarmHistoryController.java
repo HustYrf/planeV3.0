@@ -9,30 +9,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 
 @Controller
 public class AlarmHistoryController {
-	
+
     @Autowired
     private AlarmService alarmService;
 
     @RequestMapping(value = "alarmHistory")
-    public String alarmHistoryQueryPage(Alarm alarm, TailPage<AlarmPojo> page, Model model) {
+    public String alarmHistoryQueryPage(Alarm alarm, TailPage<AlarmPojo> page, Model model,
+                                        @RequestParam(required = false) String finishstatus, @RequestParam(required = false) String inputId,
+                                        @RequestParam(required = false)String pageNum ){
 
-        if (alarm.getStatus() == null || alarm.getStatus() == -1) {
+        if (finishstatus == null || Integer.valueOf(finishstatus) == -1) {
             alarm.setStatus(null);
+        } else {
+            alarm.setStatus(Integer.valueOf(finishstatus));
         }
-        if (alarm.getInputId()== null || alarm.getInputId() == "") {
+        if (inputId == null || inputId == "") {
             alarm.setId(null);
-        }else
-        {
-        	int id = Integer.parseInt(alarm.getInputId());
-        	alarm.setId(id);
+        } else {
+            int id = Integer.parseInt(inputId);
+            alarm.setId(id);
         }
-        page = alarmService.queryAlarmWithPage(alarm, page);
+        page = alarmService.queryAlarmWithPage(alarm, page,pageNum);
         model.addAttribute("selectStatus", alarm.getStatus());
         model.addAttribute("page", page);
         model.addAttribute("curNav", "alarmhistory");

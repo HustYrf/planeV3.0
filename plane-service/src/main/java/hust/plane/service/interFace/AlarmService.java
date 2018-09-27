@@ -11,7 +11,7 @@ public interface AlarmService {
 
     List<Alarm> getAllAlarm();
 
-    TailPage<AlarmPojo> queryAlarmWithPage(Alarm alarm, TailPage<AlarmPojo> page);
+    TailPage<AlarmPojo> queryAlarmWithPage(Alarm alarm, TailPage<AlarmPojo> page, String pageNum);
 
     Alarm selectAlarmById(int id);
 
@@ -21,7 +21,7 @@ public interface AlarmService {
 
     boolean updateAlarmDesc(int alarmid, String description);
 
-	List<Alarm> getAlarmsByTaskId(Integer taskid);
-	
-	boolean insertAlarmByAlarms(Alarm alarm);
+    List<Alarm> getAlarmsByTaskId(Integer taskid);
+
+    boolean insertAlarmByAlarms(Alarm alarm);
 }
