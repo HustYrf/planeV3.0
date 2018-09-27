@@ -30,6 +30,9 @@ public class FlyingPathVO {
 	public FlyingPathVO(FlyingPath flyingPath) {
 
 		this.id = flyingPath.getId();
+		if(flyingPath.getName()!=null) {
+			this.name = flyingPath.getName();
+		}
 		if (flyingPath.getPathdata() != null) {
 			this.pathdata = LineUtil.stringLineToList(flyingPath.getPathdata());
 		}
@@ -44,9 +47,6 @@ public class FlyingPathVO {
 		}
 		if (flyingPath.getUpdatetime() != null) {
 			this.updatetime = DateKit.dateFormat(flyingPath.getUpdatetime(), "yyyy/MM/dd HH:mm:ss");
-		}
-		if(flyingPath.getName()!=null) {
-			this.name = flyingPath.getName();
 		}
 
 	}
@@ -122,5 +122,4 @@ public class FlyingPathVO {
 	public void setHeightdata(ArrayList<Double> heightdata) {
 		this.heightdata = heightdata;
 	}
-
 }

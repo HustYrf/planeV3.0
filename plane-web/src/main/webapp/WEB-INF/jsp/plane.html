@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>无人机位置</title>
-<link rel="icon" type="image/png" href="i/ico.png" sizes="16x16">
 
+
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="${s.base}/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
+    <!-- BEGIN PAGE LEVEL STYLES -->
 	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
-     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 </head>
 <style>
 .headerUav{
@@ -21,7 +25,6 @@
   background-color:red;
   left:50%;
   line-height:50px;
-  left: 50%;
   transform: translate(-50%, 0);
   border-radius:10px;
   -moz-border-radius:10px; /* 老的 Firefox */
@@ -29,10 +32,51 @@
   color:#fff;
   margin-top:20px;
 }
+#UavInfo{
+    position:absolute;
+    z-index:99;
+    width:360px;
+    min-height: 420px;
+    right:2%;
+    background-color:#fff;
+    border-radius:10px;
+    -moz-border-radius:10px; /* 老的 Firefox */
+    opacity:0.8;
+    color:#f01414;
+    margin-top:2%;
+    padding: 25px;
+    font-size:1.6rem;
+}
+.liheader{
+    background-color:#d4d4d4;
+}
 </style>
 <body>
-<div class="headerUav">
-<font size="4">飞机状态：飞行中</font>
+<div class="headerUav" style="font-size:2.0rem;">
+飞机状态：飞行中
+</div>
+<div id="UavInfo">
+    <div class="baseInfo">
+
+        <ul class="list-group">
+            <li class="list-group-item liheader" ><b>任务基本信息</b></li>
+            <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name}</span></li>
+            <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
+            <li class="list-group-item">起飞员：<span>${task.userAName}</span></li>
+            <li class="list-group-item">降落员：<span>${task.userZName}</span></li>
+            <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
+            <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
+            <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
+        </ul>
+    </div>
+    <div class="flyingInfo">
+        <ul class="list-group">
+            <li class="list-group-item liheader"><b>无人机信息</b></li>
+            <li class="list-group-item">无人机位置：</li>
+            <li class="list-group-item">无人机状态：</li>
+            <li class="list-group-item">无人机高度：</li>
+            </ul>
+    </div>
 </div>
 <div id="container"></div>
            
@@ -41,10 +85,19 @@
         <script type="text/javascript">
            
 			var uavdata = ${uav};
+			var flyingPath = ${path};
+
+			$("#flyingPathName").html(flyingPath.name);
+
+            $("#uavDeviceId").html(uavdata.deviceid);
+            $("#uavName").html(uavdata.name);
+            $("#uavDescription").html(uavdata.description);
+
+
             //创建地图
             var map = new AMap.Map('container', {
                 zoom: 12,
-                center: uavdata.position, //中心点坐标
+                center: flyingPath.pathdata[0], //中心点坐标
             });
             map.plugin(["AMap.Scale"],function(){    //加载比例尺插件      
      	       var scale = new AMap.Scale({
@@ -54,8 +107,17 @@
      	        map.addControl(scale);  
      	        scale.show();
      	 	});
-            
-            
+
+            var polyline = new AMap.Polyline({
+                map: map,
+                path: flyingPath.pathdata, //设置线覆盖物路径
+                strokeColor: '#ff6700', //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 6, //线宽
+                strokeStyle: "solid", //线样式
+                strokeDasharray: [10, 5] //补充线样式
+            });
+
 	        var uavMarker = new AMap.Marker({
 	                map: map,
                     position: uavdata.position,

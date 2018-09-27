@@ -179,5 +179,4 @@ public class UavVO {
 	public void setPhonetwo(String phonetwo) {
 		this.phonetwo = phonetwo;
 	}
-
 }

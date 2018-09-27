@@ -89,13 +89,18 @@ public class TaskController {
 
 		taskVO.setPlanstarttime(DateKit.get2HoursLater());
 		taskVO.setPlanendtime(DateKit.get4HoursLater());
-
 		if(task.getFlyingpathId()!=null && task.getFlyingpathId()!=0){
 			flyingPath = flyingPathServiceImpl.selectByFlyingPathIdWithoutData(task.getFlyingpathId());
+
 		}else {
 			if (task.getId() != null && task.getId() != 0) { // 判断对象是否为空
 				task2 = taskServiceImpl.getTaskByTask(task);
-
+				if (task2.getPlanstarttime() == null) {
+					task2.setPlanstarttime(DateKit.get2HoursLater());
+				}
+				if(task2.getPlanendtime() == null){
+					task2.setPlanendtime(DateKit.get4HoursLater());
+				}
 				if (task2.getUserA() != null) {
 					taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
 				}
@@ -108,6 +113,9 @@ public class TaskController {
 				if(task2.getUavId()!=null){
 					taskVO.setUavName(uavServiceImpl.getNameById(task2.getUavId()));
 				}
+			}else{
+				taskVO.setPlanstarttime(DateKit.get2HoursLater());
+				taskVO.setPlanendtime(DateKit.get4HoursLater());
 			}
 			taskVO.setTaskVO(task2);
 		}
@@ -182,8 +190,7 @@ public class TaskController {
 		Task task = new Task();
 		User userA = null;
 		User userZ = null;
-		
-		System.out.println(taskVO.getPlanstarttime());
+
 		if (taskVO.getUserAName()!= null && taskVO.getUserAName() != "") {
 			userA = userServiceImpl.getUserByName(taskVO.getUserAName());
 			if (userA == null) {
@@ -375,7 +382,7 @@ public class TaskController {
 	
 	//跳转无人机（单个）页面  ，同时显示任务、飞行路径
 	@RequestMapping("getTaskPlaneLocation")
-	public String getTaskPlaneLocation(@RequestParam("uavid")Integer uavid,@RequestParam("taskid")Integer taskid,Model model){
+	public String getTaskPlaneLocation(Model model,@RequestParam("uavid")Integer uavid,@RequestParam("taskid")Integer taskid){
 		
 		Uav uav = new Uav();
 		uav.setId(uavid);
@@ -384,15 +391,24 @@ public class TaskController {
 		
 	    Task task = new Task();
 	    task.setId(taskid);
-		Task task2 = taskServiceImpl.getTaskByTask(task);
-		
-		FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task2.getFlyingpathId());
+	    Task task1 = taskServiceImpl.getTaskByTask(task);
+
+		TaskVO taskVO = new TaskVO();
+		taskVO.setTaskVO(task1);
+
+		taskVO.setUserAName(userServiceImpl.getNameByUserId(task1.getUserA()));
+		taskVO.setUserZName(userServiceImpl.getNameByUserId(task1.getUserZ()));
+		taskVO.setUserCreatorName(userServiceImpl.getNameByUserId(task1.getUsercreator()));
+
+		FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(taskVO.getFlyingpathId());
 		FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
-		
+
+		model.addAttribute("path",JsonUtils.objectToJson(flyingPathVO));
 		model.addAttribute("uav",JsonUtils.objectToJson(uavVO));
-		model.addAttribute("task",task2);
-		model.addAttribute("flyingpath",JsonUtils.objectToJson(flyingPathVO));
-		
+		model.addAttribute("task",taskVO);
+
+		System.out.println(JsonUtils.objectToJson(uavVO));
+
 		return "plane";
 		
 	}
