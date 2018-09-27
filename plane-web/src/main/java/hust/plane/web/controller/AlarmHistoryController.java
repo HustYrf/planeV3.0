@@ -5,6 +5,7 @@ import hust.plane.service.interFace.AlarmService;
 import hust.plane.utils.page.AlarmPojo;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.JsonView;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,9 @@ public class AlarmHistoryController {
             alarm.setTaskId(id);
         }
         page = alarmService.queryAlarmWithPage(alarm, page,pageNum);
+        if(StringUtils.isNotBlank(inputId)){
+            model.addAttribute("taskId",inputId);
+        }
         model.addAttribute("selectStatus", alarm.getStatus());
         model.addAttribute("page", page);
         model.addAttribute("curNav", "alarmhistory");
