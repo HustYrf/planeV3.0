@@ -64,5 +64,26 @@ public class DataStatisticsController {
 		resultList.add(v3);
 		return resultList;
 	}
+	
+	//用于告警周统计数据
+	@RequestMapping("cityAlarmWeekStatistics")
+	@ResponseBody
+	public List<Integer> dealWithcityAlarmWeekStatistics(String target)
+	{
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(5);
+		list.add(20);
+		list.add(40);
+		list.add(10);
+		list.add(10);
+		list.add(20);
+		list.add(5);
+		list.add(6);
+		list.add(7);
+		list.add(10);
+		list.add(23);
+		list.add(34);
+		return list;
+	}
 
 }
