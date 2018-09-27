@@ -35,8 +35,8 @@
     <select id="alarmCount" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Alarm">
         select count(1) from K_Alarm
         WHERE 1=1
-        <if test="id != null">
-            AND id = #{id}
+        <if test="taskId != null">
+            AND Task_id = #{taskId}
         </if>
         <if test="status != null">
             AND Status = #{status}
@@ -48,8 +48,8 @@
         <include refid="Base_Column_List"/>
         FROM K_Alarm
         WHERE 1=1
-        <if test="param1.id != null">
-            AND id = #{param1.id}
+        <if test="param1.taskId != null">
+            AND Task_id= #{param1.taskId}
         </if>
         <if test="param1.status != null">
             AND Status = #{param1.status }

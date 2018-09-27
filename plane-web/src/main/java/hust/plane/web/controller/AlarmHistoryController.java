@@ -33,7 +33,7 @@ public class AlarmHistoryController {
             alarm.setId(null);
         } else {
             int id = Integer.parseInt(inputId);
-            alarm.setId(id);
+            alarm.setTaskId(id);
         }
         page = alarmService.queryAlarmWithPage(alarm, page,pageNum);
         model.addAttribute("selectStatus", alarm.getStatus());
