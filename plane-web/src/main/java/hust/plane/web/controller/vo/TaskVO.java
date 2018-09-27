@@ -12,7 +12,9 @@ public class TaskVO {
 	private String userAName;
 	private String userZName;
 	private Integer uavId;
+	private String uavName;
 	private Integer flyingpathId;
+	private String flyingpathName;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")	
 	private Date planstarttime;
@@ -32,7 +34,7 @@ public class TaskVO {
 	private String imgfolder;
 	private String reporturl;
 
-	public void setTaskVo(Task task) {
+	public void setTaskVO(Task task) {
 
 		this.id = task.getId();
 		if (task.getName() != null) {
@@ -66,6 +68,22 @@ public class TaskVO {
 			this.executeendtime = task.getExecuteendtime();
 		}
 
+	}
+
+	public String getUavName() {
+		return uavName;
+	}
+
+	public void setUavName(String uavName) {
+		this.uavName = uavName;
+	}
+
+	public String getFlyingpathName() {
+		return flyingpathName;
+	}
+
+	public void setFlyingpathName(String flyingpathName) {
+		this.flyingpathName = flyingpathName;
 	}
 
 	public String getUserAName() {

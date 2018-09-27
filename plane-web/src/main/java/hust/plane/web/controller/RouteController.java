@@ -160,6 +160,35 @@ public class RouteController {
         return JsonView.render(0, WebConst.SUCCESS_RESULT, queryRouteVo);
     }
 
+
+    //删除路由
+    @RequestMapping(value = "deleteRoute", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String deleteRoute(Route route){
+        if (route.getId() != null) {
+            if (routeServiceImpl.deleteRouteById(route.getId()) == true) {
+                return new JsonView(0, "SUCCESS", "删除路由成功！").toString();
+            }
+            return new JsonView(0, "SUCCESS", "删除路由失败！").toString();
+        }
+        return new JsonView(0, "SUCCESS", "未传入路由编号,删除路由失败！").toString();
+    }
+
+    //查看某条路由详情
+    @RequestMapping("showRouteDetail")
+    public String showRouteDetail(Model model,Route route){
+        Route route1;
+        RouteVO routeVO;
+        if(route.getName() == null || route.getName()==""){
+            return "common/404";
+        }else{
+            route1 = routeServiceImpl.getRouteByName(route.getName());
+            routeVO = new RouteVO(route1);
+        }
+        model.addAttribute("routedata", JsonUtils.objectToJson(routeVO));
+        return "showRoute";
+    }
+
     /**
      * 跳转到查询路由处
      *

@@ -171,8 +171,8 @@
                                     <div class="controls">
                                         <div class="select2-wrapper">
                                         <select id="uavId" class="span8 select2_category" type="select">
-                                            <#if taskvo.uavId??>
-                                                <option value="${taskvo.uavId!}">${ taskvo.uavId!}</option>
+                                            <#if taskvo.uavName??>
+                                                <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
                                             <#else>
                                                 <#if uavs?? && uavs?size gt 0>
                                                     <#list uavs as uav>
@@ -190,14 +190,15 @@
                                     <div class="controls">
                                         <div class="select2-wrapper">
                                             <select  id="flyingpathid" class="span8 select2_category" type="select">
-                                                <#if taskvo.planepathid??>
-                                                    <option value="${taskvo.planepathid!}">${taskvo.planepathid!}</option>
-                                                <#else>
-                                                    <#if planePaths?? && planePaths?size gt 0>
-                                                        <#list planePaths as planePath>
-                                                        <option value="${planePath.id!}">${planePath.name!}</option>
-                                                        </#list>
-                                                    </#if>
+                                               <#if flyingPath.name??>
+                                                   <option value="${flyingPath.id!}" selected>${flyingPath.name!}</option>
+                                               <#elseif taskvo.planepathid??>
+                                                    <option value="${taskvo.planepathid!}" selected>${taskvo.flyingpathName!}</option>
+                                                </#if>
+                                                <#if planePaths?? && planePaths?size gt 0>
+                                                    <#list planePaths as planePath>
+                                                    <option value="${planePath.id!}">${planePath.name!}</option>
+                                                    </#list>
                                                 </#if>
                                              </select>
                                           </div>

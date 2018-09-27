@@ -33,7 +33,7 @@ public class UavController {
 		return "plane";
 	}
 
-	@RequestMapping("/planeList")
+	@RequestMapping("/uavList")
 	//获取飞机列表信息
 	//实例解决经纬度路径
 	public String getPlaneList(Model model)
@@ -48,7 +48,7 @@ public class UavController {
 		model.addAttribute("curNav", "planeAllList");
 		//System.out.println(planeList.size());
 		//return JsonUtils.objectToJson(planeList);
-		return "planeList";
+		return "uavListMap";
 	}
 	
 	

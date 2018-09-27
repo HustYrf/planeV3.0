@@ -17,7 +17,6 @@
 
 #panel {
     position: absolute;
-    top: 1px;
     right: 0;
     width: 280px;
     z-index: 90; 
@@ -27,7 +26,7 @@
     overflow: auto;
     border-left: 1px solid #eaeaea;
     background: #fff;
-
+    padding-top: 10px;
 }
 
 #my-list {
@@ -55,8 +54,12 @@
 #planeSelect {
     padding-left: 20px;
     padding-bottom: 10px;
+    height: 20px;
+    line-height: 20px;
 }
-
+#planeSelect input,span{
+    vertical-align:middle;
+}
 
 #my-list li {
     background: #eee;

@@ -13,5 +13,11 @@ public interface RouteService {
 
     TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page);
 
-	int getNumOfRouteByType(int i);
+    boolean deleteRouteById(Integer id);
+
+    Route getRouteById(Integer id);
+
+    Route getRouteByName(String name);
+
+    int getNumOfRouteByType(int i);
 }

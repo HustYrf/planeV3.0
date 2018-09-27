@@ -52,9 +52,26 @@ public class RouteServiceImpl implements RouteService {
         page.setItems(routeList);
         return page;
 
+    }
 
+    //  删除路由
+    @Override
+    public boolean deleteRouteById(Integer id) {
 
+        if(routeMapper.deleteRouteById(id) == 1){
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public Route getRouteById(Integer id) {
+        return routeMapper.getRouteById(id);
+    }
+
+    @Override
+    public Route getRouteByName(String name) {
+        return routeMapper.getRouteByName(name);
     }
 
 	@Override
