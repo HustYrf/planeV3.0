@@ -50,7 +50,7 @@ public class UserController {
 
     @RequestMapping(value = "toUserCreate", method = RequestMethod.GET)
     public String userModify(TailPage<UserPojo> page, Model model, @RequestParam(required = false) Integer GroupId,
-                             @RequestParam(required = false) String userName,@RequestParam(required = false) String pageNum) {
+                             @RequestParam(required = false) String userName, @RequestParam(required = false) String pageNum) {
         if (GroupId == null || GroupId == 0) {
             GroupId = null;
         }
@@ -58,7 +58,7 @@ public class UserController {
             if (StringUtils.isBlank(userName)) {
                 userName = WebConst.SEARCH_NO_USERNAME;
             }
-            page = userService.getUserByGroupIdOruserNameWithPage(GroupId, userName, page,pageNum);
+            page = userService.getUserByGroupIdOruserNameWithPage(GroupId, userName, page, pageNum);
         } else {
             page = userService.getAllUserWithPage(page);
         }
@@ -73,7 +73,7 @@ public class UserController {
 //                userPojo.setPosition(");
             }
             if (userGroupList.size() > 0 && userGroupList.contains(Integer.valueOf(2))) {
-                userPosition.append("任务管理员 ") ;
+                userPosition.append("任务管理员 ");
 //                userPojo.setPosition("");
             }
             if (userGroupList.size() > 0 && userGroupList.contains(Integer.valueOf(3))) {
@@ -86,7 +86,7 @@ public class UserController {
             }
         }
         page.setItems(pojoList);
-        if (StringUtils.isNotBlank(userName)&&!userName.equals(WebConst.SEARCH_NO_USERNAME)) {
+        if (StringUtils.isNotBlank(userName) && !userName.equals(WebConst.SEARCH_NO_USERNAME)) {
             model.addAttribute("inputname", userName);
         }
         model.addAttribute("selectStatus", GroupId);
@@ -141,8 +141,8 @@ public class UserController {
                             @RequestParam(required = false) String authority) {
         try {
             int userCount = userService.addUserWithInfo(addUsername, addUserPaw, addUserWorkNumber, addUserNickname, addUserEmail, addUserPhone);
-            if (userCount==1&&StringUtils.isNotBlank(authority)){
-                userService.addUserAuthorityWithUserName(addUsername,authority);
+            if (userCount == 1 && StringUtils.isNotBlank(authority)) {
+                userService.addUserAuthorityWithUserName(addUsername, authority);
             }
         } catch (Exception e) {
             String msg = "添加失败";

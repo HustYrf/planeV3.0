@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>用户列表</title>
+    <title>告警列表</title>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -125,8 +125,8 @@
                                     <option value=-1>全部</option>
                                     <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if>>已处理告警</option>
                                     <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>未处理告警</option>
-                            </select>
-                            <input  name="inputId" type="text" value="" class="search-text" placeholder=" 请输入告警编号" style="margin-bottom: 3px;">
+                                 </select>
+                            <input  name="inputId" type="text" value="${taskId!}" class="search-text" placeholder=" 请输入任务编号" style="margin-bottom: 3px;">
                             <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 3px;">
                             <button type="button" style="display: none" id="modalShow"  data-toggle="modal"></button>
                         </div>
