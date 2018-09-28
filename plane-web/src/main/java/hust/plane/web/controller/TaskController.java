@@ -382,12 +382,24 @@ public class TaskController {
 	
 	//跳转无人机（单个）页面  ，同时显示任务、飞行路径
 	@RequestMapping("getTaskPlaneLocation")
-	public String getTaskPlaneLocation(Model model,@RequestParam("uavid")Integer uavid,@RequestParam("taskid")Integer taskid){
-		
+	public String getTaskPlaneLocation(Model model,@RequestParam("uavid")Integer uavid,@RequestParam("taskid")Integer taskid,HttpServletRequest request){
+		String role =null;
 		Uav uav = new Uav();
 		uav.setId(uavid);
 		Uav uav2 = uavServiceImpl.getPlaneByPlane(uav);
 		UavVO uavVO= new UavVO(uav2);
+		User user = PlaneUtils.getLoginUser(request);
+		//判别是观察者和浏览者
+		List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(user.getId());
+		if (groupIdList.contains(Integer.valueOf(1))) {
+			//是浏览者
+			role = "1";
+			
+		}
+		else {
+			//是观察者
+			role ="2";
+		}
 		
 	    Task task = new Task();
 	    task.setId(taskid);
@@ -406,8 +418,10 @@ public class TaskController {
 		model.addAttribute("path",JsonUtils.objectToJson(flyingPathVO));
 		model.addAttribute("uav",JsonUtils.objectToJson(uavVO));
 		model.addAttribute("task",taskVO);
+		model.addAttribute("role",role);
+		model.addAttribute("uav2",uav2);
 
-		System.out.println(JsonUtils.objectToJson(uavVO));
+		//System.out.println(JsonUtils.objectToJson(uavVO));
 
 		return "plane";
 		

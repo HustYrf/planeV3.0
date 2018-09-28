@@ -39,7 +39,8 @@ var WebSocketUtil = {
 		switch(messageType[0]){
 		case WebTypeUtil.MESSAGETYPESTATUS:
 			//处理接收到的经纬度消息
-			PlaneHandleServiceUtil.handleStatus(messageType[1],messageType[2]);
+			PlaneHandleServiceUtil.handleStatus(messageType[1],messageType[2],messageType[3],messageType[4],messageType[5],
+					messageType[6],messageType[7],messageType[8],messageType[9],messageType[10]);
 			break;
 		}
 
@@ -65,10 +66,19 @@ var WebSocketUtil = {
 }
 
 var PlaneHandleServiceUtil ={
-		handleStatus:function(message,status)
+		handleStatus:function(message,status,AR_SPD,GR_SPD,lon,lat,GPS_ELV,GPS_HDG,HORI_AGL,VERT_AGL)
 		{
+			alert(AR_SPD+" "+GR_SPD+""+lon+" "+lat)
 			//显示无人机的状态信息
 			planeStatus.innerHTML = status;
+			fightArSpd.innerHTML = AR_SPD+"";
+			fightGrSpd.innerHTML = GR_SPD+"";
+			fightLat.innerHTML = lat+"";
+			fightLon.innerHTML = lon+"";
+			fightElv.innerHTML = GPS_ELV+"";
+			fightHDG.innerHTML = GPS_HDG+"";
+			fightHAgl.innerHTML = HORI_AGL+"";
+			fightGrVAgl.innerHTML = VERT_AGL+"";
 			var mes = message.split(",");
 			var data = new Array();
 	        var value = mes[0] *1
@@ -88,7 +98,6 @@ var PlaneHandleServiceUtil ={
             });
 		    map.setCenter(data); 
 		    map.add(planeMarker);
-			//WebSocketUtil.print("[send] '" + message + "'\n");
 		}
 	
 }
