@@ -191,15 +191,15 @@ public class TaskController {
 		User userA = null;
 		User userZ = null;
 
-		if (taskVO.getUserAName()!= null && taskVO.getUserAName()=="") {
+		if (taskVO.getUserAName()!= null && taskVO.getUserAName()!="") {
 			userA = userServiceImpl.getUserByName(taskVO.getUserAName());
 			if (userA == null) {
-				return JsonView.render(1, "任务提交失败，起飞员不存在！");
+				return JsonView.render(1, "任务创建失败，起飞员不存在！");
 			} else {
 				task.setUserA(userA.getId());
 			}
 		}
-		if (taskVO.getUserZName() != null && taskVO.getUserZName()=="") {
+		if (taskVO.getUserZName() != null && taskVO.getUserZName()!="") {
 
 			userZ = userServiceImpl.getUserByName(taskVO.getUserZName());
 			if (userZ == null) {
