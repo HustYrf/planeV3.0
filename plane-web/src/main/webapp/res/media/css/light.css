@@ -139,7 +139,7 @@ ul.page-sidebar-menu ul.sub-menu > li.active > a,
 ul.page-sidebar-menu ul.sub-menu > li > a:hover,
 ul.page-sidebar-menu ul.sub-menu > li.open > a {
   color: #818181 !important;
-  background: #efefef !important; 
+  background: #d9fdd7 !important;
 }
 ul.page-sidebar-menu ul.sub-menu > li > a i {
   color: #bbb !important;

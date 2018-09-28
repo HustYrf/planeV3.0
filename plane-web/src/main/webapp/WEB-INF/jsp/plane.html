@@ -13,6 +13,8 @@
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
+	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 </head>
 <style>
 .headerUav{
@@ -52,8 +54,11 @@
 }
 </style>
 <body>
+<input type="hidden" id="base" value="${s.base}"><br/>
+<input type="hidden" id="plane" value="${uav2.deviceid!}"><br/>
+<input type="hidden" id="peoplerole" value="${role!}"><br/>
 <div class="headerUav" style="font-size:2.0rem;">
-飞机状态：飞行中
+<font size="4">飞机状态：<span id="fightStatus">暂无</span></font>
 </div>
 <div id="UavInfo">
     <div class="baseInfo">
@@ -72,9 +77,14 @@
     <div class="flyingInfo">
         <ul class="list-group">
             <li class="list-group-item liheader"><b>无人机信息</b></li>
-            <li class="list-group-item">无人机位置：</li>
-            <li class="list-group-item">无人机状态：</li>
-            <li class="list-group-item">无人机高度：</li>
+            <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span>m/s</li>
+            <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span>m/s</li>
+            <li class="list-group-item">无人机纬度：<span id="fightLat">暂无</span></li>
+            <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
+            <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
+            <li class="list-group-item">无人机航向：<span id="fightHDG">暂无</span></li>
+             <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
+            <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
             </ul>
     </div>
 </div>
@@ -118,7 +128,7 @@
                 strokeDasharray: [10, 5] //补充线样式
             });
 
-	        var uavMarker = new AMap.Marker({
+	        var planeMarker = new AMap.Marker({
 	                map: map,
                     position: uavdata.position,
                     icon: new AMap.Icon({
@@ -128,123 +138,9 @@
                     }),
              });
 	        
+	        map.add(planeMarker);  
 	        
 	        
-	        //然后在下面进行位置轮询
-	  			  	        
-
-		        /* var infoWindow = new AMap.InfoWindow({
-	            isCustom: true,
-	            offset: new AMap.Pixel(20, -25)
-	            }); */
-                //实例化信息窗体
-               /*  var title = '无人机编号:<span>' + data[i].name + '</span>';
-                var content = [];
-                content.push("状态：" + statusDec);
-                content.push("描述：" + data[i].description);
-                content.push("创建时间：" + data[i].updatetime);
-
-                markeritem.content = createInfoWindow(title, content.join("<br/>"));
-                markeritem.on('click', markerClick);
-
-                markerlist[data[i].status].push(markeritem);
-            } */
-
-            /* function markerClick(e) {
-                infoWindow.setContent(e.target.content);
-                infoWindow.open(map, e.target.getPosition());
-            }
-
-
-            //选中无人机类型进行显示,并且展示相关列表
-            function showplane(index) {
-            	
-                var disRouteCheckbox = document.getElementById("optionsRadios" + index);
-                if (disRouteCheckbox.checked == true) {
-                    map.add(markerlist[statuscode[index]]);
-
-                } else {
-                    map.remove(markerlist[statuscode[index]]);
-                }
-                document.getElementById("my-list").innerHTML = "";
-                var flaglist = [];
-                var innHTML = "";
-                for (var i = 0; i < 4; i++) {
-                    var checkfg = document.getElementById("optionsRadios" + i);
-                    if (checkfg.checked == true) {
-                        flaglist.push(i);
-                    }
-                }
-               
-                for (var j = 0; j < data.length; j++) {
-
-                    if (flaglist.indexOf(data[j].status) >= 0) {
-                        var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机编号：'
-                        + data[j].name + '&nbsp;&nbsp;状态：' + Statusdec[data[j].status] 
-                        + '<br>更新时间：' + data[j].updatetime 
-                        + '<br>描述：' + data[j].description 
-                        + '<br>SIM卡1：' + data[j].phoneone
-                        + '<br>SIM卡2：' + data[j].phonetwo
-                        + '</li>';
-                       
-                        innHTML = innHTML + str;
-                    }
-                }
-
-                document.getElementById("my-list").innerHTML = innHTML;
-            }
-
-
-            function showPlan(e, positionX, positionY) {
-                var posi = [positionX, positionY];
-                var lilist = document.getElementById('my-list')
-                var eles = lilist.getElementsByTagName('li');
-                
-                for(var i=0;i<eles.length;i++){
-                	
-                	eles[i].className = 'poibox';
-                }
-                e.className ='poibox selected';
-                       
-                map.panTo(posi);
-            }
-
-          
-            //构建自定义信息窗体
-            function createInfoWindow(title, content) {
-                var info = document.createElement("div");
-                info.className = "info";
-
-                //可以通过下面的方式修改自定义窗体的宽高
-                info.style.width = "240px";
-                // 定义顶部标题
-                var top = document.createElement("div");
-                var titleD = document.createElement("div");
-                var closeX = document.createElement("img");
-                top.className = "info-top";
-                titleD.innerHTML = title;
-                closeX.src = "res/i/close2.gif";
-                closeX.onclick = closeInfoWindow;
-
-                top.appendChild(titleD);
-                top.appendChild(closeX);
-                info.appendChild(top);
-
-                // 定义中部内容
-                var middle = document.createElement("div");
-                middle.className = "info-middle";
-                middle.style.backgroundColor = 'white';
-                middle.innerHTML = content;
-                info.appendChild(middle);
-                return info;
-            }
-
-            //关闭信息窗体
-            function closeInfoWindow() {
-                map.clearInfoWindow();
-            } */
-           
         </script>
- 		</div>
 	</body>
 </html>
