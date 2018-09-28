@@ -57,9 +57,8 @@
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
         <div id="dashboard" style="min-height: 86%;">
-            <!-- 填充内容 start-->
-            <div class="container-fluid" style="width:92%;">
-                <div class="row-fluid" style="margin:20px 40px;">
+
+                <div class="row-fluid">
                     <div class="span12">
 
                         <form id="queryPageForm" class="mt-15">
@@ -108,7 +107,7 @@
                                                         <td>${routepojo.createtime?datetime!}</td>
                                                         <td>${routepojo.description!}</td>
                                                         <#if !Session[ "super_administrator"]?exists>
-                                                        <td><a class="btn" onclick="deleteRoute(${routepojo.id})">删除</a></td>
+                                                        <td><a class="btn red" onclick="deleteRoute(${routepojo.id})">删除</a></td>
                                                         </#if>
                                                     </tr>
                                                     </#list>
@@ -126,7 +125,6 @@
     </div>
 </div>
 
-</div>
 <!-- 提示信息模态框 -->
 
 <div class="modal fade" id="ocDialogModal" tabindex="-1" aria-hidden="true">
