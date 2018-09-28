@@ -12,9 +12,13 @@
 	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />
+
 </head>
 <style>
 .headerUav{
@@ -22,36 +26,42 @@
   z-index:99;
   width:400px;;
   height:50px;
-  margin:0 auto;
   text-align:center;
   background-color:red;
   left:50%;
+    top:10px;
   line-height:50px;
   transform: translate(-50%, 0);
   border-radius:10px;
   -moz-border-radius:10px; /* 老的 Firefox */
-  opacity:0.7;
+  opacity:0.6;
   color:#fff;
-  margin-top:20px;
 }
 #UavInfo{
     position:absolute;
     z-index:99;
-    width:360px;
+    width:330px;
     min-height: 420px;
-    right:2%;
+    right:0;
+    top:0;
     background-color:#fff;
     border-radius:10px;
     -moz-border-radius:10px; /* 老的 Firefox */
     opacity:0.8;
-    color:#f01414;
-    margin-top:2%;
-    padding: 25px;
-    font-size:1.6rem;
+    padding: 10px;
+    font-size:1.4rem;
 }
+span{
+     color:#f01414;
+ }
 .liheader{
     background-color:#d4d4d4;
+    font-size:1.8rem;
 }
+    #fightStatus{
+        color: #fff;
+    }
+
 </style>
 <body>
 <input type="hidden" id="base" value="${s.base}"><br/>
@@ -62,7 +72,6 @@
 </div>
 <div id="UavInfo">
     <div class="baseInfo">
-
         <ul class="list-group">
             <li class="list-group-item liheader" ><b>任务基本信息</b></li>
             <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name}</span></li>
@@ -77,8 +86,8 @@
     <div class="flyingInfo">
         <ul class="list-group">
             <li class="list-group-item liheader"><b>无人机信息</b></li>
-            <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span>m/s</li>
-            <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span>m/s</li>
+            <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span><span><strong>(m/s)</strong></span></li>
+            <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span><span><strong>(m/s)</strong></span></li>
             <li class="list-group-item">无人机纬度：<span id="fightLat">暂无</span></li>
             <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
             <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
@@ -86,6 +95,12 @@
              <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
             <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
             </ul>
+    </div>
+</div>
+<div class="input-card" style="width:18rem;z-index: 99;">
+    <div class="input-item">
+        <button class="btn" id="add-satellite-layer" style="margin-right: 3rem;">添加卫星图层</button>
+        <button class="btn" id="remove-satellite-layer">删除卫星图层</button>
     </div>
 </div>
 <div id="container"></div>
@@ -138,8 +153,20 @@
                     }),
              });
 	        
-	        map.add(planeMarker);  
-	        
+	        map.add(planeMarker);
+
+            // 构造官方卫星、路网图层
+            var satelliteLayer = new AMap.TileLayer.Satellite();
+            map.add([satelliteLayer]);
+
+            //事件绑定
+            document.querySelector("#add-satellite-layer").onclick = function() {
+                map.add(satelliteLayer);
+            }
+
+            document.querySelector("#remove-satellite-layer").onclick = function() {
+                map.remove(satelliteLayer);
+            }
 	        
         </script>
 	</body>

@@ -18,13 +18,13 @@
                         <#else>
                             <img alt="头像" src="${s.base}/res/i/header.jpg" style="width:40px;height:40px;margin-right: 5px;"">
                         </#if>
-						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].name}</#if></span>
+						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname}</#if></span>
 						<i class="icon-angle-down"></i>
                     </a>
 
                     <ul class="dropdown-menu">
                         <li><a href="extra_profile.html"><i class="icon-user"></i>用户： <#if Session["login_user"]?exists>${Session["login_user"].name}</#if></a></li>
-                        <li><a href="${s.base}/admin/profile"><i class="icon-calendar"></i> 个人信息</a></li>
+                        <li><a href="${s.base}/admin/profileEdit"><i class="icon-calendar"></i> 个人信息</a></li>
                         <li><a href="${s.base}/admin/logout"><i class="icon-envelope"></i> 注销</a></li>
                     </ul>
                 </li>

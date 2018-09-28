@@ -78,7 +78,7 @@ public class FlyingPathServiceImpl implements FlyingPathService {
 			flyingPaths = flyingPathMapper.queryFlyingPathPage(flyingPath, page);
 		}
 
-		page.setItemsTotalCount(totalPageNum);
+		page.setItemsTotalCount(itemsTotalCount);
 		page.setItems(flyingPaths);
 		return page;
 	}

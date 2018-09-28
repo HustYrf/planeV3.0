@@ -1,10 +1,3 @@
-html {
-  font-size: 12px;
-}
-
-* {
-  box-sizing: border-box
-}
 .input-textarea{
    color:grey;
    height:8em;
@@ -12,13 +5,6 @@ html {
    border-radius:0.4rem;
    border:1px solid #ced4da;
    margin-bottom:1rem;
-}
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  line-height: 1.5;
-  font-weight: 300;
-  color: #111213;
 }
 
 hr {
@@ -84,7 +70,7 @@ input[type=checkbox], input[type=radio] {
   background-image: none;
   color: #25A5F7;
   border-color: #25A5F7;
-  padding: .25rem .5rem;
+  padding: .25rem .25rem;
   line-height: 1.5;
   border-radius: 1rem;
   -webkit-appearance: button;
@@ -110,7 +96,7 @@ input[type=checkbox], input[type=radio] {
   -ms-flex-align: center;
   align-items: center;
   width: 100%;
-  height: 3rem;
+  height: 2rem;
 }
 
 .input-item:last-child {
@@ -184,7 +170,7 @@ input[type=checkbox], input[type=radio] {
   background-color: #fff;
   background-clip: border-box;
   border-radius: .25rem;
-  width: 22rem;
+  width: 18rem;
   border-width: 0;
   border-radius: 0.4rem;
   box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
@@ -193,32 +179,12 @@ input[type=checkbox], input[type=radio] {
   right: 1rem;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem  0.5rem;
 }
 
 .input-text {
   line-height: 2rem;
   margin-right: 2rem;
-}
-
-.info hr {
-  margin-right: 0;
-  margin-left: 0;
-  border-top-color: grey;
-}
-
-.info {
-  padding: .75rem 1.25rem;
-  margin-bottom: 1rem;
-  border-radius: .25rem;
-  position: fixed;
-  top: 1rem;
-  background-color: white;
-  width: auto;
-  min-width: 22rem;
-  border-width: 0;
-  right: 1rem;
-  box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
 }
 
 select, input[type=text] {

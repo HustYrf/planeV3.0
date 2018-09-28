@@ -16,14 +16,15 @@
     <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
-    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />
 
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link rel="stylesheet" href="${s.base}/res/css/common.css">
 
 </head>
 <body class="page-header-fixed">
@@ -123,14 +124,11 @@
                 }];
                 var alarmList = [{
                     alarmid: '1',
-                    image: 'res/i/bing.png',
-                    planeid: '1',
+                    image: '${s.base}/res/i/alarmPic1.jpg',
                     descripte: '这是一个告警点',
                     updatetime: '2018-7-5',
                     createTime: '2018-8-5',
                     alongda: [107.79962, 23.06691],
-                    position: '107.79962, 23.06691',
-
                 }];
                 //创建一个地图
                 var map = new AMap.Map('container', {
@@ -171,7 +169,7 @@
                         var polyline = new AMap.Polyline({
                             map: map,
                             path: RouteList[i].routepath, //设置线覆盖物路径
-                            strokeColor: colors[parseInt(5 / 2)], //线颜色
+                            strokeColor:"#4fd2b1", //线颜色
                             strokeOpacity: 1, //线透明度
                             strokeWeight: 5, //线宽
                             strokeStyle: "solid", //线样式
