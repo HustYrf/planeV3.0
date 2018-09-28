@@ -137,7 +137,7 @@
                                         <td>
 	                                	   <#if taskpojo.task.status==-1 || taskpojo.task.status==1>
                                                <#if !Session["super_administrator"]?exists>
-		                                		<button type="button" class="btn btn-info btn-xs" onclick="assignTask(${taskpojo.task.id!})">分派</button>
+		                                		<button type="button" class="btn green" onclick="assignTask(${taskpojo.task.id!})">分派</button>
                                                <#else>
                                                  <span class="label label-warning">无操作权限</span>
                                                </#if>
@@ -146,7 +146,7 @@
 										    <#if taskpojo.task.status==0>
                                                 <#if !Session["super_administrator"]?exists>
 		                                		<a class="btn" href="${s.base}/toTaskCreate.action?id=${taskpojo.task.id!}">编辑</a>
-		                                		<button type="button" class="btn btn-info" onclick="deleteTask(${taskpojo.task.id!})">删除</button>
+		                                		<button type="button" class="btn red" onclick="deleteTask(${taskpojo.task.id!})">删除</button>
                                                 <#else>
                                                  <span class="label label-warning">无操作权限</span>
                                                 </#if>
@@ -168,8 +168,8 @@
 
 	                                		<#if taskpojo.task.status==7>
                                                 <#if !Session["super_administrator"]?exists>
-	                                		    <button type="button" class="btn btn-info btn-xs" onclick="onsureFly('${taskpojo.task.id!}')">批准</button>
-	                                		    <button type="button" class="btn btn-info btn-xs" onclick="rejectFly('${taskpojo.task.id!}')">驳回</button>
+	                                		    <button type="button" class="btn default" onclick="onsureFly('${taskpojo.task.id!}')">批准</button>
+	                                		    <button type="button" class="btn blue btn-xs" onclick="rejectFly('${taskpojo.task.id!}')">驳回</button>
                                                 <#else>
                                                 <span class="label label-warning">无操作权限</span>
                                                 </#if>
