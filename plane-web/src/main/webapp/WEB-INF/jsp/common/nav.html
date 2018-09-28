@@ -43,11 +43,11 @@
             <span class="arrow "></span>
         </a>
         <ul class="sub-menu">
-            <li><a href="${s.base}/home.action">主页</a></li>
+            <li <#if (curNav)?? && curNav =="home">class="active"</#if>><a href="${s.base}/home.action">主页</a></li>
             <#if !Session[ "super_administrator"]?exists>
-            <li><a href="${s.base}/toTaskCreate.action">创建任务</a></li>
+            <li <#if (curNav)?? && curNav =="createTask">class="active"</#if>><a href="${s.base}/toTaskCreate.action">创建任务</a></li>
             </#if>
-            <li><a href="${s.base}/taskPageList.action">任务一览</a></li>
+            <li <#if (curNav)?? && curNav =="taskAllList">class="active"</#if>><a href="${s.base}/taskPageList.action">任务一览</a></li>
         </ul>
     </li>
 </#if>
@@ -71,17 +71,17 @@
     </a>
         <ul class="sub-menu">
             <#if !Session[ "super_administrator"]?exists>
-            <li><a href="${s.base}/routeImport.action">路由导入</a></li>
+            <li <#if (curNav)?? && curNav =="routeImport">class="active"</#if>><a href="${s.base}/routeImport.action">路由导入</a></li>
             </#if>
           <#--  <li><a href="${s.base}/routeMap.action">路由地图</a></li>-->
-            <li><a href="${s.base}/routeList.action">路由一览</a></li>
+            <li <#if (curNav)?? && curNav =="routeList">class="active"</#if>><a href="${s.base}/routeList.action">路由一览</a></li>
         </ul>
     </li>
 </#if>
 
 
 <#if curNav ??>
-    <#if curNav =="flyPathList" || curNav =="setFlyPath">
+    <#if curNav =="flyingPathList" || curNav =="setFlyPath">
         <li class="active">
     <#else>
         <li class="">
@@ -89,7 +89,7 @@
     	<a href="javascript:;">
         <i class="icon-bookmark-empty"></i>
         <span class="title">飞巡路经</span>
-            <#if curNav =="flyingPathList" || curNav =="setFlyingPath">
+            <#if curNav =="flyingPathList" || curNav =="setFlyPath">
                    <span class="selected"></span>
             <#else>
                    <span class=""></span>
@@ -98,9 +98,9 @@
         </a>
             <ul class="sub-menu">
                 <#if !Session[ "super_administrator"]?exists>
-                <li><a href="${s.base}/setFlyingPath.action">设定路经</a></li>
+                <li <#if (curNav)?? && curNav =="setFlyPath">class="active"</#if>><a href="${s.base}/setFlyingPath.action">设定路经</a></li>
                 </#if>
-                <li><a href="${s.base}/doGetFlyingPathList.action">路经一览</a></li>
+                <li <#if (curNav)?? && curNav =="flyingPathList">class="active"</#if>><a href="${s.base}/doGetFlyingPathList.action">路经一览</a></li>
             </ul>
     </li>
 </#if>
@@ -123,7 +123,7 @@
         <span class="arrow "></span>
     </a>
     <ul class="sub-menu">
-        <li><a href="${s.base}/uavList.action">无人机查看</a></li>
+        <li <#if (curNav)?? && curNav =="planeAllList">class="active"</#if>><a href="${s.base}/uavList.action">无人机查看</a></li>
         <li><a href="#">无人机注册</a></li>
         <li><a href="#">三盯摄像头</a></li>
         <li><a href="#">摄像头注册</a></li>
@@ -149,7 +149,7 @@
             <span class="arrow "></span>
         </a>
         <ul class="sub-menu">
-            <li><a href="${s.base}/alarmHistory.action">告警历史</a></li>
+            <li <#if (curNav)?? && curNav =="alarmhistory">class="active"</#if>><a href="${s.base}/alarmHistory.action">告警历史</a></li>
         </ul>
        </li>
 </#if>
@@ -172,7 +172,7 @@
         <span class="arrow "></span>
     </a>
     <ul class="sub-menu">
-        <li><a href="${s.base}/dataRoute.action">任务汇总</a></li>
+        <li <#if (curNav)?? && curNav =="taskStatistics">class="active"</#if>><a href="${s.base}/dataRoute.action">任务汇总</a></li>
         <li><a href="#">飞巡路经汇总</a></li>
     </ul>
     </li>
@@ -196,7 +196,7 @@
         <span class="arrow "></span>
     </a>
     <ul class="sub-menu">
-        <li><a href="${s.base}/toUserCreate.action">用户列表</a></li>
+        <li <#if (curNav)?? && curNav =="usersEdit">class="active"</#if>><a href="${s.base}/toUserCreate.action">用户列表</a></li>
         <!--<li><a href="#">用户组绑定</a></li>-->
     </ul>
     </li>
@@ -219,20 +219,20 @@
     </#if>
     <span class="arrow "></span>
     </a>
-    <ul class="sub-menu">
-        <li>
-            <a href="javascript:;">修改信息
-                <span class="arrow"></span>
-            </a>
+    <!--<ul class="sub-menu">-->
+        <!--<li>-->
+            <!--<a href="javascript:;">修改信息-->
+                <!--<span class="arrow"></span>-->
+            <!--</a>-->
 
             <ul class="sub-menu">
-                <li><a href="${s.base}/admin/profileEdit">个人信息</a></li>
-                <li><a href="${s.base}/admin/passwordEdit">修改密码</a></li>
-                <li><a href="${s.base}/admin/logout">退出</a></li>
+                <li <#if (curNav)?? && curNav =="profileEdit">class="active"</#if>><a href="${s.base}/admin/profileEdit">个人信息</a></li>
+                <li <#if (curNav)?? && curNav =="passwordEdit">class="active"</#if>><a href="${s.base}/admin/passwordEdit">修改密码</a></li>
+                <li <#if (curNav)?? && curNav =="logout">class="active"</#if>><a href="${s.base}/admin/logout">退出</a></li>
 
             </ul>
-        </li>
-    </ul>
+        <!--</li>-->
+    <!--</ul>-->
  </li>
 </#if>
 </#if>
