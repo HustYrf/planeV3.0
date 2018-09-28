@@ -90,8 +90,10 @@ public class FlyingPathController {
     	if(flyingPath.getName()==null || flyingPath.getName()==""){
     		flyingPath.setName(null);
 		}
-        model.addAttribute("findname",flyingPath.getName());
+        model.addAttribute("inputName",flyingPath.getName());
+
         page = flyingPathServiceImpl.queryFlyingPathWithPage(flyingPath,page);
+
         model.addAttribute("page",page);
         model.addAttribute("curNav", "flyingPathList");
         return "flyingPathList";

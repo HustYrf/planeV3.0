@@ -122,7 +122,7 @@ public class RouteController {
         {
             route.setName(null);
         }else {
-            model.addAttribute("findname",route.getName());
+            model.addAttribute("inputname",route.getName());
         }
         if(route.getType()==null || route.getType() == -1){
             route.setType(null);

@@ -43,19 +43,24 @@ public class RouteServiceImpl implements RouteService {
       
     }
 
+    //路由列表分页
     @Override
     public TailPage<Route> queryRouteWithPage(Route route, TailPage<Route> page) {
+        List<Route> routeList = null;
+        int itemsTotalCount = routeMapper.routeCount(route);
+        //查看当前条目的分页的页数
+        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount/page.getPageSize():itemsTotalCount/page.getPageSize() + 1;
 
-        int count = routeMapper.routeCount(route);
-        // 避免 搜索结果的分页页码数大于数据条数
-        if (page.getPageNum() != 0 && page.getPageNum() > (count / TailPage.DEFAULT_PAGE_SIZE + 1)) {
+        if(page.getPageNum()== 0 || page.getPageNum() > totalPageNum){
             page.setPageNum(1);
         }
-        page.setItemsTotalCount(count);
-        List<Route> routeList = routeMapper.queryFlyingPathPage(route, page);
+        if(itemsTotalCount>0){
+            routeList = routeMapper.queryRoutePage(route, page);
+        }
+
+        page.setItemsTotalCount(itemsTotalCount);
         page.setItems(routeList);
         return page;
-
     }
 
     //  删除路由

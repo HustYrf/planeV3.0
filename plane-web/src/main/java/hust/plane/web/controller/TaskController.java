@@ -191,7 +191,7 @@ public class TaskController {
 		User userA = null;
 		User userZ = null;
 
-		if (taskVO.getUserAName()!= null && taskVO.getUserAName() != "") {
+		if (taskVO.getUserAName()!= null && taskVO.getUserAName()=="") {
 			userA = userServiceImpl.getUserByName(taskVO.getUserAName());
 			if (userA == null) {
 				return JsonView.render(1, "任务提交失败，起飞员不存在！");
@@ -199,7 +199,7 @@ public class TaskController {
 				task.setUserA(userA.getId());
 			}
 		}
-		if (taskVO.getUserZName() != null && taskVO.getUserZName() != "") {
+		if (taskVO.getUserZName() != null && taskVO.getUserZName()=="") {
 
 			userZ = userServiceImpl.getUserByName(taskVO.getUserZName());
 			if (userZ == null) {
@@ -247,15 +247,20 @@ public class TaskController {
 		} else {
 			task.setUsercreator(userCreator.getId());
 		}
-		if(task.getName()=="" || task.getName()==null)
+		if(task.getName()==null || task.getName()=="" )
 		{
 			task.setName(null);
 		}else {
 			model.addAttribute("inputName",task.getName());
 		}
+		if(task.getFinishstatus() == null || task.getFinishstatus() == -1){
+			task.setFinishstatus(null);
+		}else{
+			model.addAttribute("selectStatus",task.getFinishstatus());
+		}
+
 		page = taskServiceImpl.queryPage(task, page);
 
-		model.addAttribute("selectStatus", task.getFinishstatus());
 		model.addAttribute("page", page);
 		model.addAttribute("curNav", "taskAllList");
 		return "taskList";
@@ -272,8 +277,20 @@ public class TaskController {
 		} else {
 			task.setUsercreator(userCreator.getId());
 		}
-		page = taskServiceImpl.queryPageWithTime(task, page);
-		model.addAttribute("selectStatus", task.getFinishstatus());
+		if(task.getName()=="" || task.getName()==null)
+		{
+			task.setName(null);
+		}else {
+			model.addAttribute("inputName",task.getName());
+		}
+		if(task.getFinishstatus() == null || task.getFinishstatus() == -1){
+			task.setFinishstatus(null);
+		}else{
+			model.addAttribute("selectStatus",task.getFinishstatus());
+		}
+
+		page = taskServiceImpl.queryPage(task, page);
+
 		model.addAttribute("page", page);
 		model.addAttribute("curNav", "taskAllList");
 		return "taskList";

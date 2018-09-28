@@ -14,7 +14,7 @@
     <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css" />
     <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" href="media/image/favicon.ico"/>
+    <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css" />
 
@@ -82,8 +82,8 @@
                                             <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if> >一干路由</option>
                                             <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if> >二干路由</option>
                                         </select>
-                                        <input name="name" type="text" value="${findname!}" class="search-text" placeholder="请输入路由名称" style="margin-bottom: 8px;">
-                                        <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 8px;">
+                                        <input name="name" type="text" value="${inputName!}" class="search-text" placeholder="请输入路由名称" style="margin-bottom: 8px;">
+                                        <input type="submit" class="btn green"  style="height: 30px;margin-bottom: 8px;">
                                        <#-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 3px;">创建时间逆序查看</button>-->
                                     </div>
                                     <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1">
