@@ -88,7 +88,9 @@
                                             <th>类型</th>
                                             <th>导入时间</th>
                                             <th>描述</th>
+                                            <#if !Session[ "super_administrator"]?exists>
                                             <th>操作</th>
+                                            </#if>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -105,7 +107,9 @@
                                                         </td>
                                                         <td>${routepojo.createtime?datetime!}</td>
                                                         <td>${routepojo.description!}</td>
+                                                        <#if !Session[ "super_administrator"]?exists>
                                                         <td><a class="btn" onclick="deleteRoute(${routepojo.id})">删除</a></td>
+                                                        </#if>
                                                     </tr>
                                                     </#list>
                                                 </#if>
