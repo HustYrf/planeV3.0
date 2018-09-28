@@ -142,8 +142,11 @@
 	                    option.tooltip.trigger = 'item';
 	                } else {
 	                    //添加省地图事件
-	                    alert("选择了"+param.target);
+	                    //alert("选择了"+param.target);
 	                    //发送请求
+	                    var myCharCharts=ec.init(document.getElementById('barMain'));
+	                    myCharCharts.showLoading();
+	                    
 	                    $.ajax({
 	                    	 type: "post",
 	                         url: "${s.base}/cityRouteStatistics.action",
@@ -151,9 +154,9 @@
 	                             'target':param.target,
 	                         },
 	                         success: function (result) {
-	                        	 alert(result);
+	                        	 //alert(result);
 	                             var routedata = result;
-	                             var myCharCharts=ec.init(document.getElementById('barMain'));
+	                           
 	     	                    option2 = {
 	     	                        title: {
 	     	                            subtext: '光缆级别统计',
@@ -188,6 +191,7 @@
 	     	                            }
 	     	                        ]
 	     	                    };
+	     	                   myCharCharts.hideLoading();
 	     	                    myCharCharts.setOption(option2,true);
 	     	                    
 	     	                  
@@ -263,10 +267,10 @@
 	   	
 	   	                    var myCharCharts1=ec.init(document.getElementById('barMain1'));
 	                           var routedata = [
-	                               {value:1548, name: '飞行中'},
-	                               {value:535, name: '已入库'},
-	                               {value:510, name: '待放飞'},
-	                               {value:510, name: '故障'}
+	                               {value:20, name: '飞行中'},
+	                               {value:5, name: '已入库'},
+	                               {value:10, name: '待放飞'},
+	                               {value:2, name: '故障'}
 	                           ];
 	   	                    option4 = {
 	   	                        title: {
@@ -313,13 +317,15 @@
 	                         }
 	                    });
 	                    //
+	                    var myBarChart = ec.init(document.getElementById('charMain'));
+	                    myBarChart.showLoading();
 	                    $.ajax({
 	                    	 type: "post",
 	                         url: "${s.base}/cityAlarmWeekStatistics.action",
 	                         data: {
 	                             'target':param.target,
 	                         },success: function (result) {
-		   	                    var myBarChart = ec.init(document.getElementById('charMain'));
+		   	                    
 		                           option1= {
 		                               title:{
 		                                   subtext:"周警告统计"
@@ -355,16 +361,17 @@
 		                                       name:'未处理告警',
 		                                       type:'bar',
 		                                       stack: '警告',
-		                                       data:[320, 332, 301, 334, 390, 330, 320]
+		                                       data:[10, 11, 12, 14, 20, 8, 17]
 		                                   },
 		                                   {
 		                                       name:'已处理告警',
 		                                       type:'bar',
 		                                       stack: '警告',
-		                                       data:[120, 132, 101, 134, 90, 230, 210]
+		                                       data:[21, 20, 30, 10, 24, 40, 10]
 		                                   }
 		                               ]
 		                           };
+		                           myBarChart.hideLoading();
 		                           myBarChart.setOption(option1,true);
 	                        	 
 	                        	 }
