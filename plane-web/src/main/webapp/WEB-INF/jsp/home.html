@@ -17,13 +17,8 @@
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
-    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
-    <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />
-
-    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
 
 </head>
@@ -59,13 +54,6 @@
         <div id="dashboard"  style="position:relative;min-height: 790px;">
 
             <div id="container" ></div>
-            <div class="input-card" style="width:24rem;">
-                <div class="input-item">
-                    <label>卫星图层：</label>
-                    <button class="btn" id="add-satellite-layer" style="margin-right:1rem;">添加卫星图层</button>
-                    <button class="btn" id="remove-satellite-layer">删除卫星图层</button>
-                </div>
-            </div>
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
@@ -130,32 +118,32 @@
                     createTime: '2018-8-5',
                     alongda: [107.79962, 23.06691],
                 }];
+
                 //创建一个地图
-                var map = new AMap.Map('container', {
+                map = new AMap.Map('container', {
                     resizeEnable: true,
                     center: routeList[0].routepath[0],
-                    zoom: 13
+                    zoom: 13,
+                    //layers: layerCtrl1.getEnabledLayers()
                 });
-                // 构造官方卫星、路网图层
-                var satelliteLayer = new AMap.TileLayer.Satellite();
-                map.add([satelliteLayer]);
-
-                //事件绑定
-                document.querySelector("#add-satellite-layer").onclick = function() {
-                    map.add(satelliteLayer);
-                }
-
-                document.querySelector("#remove-satellite-layer").onclick = function() {
-                    map.remove(satelliteLayer);
-                }
-                map.plugin(["AMap.Scale"], function () { //加载比例尺插件
-                    var scale = new AMap.Scale({
+                map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
+                    var scale = new AMap.Scale({          //生成 比例尺插件
                         visible: true,
-                        position: 'LB',
-
+                        position:'LB',
                     });
                     map.addControl(scale);
                     scale.show();
+                    map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
+                });
+                if(location.href.indexOf('&guide=1')!==-1){
+                    map.setStatus({scrollWheel:false})
+                }
+                AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+                    var layerCtrl1 = new BasicControl.LayerSwitcher({
+                        position: 'tr'
+                    });
+                    map.addControl(layerCtrl1);
                 });
 
 
@@ -255,11 +243,8 @@
                     map.clearInfoWindow();
                 }
             </script>
-
         </div>
-
     </div>
-
     <!-- END PAGE CONTAINER-->
 </div>
 

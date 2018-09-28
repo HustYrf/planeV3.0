@@ -12,10 +12,7 @@
 	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 
-    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
-    <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />  
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 
@@ -58,9 +55,9 @@ span{
     background-color:#d4d4d4;
     font-size:1.8rem;
 }
-    #fightStatus{
-        color: #fff;
-    }
+#fightStatus{
+    color: #fff;
+}
 
 </style>
 <body>
@@ -97,12 +94,6 @@ span{
             </ul>
     </div>
 </div>
- <div class="input-card" style="width:18rem;z-index: 99;">
-    <div class="input-item">
-        <button class="btn" id="add-satellite-layer" style="margin-right: 3rem;">添加卫星图层</button>
-        <button class="btn" id="remove-satellite-layer">删除卫星图层</button>
-    </div>
-</div>  
 <div id="container"></div>
            
         <!-- UI组件库 1.0 -->
@@ -113,25 +104,34 @@ span{
 			var flyingPath = ${path};
 
 			$("#flyingPathName").html(flyingPath.name);
-
             $("#uavDeviceId").html(uavdata.deviceid);
             $("#uavName").html(uavdata.name);
             $("#uavDescription").html(uavdata.description);
-
 
             //创建地图
             var map = new AMap.Map('container', {
                 zoom: 12,
                 center: flyingPath.pathdata[0], //中心点坐标
             });
-            map.plugin(["AMap.Scale"],function(){    //加载比例尺插件      
-     	       var scale = new AMap.Scale({
-     	        visible: true,
-     			position:'LB',
-     			}); 
-     	        map.addControl(scale);  
-     	        scale.show();
-     	 	});
+            map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
+                var scale = new AMap.Scale({          //生成 比例尺插件
+                    visible: true,
+                    position:'LB',
+                });
+                map.addControl(scale);
+                scale.show();
+                map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
+            });
+            if(location.href.indexOf('&guide=1')!==-1){
+                map.setStatus({scrollWheel:false})
+            }
+            AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+                var layerCtrl1 = new BasicControl.LayerSwitcher({
+                    position: 'RB'
+                });
+                map.addControl(layerCtrl1);
+            });
 
             var polyline = new AMap.Polyline({
                 map: map,
@@ -155,19 +155,7 @@ span{
 	        
 	        map.add(planeMarker);
 
-             // 构造官方卫星、路网图层
-            var satelliteLayer = new AMap.TileLayer.Satellite();
-            map.add([satelliteLayer]);
 
-            //事件绑定
-            document.querySelector("#add-satellite-layer").onclick = function() {
-                map.add(satelliteLayer);
-            }
-
-            document.querySelector("#remove-satellite-layer").onclick = function() {
-                map.remove(satelliteLayer);
-            } 
-	       
         </script>
 	</body>
 </html>
