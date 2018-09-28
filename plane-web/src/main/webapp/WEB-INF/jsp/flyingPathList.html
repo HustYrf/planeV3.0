@@ -58,8 +58,8 @@
         <!-- END PAGE TITLE & BREADCRUMB-->
         <div id="dashboard" style="min-height: 86%;">
             <!-- 填充内容 start-->
-            <div class="container-fluid" style="width:92%;">
-                <div class="row-fluid" style="margin:20px 40px;">
+
+                <div class="row-fluid" >
                     <div class="span12">
 
                         <form id="queryPageForm" class="mt-15">
@@ -70,8 +70,8 @@
                                 </div>
                                 <div class="portlet-body">
                                     <div class="" style="float: right;" >
-                                        <input name="name" type="text" value="${findname!}" class="search-text" placeholder="请输入飞行路径名称" style="margin-bottom: 8px;">
-                                        <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 8px;">
+                                        <input name="name" type="text" value="${inputName!}" placeholder="请输入飞行路径名称" class="search-text" style="margin-bottom: 8px;">
+                                        <input type="submit" class="btn green"  style="height: 30px;margin-bottom: 8px;">
                                     </div>
                                     <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1">
                                         <thead>
@@ -98,9 +98,9 @@
                                                     <td><a href="${s.base}/showPlanePath.action?id=${planepath.id}" target="_blank">详细信息</a></td>
                                                     <#if !Session["super_administrator"]?exists>
                                                     <td>
-                                                        <a href="${s.base}/toTaskCreate?flyingpathId=${planepath.id}" class="btn btn-primary btn-sm">创建任务</a>
-                                                        <a class="btn btn-primary btn-sm" onclick='deletePlanePath("${planepath.id!}")'>删除路径</a>
-                                                        <a class="btn btn-primary btn-sm" onclick='exportPlanePath(${planepath.id!},${planepath.heightdata!})' style="cursor: pointer;">导出路径</a></td>
+                                                        <a href="${s.base}/toTaskCreate?flyingpathId=${planepath.id}" class="btn green">创建任务</a>
+                                                        <a class="btn red" onclick='deletePlanePath("${planepath.id!}")'>删除路径</a>
+                                                        <a class="btn blue" onclick='exportPlanePath(${planepath.id!},${planepath.heightdata!})' style="cursor: pointer;">导出路径</a></td>
                                                     </#if>
                                                     </tr>
                                                 </#list>
@@ -118,7 +118,6 @@
     </div>
 </div>
 
-</div>
 <!--  返回消息弹出框  开始-->
 <div class="modal" id="_ocDialogModal" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper small">

@@ -410,15 +410,11 @@
 			AND UserCreator = #{param1.usercreator}
 		</if>
 		<if test="param1.name != null">
-			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
+			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="param1.finishstatus != null">
 			AND FinishStatus = #{param1.finishstatus}
 		</if>
-		<if test="param1.name != null">
-			AND Name = #{param1.name}
-		</if>
-		
 		ORDER BY CreateTime DESC
 		LIMIT #{param2.startIndex, jdbcType=INTEGER} ,
 		#{param2.pageSize, jdbcType=INTEGER}
@@ -455,10 +451,10 @@
 			AND UserCreator = #{param1.usercreator}
 		</if>
 		<if test="param1.name != null">
-			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
+			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="param1.finishstatus != null">
-			AND FinishStatus = #{param1.finishstatus}
+			AND FinishStatus = #{param1.finishstatus,jdbcType=INTEGER}
 		</if>
 		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
 		jdbcType=INTEGER}
@@ -473,4 +469,18 @@
 		set ImgFolder = #{imgfolder,jdbcType=VARCHAR}
 		where id=#{id, jdbcType=INTEGER}
 	</update>
+	<select id="countByTask" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Task">
+		select count(*) from K_Task
+		where 1 =1
+		<if test="usercreator!=null">
+			and UserCreator=#{usercreator,jdbcType=INTEGER}
+		</if>
+		<if test="finishstatus!=null">
+			and FinishStatus = #{finishstatus,,jdbcType=INTEGER}
+		</if>
+		<if test="name!=null">
+			and Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
+
 </mapper>

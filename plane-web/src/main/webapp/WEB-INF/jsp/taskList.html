@@ -56,8 +56,7 @@
         <!-- END PAGE TITLE & BREADCRUMB-->
         <div id="dashboard" style="min-height: 86%;">
             <!-- 填充内容 start-->
-            <div class="container-fluid" style="width:92%;">
-                <div class="row-fluid" style="margin:20px 40px;">
+                <div class="row-fluid" >
                     <div class="span12">
 
                         <form id="queryPageForm" class="mt-15">
@@ -76,7 +75,7 @@
                                         </select>
                                         <input name="name" type="text" value="${inputName!}" class="search-text" placeholder=" 请输入任务名称" style="margin-bottom: 8px;">
                                         <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 8px;">
-                                        <#--<button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 8px;">创建时间逆序查看</button>-->
+                                       <#-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 8px;">创建时间逆序查看</button>-->
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable " id="sample_editable_1">
                                     <thead>
@@ -155,10 +154,12 @@
 
                                             <#if taskpojo.task.status==10>
                                                 <#if !Session["super_administrator"]?exists>
-                                            <button type="button" class="btn" onclick="uploadPic(${taskpojo.task.id!})">
-                                                <span class="glyphicon glyphicon-upload" aria-hidden="true">传图</span></button>
+                                            <button type="button" class="btn blue start" onclick="uploadPic(${taskpojo.task.id!})">
+                                                <i class="icon-upload icon-white"></i>
+                                                <span>传图</span></button>
 
-                                            <button type="button" class="btn" onclick="">
+                                            <button type="button" class="btn red delete" onclick="">
+                                                <i class="icon-camera icon-white"></i>
                                                 <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span></button>
                                                 <#else>
                                             <span class="label label-warning">无操作权限</span>
@@ -205,8 +206,6 @@
             </div>
         </div>
     </div>
-</div>
-
 </div>
 <!-- 提示信息模态框 -->
 

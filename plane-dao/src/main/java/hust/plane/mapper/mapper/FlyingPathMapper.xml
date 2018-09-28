@@ -59,7 +59,7 @@
 		select count(1) from K_FlyingPath
 		WHERE 1=1
 		<if test="name != null">
-			AND Name LIKE "%"#{name,jdbcType=VARCHAR}"%"
+			AND Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
 		</if>
 	</select>
 
@@ -69,7 +69,7 @@
 		from K_FlyingPath
 		WHERE 1=1
 		<if test="param1.name != null">
-			AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
+			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
 		</if>
 		ORDER BY CreateTime DESC
 		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,

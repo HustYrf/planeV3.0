@@ -20,11 +20,11 @@ public interface RouteMapper {
 
     int routeCount(Route route);
 
-	List<Route> queryFlyingPathPage(Route route, TailPage<Route> page);
-
     int deleteRouteById(Integer id);
 
 	Route getRouteById(Integer id);
 
 	Route getRouteByName(String name);
+
+    List<Route> queryRoutePage(Route route, TailPage<Route> page);
 }

@@ -32,6 +32,8 @@ public interface TaskMapper {
     int updateByPrimaryKey(Task record);
     
     //以下为自定义查询方法
+
+    int countByTask(Task task);
     
     List<Task> queryPage(Task task, TailPage<TaskPojo> page);
 

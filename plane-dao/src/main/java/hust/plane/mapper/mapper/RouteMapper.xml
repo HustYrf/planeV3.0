@@ -62,19 +62,19 @@
         select count(*) from K_Route
         where 1=1
         <if test="name != null">
-            and Name LIKE "%"#{name,jdbcType=VARCHAR}"%"
+            AND Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
         </if>
         <if test="type != null">
             and Type = #{type,jdbcType=INTEGER}
         </if>
     </select>
-    <select id="queryFlyingPathPage" resultMap="BaseResultMap">
+    <select id="queryRoutePage" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_list" />
         from K_Route
         WHERE 1=1
         <if test="param1.name != null">
-            AND Name LIKE "%"#{param1.name,jdbcType=VARCHAR}"%"
+            AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
         </if>
         <if test="param1.type != null">
             AND Type = #{param1.type,jdbcType=INTEGER}
