@@ -12,12 +12,12 @@
 	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
-    <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
-	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
-    <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />
+    <link rel="stylesheet" href="${s.base}/res/css/demo-center.css" />  
+    <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
+	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 
 </head>
 <style>
@@ -97,12 +97,12 @@ span{
             </ul>
     </div>
 </div>
-<div class="input-card" style="width:18rem;z-index: 99;">
+ <div class="input-card" style="width:18rem;z-index: 99;">
     <div class="input-item">
         <button class="btn" id="add-satellite-layer" style="margin-right: 3rem;">添加卫星图层</button>
         <button class="btn" id="remove-satellite-layer">删除卫星图层</button>
     </div>
-</div>
+</div>  
 <div id="container"></div>
            
         <!-- UI组件库 1.0 -->
@@ -155,7 +155,7 @@ span{
 	        
 	        map.add(planeMarker);
 
-            // 构造官方卫星、路网图层
+             // 构造官方卫星、路网图层
             var satelliteLayer = new AMap.TileLayer.Satellite();
             map.add([satelliteLayer]);
 
@@ -166,8 +166,8 @@ span{
 
             document.querySelector("#remove-satellite-layer").onclick = function() {
                 map.remove(satelliteLayer);
-            }
-	        
+            } 
+	       
         </script>
 	</body>
 </html>

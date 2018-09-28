@@ -33,7 +33,6 @@ var WebSocketUtil = {
 		WebSocketUtil.webSocket.send(content);
 	},
 	onMessage : function(event) {
-		//alert("收到消息"+event.data);
 		var message = event.data;
 		var messageType = message.split(":");
 		switch(messageType[0]){
@@ -68,7 +67,6 @@ var WebSocketUtil = {
 var PlaneHandleServiceUtil ={
 		handleStatus:function(message,status,AR_SPD,GR_SPD,lon,lat,GPS_ELV,GPS_HDG,HORI_AGL,VERT_AGL)
 		{
-			alert(AR_SPD+" "+GR_SPD+""+lon+" "+lat)
 			//显示无人机的状态信息
 			planeStatus.innerHTML = status;
 			fightArSpd.innerHTML = AR_SPD+"";
