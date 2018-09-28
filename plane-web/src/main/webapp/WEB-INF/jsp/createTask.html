@@ -291,10 +291,10 @@
 		
 		var flyingpathid = $("#flyingpathid").val();
 		var planstarttime = $("#planstarttime").val().toString();
-		var plansendtime = $("#planendtime").val().toString();
+		var planendtime = $("#planendtime").val().toString();
 
 		planstarttime = planstarttime.replace("T"," ") + ":00";
-        plansendtime = plansendtime.replace("T"," ") + ":00";
+        planendtime = planendtime.replace("T"," ") + ":00";
 		console.log(planstarttime);
 		$.ajax({
 		    type: "POST",
@@ -307,13 +307,13 @@
 		        "uavId":uavId,
 		        "flyingpathId":flyingpathid,
 		        "planstarttime":planstarttime,
-                "plansendtime":plansendtime,
+                "planendtime":planendtime,
 		    },
 		    success: function (result) {
 		        if (result.errcode == 1) {
                     $('#ocDialogModal').css('display','block');
                 	document.getElementById("resText").innerHTML=result.message;    
-                	setTimeout('Redirect()', 2000); //跳转  
+                	setTimeout('Redirect()', 1500); //跳转
 		        }
 		    },
 		    error: function () {
@@ -339,10 +339,10 @@
 		var flyingpathid = $("#flyingpathid").val();
 
         var planstarttime = $("#planstarttime").val().toString();
-        var plansendtime = $("#planendtime").val().toString();
+        var planendtime = $("#planendtime").val().toString();
 
         planstarttime = planstarttime.replace("T"," ") + ":00";
-        plansendtime = plansendtime.replace("T"," ") + ":00";
+        planendtime = planendtime.replace("T"," ") + ":00";
 		
 		$.ajax({
 		    type: "POST",
@@ -355,13 +355,13 @@
 		        "uavId":uavId,
 		        "flyingpathId":flyingpathid,
 		        "planstarttime":planstarttime,
-                "plansendtime":plansendtime,
+                "planendtime":planendtime,
 		    },
 		    success: function (result) {
 		        if (result.errcode == 1) {
 		        	$('#ocDialogModal').css('display','block');
                 	document.getElementById("resText").innerHTML=result.message;
-                	setTimeout('Redirect()', 2000); //跳转  
+                	setTimeout('Redirect()', 1500); //跳转
 		        }
 		    },
 		    error: function () {

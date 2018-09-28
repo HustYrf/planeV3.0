@@ -18,16 +18,20 @@ public class TaskVO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")	
 	private Date planstarttime;
-	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date planendtime;
+
 	private Integer id;	
 	private Integer usercreator;
 	private Integer userA;
 	private Integer userZ;
 	private String userCreatorName;
-	
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createtime;
-	private Date planendtime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date executestarttime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date executeendtime;
 	private Integer status;
 	private Integer finishstatus;
