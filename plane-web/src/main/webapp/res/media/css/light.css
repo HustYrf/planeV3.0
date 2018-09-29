@@ -7,11 +7,11 @@ Reset and overrides
 ***/
 body {
   background-color: #fafafa !important;
+  height: 100%;
 }
 #container {
     min-width: 400px;
     position: relative;
-    min-height: 790px;
     width: 100%;
 }
 /*去除高德地图广告*/

@@ -31,8 +31,9 @@
      <#else>
       <li class="">
      </#if>
-        <a href="javascript:;">
-            <i class="icon-home"></i>
+        <a href="javascript:;" class="glyphicons glass"><i></i>
+          <#--  <i class="icon-home"></i>-->
+         <#--  <a href="#" ></a>-->
             <span class="title">我的任务</span>
 
              <#if curNav =="createTask" || curNav =="taskAllList" || curNav =="home">
@@ -140,7 +141,7 @@
     </#if>
     	<a href="javascript:;">
             <i class="icon-briefcase"></i>
-            <span class="title">告警历史</span>
+            <span class="title">历史告警</span>
                <#if curNav =="alarmList" || curNav =="alarmhistory" || curNav =="importAlarm">
                    <span class="selected"></span>
               <#else>

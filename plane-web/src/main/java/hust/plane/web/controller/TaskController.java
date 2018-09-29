@@ -89,6 +89,8 @@ public class TaskController {
 
 		taskVO.setPlanstarttime(DateKit.get2HoursLater());
 		taskVO.setPlanendtime(DateKit.get4HoursLater());
+		taskVO.setCreatetime(new Date());
+
 		if(task.getFlyingpathId()!=null && task.getFlyingpathId()!=0){
 			flyingPath = flyingPathServiceImpl.selectByFlyingPathIdWithoutData(task.getFlyingpathId());
 
@@ -100,6 +102,9 @@ public class TaskController {
 				}
 				if(task2.getPlanendtime() == null){
 					task2.setPlanendtime(DateKit.get4HoursLater());
+				}
+				if(task2.getCreatetime()==null){
+					task2.setCreatetime(new Date());
 				}
 				if (task2.getUserA() != null) {
 					taskVO.setUserAName(userServiceImpl.getNameByUserId(task2.getUserA()));
@@ -113,9 +118,11 @@ public class TaskController {
 				if(task2.getUavId()!=null){
 					taskVO.setUavName(uavServiceImpl.getNameById(task2.getUavId()));
 				}
+
 			}else{
 				taskVO.setPlanstarttime(DateKit.get2HoursLater());
 				taskVO.setPlanendtime(DateKit.get4HoursLater());
+				task2.setCreatetime(new Date());
 			}
 			taskVO.setTaskVO(task2);
 		}
@@ -165,8 +172,12 @@ public class TaskController {
 		if(taskVO.getPlanendtime()!=null){
 			task.setPlanendtime(taskVO.getPlanendtime());
 		}
+		if(taskVO.getCreatetime()!=null){
+			task.setCreatetime(taskVO.getCreatetime());
+		}
+
 		task.setName(taskVO.getName());
-		task.setCreatetime(new Date());
+		//task.setCreatetime(new Date());
 		task.setUsercreator(createUser.getId());
 		// 初始状态为1提交
         task.setStatus(1);
@@ -175,9 +186,9 @@ public class TaskController {
 		// 提交的任务
 		
 		if (taskServiceImpl.saveTask(task) == true) {
-			return JsonView.render(1, "任务提交成功");
+			return JsonView.render(1, "任务提交成功!");
 		}
-		return JsonView.render(1, "任务提交失败");
+		return JsonView.render(1, "任务提交失败!");
 	}
 
 	
@@ -220,8 +231,12 @@ public class TaskController {
 		if(taskVO.getPlanendtime()!=null){
 			task.setPlanendtime(taskVO.getPlanendtime());
 		}
+		if(taskVO.getCreatetime()!=null){
+			task.setCreatetime(taskVO.getCreatetime());
+		}
+
 		task.setName(taskVO.getName());
-		task.setCreatetime(new Date());
+		//task.setCreatetime(new Date());
 		task.setUsercreator(createUser.getId());
 		// 初始状态为0创建
         task.setStatus(0);
@@ -229,9 +244,9 @@ public class TaskController {
 
 		// 设置状态未完成
 		if (taskServiceImpl.saveTask(task) == true) {
-			return JsonView.render(1, "任务创建成功");
+			return JsonView.render(1, "任务创建成功!");
 		}
-		return JsonView.render(1, "任务创建失败");
+		return JsonView.render(1, "任务创建失败!");
 	}
 	
 	
