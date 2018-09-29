@@ -37,7 +37,7 @@ public class DataStatisticsController {
 	{
 		model.addAttribute("curNav", "taskStatistics");
 
-		return "statistics";
+		return "statistics2";
 	}
 	
 	//用于城市数据统计
