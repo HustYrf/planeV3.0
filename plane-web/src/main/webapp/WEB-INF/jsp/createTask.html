@@ -377,7 +377,7 @@
 		        }
 		    },
 		    error: function () {
-                $('#ocDialogModal').css('display','block');
+                Modal.show('ocDialogModal');
                 document.getElementById("resText").innerHTML="创建失败，请重试";
 		    },
 		});		
@@ -415,7 +415,7 @@
                     }
                 },
                 error: function () {
-                    Modal.tipFailure('导入失败');
+                    //Modal.tipFailure('导入失败');
                 }
             });
      });
@@ -464,7 +464,7 @@
                 }
             },
             error: function () {
-                Modal.tipFailure('导入失败');
+                //Modal.tipFailure('查询失败');
             }
         });
        });
