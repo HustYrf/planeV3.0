@@ -233,21 +233,19 @@
                             <div class="caption"><i class="icon-edit"></i>用户列表</div>
                         </div>
                         <div class="portlet-body">
-                            <div class="clearfix">
+
                                 <div class="btn-group"><button id="sample_editable_1_new" class="btn green" href="#myModal1" data-toggle="modal"> <i class="icon-plus"></i>新增用户</button></div>
-                                <div class="btn-group pull-right">
-                                    <div class="" style="float: right;">
-                                        <select name="GroupId" class="select2-container" style="margin-bottom: 3px;">
-                                            <option value=0>全部</option>
-                                            <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>浏览组</option>
-                                            <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if>>管理组</option>
-                                            <option value=3 <#if (selectStatus)?? && selectStatus ==3>selected="selected"</#if>>巡检组</option>
-                                         </select>
+                                <div class="" style="float: right;">
+                                    <select name="GroupId" class="select-container" style="margin-bottom: 3px;">
+                                        <option value=0>全部</option>
+                                        <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>浏览组</option>
+                                        <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if>>管理组</option>
+                                        <option value=3 <#if (selectStatus)?? && selectStatus ==3>selected="selected"</#if>>巡检组</option>
+                                     </select>
                                     <input name="userName" type="text" class="search-text"  placeholder=" 请输入姓名" value="${inputname!}" maxlength="4" style="margin-bottom: 3px;">
                                     <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 3px;">
-                                    </div>
                                 </div>
-                            </div>
+
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
                                 <tr>

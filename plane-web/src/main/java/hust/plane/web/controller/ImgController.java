@@ -30,10 +30,13 @@ public class ImgController {
     private Logger logger = LoggerFactory.getLogger(ImgController.class);
     @Resource
     private TaskService taskService;
-    @Value(value = "${imgPath}")    //后台图片保存地址
+
+    @Value(value = "${TASK_DIR}")    //后台图片保存地址
     private String imgPath;
-    @Value(value = "${uploadHost}")
-    private String uploadHost;    //项目host路径
+
+    @Value(value = "${BASE_IMAGE_URL}")
+    private String uploadHost;    // 项目host路径
+
 
     @RequestMapping(value = "/{taskId}")
     public String toPicIndex(@PathVariable(value = "taskId") String taskId, Model model) {
@@ -84,7 +87,7 @@ public class ImgController {
     public void uploadSysHeadImg(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "taskDir") String taskDir) {
         JSONObject jo = new JSONObject();
         try {
-//            imgPath = imgPath + "4taskFolder/";
+
             MultipartHttpServletRequest Murequest = (MultipartHttpServletRequest)request;
             Map<String, MultipartFile> files = Murequest.getFileMap();//得到文件map对象
             Client client = new Client();//实例化一个jersey
@@ -92,7 +95,8 @@ public class ImgController {
             List<String> relaPathList = new ArrayList<>();
             List<String> realPathList = new ArrayList<>();
             for (MultipartFile pic : files.values()) {
-                String uploadInfo = Upload.upload(client, pic, request, response, uploadHost, imgPath,taskDir);
+
+                String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");
                     fileNameList.add(infoList[0]);    //文件名
