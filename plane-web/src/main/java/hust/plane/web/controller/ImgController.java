@@ -40,7 +40,8 @@ public class ImgController {
 
     @RequestMapping(value = "/{taskId}")
     public String toPicIndex(@PathVariable(value = "taskId") String taskId, Model model) {
-        String ImgFolder = taskService.selectImgFolderWithId(Integer.parseInt(taskId));
+       // String ImgFolder = taskService.selectImgFolderWithId(Integer.parseInt(taskId));
+    	String ImgFolder = taskId;
         model.addAttribute("ImgFolder", ImgFolder);
         return "uploadFile";
     }

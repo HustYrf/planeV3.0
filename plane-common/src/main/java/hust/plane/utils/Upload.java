@@ -20,8 +20,8 @@ public class Upload {
      * @param path             文件路径（不包含服务器地址：upload/）
      * @param
      * @return
-     */ //                                                           232.11.11.34       /ImageTask        /ImageResource       /ImageAlarm
-    public static String upload(Client client, MultipartFile file, String serverPath, String path,String taskResource,String taskAlarm,String taskDir){
+     */ //                                                          
+    public static String upload(Client client, MultipartFile file, String serverPath, String path,String taskDir){
         // 文件名称生成策略（UUID uuid = UUID.randomUUID()）
         Date d = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -37,7 +37,7 @@ public class Upload {
         // 文件名
         String fileName = formatDate + str + "." + extension;
         //相对路径
-        String relaPath = path + taskDir +"ImageResource" +"/"+ fileName;
+        String relaPath = path + taskDir+ "/"+"ImageResource" +"/"+ fileName;
 
 //        String a = serverPath + path.substring(0, path.lastIndexOf("/"));
 //         String serverFileAddress = "D:"+File.separator+"Games"+File.separator+taskDir;
@@ -78,7 +78,7 @@ public class Upload {
         }
         
         File file4 = new File(alarmFileAddress.toString());
-        if(!file3.exists())
+        if(!file4.exists())
         {
         	  boolean mkdirs = file4.mkdirs();
               try {
