@@ -58,19 +58,18 @@
         LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize, jdbcType=INTEGER}
     </select>
 
-    <select id="selectInfoById" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.String">
-        select
-        <include refid="Info_Column_List"/>
+    <select id="selectInfoById" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.Integer">
+        select Task_id as taskId,id,ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
         from K_Alarm
-        where id=#{id}
+        where id=#{id,jdbcType=INTEGER}
     </select>
 
 
-    <select id="getAlarmsByTaskId" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.String">
+    <select id="getAlarmsByTaskId" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from K_Alarm
-        where Task_id=#{taskId}
+        where Task_id=#{taskId,, jdbcType=INTEGER}
     </select>
 
     <update id="updateByAlarmId" parameterType="java.lang.String">

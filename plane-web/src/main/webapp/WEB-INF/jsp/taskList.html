@@ -30,7 +30,7 @@
     <script src="${s.base}/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="${s.base}/media/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${s.base}/media/js/app.js" type="text/javascript"></script>
-
+    <script src="${s.base}/res/js/plane.js" type="text/javascript"></script>
 </head>
 <body class="page-header-fixed">
 <#include "common/header.html" />
@@ -54,11 +54,10 @@
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
-        <div id="dashboard" style="min-height: 86%;">
+        <div id="dashboard">
             <!-- 填充内容 start-->
-                <div class="row-fluid" >
-                    <div class="span12">
-
+            <div class="container-fluid">
+                    <div class="row-fluid" style="width:90%;margin:20px 30px;">
                         <form id="queryPageForm" class="mt-15">
                         <!-- BEGIN EXAMPLE TABLE PORTLET-->
                         <div class="portlet box yellow">
@@ -193,7 +192,6 @@
 
                                             </#if>
                                         </td>
-
                                     </tr>
                                     </#list>
                                     </#if>
@@ -204,13 +202,11 @@
                         </div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- 提示信息模态框 -->
-
 <div class="modal fade" id="ocDialogModal" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper small">
         <div class="modal-dialog w-4" >
@@ -226,8 +222,27 @@
         </div>
     </div>
 </div>
-
-
+<!-- 任务派发确认 -->
+<div class="modal fade" id="assignfirmModel" tabindex="-1" aria-hidden="true">
+    <div class="modal_wapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">派发确认</h4>
+            </div>
+            <div class="modal-body"  style="font-size:1.2rem;">
+                <p id="tip">您确认要派发该任务吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>    <!-- 用于隐藏信息 -->
+                <button type="button" class="btn blue" data-dismiss="modal">取消</button>
+                <a  onclick="assign()" class="btn red" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+        <input type="text" id="assignTaskId" style="display:none" />
+    </div>
+</div>
+<!-- 任务派发确认 -->
 <!-- 信息删除确认 -->
 <div class="modal fade" id="deleltconfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -236,8 +251,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                     <h4 class="modal-title">删除确认</h4>
                 </div>
-                <div class="modal-body">
-                    <p>您确认要删除该任务吗？</p>
+                <div class="modal-body"  style="font-size:1.2rem;">
+                    <p id="tip">您确认要删除该任务吗？</p>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="url"/>    <!-- 用于隐藏信息 -->
@@ -248,7 +263,6 @@
              <input type="text" id="taskid" style="display:none" />
     </div>
 </div>
-
 <!-- 信息删除确认 -->
 </div>
 <script type="text/javascript">
@@ -292,13 +306,12 @@
         });
     }
 
-    //分派任务
-    function assignTask(taskid){
+    function assign() {
         $.ajax({
             type: "post",
             url: "${s.base}/assignTask.action",
             data: {
-                'id': taskid,
+                'id':  $('#assignTaskId').val(),
             },
             success: function (result) {
 
@@ -311,6 +324,13 @@
         });
 
     }
+    //分派任务
+    function assignTask(taskid){
+	    
+        $('#assignTaskId').val(taskid);
+        Modal.show('assignfirmModel');
+    }
+
     function urlSubmit(){
 
         $.ajax({

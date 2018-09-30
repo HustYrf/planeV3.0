@@ -26,7 +26,8 @@ public class AlarmServiceImpl implements AlarmService {
     public List<Alarm> getAllAlarm() {
 
         List<Alarm> alarmList = alarmMapper.selectALLAlarm();
-        return alarmList;
+
+        return alarmList.size()>0?alarmList:null;
     }
 
     @Override
@@ -53,7 +54,8 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public Alarm selectAlarmById(int id) {
         if (id != 0) {
-            return alarmMapper.selectInfoById(id);
+            Alarm alarm =  alarmMapper.selectInfoById(id);
+            return alarm;
         }
         return null;
     }
