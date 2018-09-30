@@ -97,6 +97,7 @@ public class ImgController {
             for (MultipartFile pic : files.values()) {
 
                 String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
+
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");
                     fileNameList.add(infoList[0]);    //文件名
