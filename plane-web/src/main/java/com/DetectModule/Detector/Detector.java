@@ -1,9 +1,7 @@
 package com.DetectModule.Detector;
 
-
 public class Detector {
-	
-	public static final String LibPath = "D:/PlaneGit/planeV3.0/plane-web";
+	public static final String LibPath = "/home/gxdx_ai/linux";
 	
 	public native void run(String loadPath, String savePath);
 	
@@ -18,13 +16,15 @@ public class Detector {
 	public native String getAllLog();
 	
 	static {
-		System.load(LibPath + "/" + "opencv_world320.dll");
-		System.load(LibPath + "/" + "Detector.dll");
+		System.load(LibPath + "/" + "libopencv_core.so.3.2.0");
+		System.load(LibPath + "/" + "libopencv_imgcodecs.so.3.2.0");
+		System.load(LibPath + "/" + "libopencv_highgui.so.3.2.0");
+		System.load(LibPath + "/" + "libdetector.so");	
 	}
 	
 	public static void main(String[] args) {
 		Detector detector = new Detector();
-		detector.run("D:/source","D:/alarm");
+		detector.run("/home/leafwaltz/opencvtest", "/home/leafwaltz/opencvtest/fuck");
 		detector.logAll();
 	}
 }
