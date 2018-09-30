@@ -122,53 +122,53 @@
         <!-- END PAGE HEADER-->
         <div id="dashboard">
             <!-- 填充内容 start-->
-            <div class="container-fluid" style="width:100%;">
+                <div class="container-fluid">
+                    <div class="row-fluid" style="width:90%;margin:20px 30px;">
+                        <div class="tab-pane" >
+                            <div class="portlet box yellow">
 
-                <div class="tab-pane" >
-                    <div class="portlet box yellow">
-
-                        <div class="portlet-title">
-                            <div class="caption"><i class="icon-reorder"></i>创建任务</div>
-                        </div>
-
-                        <div class="portlet-body form">
-
-                            <!-- BEGIN FORM-->
-                            <form action="#" class="form-horizontal form-row-seperated">
-
-                                <div class="control-group">
-                                    <label class="control-label">任务名称</label>
-                                    <div class="controls">
-                                        <input type="text" class="span8" id="taskname" value="${taskvo.name!}" required="required">
-                                    </div>
+                                <div class="portlet-title">
+                                    <div class="caption"><i class="icon-reorder"></i>创建任务</div>
                                 </div>
 
-                                <div class="control-group">
-                                    <label class="control-label">放飞员</label>
-                                    <div class="controls">
-                                        <input type="text" class="span8" id="userA" name="userAName" placeholder="请输入放飞员" value="${taskvo.userAName!}">
-                                        <div class="search-div" id="search-div1">
-                                            <ul id="search-result" ></ul>
+                                <div class="portlet-body form">
+
+                                    <!-- BEGIN FORM-->
+                                    <form action="#" class="form-horizontal form-row-seperated">
+
+                                        <div class="control-group">
+                                            <label class="control-label">任务名称</label>
+                                            <div class="controls">
+                                                <input type="text" class="span8" id="taskname" value="${taskvo.name!}" required="required">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="control-group">
-                                    <label class="control-label">接机员</label>
-                                    <div class="controls">
-                                        <input type="text" class="span8"  id="userZ" name="userZName" placeholder="请输入接机员" value="${taskvo.userZName!}">
-                                        <div class="search-div" id="search-div2">
-                                            <ul id="search-result2" >
-                                            </ul>
+                                        <div class="control-group">
+                                            <label class="control-label">放飞员</label>
+                                            <div class="controls">
+                                                <input type="text" class="span8" id="userA" name="userAName" placeholder="请输入放飞员" value="${taskvo.userAName!}">
+                                                <div class="search-div" id="search-div1">
+                                                    <ul id="search-result" ></ul>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="control-group">
-                                    <label class="control-label">无人机名称</label>
-                                    <div class="controls">
-                                        <div class="select2-wrapper">
-                                        <select id="uavId" class="span8" name="uavName" type="select">
+                                        <div class="control-group">
+                                            <label class="control-label">接机员</label>
+                                            <div class="controls">
+                                                <input type="text" class="span8"  id="userZ" name="userZName" placeholder="请输入接机员" value="${taskvo.userZName!}">
+                                                <div class="search-div" id="search-div2">
+                                                    <ul id="search-result2" >
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">无人机名称</label>
+                                            <div class="controls">
+                                                <div class="select2-wrapper">
+                                                    <select id="uavId" class="span8" name="uavName" type="select">
                                             <#if taskvo.uavName??>
                                                 <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
                                             <#else>
@@ -178,77 +178,76 @@
                                                     </#list>
                                                 </#if>
                                             </#if>
-                                          </select>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="control-group">
-                                    <label class="control-label">选择飞行路径</label>
-                                    <div class="controls">
-                                        <div class="select2-wrapper">
-                                            <select  id="flyingpathid" class="span8" name="flyingpathId" type="select">
+                                        <div class="control-group">
+                                            <label class="control-label">选择飞行路径</label>
+                                            <div class="controls">
+                                                <div class="select2-wrapper">
+                                                    <select  id="flyingpathid" class="span8" name="flyingpathId" type="select">
                                                <#if flyingPath.name??>
                                                    <option value="${flyingPath.id!}" selected>${flyingPath.name!}</option>
                                                <#elseif taskvo.planepathid??>
                                                     <option value="${taskvo.planepathid!}" selected>${taskvo.flyingpathName!}</option>
-                                                </#if>
+                                               </#if>
                                                 <#if planePaths?? && planePaths?size gt 0>
                                                     <#list planePaths as planePath>
                                                     <option value="${planePath.id!}">${planePath.name!}</option>
                                                     </#list>
                                                 </#if>
-                                             </select>
-                                          </div>
-                                     </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">任务计划开始时间</label>
+                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planstarttime">
+                                                <input type="text" value="${taskvo.planstarttime?datetime!}" class="span8" readonly>
+                                                <span class="add-on"><i class="icon-remove"></i></span>
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                            </div>
+                                            <input type="hidden" id="planstarttime" value="${taskvo.planendtime?datetime!}" />
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">任务计划完成时间</label>
+                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planendtime">
+                                                <input type="text" value="${taskvo.planendtime?datetime!}" class="span8" readonly>
+                                                <span class="add-on"><i class="icon-remove"></i></span>
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                            </div>
+                                            <input type="hidden" id="planendtime" value="${taskvo.planendtime?datetime!}" />
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">任务创建时间</label>
+                                            <div class="controls date" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="createtime">
+                                                <input type="text" value="${taskvo.createtime?datetime!}" class="span8" disabled>
+                                            </div>
+                                            <input type="hidden" id="createtime" value="${taskvo.createtime?datetime!}" />
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button type="button" class="btn blue" onclick="createtTask()" style="margin:auto 20px;"><i class="icon-pushpin"></i>创建</button>
+                                            <button type="button" class="btn red" onclick="submitTask()"><i class="icon-ok"></i>提交</button>
+                                        </div>
+
+                                    </form>
+
+                                    <!-- END FORM-->
+
                                 </div>
 
-                                <div class="control-group">
-                                    <label class="control-label">任务计划开始时间</label>
-                                    <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planstarttime">
-                                        <input type="text" value="${taskvo.planstarttime?datetime!}" class="span8" readonly>
-                                        <span class="add-on"><i class="icon-remove"></i></span>
-                                        <span class="add-on"><i class="icon-th"></i></span>
-                                    </div>
-                                    <input type="hidden" id="planstarttime" value="${taskvo.planendtime?datetime!}" />
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">任务计划完成时间</label>
-                                    <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planendtime">
-                                        <input type="text" value="${taskvo.planendtime?datetime!}" class="span8" readonly>
-                                        <span class="add-on"><i class="icon-remove"></i></span>
-                                        <span class="add-on"><i class="icon-th"></i></span>
-                                    </div>
-                                    <input type="hidden" id="planendtime" value="${taskvo.planendtime?datetime!}" />
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">任务创建时间</label>
-                                    <div class="controls date" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="createtime">
-                                        <input type="text" value="${taskvo.createtime?datetime!}" class="span8" disabled>
-                                    </div>
-                                    <input type="hidden" id="createtime" value="${taskvo.createtime?datetime!}" />
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="button" class="btn blue" onclick="createtTask()" style="margin:auto 20px;"><i class="icon-pushpin"></i>创建</button>
-                                    <button type="button" class="btn red" onclick="submitTask()"><i class="icon-ok"></i>提交</button>
-                                </div>
-
-                            </form>
-
-                            <!-- END FORM-->
+                            </div>
 
                         </div>
-
                     </div>
-
                 </div>
-
-            </div>
         </div>
-
             <!-- 填充内容 end-->
     </div>
     <!-- END PAGE CONTAINER-->
@@ -378,7 +377,7 @@
 		        }
 		    },
 		    error: function () {
-                $('#ocDialogModal').css('display','block');
+                Modal.show('ocDialogModal');
                 document.getElementById("resText").innerHTML="创建失败，请重试";
 		    },
 		});		
@@ -416,7 +415,7 @@
                     }
                 },
                 error: function () {
-                    Modal.tipFailure('导入失败');
+                    //Modal.tipFailure('导入失败');
                 }
             });
      });
@@ -465,7 +464,7 @@
                 }
             },
             error: function () {
-                Modal.tipFailure('导入失败');
+                //Modal.tipFailure('查询失败');
             }
         });
        });

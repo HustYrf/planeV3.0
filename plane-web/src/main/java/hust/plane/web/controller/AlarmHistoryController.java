@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,10 +47,16 @@ public class AlarmHistoryController {
         return "alarmHistory";
     }
 
-    @RequestMapping(value = "dealWithAlarm")
+    //处理告警
+    @RequestMapping(value = "dealWithAlarm",method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String dealWithAlarm(int id) {
-        alarmService.updateAlarmStatus(id);
-        return new JsonView(0).toString();
+    public String dealWithAlarm(Alarm alarm) {
+
+        if(alarmService.updateAlarmStatus(alarm.getId()) == true){
+
+            return JsonView.render(1, "告警处理成功！");
+        }else{
+            return JsonView.render(1, "告警处理失败，请重试！");
+        }
     }
 }

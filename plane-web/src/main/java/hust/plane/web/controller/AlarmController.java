@@ -6,22 +6,21 @@ import hust.plane.mapper.pojo.Route;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.Uav;
 import hust.plane.mapper.pojo.User;
-import hust.plane.service.interFace.AlarmService;
-import hust.plane.service.interFace.UavService;
-import hust.plane.service.interFace.RouteService;
-import hust.plane.service.interFace.TaskService;
+import hust.plane.service.interFace.*;
 import hust.plane.utils.ImgUtils;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.pojo.InfoTplData;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.utils.pojo.TipException;
+import hust.plane.web.controller.vo.AlarmDetailVO;
 import hust.plane.web.controller.vo.AlarmVO;
 import hust.plane.web.controller.vo.RouteVO;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,13 +42,25 @@ public class AlarmController {
     private AlarmService alarmService;
 
     @Autowired
-    private UavService planeServiceImpl;
+    private UavService uavServiceImpl;
+
+    @Autowired
+    private UserService userServiceImpl;
 
     @Autowired
     private TaskService taskServiceImpl;
 
     @Autowired
+    private FlyingPathService flyingPathServiceImpl;
+
+    @Autowired
     private RouteService routeServiceImpl;
+
+    @Value("${BASE_IMAGE_URL}") // 服务器地址
+    private String BASE_IMAGE_URL;
+
+    @Value("${IMAGE_ALARM}") // 文件夹
+    private String ALARM_DIR;
 
     //返回所有的告警点
     @RequestMapping("/alarmList")
@@ -78,7 +89,6 @@ public class AlarmController {
     /**
      * 返回相应的告警信息
      *
-     * @param [id, request]
      * @return java.lang.String
      * @author rfYang
      * @date 2018/7/6 15:05
@@ -86,12 +96,34 @@ public class AlarmController {
     @RequestMapping(value = "alarmInfo", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public String getAlarmInfo(@RequestParam(value = "id") int id) {
+
         Alarm alarm = alarmService.selectAlarmById(id);
-        InfoTplData info = new InfoTplData();
-        info.setImg(alarm.getImageurl());
-        info.setBody(alarm.getDescription());
-        return JsonView.render(0, WebConst.SUCCESS_RESULT, info);
+//        private String BASE_IMAGE_URL;
+//        private String ALARM_DIR;
+        Task task = new Task();
+        task.setId(alarm.getTaskId());
+        Task task1 = taskServiceImpl.getTaskByTask(task);
+        Uav uav = new Uav();
+        uav.setId(task1.getUavId());
+        Uav uav1 = uavServiceImpl.getPlaneByPlane(uav);
+        String flyingPathName = flyingPathServiceImpl.getNameById(task1.getFlyingpathId());
+
+        AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
+        //设置从文件服务器查看图片
+        //alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
+        alarmDetailVO.setUav(uav1);
+
+        alarmDetailVO.setTaskName(task1.getName());
+        alarmDetailVO.setFlyingPathName(flyingPathName);
+        alarmDetailVO.setUserCreatorName(userServiceImpl.getNameByUserId(task1.getUsercreator()));
+        alarmDetailVO.setUserAName(userServiceImpl.getNameByUserId(task1.getUserA()));
+        alarmDetailVO.setUserZName(userServiceImpl.getNameByUserId(task1.getUserZ()));
+
+        return JsonView.render(0, WebConst.SUCCESS_RESULT, alarmDetailVO);
     }
+
+
+
 
    /* @RequestMapping(value = "alarmImport", method = RequestMethod.GET)
     public String toAlarmImport(Model model) {
@@ -106,7 +138,7 @@ public class AlarmController {
 
         User aUser = PlaneUtils.getLoginUser(request);
         List<Task> tasklist = taskServiceImpl.getTasklistByAuser(aUser);
-        List<Uav> uavlist = planeServiceImpl.getAllPlane();
+        List<Uav> uavlist = uavServiceImpl.getAllPlane();
         model.addAttribute("planelist", uavlist);
         model.addAttribute("tasklist", tasklist);
         model.addAttribute("curNav", "alarmImport");

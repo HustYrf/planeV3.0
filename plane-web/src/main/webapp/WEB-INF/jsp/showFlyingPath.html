@@ -29,15 +29,6 @@
                                 [107.79962, 23.06691], // 2144  起飞点
                                 [107.79985, 23.06666], // 2143
                                 [107.80006, 23.06645], // 2142
-                                [107.80033, 23.06617], // 2141
-                                [107.80079, 23.06568], // 2140
-                                [107.80103, 23.06544], // 2139
-                                [107.80121, 23.06524], // 2138
-                                [107.80143, 23.06500], // 2137
-                                [107.80164, 23.06481], // 2136
-                                [107.80214, 23.06427], // 2135
-                                [107.80226, 23.06413], // 2134+2
-                                [107.80245, 23.06394], // 2134+1
                             ],
                             descripte: '看天上有个大飞机，快看，要掉下来了',
                             createtime: '2018-8-1',
@@ -49,17 +40,30 @@
                         var map = new AMap.Map('container', {
                             resizeEnable: true,
                             center: planePath.pathdata[0],
-                            zoom: 15
+                            zoom: 16
                         });
-                        map.plugin(["AMap.Scale"],function(){    //加载比例尺插件      
-                 	       var scale = new AMap.Scale({
-                 	        visible: true,
-                 			position:'LB',
-                 			}); 
-                 	        map.addControl(scale);  
-                 	        scale.show();
-                 	 	});
-                        var infoWindow = new AMap.InfoWindow({
+
+                       map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
+                           var scale = new AMap.Scale({          //生成 比例尺插件
+                               visible: true,
+                               position:'LB',
+                           });
+                           map.addControl(scale);
+                           scale.show();
+                           map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
+                       });
+                       if(location.href.indexOf('&guide=1')!==-1){
+                           map.setStatus({scrollWheel:false})
+                       }
+                       AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+                           var layerCtrl1 = new BasicControl.LayerSwitcher({
+                               position: 'tr'
+                           });
+                           map.addControl(layerCtrl1);
+                       });
+
+                       var infoWindow = new AMap.InfoWindow({
                             isCustom: true,
                             offset: new AMap.Pixel(20, -35)
                         });

@@ -19,10 +19,8 @@
     position: absolute;
     right: 0;
     width: 280px;
-    z-index: 90; 
-    bottom: 0;
-    right: 0;
-    height: 100%;
+    z-index: 199;
+    right: 10px;
     overflow: auto;
     border-left: 1px solid #eaeaea;
     background: #fff;

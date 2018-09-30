@@ -20,7 +20,7 @@ public class Upload {
      * @param path             文件路径（不包含服务器地址：upload/）
      * @param
      * @return
-     */ //                                                          
+     */
     public static String upload(Client client, MultipartFile file, String serverPath, String path,String taskDir){
         // 文件名称生成策略（UUID uuid = UUID.randomUUID()）
         Date d = new Date();

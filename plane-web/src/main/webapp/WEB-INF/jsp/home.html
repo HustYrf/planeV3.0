@@ -7,6 +7,7 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
+    <#--<#include "common/res.html" />-->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
     <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -215,8 +216,7 @@
                     var pointSimplifierIns = new PointSimplifier({
                         zIndex: 115,
                         autoSetFitView: false,
-                        map: map, //所属的地图实例
-
+                        map:map,
                         getPosition: function (item) {
                             if (!item ) {
                                 return null;
@@ -275,6 +275,7 @@
                     setInterval(function () {
                         pointSimplifierIns.render();
                     }, 500);
+
                     pointSimplifierIns.setData(new Array([107.79962, 23.06691]));
 
                 });
