@@ -158,7 +158,7 @@
                                                 <i class="icon-upload icon-white"></i>
                                                 <span>传图</span></button>
 
-                                            <button type="button" class="btn red delete" onclick="">
+                                            <button type="button" class="btn red delete" onclick="recongizePic(${taskpojo.task.id!})">
                                                 <i class="icon-camera icon-white"></i>
                                                 <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span></button>
                                                 <#else>
@@ -253,7 +253,27 @@
     jQuery(document).ready(function () {
         App.init();
     });
-
+	function recongizePic(taskid)
+	{
+		$.ajax({
+			type:"post",
+			url:"${s.base}/recongize.action",
+			data:{
+			    'id':taskid
+			},
+			 success: function (result) {
+	                if (result.errcode == 0 && result.message == "SUCCESS") {
+	                	
+	                	Modal.show('_ocDialogModal');
+	                	document.getElementById("resText").innerHTML=result.data;
+	                	setTimeout("window.location.reload()",2000);
+	                } 
+	            },
+	         error:function(){
+		            	
+	            }
+		});
+	}
     function uploadPic(taskId) {
         window.location.href="${s.base}/picture/"+ taskId;
     }
