@@ -31,29 +31,66 @@ public class Upload {
             int n = (int)(Math.random()*90)+10;
             str += n;
         }
+        
         // 获取文件的扩展名
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         // 文件名
         String fileName = formatDate + str + "." + extension;
         //相对路径
-        String relaPath = path + taskDir + "/"+ fileName;
+        String relaPath = path + taskDir +"ImageResource" +"/"+ fileName;
 
 //        String a = serverPath + path.substring(0, path.lastIndexOf("/"));
 //         String serverFileAddress = "D:"+File.separator+"Games"+File.separator+taskDir;
-        StringBuilder serverFileAddress = new StringBuilder();
-        serverFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+        StringBuilder taskFileAddress = new StringBuilder();
+        taskFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
                 .append(File.separator).append("ImageTask").append(File.separator).append(taskDir);//任务文件夹地址
-        File file2 = new File(serverFileAddress.toString());
+        
+        StringBuilder sourceFileAddress = new StringBuilder();
+        sourceFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+                .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageResource");//源任务文件夹地址
+        
+        StringBuilder alarmFileAddress = new StringBuilder();
+        alarmFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+                .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageAlarm");//告警任务文件夹地址
+        
+        
+        File file2 = new File(taskFileAddress.toString());
         if(!file2.exists()){
             boolean mkdirs = file2.mkdirs();
             try {
-                Runtime.getRuntime().exec("chmod 777 -R " + serverFileAddress.toString());
+                Runtime.getRuntime().exec("chmod 777 -R " + taskFileAddress.toString());
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("文件夹权限授予失败");
             }
             System.out.println(mkdirs);
         }
+        File file3 = new File(sourceFileAddress.toString());
+        if(!file3.exists())
+        {
+        	  boolean mkdirs = file3.mkdirs();
+              try {
+                  Runtime.getRuntime().exec("chmod 777 -R " + sourceFileAddress.toString());
+              } catch (IOException e) {
+                  e.printStackTrace();
+                  System.out.println("文件夹权限授予失败");
+              }
+              System.out.println(mkdirs);
+        }
+        
+        File file4 = new File(alarmFileAddress.toString());
+        if(!file3.exists())
+        {
+        	  boolean mkdirs = file4.mkdirs();
+              try {
+                  Runtime.getRuntime().exec("chmod 777 -R " + alarmFileAddress.toString());
+              } catch (IOException e) {
+                  e.printStackTrace();
+                  System.out.println("文件夹权限授予失败");
+              }
+              System.out.println(mkdirs);
+        }
+
 
         // 另一台tomcat的URL（真实路径）
         String realPath = serverPath + relaPath;
