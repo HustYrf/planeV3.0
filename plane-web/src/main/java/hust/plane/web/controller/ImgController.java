@@ -37,11 +37,6 @@ public class ImgController {
     @Value(value = "${BASE_IMAGE_URL}")
     private String uploadHost;    // 项目host路径
 
-    @Value(value = "${TASKRESOURCE}")
-    private String taskResource;    //任务原图片文件夹
-
-    @Value(value = "${TASKAlARM}")
-    private String taskAlarm;       //任务告警图片文件夹
 
     @RequestMapping(value = "/{taskId}")
     public String toPicIndex(@PathVariable(value = "taskId") String taskId, Model model) {
@@ -101,7 +96,7 @@ public class ImgController {
             List<String> realPathList = new ArrayList<>();
             for (MultipartFile pic : files.values()) {
 
-                String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskResource,taskAlarm,taskDir);
+                String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");
                     fileNameList.add(infoList[0]);    //文件名
