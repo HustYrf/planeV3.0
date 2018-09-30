@@ -15,13 +15,13 @@ import java.util.Date;
 public class Upload {
     /**
      * 上传文件
-     * @param request
-     * @param response
+
      * @param serverPath    服务器地址:(http://172.16.5.102:8090/)
      * @param path             文件路径（不包含服务器地址：upload/）
+     * @param
      * @return
-     */
-    public static String upload(Client client, MultipartFile file, HttpServletRequest request, HttpServletResponse response, String serverPath, String path,String taskDir){
+     */ //                                                           232.11.11.34       /ImageTask        /ImageResource       /ImageAlarm
+    public static String upload(Client client, MultipartFile file, String serverPath, String path,String taskResource,String taskAlarm,String taskDir){
         // 文件名称生成策略（UUID uuid = UUID.randomUUID()）
         Date d = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -56,14 +56,13 @@ public class Upload {
         
         File file2 = new File(taskFileAddress.toString());
         if(!file2.exists()){
-            boolean mkdirs = file2.mkdirs();
+            boolean mkdirs2 = file2.mkdirs();
             try {
                 Runtime.getRuntime().exec("chmod 777 -R " + taskFileAddress.toString());
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("文件夹权限授予失败");
+                System.out.println("任务基本文件夹权限授予失败！");
             }
-            System.out.println(mkdirs);
         }
         File file3 = new File(sourceFileAddress.toString());
         if(!file3.exists())
@@ -90,7 +89,6 @@ public class Upload {
               }
               System.out.println(mkdirs);
         }
-
 
         // 另一台tomcat的URL（真实路径）
         String realPath = serverPath + relaPath;
