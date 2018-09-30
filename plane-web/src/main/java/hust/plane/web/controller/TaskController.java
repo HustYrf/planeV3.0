@@ -575,8 +575,8 @@ public class TaskController {
 		//改成异步的操作
 		Detector detector = new Detector();
 		//生成源文件的地址和告警图片的地址
-		String sourcePath =BASE_IMAGE_URL+imgPath+task.getId()+IMAGE_SOURCE;
-		String imageAlarm = BASE_IMAGE_URL +imgPath+task.getId()+IMAGE_ALARM;
+		String sourcePath =BASE_IMAGE_URL+imgPath+task.getId()+"/"+IMAGE_SOURCE;
+		String imageAlarm = BASE_IMAGE_URL +imgPath+task.getId()+"/"+IMAGE_ALARM;
 		detector.run(sourcePath,imageAlarm);
 		taskServiceImpl.setStatusTaskByTask(task, 12);
 		return new JsonView(0, "SUCCESS", "识别完成").toString();
