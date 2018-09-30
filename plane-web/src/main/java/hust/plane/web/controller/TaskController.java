@@ -20,12 +20,15 @@ import hust.plane.web.controller.vo.UavVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.DetectModule.Detector.Detector;
 
 import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.page.TailPage;
@@ -38,6 +41,15 @@ import hust.plane.web.controller.webUtils.WordUtils;
 @Controller
 public class TaskController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
+	@Value(value = "${BASE_IMAGE_URL}")    //访问图片的地址
+	private String BASE_IMAGE_URL;
+	@Value(value = "${imgPath}")    //后台图片保存地址
+	private String imgPath;
+	@Value(value = "${IMAGE_SOURCE}")    //访问图片的地址
+	private String IMAGE_SOURCE;
+	@Value(value = "${IMAGE_ALARM}")    //后台图片保存地址
+	private String IMAGE_ALARM;
+	
 	@Autowired
 	private TaskService taskServiceImpl;
 	@Autowired
@@ -553,6 +565,21 @@ public class TaskController {
 		model.addAttribute("alarmList", JsonUtils.objectToJson(alarmList));
 		model.addAttribute("curNav", "taskAllList");
 		return "alarmListWithTaskId";
+	}
+	//识别图片
+	@RequestMapping(value = "recongize", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String recongizePicture(Task task)
+	{
+		taskServiceImpl.setStatusTaskByTask(task, 12);
+		//改成异步的操作
+		Detector detector = new Detector();
+		//生成源文件的地址和告警图片的地址
+		String sourcePath =BASE_IMAGE_URL+imgPath+task.getId()+IMAGE_SOURCE;
+		String imageAlarm = BASE_IMAGE_URL +imgPath+task.getId()+IMAGE_ALARM;
+		detector.run(sourcePath,imageAlarm);
+		taskServiceImpl.setStatusTaskByTask(task, 12);
+		return new JsonView(0, "SUCCESS", "识别完成").toString();
 	}
 
 }

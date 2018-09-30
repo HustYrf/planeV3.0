@@ -273,6 +273,7 @@
                         ];
                         option2 = {
                             title: {
+                            	text: mt+'飞机状况统计'
                             },
                             tooltip : {
                                 trigger: 'item',
@@ -280,8 +281,8 @@
 
                             },
                             legend: {
-                                //orient: 'vertical',
-                                left: 'left',
+                            	orient: 'vertical',
+                                x:'right',
                                 data: ['飞行中', '已入库','待放飞','故障']
                             },
                             series : [
@@ -307,12 +308,15 @@
 
                         option4 = {
                             title: {
+                            	text: mt+'告警量'
                             },
                             tooltip: {
                                 trigger: 'axis'
                             },
                             legend: {
-                                data : ['南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市']
+                                data : ['南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市'],
+                                orient: 'vertical',
+                                x:'right'
                             },
                             grid: {
                                 left: '3%',
