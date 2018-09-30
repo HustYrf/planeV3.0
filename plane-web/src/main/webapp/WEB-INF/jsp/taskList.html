@@ -112,7 +112,9 @@
                                         <td>${taskpojo.deviceId!}</td>
                                         <td>${(taskpojo.task.createtime?datetime)!}</td>
                                         <td>${(taskpojo.task.planstarttime?datetime)!}</td>
-                                        <td>${taskpojo.flyingPathName!}</td>
+                                        <td>
+                                            <a href="${s.base}/showPlanePath.action?id=${taskpojo.task.flyingpathId}" target="_blank">${taskpojo.flyingPathName!}</a>
+                                        </td>
                                         <td>
                                             <#if taskpojo.task.status??>
                                                 <#if  taskpojo.task.status == -1><span class="label label-danger">故障或异常</span>
@@ -153,7 +155,7 @@
                                             </#if>
 
                                             <#if taskpojo.task.status==10>
-                                                <#if !Session["super_administrator"]?exists>
+                                                <#--<#if !Session["super_administrator"]?exists>-->
                                             <button type="button" class="btn blue start" onclick="uploadPic(${taskpojo.task.id!})">
                                                 <i class="icon-upload icon-white"></i>
                                                 <span>传图</span></button>
@@ -161,9 +163,9 @@
                                             <button type="button" class="btn red delete" onclick="recongizePic(${taskpojo.task.id!})">
                                                 <i class="icon-camera icon-white"></i>
                                                 <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span></button>
-                                                <#else>
-                                            <span class="label label-warning">无操作权限</span>
-                                                </#if>
+                                                <#--<#else>-->
+                                            <#--<span class="label label-warning">无操作权限</span>-->
+                                                <#--</#if>-->
                                             </#if>
 
 	                                		<#if taskpojo.task.status==7>
@@ -275,7 +277,7 @@
 		});
 	}
     function uploadPic(taskId) {
-        window.location.href="${s.base}/picture/"+ taskId;
+        window.open("${s.base}/picture/"+ taskId);   //打开新窗口上传图片
     }
     //显示任务告警
     function showAlarm(taskid) {

@@ -17,6 +17,14 @@
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
+    <link href="media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="media/css/glyphicons.css" rel="stylesheet" />
+    <link href="media/css/halflings.css" rel="stylesheet" />
+    <!-- END PAGE LEVEL STYLES -->
+
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
@@ -51,7 +59,7 @@
         </div>
 
         <!-- END PAGE HEADER-->
-        <div id="dashboard"  style="position:relative;min-height: 790px;">
+        <div id="dashboard">
 
             <div id="container" ></div>
             <!-- UI组件库 1.0 -->
@@ -114,13 +122,13 @@
                     alarmid: '1',
                     image: '${s.base}/res/i/alarmPic1.jpg',
                     descripte: '这是一个告警点',
-                    updatetime: '2018-7-5',
-                    createTime: '2018-8-5',
-                    alongda: [107.79962, 23.06691],
+                    updatetime: '2018-7-5 11:22:33',
+                    createTime: '2018-8-5 11:22:33',
+                    position: [107.79962, 23.06691],
                 }];
 
                 //创建一个地图
-                map = new AMap.Map('container', {
+                var map = new AMap.Map('container', {
                     resizeEnable: true,
                     center: routeList[0].routepath[0],
                     zoom: 13,
@@ -146,7 +154,6 @@
                     map.addControl(layerCtrl1);
                 });
 
-
                 var infoWindow = new AMap.InfoWindow({
                     isCustom: true,
                     offset: new AMap.Pixel(20, -35)
@@ -165,11 +172,9 @@
                         });
                     }
                 }
-
                 showrouteList(routeList);
 
                 AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
-
 
                     for (var i = 0; i < alarmList.length; i++) {
                         //启动页面
@@ -194,13 +199,84 @@
                         var content = [];
                         content.push("描述：" + alarmList[i].descripte);
                         content.push("更新时间：" + alarmList[i].updatetime);
-                        content.push("<img src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530789395974&di=2bd17bc4551781dae15490dbab36b48c&imgtype=0&src=http%3A%2F%2Fimg008.hc360.cn%2Fm7%2FM0E%2FA5%2F5E%2FwKhQpFXihEuEC2tbAAAAAO5sgVM784.jpg' class='alarmImg'>");
+                        content.push("<img src='${s.base}/res/i/alarmPic1.jpg' class='alarmImg'>");
 
                         dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
                         dangerPoint.on('click', markerClick);
-
-
                     }
+                });
+
+                //添加闪烁点效果
+                AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
+                    if (!PointSimplifier.supportCanvas) {
+                        alert('当前环境不支持 Canvas！');
+                        return;
+                    }
+                    var pointSimplifierIns = new PointSimplifier({
+                        zIndex: 115,
+                        autoSetFitView: false,
+                        map: map, //所属的地图实例
+
+                        getPosition: function (item) {
+                            if (!item ) {
+                                return null;
+                            }
+                            return  item;
+                        },
+                        //使用GroupStyleRender
+                        renderConstructor: PointSimplifier.Render.Canvas.GroupStyleRender,
+                        renderOptions: {
+                            eventSupport: false, //禁止事件,对性能更友好
+                            //点的样式
+                            pointStyle: {
+                                fillStyle: null,
+                                width: 5,
+                                height: 5
+                            },
+                            topNAreaStyle: null,
+                            getGroupId: function (item, idx) {
+
+                                //随机返回一个组ID
+                                return Math.ceil(colors.length * Math.random());
+                            },
+                            groupStyleOptions: function (gid) {
+
+                                //随机设置大小
+                                var radius = 10 + 10 * Math.random();
+                                return {
+                                    pointStyle: radius > 0 ? {
+                                        content: function (ctx, x, y, width, height) {
+                                            var p = {
+                                                x: x + width / 2,
+                                                y: y + height / 2,
+                                                radius: radius
+                                            };
+                                            ctx.beginPath();
+                                            var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                                            gradient.addColorStop(0, "rgba(255,0,0,1)");
+                                            gradient.addColorStop(1, "rgba(255,0,0,0.1)");
+                                            ctx.fillStyle = gradient;
+                                            ctx.arc(p.x, p.y, p.radius, Math.PI * 2, false);
+                                            ctx.fill();
+                                        },
+                                        //fillStyle: colors[gid % colors.length],
+                                        width: radius * 2,
+                                        height: radius * 2
+                                    } : null,
+                                    pointHardcoreStyle: {
+                                        width: radius * 2 + 3,
+                                        height: radius * 2 + 3
+                                    }
+                                };
+                            }
+                        }
+                    });
+                    //重复render  闪烁的频率
+                    setInterval(function () {
+                        pointSimplifierIns.render();
+                    }, 500);
+                    pointSimplifierIns.setData(new Array([107.79962, 23.06691]));
+
                 });
 
                 //构建自定义信息窗体
@@ -231,13 +307,11 @@
                     info.appendChild(middle);
                     return info;
                 }
-
                 //打开信息窗体
                 function markerClick(e) {
                     infoWindow.setContent(e.target.content);
                     infoWindow.open(map, e.target.getPosition());
                 }
-
                 //关闭信息窗体
                 function closeInfoWindow() {
                     map.clearInfoWindow();

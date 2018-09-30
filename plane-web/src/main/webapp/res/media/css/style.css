@@ -19,6 +19,8 @@ body {
   margin: 0px !important;
   font-size:13px; 
   direction: ltr;
+  height: 100%;
+  width:100%;
 }
 ::-ms-clear,::-ms-reveal{
   display:none;
@@ -448,7 +450,8 @@ Page container
 }
 
 .page-header-fixed .page-container {
-  margin-top: 42px;  
+  padding-top: 42px;
+  height: 100%;
 }
 
 /***
@@ -1028,7 +1031,7 @@ Footer
 }
 
 .page-footer-fixed .page-container {
-  margin-bottom: 33px;
+  margin-bottom: 3px;
 }
 
 .page-footer-fixed.page-sidebar-fixed .footer {
@@ -2947,10 +2950,36 @@ Custom portlet tabs
 /***
 Dashboard container
 ***/
+/*** 分辨率适配问题 ***/
 #dashboard {
   overflow: hidden;
   position:relative !important;
-  min-height: 790px !important;
+}
+@media screen and (min-width:1920px){
+    /*本机分辨率*/
+    #dashboard {
+         min-height: 780px !important;
+    }
+    #container{
+         height: 780px !important;
+    }
+}
+@media screen and (min-width: 1200px) and (max-width: 1919px) {
+  #dashboard {
+    min-height: 560px !important;
+  }
+  #container{
+    height: 560px !important;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  #dashboard {
+    min-height: 400px !important;
+  }
+  #container{
+    height: 400px !important;
+  }
+}
 }
 
 /***

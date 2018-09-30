@@ -36,7 +36,7 @@ public class Upload {
         // 文件名
         String fileName = formatDate + str + "." + extension;
         //相对路径
-        String relaPath = path + fileName;
+        String relaPath = path + taskDir + "/"+ fileName;
 
 //        String a = serverPath + path.substring(0, path.lastIndexOf("/"));
 //         String serverFileAddress = "D:"+File.separator+"Games"+File.separator+taskDir;
@@ -46,6 +46,12 @@ public class Upload {
         File file2 = new File(serverFileAddress.toString());
         if(!file2.exists()){
             boolean mkdirs = file2.mkdirs();
+            try {
+                Runtime.getRuntime().exec("chmod 777 -R " + serverFileAddress.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("文件夹权限授予失败");
+            }
             System.out.println(mkdirs);
         }
 

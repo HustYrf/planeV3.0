@@ -71,6 +71,9 @@ public class TaskVO {
 		if (task.getExecuteendtime() != null) {
 			this.executeendtime = task.getExecuteendtime();
 		}
+		if(task.getCreatetime()!=null){
+	        this.createtime = task.getCreatetime();
+		}
 
 	}
 
