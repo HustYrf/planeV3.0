@@ -112,7 +112,7 @@
                                         <td>${(taskpojo.task.createtime?datetime)!}</td>
                                         <td>${(taskpojo.task.planstarttime?datetime)!}</td>
                                         <td>
-                                            <a href="${s.base}/showPlanePath.action?id=${taskpojo.task.flyingpathId}" target="_blank">${taskpojo.flyingPathName!}</a>
+                                            <a href="${s.base}/alarmWithId.action?id=${taskpojo.task.id!}" target="_blank">${taskpojo.flyingPathName!}</a>
                                         </td>
                                         <td>
                                             <#if taskpojo.task.status??>
@@ -139,6 +139,7 @@
 	                                	   <#if taskpojo.task.status==-1 || taskpojo.task.status==1>
                                                <#if !Session["super_administrator"]?exists>
 		                                		<button type="button" class="btn green" onclick="assignTask(${taskpojo.task.id!})">分派</button>
+                                               <button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>
                                                <#else>
                                                  <span class="label label-warning">无操作权限</span>
                                                </#if>
@@ -184,7 +185,7 @@
 	                                		<a class="label label-danger" href="${s.base}/alarmWithId.action?id=${taskpojo.task.id!}" style="cursor:pointer; ">任务告警</a>
                                             <#elseif taskpojo.task.status=14>
                                                 <#if !Session["super_administrator"]?exists>
-	                                		 <a href="${s.base}/taskReport.action?taskid=${taskpojo.task.id!}" style="cursor:pointer;" class="label label-info">打印报告</a>
+	                                	<#--	 <a href="${s.base}/taskReport.action?taskid=${taskpojo.task.id!}" style="cursor:pointer;" class="label label-info">打印报告</a>-->
                                                 <#else>
                                             <span class="label label-warning">无操作权限</span>
                                                 </#if>
@@ -243,6 +244,27 @@
     </div>
 </div>
 <!-- 任务派发确认 -->
+<!-- 任务取消确认 -->
+<div class="modal fade" id="cancelfirmModel" tabindex="-1" aria-hidden="true">
+    <div class="modal_wapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">取消确认</h4>
+            </div>
+            <div class="modal-body"  style="font-size:1.2rem;">
+                <p id="tip">您确认要取消该任务吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>    <!-- 用于隐藏信息 -->
+                <button type="button" class="btn blue" data-dismiss="modal">取消</button>
+                <a  onclick="cancel()" class="btn red" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+        <input type="text" id="cancelTaskId" style="display:none" />
+    </div>
+</div>
+<!-- 任务取消确认 -->
 <!-- 信息删除确认 -->
 <div class="modal fade" id="deleltconfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -330,6 +352,33 @@
         $('#assignTaskId').val(taskid);
         Modal.show('assignfirmModel');
     }
+    //取消任务
+    function cancelTask(taskid) {
+
+        $('#cancelTaskId').val(taskid);
+        Modal.show('cancelfirmModel');
+    }
+    function cancel() {
+
+        $.ajax({
+            type: "post",
+            url: "${s.base}/cancelTask.action",
+            data: {
+                'id':$('#cancelTaskId').val(),
+            },
+            success: function (result) {
+                if (result.errcode == 1) {
+                    Modal.show('ocDialogModal');
+                    $("#resText").text(result.message);
+                    setTimeout("window.location.reload()",2000);
+                }
+            },error:function(){
+                Modal.show('ocDialogModal');
+                $("#resText").text("取消出错，请刷新重试!");
+                //document.getElementById("resText").innerHTML="删除出错，请刷新重试!";
+            }
+        });
+    }
 
     function urlSubmit(){
 
@@ -403,7 +452,7 @@
             type: "post",
             url: "${s.base}/onsureTaskOver.action",
             data: {
-                'id': id,
+                'id': taskid,
             },
             success: function (result) {
                 if (result.errcode == 1 ){

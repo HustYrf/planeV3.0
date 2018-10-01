@@ -34,14 +34,7 @@ public class RouteController {
 
     @Autowired
     public RouteService routeServiceImpl;
-    
-	@RequestMapping("/home")
-	public String index(Model model)
-	{
-		model.addAttribute("curNav", "home");
-		return "home";
-	}
-	
+
 	//提供 模板下载
 	@RequestMapping("routeExcelDownloed")
 	public void routeExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException{

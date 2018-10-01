@@ -1496,10 +1496,10 @@
   var dates = $.fn.datetimepicker.dates = {
     en: {
       days:        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      daysShort:   ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      daysMin:     ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-      months:      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      daysShort:   ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      daysMin:     ['日', '一', '二', '三', '四', '五', '六', '日'],
+      months: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+      monthsShort: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
       meridiem:    ['am', 'pm'],
       suffix:      ['st', 'nd', 'rd', 'th'],
       today:       'Today',

@@ -48,4 +48,8 @@ public interface TaskMapper {
 	int updateImgFolderByTask(Task task);
 
 	Task getTaskByName(String name);
+
+    int setTaskOver(Task task);
+
+    List<Task> getAllTaskByRole(Task task);
 }

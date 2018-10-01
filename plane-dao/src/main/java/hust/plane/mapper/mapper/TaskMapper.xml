@@ -442,13 +442,23 @@
 		WHERE
 		Name = #{name,jdbcType=VARCHAR}
 	</select>
+	<select id="getAllTaskByRole" parameterType="hust.plane.mapper.pojo.Task"
+			resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM K_Task
+		WHERE 1=1
+		<if test="usercreator != null">
+			AND UserCreator = #{usercreator,jdbcType=INTEGER}
+		</if>
+	</select>
 	<select id="queryPageWithTime" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM K_Task
 		WHERE 1=1
 		<if test="param1.usercreator != null">
-			AND UserCreator = #{param1.usercreator}
+			AND UserCreator = #{param1.usercreator,jdbcType=INTEGER}
 		</if>
 		<if test="param1.name != null">
 			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
@@ -459,6 +469,11 @@
 		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
 		jdbcType=INTEGER}
 	</select>
+	<update id="setTaskOver" parameterType="hust.plane.mapper.pojo.Task">
+		update K_Task
+		set Status = 14,FinishStatus = 1
+		where id=#{id, jdbcType=INTEGER}
+	</update>
 	<update id="updateStatusByTask" parameterType="hust.plane.mapper.pojo.Task">
 		update K_Task
 		set Status = #{status,jdbcType=INTEGER}

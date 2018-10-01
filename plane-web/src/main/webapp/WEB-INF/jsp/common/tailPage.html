@@ -11,7 +11,7 @@
 					<span class="page-omit">...</span>
 				</#if>
 				<#if page.pageNum == n>
-				<li><a class="page-cur" href="javascript:void(0);" >${n}</a></li>
+				<li><a class="page-cur" href="javascript:void(0);" style="background-color: darkgrey">${n}</a></li>
 				<#else>
 				<li><a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
 				</#if>

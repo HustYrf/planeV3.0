@@ -61,80 +61,26 @@
 
         <!-- END PAGE HEADER-->
         <div id="dashboard">
-
             <div id="container" ></div>
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
-                //闪烁点
-                //just some colors
-                var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
-                var routeStatusCode = ['一干路由', '二干路由', '混合路由'];
-                //var Imgsrc = ['start1-32.png', 'start2-32.png', 'start3-32.png'];
-                var routeList = [{
-                    routeid: '2',
-                    status: '0',
-                    routepath: [
-                        [107.79962, 23.06691], // 2144  起飞点
-                        [107.79985, 23.06666], // 2143
-                        [107.80006, 23.06645], // 2142
-                        [107.80033, 23.06617], // 2141
-                        [107.80079, 23.06568], // 2140
-                        [107.80103, 23.06544], // 2139
-                        [107.80121, 23.06524], // 2138
-                        [107.80143, 23.06500], // 2137
-                        [107.80164, 23.06481], // 2136
-                        [107.80214, 23.06427], // 2135
-                        [107.80226, 23.06413], // 2134+2
-                        [107.80245, 23.06394], // 2134+1
-                        [107.80264, 23.06376], // 2134
-                        [107.80283, 23.06354], // 2133
-                        [107.80310, 23.06329], // 2132
-                        [107.80330, 23.06305], // 2131
-                        [107.80338, 23.06280], // 2130
-                        [107.80345, 23.06262], // 2129
-                        [107.80349, 23.06253], // 2128
-                        [107.80363, 23.06209], // 2127
-                        [107.80367, 23.06200], // 2126
-                        [107.80370, 23.06188], // 2125
-                        [107.80373, 23.06178], // 2124
-                        [107.80386, 23.06140], // 2123
-                        [107.80396, 23.06104], // 2122
-                        [107.80402, 23.06079], // 2121
-                        [107.80412, 23.06069], // 2120
-                        [107.80436, 23.06050], // 2119
-                        [107.80465, 23.06029], // 2118
-                        [107.80486, 23.06015], // 2117
-                        [107.80520, 23.05990], // 2116
-                        [107.80543, 23.05976], // 2116+2
-                        [107.80568, 23.05958], // 2116+1
-                        [107.80607, 23.05926], // 2115
-                        [107.80645, 23.05895], // 2114
-                        [107.80674, 23.05875], // 2113
-                        [107.80708, 23.05849], // 2112
-                        [107.80736, 23.05829], // 2111
-                        [107.80767, 23.05807], // 2110 折返点
-                    ],
-                    descripte: '这是一条一干路由,无人机路过',
-                    updatetime: '2018-8-1',
-                    type: '1',
-                }];
-                var alarmList = [{
-                    alarmid: '1',
-                    image: '${s.base}/res/i/alarmPic1.jpg',
-                    descripte: '这是一个告警点',
-                    updatetime: '2018-7-5 11:22:33',
-                    createTime: '2018-8-5 11:22:33',
-                    position: [107.79962, 23.06691],
-                }];
 
+                var  planePath =${flyingPath};
+
+                var centerpoint;
+                if(planePath.length>0){
+                    centerpoint = planePath[0].pathdata[0];
+                }else{
+                    centerpoint = [107.79876, 23.06781];
+                }
                 //创建一个地图
                 var map = new AMap.Map('container', {
                     resizeEnable: true,
-                    center: routeList[0].routepath[0],
-                    zoom: 13,
-                    //layers: layerCtrl1.getEnabledLayers()
+                    center: centerpoint,
+                    zoom: 15
                 });
+
                 map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
                     var scale = new AMap.Scale({          //生成 比例尺插件
                         visible: true,
@@ -150,7 +96,7 @@
                 AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
 
                     var layerCtrl1 = new BasicControl.LayerSwitcher({
-                        position: 'tr'
+                        position: 'tr',
                     });
                     map.addControl(layerCtrl1);
                 });
@@ -160,54 +106,114 @@
                     offset: new AMap.Pixel(20, -35)
                 });
 
-                function showrouteList(RouteList) {
-                    for (var i = 0; i < routeList.length; i++) {
-                        var polyline = new AMap.Polyline({
-                            map: map,
-                            path: RouteList[i].routepath, //设置线覆盖物路径
-                            strokeColor:"#4fd2b1", //线颜色
-                            strokeOpacity: 1, //线透明度
-                            strokeWeight: 5, //线宽
-                            strokeStyle: "solid", //线样式
-                            strokeDasharray: [10, 5] //补充线样式
-                        });
-                    }
+                for(var j=0;j<planePath.length;j++){
+                    var polyline = new AMap.Polyline({
+                        map: map,
+                        path: planePath[j].pathdata, //设置线覆盖物路径
+                        strokeColor: '#ff6700', //线颜色
+                        strokeOpacity: 1, //线透明度
+                        strokeWeight: 3, //线宽
+                        strokeStyle: "solid", //线样式
+                        strokeDasharray: [10, 5] //补充线样式
+                    });
                 }
-                showrouteList(routeList);
 
-                AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+                var alarmList = ${alarmList!};
+                AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+                    //启动页面
+                   /* var start = new SimpleMarker({
+                        //前景文字
+                        map: map,
+                        iconLabel: {
+                            innerHTML: '<i>起</i>', //设置文字内容
+                            style: {
+                                color: 'white' //设置文字颜色
+                            }
+                        },
+                        iconTheme: 'fresh',
+                        //背景图标样式
+                        iconStyle: 'darkblue',
+                        position: planePath.pathdata[0],
+                        animation: 'AMAP_ANIMATION_DROP',
+                    });
+                    var title = '飞行路径编号：<span>' + planePath.id + '</span>';
+                    var content = [];
+                    content.push("名称：" + planePath.name );
+                    content.push("描述：" + planePath.description );
+                    content.push("创建时间：" + planePath.createtime );
+                    content.push("更新时间：" + planePath.updatetime );
+                    start.content = createInfoWindow(title, content.join("<br/>"));
+                    start.on('click', markerClick);*/
 
-                    for (var i = 0; i < alarmList.length; i++) {
-                        //启动页面
-                        var dangerPoint = new SimpleMarker({
-                            //前景文字
-                            iconLabel: {
-                                innerHTML: '<i>危</i>', //设置文字内容
-                                style: {
-                                    color: 'white' //设置文字颜色
-                                }
-                            },
-                            //图标主题
-                            iconTheme: 'default',
-                            //背景图标样式
-                            iconStyle: 'red',
-                            //...其他Marker选项...，不包括content
-                            map: map,
-                            position: [107.79962, 23.06691]
-                        });
+                  /*  var pos = planePath.pathdata.length - 1;
+                    var end = new SimpleMarker({
+                        //前景文字
+                        map: map,
+                        iconLabel: {
+                            innerHTML: '<i>终</i>', //设置文字内容
+                            style: {
+                                color: 'white' //设置文字颜色
+                            }
+                        },
+                        iconTheme: 'fresh',
+                        //背景图标样式
+                        iconStyle: 'orange',
+                        position: planePath.pathdata[pos],
+                        animation: 'AMAP_ANIMATION_DROP',
+                    });
+                    var title = '飞行路径编号：<span>' + planePath.id + '</span>';
+                    var content = [];
+                    content.push("名称：" + planePath.name );
+                    content.push("描述：" + planePath.description );
+                    content.push("创建时间：" + planePath.createtime );
+                    content.push("更新时间：" + planePath.updatetime );
+                    end.content = createInfoWindow(title, content.join("<br/>"));
+                    end.on('click', markerClick);*/
 
-                        var title = '告警点编号：<span>' + alarmList[i].alarmid + '</span>';
-                        var content = [];
-                        content.push("描述：" + alarmList[i].descripte);
-                        content.push("更新时间：" + alarmList[i].updatetime);
-                        content.push("<img src='${s.base}/res/i/alarmPic1.jpg' class='alarmImg'>");
 
-                        dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
-                        dangerPoint.on('click', markerClick);
+                    if(alarmList.length==0 || alarmList==null){
+                        alert("没有告警数据！");
+                    }else{
+                        for(var i=0;i<alarmList.length;i++){
+
+                            //启动页面
+                            var dangerPoint = new SimpleMarker({
+                                //前景文字
+                                iconLabel: {
+                                    innerHTML: '<i>危</i>', //设置文字内容
+                                    style: {
+                                        color: 'white' //设置文字颜色
+                                    }
+                                },
+                                //图标主题
+                                iconTheme: 'default',
+                                //背景图标样式
+                                iconStyle: 'red',
+                                //...其他Marker选项...，不包括content
+                                map: map,
+                                position: alarmList[i].position,
+                            });
+
+                            var title = '告警点编号：<span>' + alarmList[i].id + '</span>';
+                            var content = [];
+
+                            content.push("创建时间：" + alarmList[i].createTime);
+                            content.push("飞行任务名称：" + alarmList[i].taskName);
+                            content.push("飞行路径：" + alarmList[i].flyingPathName);
+                            content.push("创建者："+alarmList[i].userCreatorName)
+                            content.push("放飞员：：" + alarmList[i].userAName);
+                            content.push("降落员：" + alarmList[i].userZName);
+                            content.push("无人机名称：" + alarmList[i].uavName);
+                            content.push("无人机设备编号：" + alarmList[i].uavDeviceId);
+                            content.push("<img src='${s.base}/"+alarmList[i].image+"' class='alarmImg'>");
+                            dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
+                            dangerPoint.on('click', markerClick);
+
+                        }
                     }
+
                 });
 
-                //添加闪烁点效果
                 AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
                     if (!PointSimplifier.supportCanvas) {
                         alert('当前环境不支持 Canvas！');
@@ -216,12 +222,16 @@
                     var pointSimplifierIns = new PointSimplifier({
                         zIndex: 115,
                         autoSetFitView: false,
-                        map:map,
+                        map: map, //所属的地图实例
+
                         getPosition: function (item) {
-                            if (!item ) {
+                            if (!item) {
                                 return null;
                             }
-                            return  item;
+
+                            return item;
+                            // var parts = item.split(',');
+                            // return [parseFloat(parts[0]), parseFloat(parts[1])];
                         },
                         //使用GroupStyleRender
                         renderConstructor: PointSimplifier.Render.Canvas.GroupStyleRender,
@@ -237,20 +247,22 @@
                             getGroupId: function (item, idx) {
 
                                 //随机返回一个组ID
-                                return Math.ceil(colors.length * Math.random());
+                                return Math.ceil(4 * Math.random());
                             },
                             groupStyleOptions: function (gid) {
-
                                 //随机设置大小
                                 var radius = 10 + 10 * Math.random();
                                 return {
+
                                     pointStyle: radius > 0 ? {
                                         content: function (ctx, x, y, width, height) {
+
                                             var p = {
                                                 x: x + width / 2,
                                                 y: y + height / 2,
                                                 radius: radius
                                             };
+
                                             ctx.beginPath();
                                             var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
                                             gradient.addColorStop(0, "rgba(255,0,0,1)");
@@ -258,7 +270,9 @@
                                             ctx.fillStyle = gradient;
                                             ctx.arc(p.x, p.y, p.radius, Math.PI * 2, false);
                                             ctx.fill();
+
                                         },
+
                                         //fillStyle: colors[gid % colors.length],
                                         width: radius * 2,
                                         height: radius * 2
@@ -269,15 +283,21 @@
                                     }
                                 };
                             }
+
                         }
                     });
-                    //重复render  闪烁的频率
+                    //重复render
                     setInterval(function () {
                         pointSimplifierIns.render();
-                    }, 500);
+                    }, 500)
 
-                    pointSimplifierIns.setData(new Array([107.79962, 23.06691]));
-
+                    var data = new Array();
+                    if(alarmList.length>0){
+                        for(var i=0;i<alarmList.length;i++){
+                            data[i] = alarmList[i].position;
+                        }
+                        pointSimplifierIns.setData(data);
+                    }
                 });
 
                 //构建自定义信息窗体
@@ -317,6 +337,7 @@
                 function closeInfoWindow() {
                     map.clearInfoWindow();
                 }
+
             </script>
         </div>
     </div>

@@ -3,6 +3,10 @@ package hust.plane.web.controller.vo;
 import hust.plane.mapper.pojo.Alarm;
 import hust.plane.mapper.pojo.Uav;
 import hust.plane.utils.DateKit;
+import hust.plane.utils.PointUtil;
+import hust.plane.utils.pojo.Point;
+
+import java.util.List;
 
 public class AlarmDetailVO {
    //用于展示告警详情
@@ -12,11 +16,21 @@ public class AlarmDetailVO {
     private String createTime;
     private String updateTime;
 
+    private List<Double> position;
     private String taskName;
     private String flyingPathName;
 
     private String userCreatorName;
     private String userAName;
+
+    public List<Double> getPosition() {
+        return position;
+    }
+
+    public void setPosition(List<Double> position) {
+        this.position = position;
+    }
+
     private String userZName;
 
     private String uavName;
@@ -38,6 +52,9 @@ public class AlarmDetailVO {
         }
         if (alarm.getDescription() != null) {
             this.descripte = alarm.getDescription();
+        }
+        if(alarm.getPosition()!=null){
+            this.position = PointUtil.StringPointToList(alarm.getPosition());
         }
         if (alarm.getCreatetime() != null) {
             this.createTime = DateKit.dateFormat(alarm.getCreatetime(), "yyyy/MM/dd HH:mm:ss");

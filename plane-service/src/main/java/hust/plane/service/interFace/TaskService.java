@@ -22,6 +22,8 @@ public interface TaskService {
 
 	boolean setFinishStatusTaskByTask(Task task, int finishstatus);
 
+	boolean setTaskOver(Task task);
+
 	Task getTaskByTask(Task task);
 
 	List<Task> getTasklistByAuser(User aUser);
@@ -35,4 +37,6 @@ public interface TaskService {
     String selectImgFolderWithId(Integer taskId);
 
 	Task getTaskByName(String name);
+
+	List<Task> getAllTaskByRole(Task task);
 }

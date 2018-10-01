@@ -139,7 +139,7 @@
                                         <div class="control-group">
                                             <label class="control-label">任务名称</label>
                                             <div class="controls">
-                                                <input type="text" class="span8" id="taskname" value="${taskvo.name!}" required="required">
+                                                <input type="text" class="span8" id="taskname" value="${taskvo.name!}">
                                             </div>
                                         </div>
 
@@ -205,7 +205,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">任务计划开始时间</label>
-                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planstarttime">
+                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planstarttime">
                                                 <input type="text" value="${taskvo.planstarttime?datetime!}" class="span8" readonly>
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
@@ -215,7 +215,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">任务计划完成时间</label>
-                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="planendtime">
+                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planendtime">
                                                 <input type="text" value="${taskvo.planendtime?datetime!}" class="span8" readonly>
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
@@ -225,7 +225,7 @@
 
                                         <div class="control-group">
                                             <label class="control-label">任务创建时间</label>
-                                            <div class="controls date" data-date="" data-date-format="yyyy-dd-MM HH:ii" data-link-field="createtime">
+                                            <div class="controls date" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="createtime">
                                                 <input type="text" value="${taskvo.createtime?datetime!}" class="span8" disabled>
                                             </div>
                                             <input type="hidden" id="createtime" value="${taskvo.createtime?datetime!}" />
@@ -268,9 +268,7 @@
     </div>
 </div>
 <script type="text/javascript" src="${s.base}/res/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="${s.base}/res/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="application/javascript">
-
 
     window.onload=function(){
         $('.form_datetime').datetimepicker({
@@ -288,25 +286,39 @@
 
     }
 
-	function Redirect() {  
+
+	function Redirect() {
 	    window.location = "${s.base}/taskPageList.action";  
 	}  
      //提交任务
 	function submitTask(){
 		
 		var taskname = $("#taskname").val();
-		if(taskname==null || taskname==""){
-			 Modal.tipFailure("任务名不能为空");	   
-			 return;
-		}
+        if(taskname==null || taskname==""){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务名不能为空!";
+            return;
+        }
 		var userA = $("#userA").val();
 		var userZ = $("#userZ").val();
+		if(userA==""|| userA==null || userZ=="" || userZ==null || userZ == userA){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="放飞员和接机员均不能为空,且不能为同一人!";
+            return;
+        }
+
 		var uavId = $("#uavId").val();
 		
 		var flyingpathid = $("#flyingpathid").val();
 		var planstarttime = $("#planstarttime").val().toString();
 		var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
+
+        if(planstarttime > planendtime){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务计划开始时间大于任务计划完成时间！请重新设置！";
+            return;
+        }
 
 		$.ajax({
 		    type: "POST",
@@ -342,18 +354,29 @@
 		
 		var taskname = $("#taskname").val();
 		if(taskname==null || taskname==""){
-			 Modal.tipFailure("任务名不能为空");	   
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务名不能为空!";
 			 return;
 		}
 		var userA = $("#userA").val();
 		var userZ = $("#userZ").val();
 		var uavId = $("#uavId").val();
-		
+        if(userA==""|| userA==null || userZ=="" || userZ==null){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="放飞员和接机员均不能为空,且不能为同一人!";
+            return;
+        }
 		var flyingpathid = $("#flyingpathid").val();
 
         var planstarttime = $("#planstarttime").val().toString();
         var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
+
+        if(planstarttime > planendtime){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务计划开始时间大于任务计划完成时间！请重新设置！";
+            return;
+        }
 
 		$.ajax({
 		    type: "POST",

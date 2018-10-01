@@ -117,13 +117,12 @@ public class FlyingPathController {
 	@ResponseBody
 	public String deletePlanePath(FlyingPath flyingPath) {
 		
-	if(flyingPath.getId()!=null && flyingPath.getName()!=null && flyingPath.getName()!="") {
+	if(flyingPath.getId()!=null) {
 		if(flyingPathServiceImpl.deleteFlyingPath(flyingPath)) {
 			return new JsonView(0,"SUCCESS","删除成功").toString();
 		}
 		return new JsonView(0,"SUCCESS","删除失败").toString();
 	}
-		
 	  return new JsonView(0,"SUCCESS","未传入飞行路径编号,删除失败").toString();
 	}
 	

@@ -13,9 +13,7 @@ import hust.plane.service.interFace.*;
 import hust.plane.utils.DateKit;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.pojo.TipException;
-import hust.plane.web.controller.vo.RouteVO;
-import hust.plane.web.controller.vo.TaskVO;
-import hust.plane.web.controller.vo.UavVO;
+import hust.plane.web.controller.vo.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +32,8 @@ import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.TaskPojo;
 import hust.plane.utils.pojo.JsonView;
-import hust.plane.web.controller.vo.AlarmVO;
-import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.webUtils.WordUtils;
+import sun.plugin.javascript.navig4.Link;
 
 @Controller
 public class TaskController {
@@ -70,6 +67,60 @@ public class TaskController {
 	@RequestMapping("/task")
 	public String gettestTask() {
 		return "taskList";
+	}
+
+	//主页显示   传输所有的数据
+	@RequestMapping("/home")
+	public String index(Model model,HttpServletRequest request)
+	{
+
+		User userCreator = PlaneUtils.getLoginUser(request);
+		List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(userCreator.getId());
+		Task task = new Task();
+		if (groupIdList.contains(Integer.valueOf(1))) {
+			task.setUsercreator(null);   //浏览者
+		} else {
+			task.setUsercreator(userCreator.getId());  //任务管理员
+		}
+		List<FlyingPathVO> flyingPathVOList = new ArrayList<FlyingPathVO>();   //初始化向前台传送的数据
+		List<AlarmDetailVO> alarmDetailVOList = new ArrayList<AlarmDetailVO>();
+
+		List<Task> taskList = taskServiceImpl.getAllTaskByRole(task);
+
+		Iterator<Task> iterator = taskList.iterator();    //遍历所有数据
+		while (iterator.hasNext()) {
+			Task task1 = iterator.next();
+			String userCreatorName = userServiceImpl.getNameByUserId(task1.getUsercreator());
+			String userAName = userServiceImpl.getNameByUserId(task1.getUserA());
+			String userZName = userServiceImpl.getNameByUserId(task1.getUserZ());
+			Uav uav = new Uav();
+			uav.setId(task1.getUavId());
+			Uav uav1 = uavServiceImpl.getPlaneByPlane(uav);
+			List<Alarm> alarmWitIdList = alarmService.getAlarmsByTaskId(task1.getId());
+
+			FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task1.getFlyingpathId());
+			FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
+			flyingPathVOList.add(flyingPathVO);           //添加数据
+
+			for(int i =0 ;i<alarmWitIdList.size();i++){
+
+				AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarmWitIdList.get(i));
+				alarmDetailVO.setUav(uav1);
+				//设置来自图片服务器的数据
+				//alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
+				alarmDetailVO.setTaskName(task1.getName());
+				alarmDetailVO.setFlyingPathName(flyingPath.getName());
+				alarmDetailVO.setUserCreatorName(userCreatorName);
+				alarmDetailVO.setUserAName(userAName);
+				alarmDetailVO.setUserZName(userZName);
+
+				alarmDetailVOList.add(alarmDetailVO);           //添加数据
+			}
+		}
+		model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
+		model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
+		model.addAttribute("curNav", "home");
+		return "home";
 	}
 
 	// 得到所有的任务
@@ -260,9 +311,7 @@ public class TaskController {
 		}
 		return JsonView.render(1, "任务创建失败!");
 	}
-	
-	
-	
+
 	// 分页查询
 	@RequestMapping("/taskPageList")
 	public String queryPage(Task task, TailPage<TaskPojo> page, Model model, HttpServletRequest request) {
@@ -332,6 +381,18 @@ public class TaskController {
 			return JsonView.render(1, "已确认，可以放飞");
 		} else {
 			return JsonView.render(1, "确认失败,请重试！");
+		}
+
+	}
+	//取消任务
+	@RequestMapping(value = "cancelTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String cancelTask(Task task) {
+
+		if (taskServiceImpl.setTaskOver(task) == true) {
+			return JsonView.render(1, "任务已取消！");
+		} else {
+			return JsonView.render(1, "任务取消失败！");
 		}
 
 	}
@@ -470,8 +531,6 @@ public class TaskController {
 		return "plane";
 		
 	}
-	
-	
 
 	// 打印任务报告
 	@RequestMapping("taskReport")
@@ -543,27 +602,48 @@ public class TaskController {
 		return JsonView.render(0, WebConst.SUCCESS_RESULT, userNameList);
 	}
 
-	// 获取任务的告警信息
+	// 获取任务的告警信息,同时显示告警信息
 	@RequestMapping(value = "alarmWithId", method = RequestMethod.GET)
 	public String getAlarmWithId(@RequestParam(value = "id") int id, Model model) {
+		Task task = new Task();
+		task.setId(id);
+		Task task1 = taskServiceImpl.getTaskByTask(task);
+
+		String flyingPathName = flyingPathServiceImpl.getNameById(task1.getFlyingpathId());
+
+		Uav uav = new Uav();
+		uav.setId(task1.getUavId());
+		Uav uav1 = uavServiceImpl.getPlaneByPlane(uav);
+
 		List<Alarm> alarmWitIdList = alarmService.getAlarmsByTaskId(Integer.valueOf(id));
-		List<AlarmVO> alarmList = new ArrayList<AlarmVO>();
+		List<AlarmDetailVO> alarmDetailVOList = new ArrayList<AlarmDetailVO>();
+
+		String userCreatorName = userServiceImpl.getNameByUserId(task1.getUsercreator());
+		String userAName = userServiceImpl.getNameByUserId(task1.getUserA());
+		String userZName = userServiceImpl.getNameByUserId(task1.getUserZ());
 		Iterator<Alarm> iterator = alarmWitIdList.iterator();
+
 		while (iterator.hasNext()) {
 			Alarm alarm = iterator.next();
-			AlarmVO alarmVo = new AlarmVO(alarm);
-			alarmList.add(alarmVo);
+			AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
+			alarmDetailVO.setUav(uav1);
+			//设置来自图片服务器的数据
+			//alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
+
+			alarmDetailVO.setTaskName(task1.getName());
+			alarmDetailVO.setFlyingPathName(flyingPathName);
+			alarmDetailVO.setUserCreatorName(userCreatorName);
+			alarmDetailVO.setUserAName(userAName);
+			alarmDetailVO.setUserZName(userZName);
+
+			alarmDetailVOList.add(alarmDetailVO);
 		}
-		// 告警点路由显示
-		List<Route> allRoute = routeServiceImpl.getAllRoute();
-		List<RouteVO> routeList = new ArrayList<RouteVO>();
-		for (int i = 0; i < allRoute.size(); i++) {
-			RouteVO routeVo = new RouteVO(allRoute.get(i));
-			routeList.add(routeVo);
-		}
-		model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
-		model.addAttribute("alarmList", JsonUtils.objectToJson(alarmList));
-		model.addAttribute("curNav", "taskAllList");
+		FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task1.getFlyingpathId());
+		FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
+
+		model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVO));
+		model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
+		//ssmodel.addAttribute("curNav", "taskAllList");
 		return "alarmListWithTaskId";
 	}
 	//识别图片

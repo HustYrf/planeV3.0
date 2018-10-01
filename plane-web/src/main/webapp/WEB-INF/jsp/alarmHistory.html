@@ -110,12 +110,12 @@
                 <h4 class="modal-title">告警确认</h4>
             </div>
             <div class="modal-body" style="font-size:1.2rem;">
-                <p>是否已经处理完该告警？</p>
+                <p>是否将该告警发送给三盯系统？</p>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="alarmid"/>    <!-- 用于隐藏信息 -->
                 <button type="button" class="btn blue" data-dismiss="modal">取消</button>
-                <a  onclick="urlSubmit()" class="btn red" data-dismiss="modal">确定</a>
+                <a  onclick="urlSubmit()" class="btn red" data-dismiss="modal">发送</a>
             </div>
         </div>
     </div>
@@ -128,16 +128,16 @@
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
             <!--  下面这块内容是在页面写死的  -->
-            <h4 class="page-title">告警历史
-                <small>告警列表</small>
+            <h4 class="page-title">历史告警
+                <small>历史告警</small>
             </h4>
             <ul class="breadcrumb">
                 <li>
                     <i class="icon-home"></i>
-                    <a href="#">告警历史</a>
+                    <a href="#">历史告警</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="#">告警列表</a></li>
+                <li><a href="#">历史告警</a></li>
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
