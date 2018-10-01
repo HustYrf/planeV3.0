@@ -61,7 +61,7 @@
 		    position:absolute;
 		    z-index:100;
 		    background-color:#FCFCFC;
-		    width:45.3%;
+		    width:51.2%;
 		    display:none;
 		    border: 1px solid #a6a6a6;
             border-top: none;
@@ -361,7 +361,7 @@
 		var userA = $("#userA").val();
 		var userZ = $("#userZ").val();
 		var uavId = $("#uavId").val();
-        if(userA==""|| userA==null || userZ=="" || userZ==null){
+        if(userA==""|| userA==null || userZ=="" || userZ==null || userZ == userA){
             Modal.show('ocDialogModal');
             document.getElementById("resText").innerHTML="放飞员和接机员均不能为空,且不能为同一人!";
             return;

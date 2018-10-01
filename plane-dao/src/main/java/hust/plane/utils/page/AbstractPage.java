@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class AbstractPage<E> implements Page<E> {
 
     public static final int DEFAULT_FIRST_PAGE_NUM = 1;
-    public static final int DEFAULT_PAGE_SIZE = 3;
+    public static final int DEFAULT_PAGE_SIZE = 10;
 
     protected int pageSize = DEFAULT_PAGE_SIZE;
     protected int pageNum = DEFAULT_FIRST_PAGE_NUM;

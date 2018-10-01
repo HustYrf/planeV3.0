@@ -172,6 +172,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public boolean setTaskOver(Task task) {
+        if(taskMapper.setTaskOver(task)==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public Task getTaskByTask(Task task) {
         return taskMapper.selectByPrimaryKey(task.getId());
     }
