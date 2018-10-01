@@ -2,6 +2,7 @@ package hust.plane.service.interFace;
 
 import java.util.List;
 
+import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.User;
 import hust.plane.utils.page.TailPage;
@@ -35,4 +36,6 @@ public interface TaskService {
     String selectImgFolderWithId(Integer taskId);
 
 	Task getTaskByName(String name);
+
+	List<Task> getFlyingPathByFlyingId(Integer id);
 }

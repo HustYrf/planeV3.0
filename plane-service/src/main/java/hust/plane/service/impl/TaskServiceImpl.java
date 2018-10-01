@@ -11,6 +11,7 @@ import hust.plane.mapper.mapper.FlyingPathMapper;
 import hust.plane.mapper.mapper.TaskMapper;
 import hust.plane.mapper.mapper.UavMapper;
 import hust.plane.mapper.mapper.UserMapper;
+import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.TaskExample;
 import hust.plane.mapper.pojo.TaskExample.Criteria;
@@ -255,4 +256,13 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskMapper.getTaskByName(name);
         return task;
     }
+
+	@Override
+	public List<Task> getFlyingPathByFlyingId(Integer id) {
+		TaskExample example = new TaskExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andFlyingpathIdEqualTo(id);
+		List<Task> list = taskMapper.selectByExample(example);
+		return list.size()>0?list:null;
+	}
 }
