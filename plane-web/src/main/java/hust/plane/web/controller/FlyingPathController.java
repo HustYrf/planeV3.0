@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Route;
+import hust.plane.mapper.pojo.Task;
 import hust.plane.service.interFace.FlyingPathService;
 import hust.plane.service.interFace.RouteService;
+import hust.plane.service.interFace.TaskService;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.JsonView;
@@ -29,6 +31,9 @@ public class FlyingPathController {
 	
 	@Autowired
 	public RouteService routeServiceImpl;
+
+	@Autowired
+	public TaskService taskServiceImpl;
 
 	/*@Autowired
 	private AirportService airportServiceImpl;*/
@@ -116,14 +121,22 @@ public class FlyingPathController {
 	@RequestMapping(value = "/deletePlanePath", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String deletePlanePath(FlyingPath flyingPath) {
-		
-	if(flyingPath.getId()!=null) {
-		if(flyingPathServiceImpl.deleteFlyingPath(flyingPath)) {
-			return new JsonView(0,"SUCCESS","删除成功").toString();
+		if(flyingPath.getId()!=null) {
+			//查询所有的任务中是否含有该飞行路径
+			List<Task> list =taskServiceImpl.getFlyingPathByFlyingId(flyingPath.getId());
+			if(list!=null)
+			{
+				return new JsonView(0,"SUCCESS","任务中有该条飞行路径,删除失败").toString();
+			}
+			else {
+				if(flyingPathServiceImpl.deleteFlyingPath(flyingPath)) {
+					return new JsonView(0,"SUCCESS","删除成功").toString();
+				}
+				return new JsonView(0,"SUCCESS","删除失败").toString();
+			}
 		}
-		return new JsonView(0,"SUCCESS","删除失败").toString();
-	}
-	  return new JsonView(0,"SUCCESS","未传入飞行路径编号,删除失败").toString();
+		return new JsonView(0,"SUCCESS","未传入飞行路径编号,删除失败").toString();
+
 	}
 	
 }

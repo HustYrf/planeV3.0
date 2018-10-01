@@ -11,6 +11,7 @@ import hust.plane.mapper.mapper.FlyingPathMapper;
 import hust.plane.mapper.mapper.TaskMapper;
 import hust.plane.mapper.mapper.UavMapper;
 import hust.plane.mapper.mapper.UserMapper;
+import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.TaskExample;
 import hust.plane.mapper.pojo.TaskExample.Criteria;
@@ -18,7 +19,6 @@ import hust.plane.mapper.pojo.User;
 import hust.plane.service.interFace.TaskService;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.TaskPojo;
-import sun.plugin.javascript.navig4.Link;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -142,15 +142,10 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-
-
     @Override
     public boolean setStatusTaskByTask(Task task, int status) {
 
         task.setStatus(status);
-        if(status ==14){    // 如果是状态 14 的话，那就先把任务变成完成状态
-
-        }
         if (taskMapper.updateStatusByTask(task) == 1)
             return true;
         else
@@ -174,15 +169,6 @@ public class TaskServiceImpl implements TaskService {
             return true;
         else
             return false;
-    }
-
-    @Override
-    public boolean setTaskOver(Task task) {
-       if(taskMapper.setTaskOver(task)==1){
-           return true;
-       }else{
-           return false;
-       }
     }
 
     @Override
@@ -270,6 +256,15 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskMapper.getTaskByName(name);
         return task;
     }
+
+	@Override
+	public List<Task> getFlyingPathByFlyingId(Integer id) {
+		TaskExample example = new TaskExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andFlyingpathIdEqualTo(id);
+		List<Task> list = taskMapper.selectByExample(example);
+		return list.size()>0?list:null;
+	}
 
     @Override
     public List<Task> getAllTaskByRole(Task task) {
