@@ -390,6 +390,13 @@ public class TaskController {
 	public String cancelTask(Task task) {
 
 		if (taskServiceImpl.setTaskOver(task) == true) {
+			Task task2 = taskServiceImpl.getTaskByTask(task);
+			User userA = userServiceImpl.getUserById(task2.getUserA());
+			User userZ = userServiceImpl.getUserById(task2.getUserZ());
+
+			userServiceImpl.reduceTasknumByUser(userA); // 减少az任务数目
+			userServiceImpl.reduceTasknumByUser(userZ);
+
 			return JsonView.render(1, "任务已取消！");
 		} else {
 			return JsonView.render(1, "任务取消失败！");
@@ -406,6 +413,18 @@ public class TaskController {
 			return JsonView.render(1, "已驳回，不可放飞");
 		} else {
 			return JsonView.render(1, "驳回失败,请重试!");
+		}
+	}
+
+	// 重启任务
+	@RequestMapping(value = "reStartTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String reStartTask(Task task) {
+
+		if (taskServiceImpl.setStatusTaskByTask(task, 2) == true) {// 设置任务分派
+			return JsonView.render(1, "任务已重启，已分派到指定人员！");
+		} else {
+			return JsonView.render(1, "任务重启失败，请重试!");
 		}
 	}
 
@@ -432,7 +451,7 @@ public class TaskController {
 		User userZ = userServiceImpl.getUserById(task2.getUserZ());
 		if (taskServiceImpl.setStatusTaskByTask(task2, 2) == true) {// 设置任务分派
 			
-			task2.setImgfolder("taskimg-"+task2.getId());  //图片文件夹命名
+			task2.setImgfolder(""+task2.getId());  //图片文件夹命名，直接使用任务的id命名即可
 			taskServiceImpl.updataImgFolderByTask(task2);  //写入数据库
 			
 			userServiceImpl.updataTasknumByUser(userA); // 增加az任务数目
