@@ -13,12 +13,12 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li class="dropdown user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <#if Session["login_user"]?exists>
+                        <#if Session["login_user"].icon ? exists>
                             <img alt="头像" src=${Session["login_user"].icon} style="width:40px;height:40px;margin-right: 5px;"">
                         <#else>
                             <img alt="头像" src="${s.base}/res/i/header.jpg" style="width:40px;height:40px;margin-right: 5px;"">
                         </#if>
-						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname}</#if></span>
+						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname!}</#if></span>
 						<i class="icon-angle-down"></i>
                     </a>
 

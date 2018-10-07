@@ -77,7 +77,11 @@ public class UserServiceImpl implements UserService {
         }
         int usernameCount = userDao.selectByUserName(username);
         if (usernameCount == 1) {
-            throw new TipException("该用户名已经存在");
+            throw new TipException("该用户名已经存在!");
+        }
+        int worknumberCount = userDao.countByWorkNumber(worknumber);
+        if(worknumberCount >= 1){
+            throw new TipException("该工号已使用！");
         }
         User user = new User();
         user.setName(username);

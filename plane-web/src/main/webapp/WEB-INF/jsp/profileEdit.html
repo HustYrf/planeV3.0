@@ -212,10 +212,6 @@
         App.init();
     });
 
-    function showUserList() {
-        window.location.reload();
-    }
-
     //初始化验证规则函数
     $("#modify").on("click", function () {
         //获取表单对象
@@ -233,7 +229,7 @@
                 success: function (result) {
                     $("#resText").text(result.message);
                     Modal.show('_ocDialogModal');
-                    setTimeout(showUserList, 5000);
+                    setTimeout("window.location.reload()", 2000);
 
                 }, error: function () {
                     $("#resText").text("出错了，请重试!");

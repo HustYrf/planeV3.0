@@ -169,35 +169,34 @@
                                             <div class="controls">
                                                 <div class="select2-wrapper">
                                                     <select id="uavId" class="span8" name="uavName" type="select">
-                                            <#if taskvo.uavName??>
-                                                <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
-                                            <#else>
-                                                <#if uavs?? && uavs?size gt 0>
-                                                    <#list uavs as uav>
-                                                    <option value="${uav.id!}">${uav.name!}</option>
-                                                    </#list>
-                                                </#if>
-                                            </#if>
+                                                        <#if taskvo.uavName??>
+                                                            <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
+                                                        </#if>
+                                                        <#if uavs?? && uavs?size gt 0>
+                                                            <#list uavs as uav>
+                                                            <option value="${uav.id!}">${uav.name!}</option>
+                                                            </#list>
+                                                        </#if>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="control-group">
-                                            <label class="control-label">选择飞行路径</label>
+                                            <label class="control-label">飞行路径</label>
                                             <div class="controls">
                                                 <div class="select2-wrapper">
                                                     <select  id="flyingpathid" class="span8" name="flyingpathId" type="select">
-                                               <#if flyingPath.name??>
-                                                   <option value="${flyingPath.id!}" selected>${flyingPath.name!}</option>
-                                               <#elseif taskvo.planepathid??>
-                                                    <option value="${taskvo.planepathid!}" selected>${taskvo.flyingpathName!}</option>
-                                               </#if>
-                                                <#if planePaths?? && planePaths?size gt 0>
-                                                    <#list planePaths as planePath>
-                                                    <option value="${planePath.id!}">${planePath.name!}</option>
-                                                    </#list>
-                                                </#if>
+                                                       <#if flyingPath.id ??>
+                                                           <option value="${flyingPath.id!}" >${flyingPath.name!}111</option>
+                                                       <#elseif taskvo.flyingpathId ??>
+                                                            <option value="${taskvo.flyingpathId!}" selected>${taskvo.flyingpathName!}</option>
+                                                       </#if>
+                                                       <#if planePaths?? && planePaths?size gt 0>
+                                                            <#list planePaths as planePath>
+                                                                <option value="${planePath.id!}">${planePath.name!}</option>
+                                                            </#list>
+                                                        </#if>
                                                     </select>
                                                 </div>
                                             </div>
@@ -210,7 +209,7 @@
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
                                             </div>
-                                            <input type="hidden" id="planstarttime" value="${taskvo.planendtime?datetime!}" />
+                                            <input type="hidden" id="planstarttime" value="${taskvo.planstarttime?datetime!}" />
                                         </div>
 
                                         <div class="control-group">
@@ -237,9 +236,7 @@
                                         </div>
 
                                     </form>
-
                                     <!-- END FORM-->
-
                                 </div>
 
                             </div>
@@ -281,7 +278,6 @@
             forceParse: 0,
             showMeridian: 1
         });
-
         App.init();
 
     }
@@ -314,9 +310,12 @@
 		var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
 
-        if(planstarttime > planendtime){
+        var startDate=new Date(planstarttime.replace("-","/"));
+        var endDate=new Date(planendtime.replace("-","/"));
+
+        if(startDate >= endDate){
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间大于任务计划完成时间！请重新设置！";
+            document.getElementById("resText").innerHTML="任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
             return;
         }
 
@@ -372,9 +371,12 @@
         var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
 
-        if(planstarttime > planendtime){
+        var startDate=new Date(planstarttime.replace("-","/"));
+        var endDate=new Date(planendtime.replace("-","/"));
+
+        if(startDate >= endDate){
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间大于任务计划完成时间！请重新设置！";
+            document.getElementById("resText").innerHTML="任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
             return;
         }
 

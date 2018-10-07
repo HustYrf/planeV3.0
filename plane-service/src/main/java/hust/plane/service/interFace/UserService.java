@@ -25,7 +25,6 @@ public interface UserService {
 
 //    int modifyUserRoleAndDes(Integer userid, String role, String descripte);
 
-
 //    TailPage<User> getUserByRoleOrIdWithPage(String searchUserStatus, String searchUserId, TailPage<User> page);
 
     boolean updataTasknumByUser(User user);

@@ -150,7 +150,7 @@
                                            <#if taskpojo.task.status==-1 >
                                                <#if !Session["super_administrator"]?exists>
                                             <button type="button" class="btn green" onclick="reStartTask(${taskpojo.task.id!})">重启</button>
-                                           <button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>
+                                           <#--<button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>-->
                                                <#else>
                                              <span class="label label-warning">无操作权限</span>
                                                </#if>

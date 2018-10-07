@@ -139,6 +139,7 @@ public class IndexController {
 	public String doRegister(@RequestParam String name, @RequestParam String password, @RequestParam String worknumber,
 			HttpServletRequest request, HttpSession session) {
 		try {
+
 			int count = userService.register(name, password, worknumber);
 			if (count < 0) {
 				return JsonView.render(1, "注册失败，请重新注册");
