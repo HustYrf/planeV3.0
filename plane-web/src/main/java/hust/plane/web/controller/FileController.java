@@ -1,12 +1,16 @@
 package hust.plane.web.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,35 @@ public class FileController {
 
 	@Autowired
 	private FileService FileServiceImpl;
+
+
+	//提供 app下载
+	@RequestMapping("AppDownload")
+	public void AppDownLoads(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+		String 	basepath = request.getSession().getServletContext().getRealPath("");
+		//String basepath = request.getSession().getServletContext().getRealPath("/WEB-INF/ftl"); 
+		File file = null;
+		InputStream fin = null;
+		ServletOutputStream out = null;
+		try {
+			response.setContentType(request.getSession().getServletContext().getMimeType(basepath +file.separator+ "TelUAV.apk"));
+			response.setHeader("Content-Disposition", "attachment;filename=TelUAV.apk");
+
+			file = new File(basepath +file.separator+ "NewTestPhone.apk");
+			fin = new FileInputStream(file);
+			out = response.getOutputStream();
+			byte[] buffer = new byte[1024];  // 缓冲区
+			int bytesToRead = -1;
+			// 通过循环将读入的excel文件的内容输出到浏览器中
+			while((bytesToRead = fin.read(buffer)) != -1) {
+				out.write(buffer, 0, bytesToRead);
+			}
+		} finally {
+			if(fin != null) fin.close();
+			if(out != null) out.close();
+		}
+	}
 
 	// 导入路由功能
 	@RequestMapping(value = "routeFileImport", produces = "application/json;charset=utf-8", method = RequestMethod.POST)

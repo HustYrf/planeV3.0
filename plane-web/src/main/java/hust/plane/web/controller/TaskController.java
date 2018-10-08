@@ -95,15 +95,15 @@ public class TaskController {
             Uav uav = new Uav();
             uav.setId(task1.getUavId());
             Uav uav1 = uavServiceImpl.getPlaneByPlane(uav);
-            List<Alarm> alarmWitIdList = alarmService.getAlarmsByTaskId(task1.getId());
+            List<Alarm> alarmWithIdList = alarmService.getAlarmsByTaskId(task1.getId());
 
             FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task1.getFlyingpathId());
             FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
             flyingPathVOList.add(flyingPathVO);           //添加数据
 
-            for (int i = 0; i < alarmWitIdList.size(); i++) {
+            for (int i = 0; i < alarmWithIdList.size(); i++) {
 
-                AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarmWitIdList.get(i));
+                AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarmWithIdList.get(i));
                 alarmDetailVO.setUav(uav1);
                 //设置来自图片服务器的数据
                 alarmDetailVO.setImage(BASE_IMAGE_URL + IMAGE_ALARM + alarmDetailVO.getImage());
