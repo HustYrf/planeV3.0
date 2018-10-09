@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     int countByExample(UserExample example);
 
+    int countByWorkNumber(String worknumber);
+
     int deleteByExample(UserExample example);
 
     int deleteByPrimaryKey(Integer id);

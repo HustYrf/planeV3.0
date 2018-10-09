@@ -66,7 +66,6 @@ public class RouteController {
         } finally {
             if(fin != null) fin.close();
             if(out != null) out.close();
-           
         }
 				
 	}

@@ -121,6 +121,15 @@
                                                 </div>
                                             </div>
 
+                                            <div class="control-group form-group has-feedback">
+                                                <label for="worknumber" class="col-sm-2 control-label">工号</label>
+                                                <div class="controls">
+                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                                                    <input type="text" class="m-wrap span4" name="worknumber"
+                                                           id="worknumber" value="${user.worknumber!}" maxlength="20" disabled>
+                                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                                </div>
+                                            </div>
 
                                             <div class="control-group form-group has-feedback">
                                                 <label for="nickname" class="control-label">昵称</label>
@@ -129,16 +138,6 @@
                                                     <input type="text" class="m-wrap span4" name="nickname"
                                                            id="nickname" value="${user.nickname!}" maxlength="20">
                                                     <span class="glyphicon glyphicon-user form-control-feedback" ></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="worknumber" class="col-sm-2 control-label">工号</label>
-                                                <div class="controls">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
-                                                    <input type="text" class="m-wrap span4" name="worknumber"
-                                                           id="worknumber" value="${user.worknumber!}" maxlength="20">
-                                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                                 </div>
                                             </div>
 
@@ -212,10 +211,6 @@
         App.init();
     });
 
-    function showUserList() {
-        window.location.reload();
-    }
-
     //初始化验证规则函数
     $("#modify").on("click", function () {
         //获取表单对象
@@ -233,7 +228,7 @@
                 success: function (result) {
                     $("#resText").text(result.message);
                     Modal.show('_ocDialogModal');
-                    setTimeout(showUserList, 5000);
+                    setTimeout("window.location.reload()", 2000);
 
                 }, error: function () {
                     $("#resText").text("出错了，请重试!");

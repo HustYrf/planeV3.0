@@ -196,11 +196,7 @@
             margin-left: 20px;
         }
 
-        #alertDiv {
-            display: none;
-        }
-        
-        
+
 		.tooltip-inner{
 		  
 		   background: #fafafa !important;
@@ -219,8 +215,6 @@
 		   margin-left:130px;	   
 		   opacity: 0.8 !important;
 		 }
-
-              
 
     </style>
          
@@ -254,7 +248,10 @@
                     <button type="button" class="btn btn-default" id="register">注册</button>
                     <button type="button" class="btn btn-default" id="login">登录</button>
                 </div>
-                <div id="alertDiv">
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <span class="text"><a href="${s.base}/AppDownload.action" style="cursor:pointer;color:red;font-size:1.6rem;text-decoration:underline;">无人机智能巡检APP下载</a></span>
+                </div>
+                <div id="alertDiv" style="display: none;">
                 </div>
             </form>
 

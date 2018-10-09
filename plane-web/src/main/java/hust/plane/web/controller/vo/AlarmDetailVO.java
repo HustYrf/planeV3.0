@@ -16,6 +16,9 @@ public class AlarmDetailVO {
     private String createTime;
     private String updateTime;
 
+
+    private String infoname;
+
     private List<Double> position;
     private String taskName;
     private String flyingPathName;
@@ -61,6 +64,9 @@ public class AlarmDetailVO {
         }
         if (alarm.getUpdatetime() != null) {
             this.updateTime = DateKit.dateFormat(alarm.getUpdatetime(), "yyyy/MM/dd HH:mm:ss");
+        }
+        if(alarm.getInfoname()!=null){
+            this.infoname = alarm.getInfoname();
         }
     }
     public String getUserCreatorName() {
@@ -157,4 +163,13 @@ public class AlarmDetailVO {
     public void setUavDeviceId(String uavDeviceId) {
         this.uavDeviceId = uavDeviceId;
     }
+
+    public String getInfoname() {
+        return infoname;
+    }
+
+    public void setInfoname(String infoname) {
+        this.infoname = infoname;
+    }
+
 }

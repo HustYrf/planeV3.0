@@ -110,7 +110,8 @@ public class AlarmController {
 
         AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
         //设置从文件服务器查看图片
-        //alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
+        alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
+
         alarmDetailVO.setUav(uav1);
 
         alarmDetailVO.setTaskName(task1.getName());

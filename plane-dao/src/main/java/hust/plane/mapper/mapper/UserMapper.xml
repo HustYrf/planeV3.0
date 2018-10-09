@@ -557,9 +557,12 @@
         from K_User
         where Name=#{param1}
     </select>
-
+    <select id="countByWorkNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from K_User
+        where WorkNumber = #{worknumber,jdbcType=VARCHAR}
+    </select>
     <select id="selectCountByFuzzyName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(1) from K_User
+        select count(*) from K_User
         where Name LIKE concat('%',#{Name},'%')
     </select>
    <select id="getUserByName" parameterType="java.lang.String" resultType="hust.plane.mapper.pojo.User">
