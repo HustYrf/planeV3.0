@@ -196,7 +196,7 @@
     <div id="alertAuthorityDiv"></div>
     <div class="modal-footer">
         <button class="btn blue" name="userAuth" id="modifyAuthority">修改</button>
-        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true" onclick="reload()">关闭</button>
     </div>
 </div>
 <!--用户用户组绑定-->
@@ -318,6 +318,10 @@
     });
 </script>
 <script type="text/javascript">
+    function reload() {
+        window.location.reload();
+    }
+
     function showAlert(message) {
         var alertitem = document.getElementById("alertDiv");
         var innHTMl = '<div class="alert alert-danger alert-dismissable" id="alerth">' + message + '</div>';
@@ -333,6 +337,12 @@
     function showAlert2(message) {
         var authorityItem = document.getElementById('alertAuthorityDiv');
         var innHTML = '<div class="alert alert-success alert-dismissable" id="alerth2">' + message + '</div>';
+        authorityItem.innerHTML = innHTML;
+        authorityItem.style.display = "block";
+    }
+    function showAlert3(message) {
+        var authorityItem = document.getElementById('alertAuthorityDiv');
+        var innHTML = '<div class="alert alert-danger alert-dismissable" id="alerth3">' + message + '</div>';
         authorityItem.innerHTML = innHTML;
         authorityItem.style.display = "block";
     }
@@ -398,7 +408,8 @@
                     showAlert2("用户组绑定成功!");
                     setTimeout(showUserList, 2000);
                 } else {
-                    showAlert2(result.message);
+                    showAlert3(result.message);
+                    setTimeout(showUserList, 5000);
                 }
             }
         })

@@ -1,5 +1,6 @@
 package hust.plane.service.impl;
 
+import hust.plane.mapper.mapper.UserMapper;
 import hust.plane.mapper.mapper.User_has_GroupKeyMapper;
 import hust.plane.service.interFace.UserGroupService;
 import hust.plane.utils.pojo.TipException;
@@ -16,6 +17,8 @@ public class UserGroupServiceImpl implements UserGroupService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserGroupServiceImpl.class);
     @Resource
     private User_has_GroupKeyMapper userHasGroupKeyMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public List<Integer> selectGroupIdWithUserId(int id) {
@@ -38,6 +41,10 @@ public class UserGroupServiceImpl implements UserGroupService {
     public int updateAuthorityWithUserId(Integer id, List<String> authorityList) {
         if (id == null || authorityList == null || authorityList.size() == 0) {
             throw new TipException("用户组设定异常");
+        }
+        int taskNum = userMapper.selectByPrimaryKey(id).getTasknum();
+        if(taskNum!=0&&!authorityList.contains("ipqc")){
+            throw new TipException("该用户有未完成巡视任务，无法取消巡视员身份！");
         }
         List<Integer> groupList = userHasGroupKeyMapper.getGroupIdByUserId(id.intValue());
         if (groupList.size() > 0) {
