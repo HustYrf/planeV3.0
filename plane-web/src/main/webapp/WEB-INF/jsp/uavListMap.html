@@ -86,7 +86,7 @@
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
 
-                data = ${planelist};
+                data = ${planelist!};
                 //创建地图
                 var map = new AMap.Map('container', {
                     zoom: 15,
@@ -146,8 +146,9 @@
                     var title = '无人机名称:<span>' + data[i].name + '</span>';
                     var content = [];
                     content.push("状态：" + statusDec);
+                    content.push("设备id：" + data[i].deviceid);
                     content.push("描述：" + data[i].description);
-                    content.push("创建时间：" + data[i].updatetime);
+                    content.push("更新时间：" + data[i].updatetime);
 
                     markeritem.content = createInfoWindow(title, content.join("<br/>"));
                     markeritem.on('click', markerClick);
@@ -183,7 +184,8 @@
                     for (var j = 0; j < data.length; j++) {
                         if (flaglist.indexOf(data[j].status) >= 0) {
                             var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机名称：'
-                                    + data[j].name + '&nbsp;&nbsp;状态：' + Statusdec[data[j].status]
+                                    + data[j].name + '&nbsp;&nbsp;&nbsp;&nbsp;状态：' + Statusdec[data[j].status]
+                                    +'<br>设备id：'+data[j].deviceid
                                     + '<br>更新时间：' + data[j].updatetime
                                     + '<br>描述：' + data[j].description
                                     + '<br>SIM卡1：' + data[j].phoneone

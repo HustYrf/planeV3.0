@@ -18,14 +18,14 @@
 #panel {
     position: absolute;
     right: 0;
-    width: 280px;
+    width: 290px;
     z-index: 199;
     right: 10px;
     overflow: auto;
     border-left: 1px solid #eaeaea;
     background: #fff;
     padding-top: 10px;
-    max-height: 620px;
+    max-height: 700px;
 }
 
 #my-list {
