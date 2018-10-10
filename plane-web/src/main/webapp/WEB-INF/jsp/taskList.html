@@ -138,7 +138,7 @@
                                                 <#elseif taskpojo.task.status == 9><span class="label label-success">飞行中</span>
                                                 <#elseif taskpojo.task.status == 10><span class="label label-success">无人机到达</span>
                                                 <#elseif taskpojo.task.status == 11><span class="label label-success">传图识别中</span>
-                                                <#elseif taskpojo.task.status == 12><span class="label label-success">识别完成</span>
+                                                <#elseif taskpojo.task.status == 12><span class="label label-success">识别完成&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                                 <#elseif taskpojo.task.status == 13><span class="label label-success">完成任务</span>
                                                 <#elseif taskpojo.task.status == 14><span class="label label-success">已归档</span>
                                                 </#if>
@@ -173,7 +173,7 @@
                                             </#if>
 
                                             <#if taskpojo.task.status==10>
-                                                <#--<#if !Session["super_administrator"]?exists>-->
+                                            <#if !Session["super_administrator"]?exists>
                                             <button type="button" class="btn blue start" onclick="uploadPic(${taskpojo.task.id!})">
                                                 <i class="icon-upload icon-white"></i>
                                                 <span>传图</span></button>
@@ -181,9 +181,9 @@
                                             <button type="button" class="btn red delete" onclick="recongizePic(${taskpojo.task.id!})">
                                                 <i class="icon-camera icon-white"></i>
                                                 <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span></button>
-                                                <#--<#else>-->
-                                            <#--<span class="label label-warning">无操作权限</span>-->
-                                                <#--</#if>-->
+                                                <#else>
+                                           <span class="label label-warning">无操作权限</span>
+                                               </#if>
                                             </#if>
 
 	                                		<#if taskpojo.task.status==7>
@@ -200,6 +200,9 @@
                                             <span class="label label-warning">无操作权限</span>
                                                 </#if>
                                             <#elseif taskpojo.task.status==12 || taskpojo.task.status==13>
+                                            <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
+                                            <i class="icon-exclamation-sign"></i>
+                                            <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
                                             <button type="button" class="btn red" onclick="alarmMap('${s.base}/alarmWithId.action?id=${taskpojo.task.id!}')">任务告警
                                             </button>
                                             <#elseif taskpojo.task.status=14>
@@ -515,12 +518,16 @@
         Modal.show('deleltconfirmModel');
     }
 
+    function  taskAlarm(taskid) {
+        window.location.href="${s.base}/alarmWithId.action?id="+taskid;
+    }
+
     function onsureTaskOver(taskid){
         $.ajax({
             type: "post",
             url: "${s.base}/onsureTaskOver.action",
             data: {
-                'id': taskid,
+                'id': taskid
             },
             success: function (result) {
                 if (result.errcode == 1 ){

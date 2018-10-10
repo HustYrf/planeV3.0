@@ -165,7 +165,6 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h4 id="myModalLabel4">用户组绑定</h4>
-
     </div>
     <div class="modal-body">
         <form class="form-horizontal" id="userAuthorityModify" method="post" enctype="multipart/form-data">
@@ -197,7 +196,7 @@
     <div id="alertAuthorityDiv"></div>
     <div class="modal-footer">
         <button class="btn blue" name="userAuth" id="modifyAuthority">修改</button>
-        <button class="btn red" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn red" data-dismiss="modal" aria-hidden="true" onclick="reload()">关闭</button>
     </div>
 </div>
 <!--用户用户组绑定-->
@@ -233,8 +232,9 @@
                             <div class="caption"><i class="icon-edit"></i>用户列表</div>
                         </div>
                         <div class="portlet-body">
-
+                            <#if !Session[ "super_administrator"]?exists>
                                 <div class="btn-group"><button id="sample_editable_1_new" class="btn green" href="#myModal1" data-toggle="modal"> <i class="icon-plus"></i>新增用户</button></div>
+                            </#if>
                                 <div class="" style="float: right;">
                                     <select name="GroupId" class="select-container" style="margin-bottom: 3px;">
                                         <option value=0>全部</option>
@@ -318,6 +318,10 @@
     });
 </script>
 <script type="text/javascript">
+    function reload() {
+        window.location.reload();
+    }
+
     function showAlert(message) {
         var alertitem = document.getElementById("alertDiv");
         var innHTMl = '<div class="alert alert-danger alert-dismissable" id="alerth">' + message + '</div>';
@@ -333,6 +337,12 @@
     function showAlert2(message) {
         var authorityItem = document.getElementById('alertAuthorityDiv');
         var innHTML = '<div class="alert alert-success alert-dismissable" id="alerth2">' + message + '</div>';
+        authorityItem.innerHTML = innHTML;
+        authorityItem.style.display = "block";
+    }
+    function showAlert3(message) {
+        var authorityItem = document.getElementById('alertAuthorityDiv');
+        var innHTML = '<div class="alert alert-danger alert-dismissable" id="alerth3">' + message + '</div>';
         authorityItem.innerHTML = innHTML;
         authorityItem.style.display = "block";
     }
@@ -398,7 +408,8 @@
                     showAlert2("用户组绑定成功!");
                     setTimeout(showUserList, 2000);
                 } else {
-                    showAlert2(result.message);
+                    showAlert3(result.message);
+                    setTimeout(showUserList, 5000);
                 }
             }
         })

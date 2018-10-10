@@ -348,38 +348,53 @@ public class UserServiceImpl implements UserService {
             List<User> userList = new ArrayList<>();
             if (userName.length() == 4) {
                 User userByName = userDao.selectUserByUserName(userName);
-                if (userByName == null) {
-                    userName = userName.substring(0, 3);
-                } else {
+                if (userByName != null) {
+                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if(groupId==null||groupList.contains(groupId)){
                     userList.add(userByName);
                     page.setItemsTotalCount(1);
+                    }
+                } else {
+                    userName = userName.substring(0, 3);
                 }
             }
             if (userName.length() == 3) {
                 User userByName = userDao.selectUserByUserName(userName);
-                if (userByName == null) {
-                    userName = userName.substring(0, 2);
+                if (userByName != null) {
+                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if(groupId==null||groupList.contains(groupId)) {
+                        userList.add(userByName);
+                        page.setItemsTotalCount(1);
+                    }
                 } else {
-                    userList.add(userByName);
-                    page.setItemsTotalCount(1);
+                    userName = userName.substring(0, 2);
                 }
             }
             if (userName.length() == 2) {
                 User userByName = userDao.selectUserByUserName(userName);
-                if (userByName == null) {
-                    userName = userName.substring(0, 1);
+                if (userByName != null) {
+                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if(groupId==null||groupList.contains(groupId)) {
+                        userList.add(userByName);
+                        page.setItemsTotalCount(1);
+                    }
                 } else {
-                    userList.add(userByName);
-                    page.setItemsTotalCount(1);
+                    userName = userName.substring(0, 1);
                 }
             }
             if (userName.length() == 1) {
-                UserExample example = new UserExample();
-                UserExample.Criteria criteria = example.createCriteria();
-                criteria.andNameLike("%" + userName + "%");
                 int count = userDao.selectCountByFuzzyName(userName);
+                List<User> users = new ArrayList<>(count);
+                users = userDao.selectByFuzzyNameWithPage(userName, page);
+                for(int i=0;i<users.size();i++){
+                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(users.get(i).getId());
+                    if(groupId!=null&&!groupList.contains(groupId)) {
+                        --count;
+                    }else{
+                        userList.add(users.get(i));
+                    }
+                }
                 page.setItemsTotalCount(count);
-                userList = userDao.selectByFuzzyNameWithPage(userName, page);
             }
             List<UserPojo> userVoList = new ArrayList<>();
             if (userList.size() > 0) {
@@ -395,7 +410,7 @@ public class UserServiceImpl implements UserService {
 //            }
             page.setItems(userVoList);
         }
-        return page;
+         return page;
     }
 
     @Override
