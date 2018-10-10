@@ -1,3 +1,4 @@
+
 package hust.plane.web.controller;
 
 import java.io.File;
@@ -45,7 +46,7 @@ public class FileController {
 			response.setContentType(request.getSession().getServletContext().getMimeType(basepath +file.separator+ "TelUAV.apk"));
 			response.setHeader("Content-Disposition", "attachment;filename=TelUAV.apk");
 
-			file = new File(basepath +file.separator+ "NewTestPhone.apk");
+			file = new File(basepath +file.separator+ "NewPhone.apk");
 			fin = new FileInputStream(file);
 			out = response.getOutputStream();
 			byte[] buffer = new byte[1024];  // 缓冲区
@@ -64,7 +65,7 @@ public class FileController {
 	@RequestMapping(value = "routeFileImport", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String importOneFile(@RequestParam(value = "routePathExcel", required = true) MultipartFile[] files,
-			HttpServletRequest request){
+								HttpServletRequest request){
 
 		// 记录有错误的文件名字，并返回前台
 		List<String> errfile = new ArrayList<String>();
@@ -106,7 +107,7 @@ public class FileController {
 		if(errfile.size()>0) {
 			reString = reString + errfile.toString().replace("[", "").replace("]", "")+",等文件导入失败。";
 		}
-		
+
 		return JsonView.render(0, reString);
 	}
 
@@ -119,7 +120,7 @@ public class FileController {
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
 	@ResponseBody
 	public String upload(@RequestParam(value = "files", required = true) MultipartFile[] files,
-			HttpServletRequest request) throws IOException {
+						 HttpServletRequest request) throws IOException {
 
 		// String path = request.getSession().getServletContext().getRealPath("upload");
 		String path = "D:\\upload\\";

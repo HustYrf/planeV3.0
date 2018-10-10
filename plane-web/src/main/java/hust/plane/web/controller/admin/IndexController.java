@@ -51,6 +51,9 @@ public class IndexController {
 	@Value("${USER_DIR}") // 文件夹
 	private String USER_DIR;
 
+	@Value(value = "${uploadHost}")
+	private String FILE_UPLOAD_HOST;
+
 	@Autowired
 	private UserService userService;
 	@Resource
@@ -80,8 +83,8 @@ public class IndexController {
 	@RequestMapping(value = "/login", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String doLogin(@RequestParam String name, @RequestParam String password,
-			@RequestParam(required = false) String remeber_me, HttpServletRequest request,
-			HttpServletResponse response) {
+						  @RequestParam(required = false) String remeber_me, HttpServletRequest request,
+						  HttpServletResponse response) {
 		// 得到缓存中登陆失败的次数
 		Integer error_count = cache.get("login_error_count");
 
@@ -137,7 +140,7 @@ public class IndexController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doRegister(@RequestParam String name, @RequestParam String password, @RequestParam String worknumber,
-			HttpServletRequest request, HttpSession session) {
+							 HttpServletRequest request, HttpSession session) {
 		try {
 
 			int count = userService.register(name, password, worknumber);
@@ -159,7 +162,7 @@ public class IndexController {
 	/**
 	 * 用户退出登陆
 	 *
-	 * @param [request， response, session]
+	 * @param
 	 * @return void
 	 * @author rfYang
 	 * @date 2018/7/3 18:07
@@ -235,8 +238,9 @@ public class IndexController {
 					// 创建jesy服务器，进行跨服务器上传
 					Client client = Client.create();
 					// 把文件关联到远程服务器
-					
-					WebResource resource = client.resource(BASE_IMAGE_URL + USER_DIR + newFileName + suffix);
+
+					WebResource resource = client.resource(FILE_UPLOAD_HOST + USER_DIR + newFileName + suffix);
+					//WebResource resource = client.resource(BASE_IMAGE_URL + USER_DIR + newFileName + suffix);
 					// 上传
 					resource.put(String.class, fbytes);
 					user2.setIcon(newFileName + suffix);
@@ -245,17 +249,17 @@ public class IndexController {
 		}
 
 		user2.setId(user.getId());
-		
+
 		if (userService.updateByUser(user2) == true)
-			//更新session内容
-			{
-			    User user3 = userService.getUserById(user.getId());
-			    user3.setIcon(BASE_IMAGE_URL + USER_DIR + user3.getIcon());
-			    request.getSession().removeAttribute(WebConst.LOGIN_SESSION_KEY);
-			    request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user3);
-			    
-			    return JsonView.render(0, "个人信息修改成功");
-			}
+		//更新session内容
+		{
+			User user3 = userService.getUserById(user.getId());
+			user3.setIcon(BASE_IMAGE_URL + USER_DIR + user3.getIcon());
+			request.getSession().removeAttribute(WebConst.LOGIN_SESSION_KEY);
+			request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user3);
+
+			return JsonView.render(0, "个人信息修改成功");
+		}
 		else
 			return JsonView.render(0, "个人信息修改失败");
 	}
@@ -263,7 +267,7 @@ public class IndexController {
 	@RequestMapping(value = "/doPasswordEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String doEditPwd(@RequestParam String oldpassword, @RequestParam String password,
-			HttpServletRequest request) {
+							HttpServletRequest request) {
 		try {
 			userService.modifyPwd(request, oldpassword, password);
 		} catch (Exception e) {

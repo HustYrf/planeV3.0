@@ -1,7 +1,9 @@
 <!-- 这是页面的header公共部分 -->
 <div class="header navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
-            <a class="brand" href="${s.base}/home.html">无人机通信巡检系统</a>
+            <a class="brand" href="${s.base}/home.html">
+                <img alt="" src="${s.base}/res/i/header.png">
+            </a>
             <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
 				<img src="${s.base}/media/image/menu-toggler.png" alt=""  />
 				</a>
@@ -16,7 +18,7 @@
                         <#if Session["login_user"].icon ? exists>
                             <img alt="头像" src=${Session["login_user"].icon} style="width:40px;height:40px;margin-right: 5px;"">
                         <#else>
-                            <img alt="头像" src="${s.base}/res/i/header.jpg" style="width:40px;height:40px;margin-right: 5px;"">
+                            <img alt="头像" src="${s.base}/res/i/defalutIcon.jpg" style="width:40px;height:40px;margin-right: 5px;"">
                         </#if>
 						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname!}</#if></span>
 						<i class="icon-angle-down"></i>

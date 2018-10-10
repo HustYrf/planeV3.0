@@ -25,6 +25,7 @@
     border-left: 1px solid #eaeaea;
     background: #fff;
     padding-top: 10px;
+    max-height: 620px;
 }
 
 #my-list {
@@ -50,13 +51,17 @@
 }
 
 #planeSelect {
-    padding-left: 20px;
-    padding-bottom: 10px;
     height: 20px;
     line-height: 20px;
+    text-align: center;
 }
-#planeSelect input,span{
+#planeSelect span{
     vertical-align:middle;
+    margin: 2px;
+}
+#planeSelect input{
+    vertical-align:middle;
+    margin: 2px;
 }
 
 #my-list li {

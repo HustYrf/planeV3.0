@@ -324,13 +324,9 @@ Header and header elements.
   margin-right: 0;
   padding-left: 30px;
   padding-right: 0;
-  width: 320px;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 10px;
 }
 
-.header .brand img {
-  margin-left: 20px;
-}
 
 .header .btn-navbar {
   margin-bottom: 0px;

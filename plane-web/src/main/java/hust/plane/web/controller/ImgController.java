@@ -38,11 +38,17 @@ public class ImgController {
     @Value(value = "${BASE_IMAGE_URL}")
     private String uploadHost;    // 项目host路径
 
+    @Value(value = "${uploadHost}")
+    private String FILE_UPLOAD_HOST;
+
+    @Value(value = "${SERVER_NAME}")
+    private String SERVER_NAME;
+
 
     @RequestMapping(value = "/{taskId}")
     public String toPicIndex(@PathVariable(value = "taskId") String taskId, Model model) {
-       // String ImgFolder = taskService.selectImgFolderWithId(Integer.parseInt(taskId));
-    	String ImgFolder = taskId;
+        // String ImgFolder = taskService.selectImgFolderWithId(Integer.parseInt(taskId));
+        String ImgFolder = taskId;
         model.addAttribute("ImgFolder", ImgFolder);
         return "uploadFile";
     }
@@ -97,17 +103,17 @@ public class ImgController {
             List<String> relaPathList = new ArrayList<>();
             List<String> realPathList = new ArrayList<>();
 
-            // 这里新建文件夹，并授予权限,新建文件夹是可以成功的，但是赋予权限失败
+            // 这里新建文件夹，并授予权限,,,在不同的电脑上要修改这部分的配置
             StringBuilder taskFileAddress = new StringBuilder();
-            taskFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+            taskFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
                     .append(File.separator).append("ImageTask").append(File.separator).append(taskDir);//任务文件夹地址
 
             StringBuilder sourceFileAddress = new StringBuilder();
-            sourceFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+            sourceFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
                     .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageResource");//源任务文件夹地址
 
             StringBuilder alarmFileAddress = new StringBuilder();
-            alarmFileAddress.append(File.separator).append("home").append(File.separator).append("gxdx_ai").append(File.separator).append("file-workspace")
+            alarmFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
                     .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageAlarm");//告警任务文件夹地址
 
             File file2 = new File(taskFileAddress.toString());
@@ -157,8 +163,8 @@ public class ImgController {
 
             for (MultipartFile pic : files.values()) {
 
-                String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
-
+                String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
+                //  String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");
                     fileNameList.add(infoList[0]);    //文件名

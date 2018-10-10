@@ -59,10 +59,9 @@
             <div id="container" ></div>
             <div class="portlet box yellow" id="panel" style="margin: 0;">
                 <div class="portlet-title">
-                    <div class="caption"><i class="icon-edit"></i>无人机查看</div>
+                    <div class="caption"><i class="icon-plane"></i>无人机查看</div>
                     <div class="tools">
                         <a href="" class="collapse"></a>
-                        <a href="" class="reload"></a>
                     </div>
                 </div>
                 <div class="portlet-body" >
@@ -102,6 +101,17 @@
                     scale.show();
                 });
 
+                if(location.href.indexOf('&guide=1')!==-1){
+                    map.setStatus({scrollWheel:false})
+                }
+                AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+                    var layerCtrl1 = new BasicControl.LayerSwitcher({
+                        position: 'RB',
+                    });
+                    map.addControl(layerCtrl1);
+                });
+
                 var infoWindow = new AMap.InfoWindow({
                     isCustom: true,
                     offset: new AMap.Pixel(20, -25)
@@ -133,7 +143,7 @@
                     });
 
                     //实例化信息窗体
-                    var title = '无人机编号:<span>' + data[i].name + '</span>';
+                    var title = '无人机名称:<span>' + data[i].name + '</span>';
                     var content = [];
                     content.push("状态：" + statusDec);
                     content.push("描述：" + data[i].description);
@@ -172,7 +182,7 @@
                     }
                     for (var j = 0; j < data.length; j++) {
                         if (flaglist.indexOf(data[j].status) >= 0) {
-                            var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机编号：'
+                            var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机名称：'
                                     + data[j].name + '&nbsp;&nbsp;状态：' + Statusdec[data[j].status]
                                     + '<br>更新时间：' + data[j].updatetime
                                     + '<br>描述：' + data[j].description
