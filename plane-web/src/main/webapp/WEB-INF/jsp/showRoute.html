@@ -22,8 +22,8 @@
                 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
                 <script type="text/javascript">
 
-                    var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
-                    var routeStatusCode = ['一干路由', '二干路由', '混合路由'];
+                    var colors = ['#1ef22a', '#260cff', '#eb0aff'];
+                    var routeStatusCode = ['混合路由','一干路由', '二干路由'];
 
                     var  route =${routedata};
 
@@ -49,7 +49,7 @@
                     var polyline = new AMap.Polyline({
                         map: map,
                         path: route.routepathdata, //设置线覆盖物路径
-                        strokeColor: colors[Number(route.type)], //线颜色, //线颜色
+                        strokeColor: colors[Number(route.type)], //线颜色
                         strokeOpacity: 1, //线透明度
                         strokeWeight: 3, //线宽
                         strokeStyle: "solid", //线样式

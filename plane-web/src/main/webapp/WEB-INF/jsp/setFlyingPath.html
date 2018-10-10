@@ -149,8 +149,10 @@
 <!-- UI组件库 1.0 -->
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 <script type="text/javascript">
-    //var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800', ];
-    var routeStatusCode = ['一干路由', '二干路由', '混合路由'];
+
+    var colors = ['#1ef22a', '#260cff', '#eb0aff'];
+    var routeStatusCode = ['混合路由','一干路由', '二干路由' ]
+    ;
     var routeList = ${routeList};
 
     var targetRouteList = JSON.parse(JSON.stringify(routeList));
@@ -178,19 +180,11 @@
 
     function showrouteList() {
         for (var i = 0; i < targetRouteList.length; i++) {
-            var color="";
-            if (targetRouteList[i].type == '0') {
-                color = '#1ef22a';
-            } else if (targetRouteList[i].type == '1') {
-                color = '#260cff';
-            } else {
-                color = '#eb0aff';
-            }
 
             var polyline = new AMap.Polyline({
                 map: map,
                 path: targetRouteList[i].routepathdata, //设置线覆盖物路径
-                strokeColor: color, //线颜色
+                strokeColor:  colors[Number(targetRouteList[i].type)], //线颜色
                 strokeOpacity: 1, //线透明度
                 strokeWeight: 5, //线宽
                 strokeStyle: "solid", //线样式
