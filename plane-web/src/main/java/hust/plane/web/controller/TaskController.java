@@ -1,5 +1,6 @@
 package hust.plane.web.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -39,10 +40,13 @@ public class TaskController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
     @Value(value = "${BASE_IMAGE_URL}")    //访问图片的地址
     private String BASE_IMAGE_URL;
+
     @Value(value = "${imgPath}")    //后台图片保存地址
     private String imgPath;
+
     @Value(value = "${IMAGE_SOURCE}")    //访问图片的地址
     private String IMAGE_SOURCE;
+
     @Value(value = "${IMAGE_ALARM}")    //后台图片保存地址
     private String IMAGE_ALARM;
 
@@ -105,7 +109,8 @@ public class TaskController {
                 AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarmWithIdList.get(i));
                 alarmDetailVO.setUav(uav1);
                 //设置来自图片服务器的数据
-                alarmDetailVO.setImage(BASE_IMAGE_URL + IMAGE_ALARM + alarmDetailVO.getImage());
+                //                     2113.123.12.12/   ImageTask/       22/        ImageAlarm/      1.jpg
+                alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
                 alarmDetailVO.setTaskName(task1.getName());
                 alarmDetailVO.setFlyingPathName(flyingPath.getName());
                 alarmDetailVO.setUserCreatorName(userCreatorName);
@@ -639,7 +644,7 @@ public class TaskController {
             AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
             alarmDetailVO.setUav(uav1);
             //设置来自图片服务器的数据
-            alarmDetailVO.setImage(BASE_IMAGE_URL + IMAGE_ALARM + alarmDetailVO.getImage());
+            alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
 
             alarmDetailVO.setTaskName(task1.getName());
             alarmDetailVO.setFlyingPathName(flyingPathName);
