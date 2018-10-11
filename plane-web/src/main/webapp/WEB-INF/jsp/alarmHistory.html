@@ -185,12 +185,21 @@
                                     <td>${alarm.createtime!}</td>
                                     <td>${alarm.updatetime!}</td>
                                     <td>
+                                     <#if Session["super_administrator"]?exists>
                                         <#if alarm.status ==0>
                                             <span class="btn mini green">已处理告警 </span>
                                         <#else>
-                                        <button type="button" class="btn mini red" onclick="dealAlarm(${alarm.id})">
+                                        <button type="button" class="btn mini red">
                                             未处理告警  </button>
                                         </#if>
+                                    <#else>
+                                         <#if alarm.status ==0>
+                                         <span class="btn mini green">已处理告警 </span>
+                                         <#else>
+                                         <button type="button" class="btn mini red" onclick="dealAlarm(${alarm.id})">
+                                             未处理告警  </button>
+                                         </#if>
+                                    </#if>
                                     </td>
 
                                     <td><a class="pointer" onclick="showDetail(${alarm.id})">详细信息</a></td>
