@@ -203,11 +203,11 @@
                             content.push("信息点："+alarmList[i].infoname);
                             content.push("描述："+alarmList[i].descripte);
                             content.push("创建者："+alarmList[i].userCreatorName)
-                            content.push("放飞员：：" + alarmList[i].userAName);
+                            content.push("放飞员：" + alarmList[i].userAName);
                             content.push("降落员：" + alarmList[i].userZName);
                             content.push("无人机名称：" + alarmList[i].uavName);
                             content.push("无人机设备编号：" + alarmList[i].uavDeviceId);
-                            content.push("<img src='${s.base}/"+alarmList[i].image+"' class='alarmImg'>");
+                            content.push("<img src=" + alarmList[i].image + " class='alarmImg'>");
                             dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
                             dangerPoint.on('click', markerClick);
 

@@ -3,26 +3,20 @@ package hust.plane.web.controller.vo;
 import hust.plane.mapper.pojo.Alarm;
 import hust.plane.utils.DateKit;
 import hust.plane.utils.PointUtil;
+import org.apache.commons.collections.ArrayStack;
 import sun.misc.BASE64Encoder;
+import sun.net.www.protocol.http.HttpURLConnection;
 
-import java.io.File;
-import java.io.FileInputStream;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmVO {
-	
-	/*private int id;
-	private int taskId;
-	private String imageurl;
-	private List<Double> position;
-	private String description;
-	private Date createtime;
-	private Date updatetime;
-	private int status;
-	private String infoname;
-	private int routeId;*/
-	
 
 	private int id;
 	private String image;
@@ -31,8 +25,9 @@ public class AlarmVO {
 	private String updateTime;
 	private String alongda;
 	private List<Double> positionList;
+	private String infoname;
 
-	
+	public AlarmVO(){}
 	
 	public AlarmVO(Alarm alarm) {
 
@@ -54,6 +49,17 @@ public class AlarmVO {
 			this.positionList = PointUtil.StringPointToList(alarm.getPosition());
 			this.alongda = PointUtil.pointToString(PointUtil.StringPointToList(alarm.getPosition()));
 		}
+		if(alarm.getInfoname()!=null){
+			this.infoname = alarm.getInfoname();
+		}
+	}
+
+	public String getInfoname() {
+		return infoname;
+	}
+
+	public void setInfoname(String infoname) {
+		this.infoname = infoname;
 	}
 
 	public int getId() {
@@ -112,22 +118,72 @@ public class AlarmVO {
 		this.positionList = positionList;
 	}
 
-	public void setImgBaseCode(String webappRoot) {
-
-		String imgFile = webappRoot + File.separator + image; // 获取数据库的数据
-		// System.out.println(imgFile);
-		InputStream in = null;
-		byte[] data = null;
+	public void setImgBaseCode() {
 		try {
-			in = new FileInputStream(imgFile);
-			data = new byte[in.available()];
-			in.read(data);
-			in.close();
-		} catch (Exception e) {
+			//url = new URL("http://218.65.240.246:18089/ImageTask/24/ImageAlarm/alarm1.jpg");
+			URL url = new URL(this.image);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setDoInput(true);
+			connection.setRequestMethod("POST");
+			InputStream inputStream = connection.getInputStream();
+			byte[] data = null;
+			try {
+
+				data = new byte[inputStream.available()];
+				inputStream.read(data,0,inputStream.available());
+
+				inputStream.close();         //关闭所有连接
+				connection.disconnect();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			BASE64Encoder encoder = new BASE64Encoder();
+			this.image = encoder.encode(data);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		BASE64Encoder encoder = new BASE64Encoder();
-		this.image = encoder.encode(data);
-
 	}
+
+	public void setBase(){
+
+		try{
+			URL url = new URL(this.image);
+			//打开一个网络连接
+			HttpURLConnection httpURL = (HttpURLConnection)url.openConnection();
+			//设置网络连接超时时间
+			httpURL.setConnectTimeout(3000);
+			//设置应用程序要从网络连接读取数据
+			httpURL.setDoInput(true);
+			//设置请求方式
+			httpURL.setRequestMethod("GET");
+			//获取请求返回码
+			int responseCode = httpURL.getResponseCode();
+			InputStream ins;
+			if(responseCode == 200){
+				//如果响应为“200”，表示成功响应，则返回一个输入流
+				ins = httpURL.getInputStream();
+				byte[] data = new byte[10240000];
+				byte[] temp = new byte[1024];
+				int index = 0;
+				int len = 0;
+				while((len = ins.read(temp)) > 0){
+					System.arraycopy(temp,0,data,index,len);
+					index = index + len;
+				}
+				byte[] im = new byte[index];
+				System.arraycopy(data,0,im,0,index);
+				ins.close();
+				BASE64Encoder encoder = new BASE64Encoder();
+				this.image = encoder.encode(im);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+		}
+	}
+
+
 }
