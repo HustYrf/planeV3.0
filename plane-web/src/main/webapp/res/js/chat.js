@@ -10,8 +10,8 @@ var WebSocketUtil = {
 	timeOuter : null,
 	isActive : true,
 	connect : function() {
-		
-		WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+		//部署的时候该ip改成本机地址
+		WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
 		WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
 		WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
 		WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;
