@@ -1,3 +1,4 @@
+var angle = 0;//定义全局变量飞机角度，待验证
 var WebTypeUtil=
 {
 		WEBUSERLOGIN:"web@login",
@@ -83,15 +84,25 @@ var PlaneHandleServiceUtil ={
 	        var value2=mes[1]*1;
 	        data[0] = value;
 	        data[1] = value2;
+	        //新加入start，待验证
+	        var prePosition = planeMarker.getPosition();//上一个marker的位置
+            var preLongitude = prePosition.lng;//前一个点的经度
+            var preLatitude = prePosition.lat;//前一个点的纬度
+            var currentLongitude = lon;//当前一个点的经度
+            var currentLatitude = lat;//当前一个点的纬度
+			//新加入end，待验证
 			map.remove(planeMarker);
-						
+            //新加入start，待验证
+			getPlaneAngle(preLongitude,preLatitude,currentLongitude,currentLatitude);
+            //新加入end，待验证
     	   planeMarker = new AMap.Marker({
                 //map: map,
                 position:  data,
                 icon: new AMap.Icon({
-                size: new AMap.Size(32, 32), //图标大小
+                size: new AMap.Size(64,64), //图标大小
                 image: "i/fly-32.png",
-                offset: new AMap.Pixel(-16, -16) ,// 相对于基点的偏移位置
+                angle:angle,//新加入，待验证
+                offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
                 }),
             });
 		    map.setCenter(data); 
@@ -103,4 +114,24 @@ var HomeChatOperateUtil = {
 	ready : function(){
 		WebSocketUtil.connect();
 	}
+}
+//新加入，待验证
+function getPlaneAngle(preLongitude,preLatitude,currentLongitude,currentLatitude){
+    $.ajax({
+        type: "post",
+        url: "${s.base}/getPlaneAngle.action",
+        data:{
+            "preLongitude":preLongitude,
+            "preLatitude":preLatitude,
+            "currentLongitude":currentLongitude,
+			"currentLatitude":currentLatitude
+		},
+        success: function (result) {
+            if (result.errcode == 0 && result.message == "SUCCESS") {
+                angle = result.data;
+            } else {
+                alert(result.message);
+            }
+        }
+    });
 }
