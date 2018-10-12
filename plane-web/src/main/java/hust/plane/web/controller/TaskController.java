@@ -426,6 +426,25 @@ public class TaskController {
         }
     }
 
+    // 归档任务
+    @RequestMapping(value = "finishTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String finishTask(Task task) {
+
+        if (taskServiceImpl.setTaskOver(task) == true) {
+            Task task2 = taskServiceImpl.getTaskByTask(task);
+            User userA = userServiceImpl.getUserById(task2.getUserA());
+            User userZ = userServiceImpl.getUserById(task2.getUserZ());
+
+            userServiceImpl.reduceTasknumByUser(userA); // 减少az任务数目
+            userServiceImpl.reduceTasknumByUser(userZ);
+
+            return JsonView.render(1, "任务已归档！");
+        } else {
+            return JsonView.render(1, "任务归档失败，请重试!");
+        }
+    }
+
     // 任务分派
     @RequestMapping(value = "assignTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -473,7 +492,7 @@ public class TaskController {
         User userZ = userServiceImpl.getUserById(task2.getUserZ());
 
         if (status == 9) {
-            taskServiceImpl.setStatusTaskByTask(task, 10); // 设置任务完成
+            taskServiceImpl.setStatusTaskByTask(task, 10);
             taskServiceImpl.setFinishStatusTaskByTask(task, 1);
 
             userServiceImpl.reduceTasknumByUser(userA); // 减少az任务数目
@@ -569,14 +588,16 @@ public class TaskController {
         if (alarms.size() > 0) {
             for (int i = 0; i < alarms.size(); ++i) {
                 AlarmVO alarmVo = new AlarmVO(alarms.get(i));
-                alarmVo.setImgBaseCode(webappRoot);
+                alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
             }
         }
+
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("alarms", alarmVos);
-        dataMap.put("plane", uav);
+        dataMap.put("uav", uav);
         dataMap.put("task", task2);
         dataMap.put("userA", userCreator);
         dataMap.put("userB", userA);
@@ -584,14 +605,14 @@ public class TaskController {
 
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-        String filename = task2.getId() + "-" + sdf.format(date) + ".doc";
+        String filename = task2.getName() + "-" + sdf.format(date) + ".doc";
 
         try {
             WordUtils.exportMillCertificateWord(request, response, dataMap, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        taskServiceImpl.setStatusTaskByTask(task, 13); // 设置打印报告完成
     }
 
     /**

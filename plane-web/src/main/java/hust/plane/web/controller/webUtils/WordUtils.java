@@ -22,7 +22,7 @@ public class WordUtils {
  
     public static  void exportMillCertificateWord(HttpServletRequest request, HttpServletResponse response, Map map,String filename) throws IOException {
     	 
-    	Configuration configuration = null; 
+    	 Configuration configuration = null;
     	 configuration = new Configuration();
          configuration.setDefaultEncoding("utf-8");
          configuration.setServletContextForTemplateLoading(request.getSession().getServletContext(), "/WEB-INF/ftl"); // FTL文件所存在的位置
@@ -32,8 +32,11 @@ public class WordUtils {
         InputStream fin = null;
         ServletOutputStream out = null;
         try {
+
+             String realpath =  request.getSession().getServletContext().getRealPath("/");
             // 调用工具类的createDoc方法生成Word文档
-            file = createDoc(map,freemarkerTemplate,filename);
+            file = createDoc(map,freemarkerTemplate,realpath + filename);
+
             fin = new FileInputStream(file);
  
             response.setCharacterEncoding("utf-8");
@@ -56,33 +59,35 @@ public class WordUtils {
     }
  
     private static File createDoc(Map<?, ?> dataMap, Template template,String filename) {
+
         File f = new File(filename);
-        Template t = template;
+
         try {
+            FileOutputStream fileOutputStream = new FileOutputStream(f);
             // 这个地方不能使用FileWriter因为需要指定编码类型否则生成的Word文档会因为有无法识别的编码而无法打开
-            Writer w = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
-            t.process(dataMap, w);
+            Writer w = new OutputStreamWriter(fileOutputStream, "utf-8");
+            template.process(dataMap, w);
             w.close();
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new RuntimeException(ex);
         }
         return f;
     }
-    
+
     public static String getRootPath() {
-    	String classPath = WordUtils.class.getClassLoader().getResource("/").getPath();
-    	String rootPath = "";
+        String path=Thread.currentThread().getContextClassLoader().getResource("").toString();
+        String rootPath = "";
     	//windows下
     	if("\\".equals(File.separator)){
-    	rootPath = classPath.substring(1,classPath.indexOf("/WEB-INF/classes"));
+    	rootPath = path.substring(1,path.indexOf("/WEB-INF/classes"));
     	rootPath = rootPath.replace("/", "\\");
     	}
     	//linux下
     	if("/".equals(File.separator)){
-    	rootPath = classPath.substring(0,classPath.indexOf("/WEB-INF/classes"));
+    	rootPath = path.substring(0,path.indexOf("/WEB-INF/classes"));
     	rootPath = rootPath.replace("\\", "/");
     	}
     	return rootPath;
     }
+
 }

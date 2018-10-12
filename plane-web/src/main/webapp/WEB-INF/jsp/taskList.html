@@ -199,15 +199,27 @@
                                                 <#else>
                                             <span class="label label-warning">无操作权限</span>
                                                 </#if>
-                                            <#elseif taskpojo.task.status==12 || taskpojo.task.status==13>
+                                            <#elseif taskpojo.task.status==12>
                                             <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
                                             <i class="icon-exclamation-sign"></i>
                                             <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
-                                            <#elseif taskpojo.task.status=14>
+
+                                             <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                    <i class=" icon-print"></i>
+                                                    <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                                </button>
+                                               <#-- <a href="${s.base}/taskReport.action?id=${taskpojo.task.id!}"
+                                                type="button" style="cursor:pointer;" class="btn">报告</a>-->
+                                           <#elseif taskpojo.task.status=13>
                                                 <#if !Session["super_administrator"]?exists>
-	                                	<#--	 <a href="${s.base}/taskReport.action?taskid=${taskpojo.task.id!}" style="cursor:pointer;" class="label label-info">打印报告</a>-->
+
+                                               <button type="button" class="btn blue" onclick="finishTask(${taskpojo.task.id!})">
+                                                   <i class="icon-save"></i>
+                                                   <span class="glyphicon glyphicon-picture"  aria-hidden="true">归档</span>
+                                               </button>
+
                                                 <#else>
-                                            <span class="label label-warning">无操作权限</span>
+                                                <span class="label label-warning">无操作权限</span>
                                                 </#if>
                                             <#else>
 
@@ -308,6 +320,27 @@
     </div>
 </div>
 <!-- 任务取消确认 -->
+<!-- 任务归档确认 -->
+<div class="modal fade" id="finishModel" tabindex="-1" aria-hidden="true">
+    <div class="modal_wapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">归档确认</h4>
+            </div>
+            <div class="modal-body"  style="font-size:1.2rem;">
+                <p id="tip">您确认要归档该任务吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>    <!-- 用于隐藏信息 -->
+                <button type="button" class="btn blue" data-dismiss="modal">取消</button>
+                <a  onclick="finishTaskById()" class="btn red" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+        <input type="text" id="finishTaskId" style="display:none" />
+    </div>
+</div>
+<!-- 任务归档确认 -->
 <!-- 信息删除确认 -->
 <div class="modal fade" id="deleltconfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -361,6 +394,9 @@
     function alarmMap(url) {
         window.open(url);   //打开新窗口显示告警
     }
+    function getReport(url) {
+        window.open(url);
+    }
     //显示任务告警
     function showAlarm(taskid) {
         $.ajax({
@@ -392,6 +428,7 @@
         });
 
     }
+
     function restart() {
         $.ajax({
             type: "post",
@@ -410,6 +447,31 @@
         });
 
     }
+    //归档任务
+    function finishTaskById() {
+        $.ajax({
+            type: "post",
+            url: "${s.base}/finishTask.action",
+            data: {
+                'id':  $('#finishTaskId').val(),
+            },
+            success: function (result) {
+
+                if (result.errcode == 1 ){
+                    document.getElementById("resText").innerHTML=result.message
+                    Modal.show('ocDialogModal');
+                    setTimeout("document.location.reload();",2000);
+                }
+            }
+        });
+    }
+    //归档任务
+    function finishTask(taskid){
+
+        $('#finishTaskId').val(taskid);
+        Modal.show('finishModel');
+    }
+
     //分派任务
     function assignTask(taskid){
 	    
