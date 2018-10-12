@@ -116,7 +116,11 @@
                                                 <label for="role" class="control-label">角色</label>
                                                 <div class="controls form-control">
                                                     <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                                                    <#if !Session[ "super_administrator"]?exists>
                                                     <input type="text"  class="m-wrap span4" value="任务管理员" id="role" disabled>
+                                                    <#else>
+                                                    <input type="text"  class="m-wrap span4" value="浏览者" id="role" disabled>
+                                                    </#if>
                                                     <span class="glyphicon glyphicon-user form-control-feedback" ></span>
                                                 </div>
                                             </div>
