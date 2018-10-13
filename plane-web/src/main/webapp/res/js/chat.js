@@ -99,7 +99,7 @@ var PlaneHandleServiceUtil ={
                 //map: map,
                 position:  data,
                 icon: new AMap.Icon({
-                size: new AMap.Size(64,64), //图标大小
+                size: new AMap.Size(32,32), //图标大小
                 image: "i/fly-32.png",
                 angle:angle,//新加入，待验证
                 offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置

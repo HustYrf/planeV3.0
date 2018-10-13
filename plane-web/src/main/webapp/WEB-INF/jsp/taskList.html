@@ -48,16 +48,18 @@
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
             <!--  下面这块内容是在页面写死的  -->
-            <h4 class="page-title">我的任务
-                <small>工单一览</small>
-            </h4>
+           <#--<h4 class="page-title">我的任务
+                <small>任务一览</small>
+            </h4>-->
+            <h4 class="page-title"></h4>
+
             <ul class="breadcrumb">
                 <li>
                     <i class="icon-home"></i>
                     <a href="#">我的任务</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="#">工单一览</a></li>
+                <li><a href="${s.base}/taskPageList.action">任务一览</a></li>
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
@@ -193,36 +195,37 @@
                                                 <#else>
                                                 <span class="label label-warning">无操作权限</span>
                                                 </#if>
-                                                <#elseif taskpojo.task.status==999><!-- 9状态没有确认操纵 -->
-                                                <#if !Session["super_administrator"]?exists>
-	                                		<button type="button" class="btn" onclick="onsureTaskOver(${taskpojo.task.id!})">巡视完成确认</button>
-                                                <#else>
-                                            <span class="label label-warning">无操作权限</span>
-                                                </#if>
+
                                             <#elseif taskpojo.task.status==12>
                                             <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
                                             <i class="icon-exclamation-sign"></i>
                                             <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
-
                                              <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
                                                     <i class=" icon-print"></i>
                                                     <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
-                                                </button>
-                                               <#-- <a href="${s.base}/taskReport.action?id=${taskpojo.task.id!}"
-                                                type="button" style="cursor:pointer;" class="btn">报告</a>-->
+                                             </button>
+
+                                            <#elseif taskpojo.task.status==14>
+
+                                             <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                 <i class=" icon-print"></i>
+                                                 <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                             </button>
+
                                            <#elseif taskpojo.task.status=13>
                                                 <#if !Session["super_administrator"]?exists>
-
-                                               <button type="button" class="btn blue" onclick="finishTask(${taskpojo.task.id!})">
-                                                   <i class="icon-save"></i>
-                                                   <span class="glyphicon glyphicon-picture"  aria-hidden="true">归档</span>
-                                               </button>
-
+                                                   <button type="button" class="btn blue" onclick="finishTask(${taskpojo.task.id!})">
+                                                       <i class="icon-save"></i>
+                                                       <span class="glyphicon glyphicon-picture"  aria-hidden="true">归档</span>
+                                                   </button>
+                                                     <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                         <i class=" icon-print"></i>
+                                                         <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                                     </button>
                                                 <#else>
                                                 <span class="label label-warning">无操作权限</span>
                                                 </#if>
                                             <#else>
-
                                             </#if>
                                         </td>
                                     </tr>

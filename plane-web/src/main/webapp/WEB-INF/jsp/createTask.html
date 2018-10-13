@@ -108,14 +108,17 @@
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
             <!--  下面这块内容是在页面写死的  -->
-            <h4 class="page-title">我的任务<small>创建我的任务</small></h4>
+           <!-- <h4 class="page-title">我的任务<small>创建我的任务</small></h4>-->
+
+            <h4 class="page-title"></h4>
+
             <ul class="breadcrumb">
                 <li>
                     <i class="icon-home"></i>
                     <a href="#">我的任务</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="#">创建任务</a></li>
+                <li><a href="${s.base}/toTaskCreate.action">创建任务</a></li>
             </ul>
         </div>
 
@@ -188,7 +191,7 @@
                                                 <div class="select2-wrapper">
                                                     <select  id="flyingpathid" class="span8" name="flyingpathId" type="select">
                                                        <#if flyingPath.id ??>
-                                                           <option value="${flyingPath.id!}" >${flyingPath.name!}111</option>
+                                                           <option value="${flyingPath.id!}" >${flyingPath.name!}</option>
                                                        <#elseif taskvo.flyingpathId ??>
                                                             <option value="${taskvo.flyingpathId!}" selected>${taskvo.flyingpathName!}</option>
                                                        </#if>
@@ -312,6 +315,13 @@
 
         var startDate=new Date(planstarttime.replace("-","/"));
         var endDate=new Date(planendtime.replace("-","/"));
+        var now = new Date();
+
+        if(startDate < now){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务计划开始时间不得小于当前时间！请重新设置！";
+            return;
+        }
 
         if(startDate >= endDate){
             Modal.show('ocDialogModal');
@@ -373,6 +383,14 @@
 
         var startDate=new Date(planstarttime.replace("-","/"));
         var endDate=new Date(planendtime.replace("-","/"));
+
+        var now = new Date();
+
+        if(startDate < now){
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML="任务计划开始时间不得小于当前时间！请重新设置！";
+            return;
+        }
 
         if(startDate >= endDate){
             Modal.show('ocDialogModal');

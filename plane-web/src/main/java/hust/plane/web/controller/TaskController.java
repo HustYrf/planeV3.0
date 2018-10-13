@@ -50,6 +50,9 @@ public class TaskController {
     @Value(value = "${IMAGE_ALARM}")    //后台图片保存地址
     private String IMAGE_ALARM;
 
+    @Value(value = "${uploadHost}")
+    private String FILE_UPLOAD_HOST;
+
     @Autowired
     private TaskService taskServiceImpl;
     @Autowired
@@ -573,7 +576,7 @@ public class TaskController {
 
         Task task2 = taskServiceImpl.getTaskByTask(task);
 
-        User userCreator = PlaneUtils.getLoginUser(request);
+        User userCreator =userServiceImpl.getUserById(task2.getUsercreator());
         User userA = userServiceImpl.getUserById(task2.getUserA());
         User userZ = userServiceImpl.getUserById(task2.getUserZ());
 
@@ -588,7 +591,10 @@ public class TaskController {
         if (alarms.size() > 0) {
             for (int i = 0; i < alarms.size(); ++i) {
                 AlarmVO alarmVo = new AlarmVO(alarms.get(i));
-                alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+
+                //读取本机图片服务器数据
+                 //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setImage(FILE_UPLOAD_HOST+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
                 alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
@@ -612,7 +618,17 @@ public class TaskController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        taskServiceImpl.setStatusTaskByTask(task, 13); // 设置打印报告完成
+
+        List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(userCreator.getId());
+        if (groupIdList.contains(Integer.valueOf(1))) {
+            //是浏览者,不改变状态
+
+        } else {
+            //是观察者，改变状态
+            if(task2.getStatus()==12){
+                taskServiceImpl.setStatusTaskByTask(task, 13); // 设置打印报告完成
+            }
+        }
     }
 
     /**
