@@ -161,9 +161,8 @@ public class PlaneUtils {
     }
     public static void main(String[] args) {
 
-        System.out.println(MD5encode("杨瑞丰123")
+        System.out.println(MD5encode("glzyl123456"));
 
-        );
 	}
 
 }

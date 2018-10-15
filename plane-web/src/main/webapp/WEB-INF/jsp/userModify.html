@@ -252,8 +252,8 @@
                                 <thead>
                                 <tr>
                                     <th>序号</th>
+                                    <th>用户名</th>
                                     <th>工号</th>
-                                    <th>姓名</th>
                                     <th>部门</th>
                                     <th>职位</th>
                                     <th>电话号码</th>
@@ -271,10 +271,10 @@
                                     <td>
                                         <#if user.id??>${user.id}</#if>
                                     </td>
+                                    <td>${user.name!}</td>
                                     <td>
                                         <#if user.worknumber??>${user.worknumber}</#if>
                                     </td>
-                                    <td>${user.name!}</td>
                                     <td>
                                         <#if user.departmentName??>${user.departmentName}</#if>
                                     </td>

@@ -13,6 +13,7 @@ var WebSocketUtil = {
 	connect : function() {
 		//部署的时候该ip改成本机地址
 		WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
+       // WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
 		WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
 		WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
 		WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;
@@ -86,24 +87,17 @@ var PlaneHandleServiceUtil ={
 	        data[1] = value2;
 	        //新加入start，待验证
 	        var prePosition = planeMarker.getPosition();//上一个marker的位置
-            var preLongitude = prePosition.lng;//前一个点的经度
-            var preLatitude = prePosition.lat;//前一个点的纬度
-            var currentLongitude = lon;//当前一个点的经度
-            var currentLatitude = lat;//当前一个点的纬度
-			//新加入end，待验证
+
 			map.remove(planeMarker);
-            //新加入start，待验证
-			getPlaneAngle(preLongitude,preLatitude,currentLongitude,currentLatitude);
-            //新加入end，待验证
     	   planeMarker = new AMap.Marker({
                 //map: map,
                 position:  data,
                 icon: new AMap.Icon({
                 size: new AMap.Size(32,32), //图标大小
                 image: "i/uav-32.png",
-                angle:angle,//新加入，待验证
                 offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
                 }),
+               angle:GPS_HDG,
             });
 		    map.setCenter(data); 
 		    map.add(planeMarker);
@@ -116,6 +110,7 @@ var HomeChatOperateUtil = {
 	}
 }
 //新加入，待验证
+/*
 function getPlaneAngle(preLongitude,preLatitude,currentLongitude,currentLatitude){
     $.ajax({
         type: "post",
@@ -134,4 +129,4 @@ function getPlaneAngle(preLongitude,preLatitude,currentLongitude,currentLatitude
             }
         }
     });
-}
+}*/

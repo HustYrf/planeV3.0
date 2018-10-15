@@ -4,10 +4,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import hust.plane.constant.WebConst;
+import hust.plane.utils.AngleUtil;
+import hust.plane.utils.pojo.JsonView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import hust.plane.mapper.pojo.Uav;
@@ -15,9 +21,13 @@ import hust.plane.service.interFace.UavService;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PointUtil;
 import hust.plane.web.controller.vo.UavVO;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UavController {
+
+	private static final Logger logger = LoggerFactory.getLogger(FlyingPathController.class);
+
 	@Autowired
 	public UavService planeServiceimpl;
 	
@@ -70,10 +80,19 @@ public class UavController {
 		return "planeList";	
 		
 	}
-//	@RequestMapping("/setFlyPath")
-//	public String setFlyPath(Model model){
-//		model.addAttribute("curNav", "setFlyPath");
-//		return "setFlyPath";
-//	}
+	//直接使用无人机发送的航角数据
+/*	@RequestMapping(value = "/getPlaneAngle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String getPlaneAngle(@RequestParam("preLongitude") String preLongitude, @RequestParam("preLatitude") String preLatitude,
+								@RequestParam("currentLongitude") String currentLongitude, @RequestParam("currentLatitude") String currentLatitude) {
+		AngleUtil.MyLatLng prePosition=new AngleUtil.MyLatLng(Double.valueOf(preLongitude),Double.valueOf(preLatitude));
+		AngleUtil.MyLatLng currentPosition=new AngleUtil.MyLatLng(Double.valueOf(currentLongitude),Double.valueOf(currentLatitude));
+		Double angle = Double.valueOf(Math.floor(AngleUtil.getAngle(prePosition,currentPosition)));
+		if(angle==null){
+			logger.error("===========获取飞机当前角度失败=============");
+			return JsonView.render(1,"获取飞机角度失败");
+		}
+		return JsonView.render(0, WebConst.SUCCESS_RESULT,angle);
+	}*/
 	
 }

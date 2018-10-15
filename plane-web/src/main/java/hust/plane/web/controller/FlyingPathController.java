@@ -139,17 +139,5 @@ public class FlyingPathController {
 
     }
 
-    @RequestMapping(value = "/getPlaneAngle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String getPlaneAngle(@RequestParam("preLongitude") String preLongitude, @RequestParam("preLatitude") String preLatitude,
-                                @RequestParam("currentLongitude") String currentLongitude, @RequestParam("currentLatitude") String currentLatitude) {
-        AngleUtil.MyLatLng prePosition=new AngleUtil.MyLatLng(Double.valueOf(preLongitude),Double.valueOf(preLatitude));
-        AngleUtil.MyLatLng currentPosition=new AngleUtil.MyLatLng(Double.valueOf(currentLongitude),Double.valueOf(currentLatitude));
-        Double angle = Double.valueOf(Math.floor(AngleUtil.getAngle(prePosition,currentPosition)));
-        if(angle==null){
-            logger.error("===========获取飞机当前角度失败=============");
-            return JsonView.render(1,"获取飞机角度失败");
-        }
-        return JsonView.render(0,WebConst.SUCCESS_RESULT,angle);
-    }
+
 }
