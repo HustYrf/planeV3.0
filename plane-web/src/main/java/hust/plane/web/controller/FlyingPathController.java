@@ -81,10 +81,7 @@ public class FlyingPathController {
     @ResponseBody
     public String doSetFlyPath(FlyingPath flyingPath) {
 
-        //System.out.println(route.getRoutePath());
-
         if (flyingPathServiceImpl.insertFlyingPath(flyingPath) == true)
-
             return "success";
         else
             return "failed";
