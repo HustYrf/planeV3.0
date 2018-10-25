@@ -2,7 +2,9 @@ package hust.plane.service.impl;
 
 import hust.plane.mapper.mapper.AlarmMapper;
 import hust.plane.mapper.pojo.Alarm;
+import hust.plane.mapper.pojo.Task;
 import hust.plane.service.interFace.AlarmService;
+import hust.plane.utils.ImgUtils;
 import hust.plane.utils.page.AlarmPojo;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.TipException;
@@ -106,16 +108,28 @@ public class AlarmServiceImpl implements AlarmService {
         return alarmMapper.getAlarmsByTaskId(taskid);
     }
 
+    //插入新的告警点信息
     @Override
     public boolean insertAlarmByAlarms(Alarm alarm) {
 
-        if (alarm.getId() != 0) {
-            if (alarmMapper.insertAlarmSelective(alarm) == 1)
-                return true;
-            else
-                return false;
+        if (alarmMapper.insertAlarmSelective(alarm) == 1)
+            return true;
+        else
+            return false;
+
+    }
+
+    //根据给定文件夹的文件读取告警点信息
+    @Override
+    public void insertAlarm(Task task, String alarmDir) {
+
+        List<Alarm> alarmList = ImgUtils.processlcoaldir(task.getId(),alarmDir);
+        Iterator<Alarm> iterator = alarmList.iterator();
+        while (iterator.hasNext()){
+            Alarm alarm= iterator.next();
+            insertAlarmByAlarms(alarm);
         }
-        return false;
+
     }
 
 }

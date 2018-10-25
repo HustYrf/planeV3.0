@@ -21,6 +21,10 @@
 
                     var  planePath =${flyingPath};
 
+                    var flagdataList = ${routeList};
+
+                    console.log(flagdataList);
+
                     //创建一个地图
                     var map = new AMap.Map('container', {
                         resizeEnable: true,
@@ -115,6 +119,27 @@
                         content.push("更新时间：" + planePath.updatetime );
                         end.content = createInfoWindow(title, content.join("<br/>"));
                         end.on('click', markerClick);
+
+                        if(flagdataList.length>0){
+                            for(var i=0;i<flagdataList.length;i++){
+                                for(var j=0;j<flagdataList[i].routepathdata.length;j++){
+
+                                    var flagmarker = new AMap.Marker({
+                                        map: map,
+                                        position: flagdataList[i].routepathdata[j],
+                                        icon: new AMap.Icon({
+                                            size: new AMap.Size(12, 12), //图标大小
+                                            image: '${s.base}/i/circle-12.png',
+                                            offset: new AMap.Pixel(-6, -6), // 相对于基点的偏移位置
+                                        }),
+                                    });
+
+                                    var title = '<span>信息点：' + flagdataList[i].flagdata[j] + '</span>';
+                                    flagmarker.content = createInfoWindowtwo(title);
+                                    flagmarker.on('click', markerClick);
+                                }
+                            }
+                        }
 
 
                         if(alarmList.length==0 || alarmList==null){
@@ -274,6 +299,27 @@
                         middle.style.backgroundColor = 'white';
                         middle.innerHTML = content;
                         info.appendChild(middle);
+                        return info;
+                    }
+
+                    function createInfoWindowtwo(title) {
+                        var info = document.createElement("div");
+                        info.className = "info";
+
+                        //可以通过下面的方式修改自定义窗体的宽高
+                        //info.style.width = "120px";
+                        // 定义顶部标题
+                        var top = document.createElement("div");
+                        var titleD = document.createElement("div");
+                        var closeX = document.createElement("img");
+                        top.className = "info-top";
+                        titleD.innerHTML = title;
+                        closeX.src = "res/i/close2.gif";
+                        closeX.onclick = closeInfoWindow;
+
+                        top.appendChild(titleD);
+                        top.appendChild(closeX);
+                        info.appendChild(top);
                         return info;
                     }
                     //打开信息窗体

@@ -38,11 +38,20 @@ public class PointUtil {
 	    return String.valueOf(pointList.get(0))+","+String.valueOf(pointList.get(1));
 	}
 
-	// POINT(107.78564 23.07885)
+	public static String pointToSqlString(List<Double> point){
+
+		return "POINT("+ String.valueOf(point.get(0))+" "+String.valueOf(point.get(1)) +")";
+
+	}
+
 
 	public static void main(String[] args) {
-		String s = "Point(1.9999 1.88888)";
-		Point stringToPoint = PointUtil.StringToPoint(s);
-		System.out.println(stringToPoint.getLatitude());
+//		String s = "Point(1.9999 1.88888)";
+//		Point stringToPoint = PointUtil.StringToPoint(s);
+//		System.out.println(stringToPoint.getLatitude());
+//		List<Double> list = new ArrayList<>();
+//		list.add(123.43);
+//		list.add(1.43);
+//		System.out.println(pointToSqlString(list));
 	}
 }

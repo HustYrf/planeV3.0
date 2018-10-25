@@ -14,6 +14,9 @@
   <resultMap id="ResultMapWithBLOBs" type="hust.plane.mapper.pojo.Route" extends="BaseResultMap" >
     <result column="FlagData" property="flagdata" jdbcType="LONGVARCHAR" />
   </resultMap>
+    <resultMap id="ResultMapWithPathAndBLOB" type="hust.plane.mapper.pojo.Route" extends="ResultMapWithPathData" >
+        <result column="FlagData" property="flagdata" jdbcType="LONGVARCHAR" />
+    </resultMap>
     <sql id="Base_Column_list"> id,Name,Type,Description,CreateTime	</sql>
     <select id="selectALLRoute" resultMap="BaseResultMap">
 		select id,Name,AsText(RoutePathData) as RoutePathData,Description,CreateTime,type
@@ -97,4 +100,10 @@
         from K_Route
         where  Name=#{name,jdbcType=INTEGER}
     </select>
+    <select id="getRouteWithFlagDataById" parameterType="java.lang.Integer" resultMap="ResultMapWithPathAndBLOB">
+        select id,Name,AsText(RoutePathData) as RoutePathData,FlagData
+        from K_Route
+        where  id=#{id,jdbcType=INTEGER}
+    </select>
+
 </mapper>

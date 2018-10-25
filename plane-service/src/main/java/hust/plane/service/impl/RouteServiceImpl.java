@@ -94,4 +94,12 @@ public class RouteServiceImpl implements RouteService {
 		}
 		return 0;
 	}
+
+    @Override
+    public Route getRouteWithFlagDataById(Integer routeId) {
+        Route route = null;
+        route = routeMapper.getRouteWithFlagDataById(routeId);
+        return route;
+
+    }
 }

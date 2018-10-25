@@ -53,6 +53,9 @@ public class TaskController {
     @Value(value = "${uploadHost}")
     private String FILE_UPLOAD_HOST;
 
+    @Value(value = "${LOCAL_ALARM_DIR}")
+    private String LOCAL_ALARM_DIR;
+
     @Autowired
     private TaskService taskServiceImpl;
     @Autowired
@@ -69,6 +72,9 @@ public class TaskController {
     private RouteService routeServiceImpl;
     @Autowired
     private UserGroupService userGroupService;
+
+    @Autowired
+    private FlyingPath_has_RouteKeyService flyingPath_has_routeKeyService;
 
     @RequestMapping("/task")
     public String gettestTask() {
@@ -123,6 +129,7 @@ public class TaskController {
                 alarmDetailVOList.add(alarmDetailVO);           //添加数据
             }
         }
+
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
         model.addAttribute("curNav", "home");
@@ -694,6 +701,22 @@ public class TaskController {
         FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task1.getFlyingpathId());
         FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
 
+        List<FlyingPath_has_RouteKey> flyingPath_has_routeKeyList = flyingPath_has_routeKeyService.getAllFlyingPathId(flyingPath.getId());
+        Iterator<FlyingPath_has_RouteKey> flyingPath_has_routeKeyIterator = flyingPath_has_routeKeyList.iterator();
+        List<Route> routeList = new ArrayList<>();
+        while (flyingPath_has_routeKeyIterator.hasNext()){
+            FlyingPath_has_RouteKey flyingPath_has_routeKey = flyingPath_has_routeKeyIterator.next();
+            Route route= routeServiceImpl.getRouteWithFlagDataById(flyingPath_has_routeKey.getRouteId());
+            routeList.add(route);
+        }
+        //然后把数据传输到前台
+        List<RouteWithFlagInfoVO> routeWithFlagInfoVOList = new ArrayList<RouteWithFlagInfoVO>();
+        for(int i=0;i<routeList.size();++i){
+            RouteWithFlagInfoVO routeWithFlagInfoVO = new RouteWithFlagInfoVO(routeList.get(i));
+            routeWithFlagInfoVOList.add(routeWithFlagInfoVO);
+        }
+
+        model.addAttribute("routeList",JsonUtils.objectToJson(routeWithFlagInfoVOList));
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVO));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
         //ssmodel.addAttribute("curNav", "taskAllList");
@@ -706,13 +729,18 @@ public class TaskController {
     public String recongizePicture(Task task) {
         taskServiceImpl.setStatusTaskByTask(task, 12);
         //改成异步的操作
-        Detector detector = new Detector();
+ //       Detector detector = new Detector();
         //生成源文件的地址和告警图片的地址
-        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
-        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
-        detector.run(sourcePath, imageAlarm);
-        taskServiceImpl.setStatusTaskByTask(task, 12);
-        return new JsonView(0, "SUCCESS", "识别完成").toString();
+//        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
+//        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
+//        detector.run(sourcePath, imageAlarm);
+//       taskServiceImpl.setStatusTaskByTask(task, 12);
+
+        //读取告警图片并且添加告警点数据库
+        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" +  IMAGE_ALARM;
+        alarmService.insertAlarm(task,alarmDir);
+
+        return JsonView.render(0, "识别完成!");
     }
 
 }

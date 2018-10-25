@@ -7,68 +7,60 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import hust.plane.mapper.pojo.Alarm;
 import hust.plane.utils.pojo.ImgPicToAlarm;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.*;
 
 public class ImgUtils {
- /*   public static List<Alarm> alarmList(String path,String planeId) throws Exception {
-        File file = new File(path);
-        List<Alarm> alarmList = new ArrayList<>(file.listFiles().length + 2);
-        if (file.exists()) {
-            File[] files = file.listFiles();
-            for (File img : files) {
-                File fileIMG = img;
-                alarmList.add(printImageTags(fileIMG,planeId));
-            }
-        }
-        return alarmList;
-    }*/
 
     /**
      * 读取照片里面的信息
      */
-    public static Alarm printImageTags(File file,int taskid) throws ImageProcessingException, Exception {
+    public static Alarm printImageTags(File file, int taskid) throws ImageProcessingException, Exception {
         Alarm alarm = new Alarm();
         alarm.setUpdatetime(new Date());
         alarm.setStatus(0);//未处理告警
         alarm.setTaskId(taskid);
         alarm.setImageurl(file.getName());
-        
+
         ImgPicToAlarm imgPicToAlarm = new ImgPicToAlarm();
         Metadata metadata = ImageMetadataReader.readMetadata(file);
-        if(file.exists()) {
-        for (Directory directory : metadata.getDirectories()) {
-            for (Tag tag : directory.getTags()) {
-                String tagName = tag.getTagName();  //标签名
-                String desc = tag.getDescription(); //标签信息
-                if (tagName.equals("GPS Altitude")) {
-                    alarm.setDescription("这是一张无人机从" + desc + " 高度拍摄告警的照片！");
-                }
-                if (tagName.equals("Date/Time Original")) {
-                    alarm.setCreatetime(DateKit.stringToDate(desc));
-                }
-                if (tagName.equals("GPS Latitude")) {
-                    imgPicToAlarm.setLatitude(pointToLatlong(desc));
-                }
-                if (tagName.equals("GPS Longitude")) {
-                    imgPicToAlarm.setLongitude(pointToLatlong(desc));
+        if (file.exists()) {
+            for (Directory directory : metadata.getDirectories()) {
+                for (Tag tag : directory.getTags()) {
+                    String tagName = tag.getTagName();  //标签名
+                    String desc = tag.getDescription(); //标签信息
+                    if (tagName.equals("GPS Altitude")) {
+                        alarm.setDescription("这是一张无人机从" + desc + " 高度拍摄告警的照片！");
+                    }
+                    if (tagName.equals("Date/Time Original")) {
+                        alarm.setCreatetime(DateKit.stringToDate(desc));
+                    }
+                    if (tagName.equals("GPS Latitude")) {
+                        imgPicToAlarm.setLatitude(pointToLatlong(desc));
+                    }
+                    if (tagName.equals("GPS Longitude")) {
+                        imgPicToAlarm.setLongitude(pointToLatlong(desc));
+                    }
                 }
             }
-        }}else {
-        	System.out.println("文件不存在！！");
+        } else {
+            System.out.println("文件不存在！！");
         }
         alarm.setPosition(imgPicToAlarm.setLongLatitude(imgPicToAlarm.getLongitude(), imgPicToAlarm.getLatitude()));
         System.out.println(alarm.toString());
         return alarm;
     }
 
-    public static void processlcoaldir(int taskid){
-        String localfiledir = "F:\\广西电信-无人机通信\\数据\\pic\\航拍样例2";
-       // String localfiledir =  "/home/gxdx_ai/file-workspace/ImageTask/" + taskid + "/ImageAlarm";
+    public static List<Alarm> processlcoaldir(int taskid,String alarmDir) {
+        //String localfiledir = "D:\\detect\\test\\";
+         String localfiledir =  alarmDir;
 
         List<Alarm> alarmList = new ArrayList<Alarm>();
         File file = new File(localfiledir);
@@ -79,10 +71,52 @@ public class ImgUtils {
                     System.out.println("文件夹:" + file2.getAbsolutePath() + "跳过");
                 } else {
                     System.out.println("文件:" + file2.getAbsolutePath() + "处理");
-                    //处理如下
+
+                    Alarm alarm = new Alarm();
+                    alarm.setUpdatetime(new Date());
+                    alarm.setStatus(1);//未处理告警
+                    alarm.setTaskId(taskid);
+                    alarm.setImageurl(file2.getName());
+
                     try {
-                        Alarm alarm =  printImageTags(file2,taskid);
+                        Metadata metadata = ImageMetadataReader.readMetadata(file2);
+                        for (Directory directory : metadata.getDirectories()) {
+                            for (Tag tag : directory.getTags()) {
+                                String tagName = tag.getTagName();  //标签名
+                                String desc = tag.getDescription(); //标签信息
+                                if (tagName.equals("Date/Time Original")) {
+                                    alarm.setCreatetime(DateKit.stringToDate(desc));
+                                }
+                            }
+                        }
+
+                        byte[] imgbyte = image2Bytes(file2);
+                        int length = imgbyte.length;
+                        byte[] position = new byte[12];
+                        for (int i = 0; i < 12; i++) {
+                            position[i] = imgbyte[length - 12 + i];
+                            //System.out.print(" " + position[i]);
+                        }
+                        System.out.println();
+                        float lat = getFloat(position, 0);
+                        float lon = getFloat(position, 4);
+                        float elv = getFloat(position, 8);
+                        List<Double> point = new ArrayList<Double>();
+
+                        point.add((double)lon);
+                        point.add((double)lat);
+
+                        alarm.setPosition(PointUtil.pointToSqlString(point));
+                        alarm.setDescription("这是一张无人机从" + elv + " 高度拍摄告警照片！");
+
                         alarmList.add(alarm);
+                        //25.062246	110.3134467
+//                        System.out.println(lat);
+//                        System.out.println(lon);
+//                        System.out.println(elv);
+//                        System.out.println("%" + Arrays.toString(position) + "%");
+                        //Alarm alarm =  printImageTags(file2,taskid);
+                        //alarmList.add(alarm);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -91,14 +125,78 @@ public class ImgUtils {
         } else {
             System.out.println("文件不存在!");
         }
-
-        System.out.println(alarmList.toString());
-
+        return alarmList;
     }
 
-    public static void main(String[] args){
+//    public static void main(String[] args) {
+//
+//        float te = 5.920667E-30f;
+//       byte[] test = float2byte(te);
+//       System.out.println("%" + Arrays.toString(test) + "%");
+//        processlcoaldir(1,"");
+//
+//    }
 
-        processlcoaldir(1);
+    public static byte[] float2byte(float f) {
+
+        // 把float转换为byte[]
+        int fbit = Float.floatToIntBits(f);
+        byte[] b = new byte[4];
+        for (int i = 0; i < 4; i++) {
+            b[i] = (byte) (fbit >> (24 - i * 8));
+        }
+        // 翻转数组
+        int len = b.length;
+        // 建立一个与源数组元素类型相同的数组
+        byte[] dest = new byte[len];
+        // 为了防止修改源数组，将源数组拷贝一份副本
+        System.arraycopy(b, 0, dest, 0, len);
+        byte temp;
+        // 将顺位第i个与倒数第i个交换
+        for (int i = 0; i < len / 2; ++i) {
+            temp = dest[i];
+            dest[i] = dest[len - i - 1];
+            dest[len - i - 1] = temp;
+        }
+        return dest;
+    }
+
+
+    public static float getFloat(byte[] b, int index) {
+
+        byte sndlen[] =new byte[4];
+        sndlen[3]=b[index + 3];
+        sndlen[2]=b[index + 2];
+        sndlen[1]=b[index + 1];
+        sndlen[0]=b[index + 0];
+        long data = (long)(Byte2Int(sndlen)&0x0FFFFFFFFl);
+        //获取长度
+        return data/10000000.0f;       //把float字节码转换成float
+    }
+
+    public static int Byte2Int(byte[]bytes) {
+
+        return (bytes[0]&0xff)<<24
+                | (bytes[1]&0xff)<<16
+                | (bytes[2]&0xff)<<8
+                | (bytes[3]&0xff);
+    }
+
+    static void buff2Image(byte[] b, String tagSrc) throws Exception {
+        FileOutputStream fout = new FileOutputStream(tagSrc);
+        //将字节写入文件
+        fout.write(b);
+        fout.close();
+    }
+
+    static byte[] image2Bytes(File imgSrc) throws Exception {
+        FileInputStream fin = new FileInputStream(imgSrc);
+        //可能溢出,简单起见就不考虑太多,如果太大就要另外想办法，比如一次传入固定长度byte[]
+        byte[] bytes = new byte[fin.available()];
+        //将文件内容写入字节数组，提供测试的case
+        fin.read(bytes);
+        fin.close();
+        return bytes;
     }
 
     /**

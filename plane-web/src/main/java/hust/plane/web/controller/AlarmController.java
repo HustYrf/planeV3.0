@@ -83,6 +83,7 @@ public class AlarmController {
             RouteVO routeVo = new RouteVO(allRoute.get(i));
             routeList.add(routeVo);
         }
+
         model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmList));
         model.addAttribute("curNav", "alarmList");
@@ -113,7 +114,7 @@ public class AlarmController {
         AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
         //设置从文件服务器查看图片
 
-        alarmDetailVO.setImage(BASE_IMAGE_URL + TASK_DIR + task1.getId() + ALARM_DIR + alarmDetailVO.getImage());
+        alarmDetailVO.setImage(BASE_IMAGE_URL + TASK_DIR + task1.getId() +"/"+ ALARM_DIR + alarmDetailVO.getImage());
         alarmDetailVO.setUav(uav1);
 
         alarmDetailVO.setTaskName(task1.getName());

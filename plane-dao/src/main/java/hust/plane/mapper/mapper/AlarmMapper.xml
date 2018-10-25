@@ -125,7 +125,7 @@
                 #{imageurl,jdbcType=VARCHAR},
             </if>
             <if test="position != null">
-                #{position,jdbcType=OTHER},
+                geomfromtext(#{position,jdbcType=OTHER}),
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},

@@ -107,6 +107,7 @@
                     offset: new AMap.Pixel(20, -35)
                 });
 
+
                 for(var j=0;j<planePath.length;j++){
                     var polyline = new AMap.Polyline({
                         map: map,
@@ -121,55 +122,6 @@
 
                 var alarmList = ${alarmList!};
                 AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
-                    //启动页面
-                   /* var start = new SimpleMarker({
-                        //前景文字
-                        map: map,
-                        iconLabel: {
-                            innerHTML: '<i>起</i>', //设置文字内容
-                            style: {
-                                color: 'white' //设置文字颜色
-                            }
-                        },
-                        iconTheme: 'fresh',
-                        //背景图标样式
-                        iconStyle: 'darkblue',
-                        position: planePath.pathdata[0],
-                        animation: 'AMAP_ANIMATION_DROP',
-                    });
-                    var title = '飞行路径编号：<span>' + planePath.id + '</span>';
-                    var content = [];
-                    content.push("名称：" + planePath.name );
-                    content.push("描述：" + planePath.description );
-                    content.push("创建时间：" + planePath.createtime );
-                    content.push("更新时间：" + planePath.updatetime );
-                    start.content = createInfoWindow(title, content.join("<br/>"));
-                    start.on('click', markerClick);*/
-
-                  /*  var pos = planePath.pathdata.length - 1;
-                    var end = new SimpleMarker({
-                        //前景文字
-                        map: map,
-                        iconLabel: {
-                            innerHTML: '<i>终</i>', //设置文字内容
-                            style: {
-                                color: 'white' //设置文字颜色
-                            }
-                        },
-                        iconTheme: 'fresh',
-                        //背景图标样式
-                        iconStyle: 'orange',
-                        position: planePath.pathdata[pos],
-                        animation: 'AMAP_ANIMATION_DROP',
-                    });
-                    var title = '飞行路径编号：<span>' + planePath.id + '</span>';
-                    var content = [];
-                    content.push("名称：" + planePath.name );
-                    content.push("描述：" + planePath.description );
-                    content.push("创建时间：" + planePath.createtime );
-                    content.push("更新时间：" + planePath.updatetime );
-                    end.content = createInfoWindow(title, content.join("<br/>"));
-                    end.on('click', markerClick);*/
 
 
                     if(alarmList.length==0 || alarmList==null){

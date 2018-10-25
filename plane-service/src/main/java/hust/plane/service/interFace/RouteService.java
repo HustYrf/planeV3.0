@@ -20,4 +20,6 @@ public interface RouteService {
     Route getRouteByName(String name);
 
     int getNumOfRouteByType(int i);
+
+    Route getRouteWithFlagDataById(Integer routeId);
 }

@@ -1,6 +1,7 @@
 package hust.plane.service.interFace;
 
 import hust.plane.mapper.pojo.Alarm;
+import hust.plane.mapper.pojo.Task;
 import hust.plane.utils.page.AlarmPojo;
 import hust.plane.utils.page.TailPage;
 
@@ -24,4 +25,6 @@ public interface AlarmService {
     List<Alarm> getAlarmsByTaskId(Integer taskid);
 
     boolean insertAlarmByAlarms(Alarm alarm);
+
+    void insertAlarm(Task task, String alarmDir);
 }
