@@ -12,6 +12,7 @@ import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.*;
 import hust.plane.service.interFace.*;
 import hust.plane.utils.DateKit;
+import hust.plane.utils.GetFileName;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.pojo.TipException;
 import hust.plane.web.controller.vo.*;
@@ -119,7 +120,7 @@ public class TaskController {
                 alarmDetailVO.setUav(uav1);
                 //设置来自图片服务器的数据
                 //                     2113.123.12.12/   ImageTask/       22/        ImageAlarm/      1.jpg
-                alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
+                alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
                 alarmDetailVO.setTaskName(task1.getName());
                 alarmDetailVO.setFlyingPathName(flyingPath.getName());
                 alarmDetailVO.setUserCreatorName(userCreatorName);
@@ -583,7 +584,7 @@ public class TaskController {
 
         Task task2 = taskServiceImpl.getTaskByTask(task);
 
-        User userCreator =userServiceImpl.getUserById(task2.getUsercreator());
+        User userCreator = userServiceImpl.getUserById(task2.getUsercreator());
         User userA = userServiceImpl.getUserById(task2.getUserA());
         User userZ = userServiceImpl.getUserById(task2.getUserZ());
 
@@ -600,8 +601,8 @@ public class TaskController {
                 AlarmVO alarmVo = new AlarmVO(alarms.get(i));
 
                 //读取本机图片服务器数据
-                 //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
-                alarmVo.setImage(FILE_UPLOAD_HOST+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getId() + "/" + IMAGE_ALARM + alarmVo.getImage());
                 alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
@@ -632,7 +633,7 @@ public class TaskController {
 
         } else {
             //是观察者，改变状态
-            if(task2.getStatus()==12){
+            if (task2.getStatus() == 12) {
                 taskServiceImpl.setStatusTaskByTask(task, 13); // 设置打印报告完成
             }
         }
@@ -688,7 +689,7 @@ public class TaskController {
             AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
             alarmDetailVO.setUav(uav1);
             //设置来自图片服务器的数据
-            alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
+            alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
 
             alarmDetailVO.setTaskName(task1.getName());
             alarmDetailVO.setFlyingPathName(flyingPathName);
@@ -704,23 +705,36 @@ public class TaskController {
         List<FlyingPath_has_RouteKey> flyingPath_has_routeKeyList = flyingPath_has_routeKeyService.getAllFlyingPathId(flyingPath.getId());
         Iterator<FlyingPath_has_RouteKey> flyingPath_has_routeKeyIterator = flyingPath_has_routeKeyList.iterator();
         List<Route> routeList = new ArrayList<>();
-        while (flyingPath_has_routeKeyIterator.hasNext()){
+        while (flyingPath_has_routeKeyIterator.hasNext()) {
             FlyingPath_has_RouteKey flyingPath_has_routeKey = flyingPath_has_routeKeyIterator.next();
-            Route route= routeServiceImpl.getRouteWithFlagDataById(flyingPath_has_routeKey.getRouteId());
+            Route route = routeServiceImpl.getRouteWithFlagDataById(flyingPath_has_routeKey.getRouteId());
             routeList.add(route);
         }
         //然后把数据传输到前台
         List<RouteWithFlagInfoVO> routeWithFlagInfoVOList = new ArrayList<RouteWithFlagInfoVO>();
-        for(int i=0;i<routeList.size();++i){
+        for (int i = 0; i < routeList.size(); ++i) {
             RouteWithFlagInfoVO routeWithFlagInfoVO = new RouteWithFlagInfoVO(routeList.get(i));
             routeWithFlagInfoVOList.add(routeWithFlagInfoVO);
         }
 
-        model.addAttribute("routeList",JsonUtils.objectToJson(routeWithFlagInfoVOList));
+        model.addAttribute("routeList", JsonUtils.objectToJson(routeWithFlagInfoVOList));
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVO));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
         //ssmodel.addAttribute("curNav", "taskAllList");
         return "alarmListWithTaskId";
+    }
+
+
+    @RequestMapping(value = "imageWithId")
+    public String getTaskImageWithId(@RequestParam(value = "id") int id,Model model) {
+        if(Integer.valueOf(id)!=null){
+            String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
+            List<String> picNameList = new ArrayList<>();
+            picNameList=GetFileName.getFiles(picDir);
+            model.addAttribute("picNameList",JsonUtils.objectToJson(picNameList));
+            model.addAttribute("taskId",id);
+        }
+        return "taskPicture";
     }
 
     //识别图片
@@ -729,7 +743,7 @@ public class TaskController {
     public String recongizePicture(Task task) {
         taskServiceImpl.setStatusTaskByTask(task, 12);
         //改成异步的操作
- //       Detector detector = new Detector();
+        //       Detector detector = new Detector();
         //生成源文件的地址和告警图片的地址
 //        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
 //        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
@@ -737,8 +751,8 @@ public class TaskController {
 //       taskServiceImpl.setStatusTaskByTask(task, 12);
 
         //读取告警图片并且添加告警点数据库
-        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" +  IMAGE_ALARM;
-        alarmService.insertAlarm(task,alarmDir);
+        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" + IMAGE_ALARM;
+        alarmService.insertAlarm(task, alarmDir);
 
         return JsonView.render(0, "识别完成!");
     }
