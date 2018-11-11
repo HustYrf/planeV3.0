@@ -54,6 +54,11 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="countByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from K_FlyingPath
+        where Name  = #{name,jdbcType=VARCHAR}
+    </select>
+
 	<select id="flyingPathCount" resultType="java.lang.Integer"
 		parameterType="hust.plane.mapper.pojo.FlyingPath">
 		select count(1) from K_FlyingPath

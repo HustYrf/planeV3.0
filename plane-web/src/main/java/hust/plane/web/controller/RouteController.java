@@ -35,8 +35,8 @@ public class RouteController {
     @Autowired
     public RouteService routeServiceImpl;
 
-	//提供 模板下载
-	@RequestMapping("routeExcelDownloed")
+	//提供 光缆模板下载
+	@RequestMapping("/routeExcelDownloed")
 	public void routeExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		
 		String 	basepath = request.getSession().getServletContext().getRealPath("");

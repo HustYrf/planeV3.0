@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>路由导入</title>
+<title>光缆导入</title>
 <meta charset="utf-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +50,7 @@
                     <a href="#">光缆路由</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="${s.base}/routeImport">路由导入</a></li>
+                <li><a href="${s.base}/routeImport">光缆导入</a></li>
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
@@ -61,7 +61,7 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
                             <div class="portlet box yellow" >
                                 <div class="portlet-title">
-                                    <div class="caption"><i class="icon-edit"></i>路由导入</div>
+                                    <div class="caption"><i class="icon-edit"></i>光缆导入</div>
                                 </div>
 								<div class="portlet-body form">
 
@@ -71,7 +71,7 @@
 										  enctype="multipart/form-data">
 
                                         <div class="control-group">
-                                            <label class="control-label">路由文件(.xls/.xls)：</label>
+                                            <label class="control-label">光缆数据文件(.xls/.xls)：</label>
                                             <div class="controls">
                                                 <input type="file" id="routePathExcel" name="routePathExcel" class="default" multiple="multiple"
 													   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
@@ -87,7 +87,7 @@
 											</div>
 										</div>
                                         <div class="control-group">
-                                            <label class="control-label"><a href="${s.base}/routeExcelDownloed.action">路由数据模板下载</a></label>
+                                            <label class="control-label"><a href="${s.base}/routeExcelDownloed.action">光缆数据模板下载</a></label>
                                         </div>
 
                                         <!-- tip提示-start -->
@@ -146,7 +146,7 @@
 	        	$('#al_info').html(res.message);
 				$('#ocAlertTip').css('display','block');
 	        },error:function(){
-	        	$('#al_info').html("导入出错！");
+	        	$('#al_info').html("光缆数据导入出错！");
 				$('#ocAlertTip').css('display','block');
 	        }
 	    });

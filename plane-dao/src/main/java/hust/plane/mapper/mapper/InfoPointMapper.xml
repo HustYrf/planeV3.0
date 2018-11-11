@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hust.plane.mapper.mapper.InfoPointMapper">
+    <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.InfoPoint">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="Name" property="name" jdbcType="VARCHAR"/>
+        <result column="Position" property="position" jdbcType="VARCHAR"/>
+        <result column="Altitude" property="altitude" jdbcType="REAL"/>
+        <result column="Route_id" property="routeId" jdbcType="INTEGER"/>
+        <result column="Route_name" property="routeName" jdbcType="VARCHAR"/>
+        <result column="Geohash" property="geohash" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, Name, AsText(Position) as	Position, Altitude, Route_id, Route_name, Geohash
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from K_InfoPoint
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from K_InfoPoint
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="hust.plane.mapper.pojo.InfoPoint">
+    insert into K_InfoPoint (id, Name, Position, 
+      Altitude, Route_id, Route_name, 
+      Geohash)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{position,jdbcType=OTHER}, 
+      #{altitude,jdbcType=REAL}, #{routeId,jdbcType=INTEGER}, #{routeName,jdbcType=VARCHAR}, 
+      #{geohash,jdbcType=VARCHAR})
+  </insert>
+
+    <insert id="insertInfoPointList" parameterType="java.util.List">
+        insert into K_InfoPoint (Name, Position, Altitude, Route_id, Route_name, Geohash)
+        values
+        <foreach collection="infoPoints" item="infoPoint" separator=",">
+            (#{infoPoint.name,jdbcType=VARCHAR},geomfromtext(#{infoPoint.position,jdbcType=OTHER}),#{infoPoint.altitude,jdbcType=REAL},#{infoPoint.routeId,jdbcType=INTEGER},#{infoPoint.routeName,jdbcType=VARCHAR},#{infoPoint.geohash,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.InfoPoint">
+        insert into K_InfoPoint
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                Name,
+            </if>
+            <if test="position != null">
+                Position,
+            </if>
+            <if test="altitude != null">
+                Altitude,
+            </if>
+            <if test="routeId != null">
+                Route_id,
+            </if>
+            <if test="routeName != null">
+                Route_name,
+            </if>
+            <if test="geohash != null">
+                Geohash,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=OTHER},
+            </if>
+            <if test="altitude != null">
+                #{altitude,jdbcType=REAL},
+            </if>
+            <if test="routeId != null">
+                #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="routeName != null">
+                #{routeName,jdbcType=VARCHAR},
+            </if>
+            <if test="geohash != null">
+                #{geohash,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

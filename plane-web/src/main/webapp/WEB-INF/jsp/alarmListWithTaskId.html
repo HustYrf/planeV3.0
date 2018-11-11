@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>任务告警</title>
@@ -21,9 +20,7 @@
 
                     var  planePath =${flyingPath};
 
-                    var flagdataList = ${routeList};
-
-                    console.log(flagdataList);
+                    //var flagdataList = $ {routeList};
 
                     //创建一个地图
                     var map = new AMap.Map('container', {
@@ -120,26 +117,26 @@
                         end.content = createInfoWindow(title, content.join("<br/>"));
                         end.on('click', markerClick);
 
-                        if(flagdataList.length>0){
-                            for(var i=0;i<flagdataList.length;i++){
-                                for(var j=0;j<flagdataList[i].routepathdata.length;j++){
+                        <#--if(flagdataList.length>0){-->
+                            <#--for(var i=0;i<flagdataList.length;i++){-->
+                                <#--for(var j=0;j<flagdataList[i].routepathdata.length;j++){-->
 
-                                    var flagmarker = new AMap.Marker({
-                                        map: map,
-                                        position: flagdataList[i].routepathdata[j],
-                                        icon: new AMap.Icon({
-                                            size: new AMap.Size(12, 12), //图标大小
-                                            image: '${s.base}/i/circle-12.png',
-                                            offset: new AMap.Pixel(-6, -6), // 相对于基点的偏移位置
-                                        }),
-                                    });
+                                    <#--var flagmarker = new AMap.Marker({-->
+                                        <#--map: map,-->
+                                        <#--position: flagdataList[i].routepathdata[j],-->
+                                        <#--icon: new AMap.Icon({-->
+                                            <#--size: new AMap.Size(12, 12), //图标大小-->
+                                            <#--image: '${s.base}/i/circle-12.png',-->
+                                            <#--offset: new AMap.Pixel(-6, -6), // 相对于基点的偏移位置-->
+                                        <#--}),-->
+                                    <#--});-->
 
-                                    var title = '<span>信息点：' + flagdataList[i].flagdata[j] + '</span>';
-                                    flagmarker.content = createInfoWindowtwo(title);
-                                    flagmarker.on('click', markerClick);
-                                }
-                            }
-                        }
+                                    <#--var title = '<span>信息点：' + flagdataList[i].flagdata[j] + '</span>';-->
+                                    <#--flagmarker.content = createInfoWindowtwo(title);-->
+                                    <#--flagmarker.on('click', markerClick);-->
+                                <#--}-->
+                            <#--}-->
+                        <#--}-->
 
 
                         if(alarmList.length==0 || alarmList==null){

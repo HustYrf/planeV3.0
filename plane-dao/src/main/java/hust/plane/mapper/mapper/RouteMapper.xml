@@ -60,6 +60,10 @@
         select count(1) from K_Route
         where Name  = #{name,jdbcType=VARCHAR}
     </select>
+    <select id="getIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select id from K_Route
+        where Name  = #{name,jdbcType=VARCHAR}
+    </select>
     <select id="routeCount" parameterType="hust.plane.mapper.pojo.Route"
             resultType="java.lang.Integer">
         select count(*) from K_Route
