@@ -222,6 +222,10 @@
                                             <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
                                             <i class="icon-exclamation-sign"></i>
                                             <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
+                                            <button type="button" class="btn green" onclick="taskImage(${taskpojo.task.id!})">
+                                                <i class="icon-camera-retro"></i>
+                                                <span class="glyphicon glyphicon-picture" aria-hidden="true">图片</span>
+                                            </button>
                                              <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
                                                     <i class=" icon-print icon-white"></i>
                                                     <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
@@ -606,6 +610,10 @@
 
     function  taskAlarm(taskid) {
         window.open("${s.base}/alarmWithId.action?id="+taskid);
+    }
+
+    function taskImage(taskId) {
+        window.open("${s.base}/imageWithId.action?id="+taskId)
     }
 
     function onsureTaskOver(taskid){

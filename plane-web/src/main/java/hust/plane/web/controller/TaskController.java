@@ -12,6 +12,7 @@ import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.*;
 import hust.plane.service.interFace.*;
 import hust.plane.utils.DateKit;
+import hust.plane.utils.GetFileName;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.pojo.TipException;
 import hust.plane.web.controller.vo.*;
@@ -119,7 +120,7 @@ public class TaskController {
                 alarmDetailVO.setUav(uav1);
                 //设置来自图片服务器的数据
                 //                     2113.123.12.12/   ImageTask/       22/        ImageAlarm/      1.jpg
-                alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
+                alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
                 alarmDetailVO.setTaskName(task1.getName());
                 alarmDetailVO.setFlyingPathName(flyingPath.getName());
                 alarmDetailVO.setUserCreatorName(userCreatorName);
@@ -583,7 +584,7 @@ public class TaskController {
 
         Task task2 = taskServiceImpl.getTaskByTask(task);
 
-        User userCreator =userServiceImpl.getUserById(task2.getUsercreator());
+        User userCreator = userServiceImpl.getUserById(task2.getUsercreator());
         User userA = userServiceImpl.getUserById(task2.getUserA());
         User userZ = userServiceImpl.getUserById(task2.getUserZ());
 
@@ -600,8 +601,8 @@ public class TaskController {
                 AlarmVO alarmVo = new AlarmVO(alarms.get(i));
 
                 //读取本机图片服务器数据
-                 //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
-                alarmVo.setImage(FILE_UPLOAD_HOST+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getId() + "/" + IMAGE_ALARM + alarmVo.getImage());
                 alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
@@ -720,6 +721,19 @@ public class TaskController {
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
         //ssmodel.addAttribute("curNav", "taskAllList");
         return "alarmListWithTaskId";
+    }
+
+
+    @RequestMapping(value = "imageWithId")
+    public String getTaskImageWithId(@RequestParam(value = "id") int id,Model model) {
+        if(Integer.valueOf(id)!=null){
+            String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
+            List<String> picNameList = new ArrayList<>();
+            picNameList=GetFileName.getFiles(picDir);
+            model.addAttribute("picNameList",JsonUtils.objectToJson(picNameList));
+            model.addAttribute("taskId",id);
+        }
+        return "taskPicture";
     }
 
     //识别图片
