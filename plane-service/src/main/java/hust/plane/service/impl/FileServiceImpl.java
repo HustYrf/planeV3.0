@@ -53,9 +53,6 @@ public class FileServiceImpl implements FileService {
             for(int i=0;i<infoPoints.size();i++){
                 infoPoints.get(i).setRouteId(id);
             }
-            System.out.println(infoPoints.size()+"$$$$$$$$$$$$$");
-            System.out.println(infoPoints.get(0).getName()+"$");
-            System.out.println(infoPoints.get(1).getName()+"$");
 
             infoPointMapper.insertInfoPointList(infoPoints);
 
@@ -74,6 +71,8 @@ public class FileServiceImpl implements FileService {
         if (ExcelUtil.readFlyingPathExcel(f, flyingPath) == false) {
             return false;
         }
+        flyingPath.setCreatetime(new Date());
+        flyingPath.setUpdatetime(new Date());
         int count = flyingPathMapper.countByName(flyingPath.getName());
         if (count > 0) {
             return false;

@@ -730,6 +730,12 @@ public class TaskController {
             String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
             List<String> picNameList = new ArrayList<>();
             picNameList=GetFileName.getFiles(picDir);
+            String fileROOT = BASE_IMAGE_URL + imgPath;
+            String folder = "/" + IMAGE_SOURCE;
+
+            model.addAttribute("baseImageUrl",fileROOT);
+            model.addAttribute("folder",folder);
+
             model.addAttribute("picNameList",JsonUtils.objectToJson(picNameList));
             model.addAttribute("taskId",id);
         }

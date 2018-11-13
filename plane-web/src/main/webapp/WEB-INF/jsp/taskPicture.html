@@ -36,8 +36,11 @@
 </div>
 <script src='${s.base}/res/taskImage/js/jquery.min.js'></script>
 <script type="text/javascript">
+
+    var baseurl = ${baseImageUrl};
+    var folder = ${folder};
     var taskId = ${taskId};
-    var port = "http://218.65.240.246:18088/ImageTask/" + taskId + "/ImageAlarm/";
+    var port = baseurl + taskId + folder;
     var taskPic = ${picNameList};
     $slider = $('.slider');
     for (var i = 0; i < taskPic.length; i++) {

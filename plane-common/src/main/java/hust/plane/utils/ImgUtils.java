@@ -5,8 +5,11 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
+import hust.plane.mapper.mapper.AlarmMapper;
 import hust.plane.mapper.pojo.Alarm;
+import hust.plane.mapper.pojo.InfoPoint;
 import hust.plane.utils.pojo.ImgPicToAlarm;
+import hust.plane.utils.pojo.RouteExcel;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.File;
@@ -58,9 +61,9 @@ public class ImgUtils {
         return alarm;
     }
 
-    public static List<Alarm> processlcoaldir(int taskid,String alarmDir) {
-        //String localfiledir = "D:\\detect\\test\\";
-         String localfiledir =  alarmDir;
+    public static List<Alarm> processlcoaldir(int taskid, String alarmDir) {
+
+        String localfiledir =  alarmDir;
 
         List<Alarm> alarmList = new ArrayList<Alarm>();
         File file = new File(localfiledir);
@@ -68,9 +71,9 @@ public class ImgUtils {
             File[] files = file.listFiles();
             for (File file2 : files) {
                 if (file2.isDirectory()) {
-                    System.out.println("文件夹:" + file2.getAbsolutePath() + "跳过");
+                   // System.out.println("文件夹:" + file2.getAbsolutePath() + "跳过");
                 } else {
-                    System.out.println("文件:" + file2.getAbsolutePath() + "处理");
+                    //System.out.println("文件:" + file2.getAbsolutePath() + "处理");
 
                     Alarm alarm = new Alarm();
                     alarm.setUpdatetime(new Date());
@@ -95,28 +98,28 @@ public class ImgUtils {
                         byte[] position = new byte[12];
                         for (int i = 0; i < 12; i++) {
                             position[i] = imgbyte[length - 12 + i];
-                            //System.out.print(" " + position[i]);
                         }
-                        System.out.println();
+
                         float lat = getFloat(position, 0);
                         float lon = getFloat(position, 4);
                         float elv = getFloat(position, 8);
-                        List<Double> point = new ArrayList<Double>();
 
-                        point.add((double)lon);
-                        point.add((double)lat);
+                        RouteExcel routeExcel = new RouteExcel();
 
-                        alarm.setPosition(PointUtil.pointToSqlString(point));
+                        routeExcel.setLatitude((double)lat);
+                        routeExcel.setLatitude((double)lon);
+
+                        alarm.setPosition(routeExcel.getPositon());
                         alarm.setDescription("这是一张无人机从" + elv + " 高度拍摄告警照片！");
 
+                        //在这里匹配最近的信息点
+                       // String geohash = GeohashUtil.getGeoHashBase32(routeExcel);
+
+                        List<String> geohash9area = GeohashUtil.getGeoHashBase32For9(routeExcel);
+
+
                         alarmList.add(alarm);
-                        //25.062246	110.3134467
-//                        System.out.println(lat);
-//                        System.out.println(lon);
-//                        System.out.println(elv);
-//                        System.out.println("%" + Arrays.toString(position) + "%");
-                        //Alarm alarm =  printImageTags(file2,taskid);
-                        //alarmList.add(alarm);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -189,7 +192,7 @@ public class ImgUtils {
         fout.close();
     }
 
-    static byte[] image2Bytes(File imgSrc) throws Exception {
+    static public byte[] image2Bytes(File imgSrc) throws Exception {
         FileInputStream fin = new FileInputStream(imgSrc);
         //可能溢出,简单起见就不考虑太多,如果太大就要另外想办法，比如一次传入固定长度byte[]
         byte[] bytes = new byte[fin.available()];

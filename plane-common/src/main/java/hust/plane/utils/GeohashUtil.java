@@ -13,26 +13,30 @@ import java.util.List;
  */
 public class GeohashUtil {
 
-    public static final double MINLAT = -90;
+    public static final double MINLAT = -90;    //经纬度最小值和最大值
     public static final double MAXLAT = 90;
 
     public static final double MINLNG = -180;
     public static final double MAXLNG = 180;
 
+    /**  精度：
+     * 1 2500km;2 630km;3 78km;4 30km
+     * 5 2.4km; 6 610m; 7 76m; 8 19m
+     */
     private static int hashLength = 8; //经纬度转化为geohash长度
+
     private static int latLength = 20; //纬度转化为二进制长度
     private static int lngLength = 20; //经度转化为二进制长度
 
-    private static double minLat;//每格纬度的单位大小
-    private static double minLng;//每个经度的倒下
+    private static double minLat;     //每格经纬度的单位大小
+    private static double minLng;
     private static final char[] CHARS = {'0', '1', '2', '3', '4', '5', '6', '7',
             '8', '9', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n',
             'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-//    public GeoHash(double lat, double lng) {
-//        location = new LocationBean(lat, lng);
-//        setMinLatLng();
-//    }
+    public GeohashUtil(double lat, double lng) {
+        setMinLatLng();
+    }
 
     /**
      * @Author:lulei
@@ -55,6 +59,9 @@ public class GeohashUtil {
      * @Description: 求所在坐标点及周围点组成的九个
      */
     public static List<String> getGeoHashBase32For9(RouteExcel routeExcel) {
+
+        setMinLatLng();
+
         double leftLat = routeExcel.getLatitude() - minLat;
         double rightLat = routeExcel.getLatitude() + minLat;
         double upLng = routeExcel.getLongitude() - minLng;
@@ -129,6 +136,7 @@ public class GeohashUtil {
      * @Description: 获取经纬度的base32字符串
      */
     public static String getGeoHashBase32(RouteExcel routeExcel) {
+        setMinLatLng();
         return getGeoHashBase32(routeExcel.getLatitude(),routeExcel.getLongitude());
     }
 
@@ -243,13 +251,13 @@ public class GeohashUtil {
         return result;
     }
 
-//    public static void main(String[] args) {
-//
-//        RouteExcel routeExcel = new RouteExcel();
-//        routeExcel.setLatitude(14.534523);
-//        routeExcel.setLongitude(34.5435234233333);
-//        System.out.println(GeohashUtil.getGeoHashBase32(routeExcel));
-//       // System.out.println(GeohashUtil.getGeoHashBase32For9(routeExcel).toString());
-//    }
+    public static void main(String[] args) {
+
+        RouteExcel routeExcel = new RouteExcel();
+        routeExcel.setLatitude(14.53456543);
+        routeExcel.setLongitude(34.5435288);
+        System.out.println(GeohashUtil.getGeoHashBase32(routeExcel));
+        System.out.println(GeohashUtil.getGeoHashBase32For9(routeExcel).toString());
+    }
 
 }

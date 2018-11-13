@@ -275,22 +275,6 @@ public class ExcelUtil {
         }
     }
 
-//    public static void main(String[] args) {
-//
-//        String string = "123.4";
-//        String string2 = "ggg";
-//
-//        Double d1 = Double.parseDouble(string);
-//        System.out.println(d1);
-//        try {
-//            Double d2 = Double.parseDouble(string2);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
     //读取excel文件中的飞行路径数据
     public static boolean readFlyingPathExcel(File file, FlyingPath flyingPath) {
 

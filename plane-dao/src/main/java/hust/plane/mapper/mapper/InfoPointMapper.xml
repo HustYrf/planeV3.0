@@ -42,6 +42,16 @@
         </foreach>
     </insert>
 
+    <select id="getNearPointByGeohash" parameterType="java.util.List" resultType="hust.plane.mapper.pojo.InfoPoint">
+        select distinct
+        <include refid="Base_Column_List"/>
+        from K_InfoPoint
+        where Geohash in
+        <foreach collection="geohashs" item="geohash" open="(" close=")" separator=",">
+            #{geohash,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
     <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.InfoPoint">
         insert into K_InfoPoint
         <trim prefix="(" suffix=")" suffixOverrides=",">

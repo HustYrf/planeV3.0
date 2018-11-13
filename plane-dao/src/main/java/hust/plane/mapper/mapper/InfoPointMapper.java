@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface InfoPointMapper {
 
+    List<InfoPoint> getNearPointByGeohash(@Param("geohashs")List<String> geohashs);
+
     int insertInfoPointList(@Param("infoPoints")List<InfoPoint> infoPoints);
 
 }
