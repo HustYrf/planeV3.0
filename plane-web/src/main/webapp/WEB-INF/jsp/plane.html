@@ -13,8 +13,12 @@
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
 
+    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
+    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
+
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
+
 
 </head>
 <style>
@@ -58,8 +62,21 @@ span{
 #fightStatus{
     color: #fff;
 }
+.main-wrapVideo{
+    display: none;
+    position:absolute;
+    top:10px;
+    min-width: 520px;
+    max-width: 760px;
+    z-index: 999;
+    margin-left: 80px;
+}
 
+.main-wrapVideo video{
+    width: 100%;
+}
 </style>
+
 <body>
 <input type="hidden" id="base" value="${s.base}"><br/>
 <input type="hidden" id="plane" value="${uav2.deviceid!}"><br/>
@@ -67,10 +84,19 @@ span{
 <div class="headerUav" style="font-size:2.0rem;">
 <font size="4">飞机状态：<span id="fightStatus">暂无</span></font>
 </div>
+<div class="main-wrapVideo" id="videoDiv">
+    <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
+        <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+    </video>
+</div>
+
 <div id="UavInfo">
     <div class="baseInfo">
         <ul class="list-group">
-            <li class="list-group-item liheader" ><b>任务基本信息</b></li>
+            <li class="list-group-item liheader" >
+                <b>任务基本信息</b>
+                <button type="button" class="btn btn-success" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
+            </li>
             <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name}</span></li>
             <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
             <li class="list-group-item">起飞员：<span>${task.userAName}</span></li>
@@ -100,6 +126,21 @@ span{
         <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
         <script type="text/javascript">
            
+            function videoOp() {
+
+                if($('#videoDiv').css('display') === 'none'){
+                    $("#videoDiv").css('display','block');
+                    $("#videobtn").text("关闭视频");
+                    //ajax获取后台视频流
+
+
+                }else{
+                    $("#videoDiv").css('display','none');
+                    $("#videobtn").text("实时视频");
+                    //关闭视频流
+                }
+            }
+            
 			var uavdata = ${uav};
 			var flyingPath = ${path};
 

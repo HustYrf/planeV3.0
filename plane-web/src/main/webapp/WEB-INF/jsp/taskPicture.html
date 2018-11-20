@@ -5,7 +5,7 @@
     <title>任务图片</title>
     <link rel='stylesheet prefetch' href='${s.base}/res/taskImage/css/slick.css'>
     <link rel="stylesheet" href="${s.base}/res/taskImage/css/style.css">
-
+    <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 </head>
 
 <body>
@@ -37,17 +37,23 @@
 <script src='${s.base}/res/taskImage/js/jquery.min.js'></script>
 <script type="text/javascript">
 
-    var baseurl = ${baseImageUrl};
-    var folder = ${folder};
-    var taskId = ${taskId};
+    var baseurl = '${baseImageUrl}';
+    var folder = '${folder}';
+    var taskId = '${taskId}'+'/';
     var port = baseurl + taskId + folder;
     var taskPic = ${picNameList};
-    $slider = $('.slider');
-    for (var i = 0; i < taskPic.length; i++) {
-        var imgAddress = port + taskPic[i];
-        $slider.append('<div>' + '<img src="' + imgAddress + '">' +
-            '</div>');
+
+    if(taskPic.errcode == 0){
+        alert(taskPic.message);
+    }else{
+        $slider = $('.slider');
+        for (var i = 0; i < taskPic.data.length; i++) {
+            var imgAddress = port + taskPic.data[i];
+            console.log(imgAddress);
+            $slider.append('<div>' + '<img src="' + imgAddress + '">' + '</div>');
+        }
     }
+
 </script>
 <script src='${s.base}/res/taskImage/js/slick.min.js'></script>
 <script src="${s.base}/res/taskImage/js/index.js"></script>

@@ -103,66 +103,7 @@ public class ImgController {
             List<String> relaPathList = new ArrayList<>();
             List<String> realPathList = new ArrayList<>();
 
-            // 这里新建文件夹，并授予权限,,,在不同的电脑上要修改这部分的配置
-            StringBuilder taskFileAddress = new StringBuilder();
-            taskFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(taskDir);//任务文件夹地址
-
-            StringBuilder sourceFileAddress = new StringBuilder();
-            sourceFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageResource");//源任务文件夹地址
-
-            StringBuilder alarmFileAddress = new StringBuilder();
-            alarmFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(taskDir).append(File.separator).append("ImageAlarm");//告警任务文件夹地址
-
-            File file2 = new File(taskFileAddress.toString());
-            if(!file2.exists()){
-                boolean mkdirs = file2.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务基本文件夹创建失败！");
-                }
-            }
-
-            File file3 = new File(sourceFileAddress.toString());
-            if(!file3.exists())
-            {
-                boolean mkdirs = file3.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务源文件夹创建失败！");
-                }
-            }
-
-            File file4 = new File(alarmFileAddress.toString());
-            if(!file4.exists())
-            {
-                boolean mkdirs = file4.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务告警文件夹创建失败！");
-                }
-            }
-
-            File basefile = new File(taskFileAddress.toString());   //如果文件夹存在的话，那么递归赋权限
-            if(basefile.exists()){
-                try {
-                    Process proc = Runtime.getRuntime().exec("chmod -R 777 " + taskFileAddress.toString());
-                    InputStream stderr = proc.getErrorStream();
-                    InputStreamReader isr = new InputStreamReader(stderr);
-                    BufferedReader br = new BufferedReader(isr);
-                    String line = null;
-                    while ((line = br.readLine()) != null)
-                        System.out.println(line);
-                    int exitVal = proc.waitFor();
-                    System.out.println("Process exitValue: " + exitVal);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("任务文件夹及子文件夹权限授予失败！");
-                }
-            }
-
-
             for (MultipartFile pic : files.values()) {
-
                 String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
                 //  String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功

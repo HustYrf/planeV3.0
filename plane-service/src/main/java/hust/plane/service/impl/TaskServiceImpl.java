@@ -49,16 +49,21 @@ public class TaskServiceImpl implements TaskService {
                 User user2 = userMapper.selectByPrimaryKey(task.getUserA());
                 User user3 = userMapper.selectByPrimaryKey(task.getUserZ());
 
-                Uav uav = uavMapper.getUavById(task.getUavId());
+                if(task.getUavId()==null || task.getUavId()==0){
+                    taskPojo.setUavName("");
+                    taskPojo.setDeviceId("");
+                }else{
+                    Uav uav = uavMapper.getUavById(task.getUavId());
+                    taskPojo.setUavName(uav.getName());
+                    taskPojo.setDeviceId(uav.getDeviceid());
+                }
 
                 taskPojo.setTask(task);
                 taskPojo.setUserCreatorName(user1.getName());
                 taskPojo.setUserAName(user2.getName());
                 taskPojo.setUserZName(user3.getName());
 
-                taskPojo.setUavName(uav.getName());
-                taskPojo.setDeviceId(uav.getDeviceid());
-                System.err.println(uav.getDeviceid());
+
                 taskPojo.setFlyingPathName(flyingPathMapper.getNameById(task.getId()));
                 list.add(taskPojo);
             }
@@ -92,15 +97,20 @@ public class TaskServiceImpl implements TaskService {
                 User user2 = userMapper.selectByPrimaryKey(task1.getUserA());
                 User user3 = userMapper.selectByPrimaryKey(task1.getUserZ());
 
-                Uav uav = uavMapper.getUavById(task1.getUavId());
+                if(task1.getUavId()==null || task1.getUavId()==0){
+                    taskPojo.setUavName("");
+                    taskPojo.setDeviceId("");
+                }else{
+                    Uav uav = uavMapper.getUavById(task1.getUavId());
+                    taskPojo.setUavName(uav.getName());
+                    taskPojo.setDeviceId(uav.getDeviceid());
+                }
 
                 taskPojo.setTask(task1);
                 taskPojo.setUserCreatorName(user1.getName());
                 taskPojo.setUserAName(user2.getName());
                 taskPojo.setUserZName(user3.getName());
 
-                taskPojo.setUavName(uav.getName());
-                taskPojo.setDeviceId(uav.getDeviceid());
 
                 taskPojo.setFlyingPathName(flyingPathMapper.getNameById(task1.getFlyingpathId()));
                 items.add(taskPojo);

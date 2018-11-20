@@ -1,7 +1,6 @@
 package hust.plane.web.controller;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -56,6 +55,9 @@ public class TaskController {
 
     @Value(value = "${LOCAL_ALARM_DIR}")
     private String LOCAL_ALARM_DIR;
+
+    @Value(value = "${SERVER_NAME}")
+    private String SERVER_NAME;
 
     @Autowired
     private TaskService taskServiceImpl;
@@ -193,6 +195,8 @@ public class TaskController {
                 }
                 if (task2.getUavId() != null) {
                     taskVO.setUavName(uavServiceImpl.getNameById(task2.getUavId()));
+                }else{
+                    taskVO.setUavName("");
                 }
                 taskVO.setTaskVO(task2);
 
@@ -459,7 +463,7 @@ public class TaskController {
     // 任务分派
     @RequestMapping(value = "assignTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String assignTask(Task task) {
+    public String assignTask(Task task) throws InterruptedException {
 
         Task task2 = taskServiceImpl.getTaskByTask(task);
         if (task2.getUserA() == null || task2.getUserA() == 0) {
@@ -471,19 +475,77 @@ public class TaskController {
         if (task2.getFlyingpathId() == null || task2.getFlyingpathId() == 0) {
             return JsonView.render(1, "未指定飞行路径,任务分派失败!");
         }
-        if (task2.getUavId() == null || task2.getUavId() == 0) {
-            return JsonView.render(1, "未指定无人机,任务分派失败!");
-        }
+//        if (task2.getUavId() == null || task2.getUavId() == 0) {
+//            return JsonView.render(1, "未指定无人机,任务分派失败!");
+//        }
 
         User userA = userServiceImpl.getUserById(task2.getUserA());
         User userZ = userServiceImpl.getUserById(task2.getUserZ());
         if (taskServiceImpl.setStatusTaskByTask(task2, 2) == true) {// 设置任务分派
 
-            task2.setImgfolder("" + task2.getId());  //图片文件夹命名，直接使用任务的id命名即可
+            //task2.setImgfolder("" + task2.getId());  //图片文件夹命名，直接使用任务的id命名即可
             taskServiceImpl.updataImgFolderByTask(task2);  //写入数据库
+
+            // 这里新建文件夹，并授予权限,,,在不同的电脑上要修改这部分的配置
+            StringBuilder taskFileAddress = new StringBuilder();
+            taskFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
+                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId());//任务文件夹地址
+
+            StringBuilder sourceFileAddress = new StringBuilder();
+            sourceFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
+                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId()).append(File.separator).append("ImageResource");//源任务文件夹地址
+
+            StringBuilder alarmFileAddress = new StringBuilder();
+            alarmFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
+                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId()).append(File.separator).append("ImageAlarm");//告警任务文件夹地址
+
+            File file2 = new File(taskFileAddress.toString());
+            if(!file2.exists()){
+                boolean mkdirs = file2.mkdirs();
+                if(mkdirs == false){
+                    System.out.println("任务基本文件夹创建失败！");
+                }
+            }
+
+            File file3 = new File(sourceFileAddress.toString());
+            if(!file3.exists())
+            {
+                boolean mkdirs = file3.mkdirs();
+                if(mkdirs == false){
+                    System.out.println("任务源文件夹创建失败！");
+                }
+            }
+
+            File file4 = new File(alarmFileAddress.toString());
+            if(!file4.exists())
+            {
+                boolean mkdirs = file4.mkdirs();
+                if(mkdirs == false){
+                    System.out.println("任务告警文件夹创建失败！");
+                }
+            }
+
+            File basefile = new File(taskFileAddress.toString());   //如果文件夹存在的话，那么递归赋权限
+            if(basefile.exists()){
+                try {
+                    Process proc = Runtime.getRuntime().exec("chmod -R 777 " + taskFileAddress.toString());
+                    InputStream stderr = proc.getErrorStream();
+                    InputStreamReader isr = new InputStreamReader(stderr);
+                    BufferedReader br = new BufferedReader(isr);
+                    String line = null;
+                    while ((line = br.readLine()) != null)
+                        System.out.println(line);
+                    int exitVal = proc.waitFor();
+                   // System.out.println("Process exitValue: " + exitVal);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("任务文件夹及子文件夹权限授予失败！");
+                }
+            }
 
             userServiceImpl.updataTasknumByUser(userA); // 增加az任务数目
             userServiceImpl.updataTasknumByUser(userZ);
+
             return JsonView.render(1, "任务分派成功!");
         } else {
             return JsonView.render(1, "任务分派失败!");
@@ -572,10 +634,7 @@ public class TaskController {
         model.addAttribute("role", role);
         model.addAttribute("uav2", uav2);
 
-        //System.out.println(JsonUtils.objectToJson(uavVO));
-
         return "plane";
-
     }
 
     // 打印任务报告
@@ -630,7 +689,6 @@ public class TaskController {
         List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(userCreator.getId());
         if (groupIdList.contains(Integer.valueOf(1))) {
             //是浏览者,不改变状态
-
         } else {
             //是观察者，改变状态
             if(task2.getStatus()==12){
@@ -728,15 +786,19 @@ public class TaskController {
     public String getTaskImageWithId(@RequestParam(value = "id") int id,Model model) {
         if(Integer.valueOf(id)!=null){
             String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
-            List<String> picNameList = new ArrayList<>();
-            picNameList=GetFileName.getFiles(picDir);
+            List<String> picNameList = null;
+            picNameList = GetFileName.getFiles(picDir);
             String fileROOT = BASE_IMAGE_URL + imgPath;
-            String folder = "/" + IMAGE_SOURCE;
+            String folder = IMAGE_SOURCE;
 
             model.addAttribute("baseImageUrl",fileROOT);
             model.addAttribute("folder",folder);
 
-            model.addAttribute("picNameList",JsonUtils.objectToJson(picNameList));
+            if(picNameList.size()>0)
+                model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
+            else
+                model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
+
             model.addAttribute("taskId",id);
         }
         return "taskPicture";
