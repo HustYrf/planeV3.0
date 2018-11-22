@@ -582,4 +582,9 @@
         select id from K_User
         where Name = #{param1}
     </select>
+
+    <select id="selectByUserWorkNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from K_User
+        where WorkNumber = #{addUserWorkNumber}
+    </select>
 </mapper>
