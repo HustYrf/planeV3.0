@@ -193,6 +193,9 @@ public class AlarmServiceImpl implements AlarmService {
                             }
                         }
 
+                        //暂时把创建时间设为当前时间
+                        alarm.setCreatetime(new Date());
+
                         byte[] imgbyte = image2Bytes(file2);
                         int length = imgbyte.length;
                         byte[] position = new byte[12];
@@ -224,9 +227,7 @@ public class AlarmServiceImpl implements AlarmService {
                             alarm.setInfoname(infoPoint.getName());
                             alarm.setRouteId(infoPoint.getRouteId());
                         }
-
                         alarmList.add(alarm);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

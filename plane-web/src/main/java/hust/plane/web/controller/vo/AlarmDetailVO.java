@@ -17,7 +17,8 @@ public class AlarmDetailVO {
     private String updateTime;
 
 
-    private String infoname;
+
+    private String infoName;
 
     private List<Double> position;
     private String taskName;
@@ -66,7 +67,7 @@ public class AlarmDetailVO {
             this.updateTime = DateKit.dateFormat(alarm.getUpdatetime(), "yyyy/MM/dd HH:mm:ss");
         }
         if(alarm.getInfoname()!=null){
-            this.infoname = alarm.getInfoname();
+            this.infoName = alarm.getInfoname();
         }
     }
     public String getUserCreatorName() {
@@ -163,13 +164,11 @@ public class AlarmDetailVO {
     public void setUavDeviceId(String uavDeviceId) {
         this.uavDeviceId = uavDeviceId;
     }
-
-    public String getInfoname() {
-        return infoname;
+    public String getInfoName() {
+        return infoName;
     }
 
-    public void setInfoname(String infoname) {
-        this.infoname = infoname;
+    public void setInfoName(String infoName) {
+        this.infoName = infoName;
     }
-
 }
