@@ -285,6 +285,22 @@ public class TaskServiceImpl implements TaskService {
 		return list.size()>0?list:null;
 	}
 
+
+	//根据用户作为任务管理员和正在飞行中的任务查询所有的任务
+    @Override
+    public List<Task> getTaskByCreatorAndStatus(User user, Integer status) {
+
+        TaskExample example = new TaskExample();
+        Criteria createCriteria = example.createCriteria();
+
+        createCriteria.andStatusEqualTo(status);
+        createCriteria.andUsercreatorEqualTo(user.getId());
+
+        List<Task> list = taskMapper.selectByExample(example);
+        return list.size()>0?list:null;
+
+    }
+
     @Override
     public List<Task> getAllTaskByRole(Task task) {
 

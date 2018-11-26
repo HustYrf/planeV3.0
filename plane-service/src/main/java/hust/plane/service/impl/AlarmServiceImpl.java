@@ -167,9 +167,9 @@ public class AlarmServiceImpl implements AlarmService {
     public List<Alarm> processlcoaldir(int taskid, String alarmDir) {
 
         List<Alarm> alarmList = new ArrayList<Alarm>();
-        File file = new File(alarmDir);
-//        File file = new File("D:\\pic");
-//        System.out.println("遍历该文件夹！");
+        //File file = new File(alarmDir);
+        File file = new File("D:\\pic");
+
         if (file.exists()) {
             File[] files = file.listFiles();
             for (File file2 : files) {
@@ -244,10 +244,12 @@ public class AlarmServiceImpl implements AlarmService {
 
         Double minDis = Double.MAX_VALUE;
         InfoPoint minInfoPoint = null;
+
         for (int i = 0; i < infoPoints.size(); i++) {
             InfoPoint infoPoint = infoPoints.get(i);
             List<Double> position = PointUtil.StringPointToList(infoPoint.getPosition());
-            Double dis = MapUtils.GetDistance(routeExcel.getLatitude(), routeExcel.getLongitude(), position.get(0), position.get(1));
+            Double dis = MapUtils.GetDistance(routeExcel.getLongitude(),routeExcel.getLatitude(),position.get(0), position.get(1) );
+
             if (minDis > dis) {
                 minInfoPoint = infoPoint;
                 minDis = dis;

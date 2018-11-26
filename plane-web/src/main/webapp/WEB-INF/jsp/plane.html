@@ -16,8 +16,10 @@
     <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
     <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
 
+    <script type="text/javascript" src="${s.base}/res/js/WGS84_to_GCJ02.js"></script>ssss
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
+
 
 
 </head>
@@ -188,12 +190,13 @@ span{
 
 	        var planeMarker = new AMap.Marker({
 	                map: map,
-                    position: uavdata.position,
+                   // position: uavdata.position,
+                    position: flyingPath.pathdata[0],
                     icon: new AMap.Icon({
-                        size: new AMap.Size(32, 32), //图标大小
-                        image: 'i/uav-32.png',
-                        offset: new AMap.Pixel(-16, -16), // 相对于基点的偏移位置
+                    size: new AMap.Size(32, 32), //图标大小
+                    image: 'i/uav-32.png'
                     }),
+                offset: new AMap.Pixel(-16, -16), // 相对于基点的偏移位置
             });
 	        map.add(planeMarker);
 

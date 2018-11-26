@@ -108,7 +108,7 @@
 
 
 <#if curNav??>
-    <#if curNav =="planeAllList">
+    <#if curNav =="uavAllList">
          <li class="active">
     <#else >
          <li class="">
@@ -116,7 +116,7 @@
 	<a href="javascript:;">
         <i class=" icon-plane"></i>
         <span class="title">设施管理</span>
-         <#if curNav =="planeAllList">
+         <#if curNav =="uavAllList">
                    <span class="selected"></span>
          <#else>
                    <span class=""></span>
@@ -124,7 +124,7 @@
         <span class="arrow "></span>
     </a>
     <ul class="sub-menu">
-        <li <#if (curNav)?? && curNav =="planeAllList">class="active"</#if>><a href="${s.base}/uavList.action">无人机查看</a></li>
+        <li <#if (curNav)?? && curNav =="uavAllList">class="active"</#if>><a href="${s.base}/uavList.action">无人机查看</a></li>
         <li><a href="#">无人机注册</a></li>
         <li><a href="#">三盯摄像头</a></li>
         <li><a href="#">摄像头注册</a></li>

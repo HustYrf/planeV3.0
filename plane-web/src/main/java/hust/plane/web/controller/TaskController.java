@@ -760,24 +760,9 @@ public class TaskController {
         FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(task1.getFlyingpathId());
         FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
 
-//        List<FlyingPath_has_RouteKey> flyingPath_has_routeKeyList = flyingPath_has_routeKeyService.getAllFlyingPathId(flyingPath.getId());
-//        Iterator<FlyingPath_has_RouteKey> flyingPath_has_routeKeyIterator = flyingPath_has_routeKeyList.iterator();
-//        List<Route> routeList = new ArrayList<>();
-//        while (flyingPath_has_routeKeyIterator.hasNext()){
-//            FlyingPath_has_RouteKey flyingPath_has_routeKey = flyingPath_has_routeKeyIterator.next();
-//            Route route= routeServiceImpl.getRouteWithFlagDataById(flyingPath_has_routeKey.getRouteId());
-//            routeList.add(route);
-//        }
-        //然后把数据传输到前台
-//        List<RouteWithFlagInfoVO> routeWithFlagInfoVOList = new ArrayList<RouteWithFlagInfoVO>();
-//        for(int i=0;i<routeList.size();++i){
-//            RouteWithFlagInfoVO routeWithFlagInfoVO = new RouteWithFlagInfoVO(routeList.get(i));
-//            routeWithFlagInfoVOList.add(routeWithFlagInfoVO);
-//        }
-//        model.addAttribute("routeList",JsonUtils.objectToJson(routeWithFlagInfoVOList));
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVO));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmDetailVOList));
-        //ssmodel.addAttribute("curNav", "taskAllList");
+
         return "alarmListWithTaskId";
     }
 

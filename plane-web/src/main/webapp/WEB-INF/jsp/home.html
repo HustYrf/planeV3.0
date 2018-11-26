@@ -24,6 +24,7 @@
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="media/css/glyphicons.css" rel="stylesheet" />
     <link href="media/css/halflings.css" rel="stylesheet" />
+    <link href="media/css/search.css" rel="stylesheet" />
     <!-- END PAGE LEVEL STYLES -->
 
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
@@ -58,14 +59,44 @@
                 <li><a href="${s.base}/home.action">主页</a></li>
             </ul>
             <!-- END PAGE TITLE & BREADCRUMB-->
+            <div class="search-forms search-default">
+                <form class="form-search" action="#">
+                    <div class="chat-form">
+                        <div  class="searchselect">
+                                <#--<img src="res/i/icons-34.png" style="width: 34px;height: 34px;">-->
+                                <i class="icon-angle-up"></i>
+                                <span class="">无人机</span>&nbsp;
+                                <i class="icon-angle-down"></i>
+                                <ul class="dropdown-menu" id="selectoptions" style="display: block !important;">
+                                    <li><a><i class="icon-user"></i>光缆</a></li>
+                                    <li><a><i class="icon-user-md"></i> 告警点</a></li>
+                                    <li><a><i class=" icon-signout"></i>信息点</a></li>
+                                    <li><a><i class="icon-user"></i>光缆</a></li>
+                                    <li><a><i class="icon-user-md"></i> 告警点</a></li>
+                                    <li><a><i class=" icon-signout"></i>信息点</a></li>
+                                    <li><a><i class="icon-user"></i>光缆</a></li>
+                                    <li><a><i class="icon-user-md"></i> 告警点</a></li>
+                                    <li><a><i class=" icon-signout"></i>信息点</a></li>
+                                </ul>
+                        </div>
+                        <div class="input-cont">
+                            <input type="text" placeholder="Search..." class="m-wrap" style="width: 520px;"/>
+                        </div>
+                        <button type="button" class="btn buttonright green">
+                            查找 &nbsp;<i class=" icon-search m-icon-green"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
         <!-- END PAGE HEADER-->
         <div id="dashboard">
             <div id="container" ></div>
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
+
+
 
                 var  planePath =${flyingPath};
 
@@ -107,18 +138,18 @@
                     offset: new AMap.Pixel(20, -35)
                 });
 
-
-                for(var j=0;j<planePath.length;j++){
-                    var polyline = new AMap.Polyline({
-                        map: map,
-                        path: planePath[j].pathdata, //设置线覆盖物路径
-                        strokeColor: '#ff6700', //线颜色
-                        strokeOpacity: 1, //线透明度
-                        strokeWeight: 3, //线宽
-                        strokeStyle: "solid", //线样式
-                        strokeDasharray: [10, 5] //补充线样式
-                    });
-                }
+                //
+                // for(var j=0;j<planePath.length;j++){
+                //     var polyline = new AMap.Polyline({
+                //         map: map,
+                //         path: planePath[j].pathdata, //设置线覆盖物路径
+                //         strokeColor: '#ff6700', //线颜色
+                //         strokeOpacity: 1, //线透明度
+                //         strokeWeight: 3, //线宽
+                //         strokeStyle: "solid", //线样式
+                //         strokeDasharray: [10, 5] //补充线样式
+                //     });
+               // }
 
                 var alarmList = ${alarmList!};
                 AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
@@ -130,39 +161,39 @@
                         for(var i=0;i<alarmList.length;i++){
 
                             //启动页面
-                            var dangerPoint = new SimpleMarker({
-                                //前景文字
-                                iconLabel: {
-                                    innerHTML: '<i>危</i>', //设置文字内容
-                                    style: {
-                                        color: 'white' //设置文字颜色
-                                    }
-                                },
-                                //图标主题
-                                iconTheme: 'default',
-                                //背景图标样式
-                                iconStyle: 'red',
-                                //...其他Marker选项...，不包括content
-                                map: map,
-                                position: alarmList[i].position,
-                            });
+                            // var dangerPoint = new SimpleMarker({
+                            //     //前景文字
+                            //     iconLabel: {
+                            //         innerHTML: '<i>危</i>', //设置文字内容
+                            //         style: {
+                            //             color: 'white' //设置文字颜色
+                            //         }
+                            //     },
+                            //     //图标主题
+                            //     iconTheme: 'default',
+                            //     //背景图标样式
+                            //     iconStyle: 'red',
+                            //     //...其他Marker选项...，不包括content
+                            //     map: map,
+                            //     position: alarmList[i].position,
+                            // });
 
-                            var title = '告警点编号：<span>' + alarmList[i].id + '</span>';
-                            var content = [];
-
-                            content.push("创建时间：" + alarmList[i].createTime);
-                            content.push("飞行任务名称：" + alarmList[i].taskName);
-                            content.push("飞行路径：" + alarmList[i].flyingPathName);
-                            content.push("信息点："+alarmList[i].infoName);
-                            content.push("描述："+alarmList[i].descripte);
-                            content.push("创建者："+alarmList[i].userCreatorName)
-                            content.push("放飞员：" + alarmList[i].userAName);
-                            content.push("降落员：" + alarmList[i].userZName);
-                            content.push("无人机名称：" + alarmList[i].uavName);
-                            content.push("无人机设备编号：" + alarmList[i].uavDeviceId);
-                            content.push("<img src=" + alarmList[i].image + " class='alarmImg'>");
-                            dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
-                            dangerPoint.on('click', markerClick);
+                            // var title = '告警点编号：<span>' + alarmList[i].id + '</span>';
+                            // var content = [];
+                            //
+                            // content.push("创建时间：" + alarmList[i].createTime);
+                            // content.push("飞行任务名称：" + alarmList[i].taskName);
+                            // content.push("飞行路径：" + alarmList[i].flyingPathName);
+                            // content.push("信息点："+alarmList[i].infoName);
+                            // content.push("描述："+alarmList[i].descripte);
+                            // content.push("创建者："+alarmList[i].userCreatorName)
+                            // content.push("放飞员：" + alarmList[i].userAName);
+                            // content.push("降落员：" + alarmList[i].userZName);
+                            // content.push("无人机名称：" + alarmList[i].uavName);
+                            // content.push("无人机设备编号：" + alarmList[i].uavDeviceId);
+                            // content.push("<img src=" + alarmList[i].image + " class='alarmImg'>");
+                            // dangerPoint.content = createInfoWindow(title, content.join("<br/>"));
+                            // dangerPoint.on('click', markerClick);
 
                         }
                     }
@@ -308,6 +339,16 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
+
+        $(".searchselect").hover(function () {
+            //$("#selectoptions").css('display','block');
+            //alert(1);
+        },function () {
+            //$("#selectoptions").css('display','none');
+            //alert(2);
+        });
+
+
     });
 
 </script>

@@ -1,6 +1,6 @@
 var angle = 0;//定义全局变量飞机角度，待验证
 var startpoint;
-
+var wgs84_to_gcj02 = new WGS84_to_GCJ02();
 var WebTypeUtil=
 {
 		WEBUSERLOGIN:"web@login",
@@ -14,8 +14,8 @@ var WebSocketUtil = {
 	isActive : true,
 	connect : function() {
 		//部署的时候该ip改成固定ip
-		WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
-		//WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+		//WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
+		WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
 		WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
 		WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
 		WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;
@@ -52,7 +52,7 @@ var WebSocketUtil = {
 		//alert("收到消息"+event.data);
 	},
 	onError : function(event) {
-		alert("出错了");
+		alert("未连接到服务器！");
 	},
 	sendMessage : function(content)
 	{
@@ -107,8 +107,12 @@ var PlaneHandleServiceUtil ={
             });
 
             map.remove(planeMarker);
+
+            var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
+
             planeMarker = new AMap.Marker({
-                position:  data,
+                //position:  data,
+                position:  realdata,
                 icon: new AMap.Icon({
                     size: new AMap.Size(32,32), //图标大小
                     image: "i/uav-32.png",
