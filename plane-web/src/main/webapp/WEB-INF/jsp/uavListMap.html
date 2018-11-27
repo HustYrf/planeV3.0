@@ -8,7 +8,6 @@
     <meta content="" name="author"/>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-
     <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
     <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -17,8 +16,10 @@
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
-    <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
+    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
 
+    <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
@@ -59,6 +60,17 @@
         <!-- END PAGE HEADER-->
         <div id="dashboard"  style="position:relative;">
 
+            <div class="main-wrapVideo" id="videoDiv">
+                <div class="videoheader" id="videoHeader">
+                    <span>无人机实时视频</span>
+                </div>
+                <div class="videocontain" id="videoContainer">
+                    <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
+                        <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+                    </video>
+                </div>
+            </div>
+
             <div id="container" ></div>
 
             <div class="portlet box yellow" id="panel" style="">
@@ -70,14 +82,6 @@
                 </div>
                 <div class="portlet-body" >
                     <div class="tabbable portlet-tabs">
-                            <#--<div id="planeSelect" class="control-group">-->
-                                <#--<p>-->
-                                    <#--<input type="checkbox" name="optionsRadiosinline" id="optionsRadios0" value="0"  onclick="showplane(0)"><span style="color: #2114F4;">飞行中</span>-->
-                                    <#--<input type="checkbox" name="optionsRadiosinline" id="optionsRadios1" value="1"  onclick="showplane(1)" ><span style="color: #8e44ad">已入库</span>-->
-                                    <#--<input type="checkbox" name="optionsRadiosinline" id="optionsRadios2" value="2"  onclick="showplane(2)"><span style="color: #27ae60">待放飞</span>-->
-                                    <#--<input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="3"  onclick="showplane(3)"><span style="color: #e74c3c">故障中</span>-->
-                                <#--</p>-->
-                            <#--</div>-->
                             <ul id="my-list"></ul>
                     </div>
                 </div>
@@ -86,7 +90,22 @@
 
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
-            <script type="text/javascript">
+            <script>
+
+                function videoOp(a,deviceid) {
+                    if($('#videoHeader').css('display') === 'none'){
+                        $('#videoHeader').css('display','block');
+                        $('#videoContainer').css('display','block');
+                        $(a).html('<i class="icon-stop icon-white"></i><span>关闭视频</span>');
+                        //ajax获取后台视频流
+                    }else{
+                        $("#videoHeader").css('display','none');
+                        $("#videoContainer").css('display','none');
+                        $(a).html('<i class="icon-play icon-white"></i><span>实时视频</span>');
+                        //关闭视频流
+                        //console.log( $(a).attr("class"));
+                    }
+                }
 
                 data = ${uavlist!};
                 //创建地图
@@ -114,7 +133,6 @@
                     });
                     map.addControl(layerCtrl1);
                 });
-
 
                 var infoWindow = new AMap.InfoWindow({
                     isCustom: true,
@@ -171,7 +189,8 @@
                                 + '<br>描述：' + data[j].description
                                 // + '<br>SIM卡1：' + data[j].phoneone
                                 // + '<br>SIM卡2：' + data[j].phonetwo
-                                + '<br><button type="button" class="btn green mini" onclick="openVideo()">'
+                                + '<br><button type="button" class="btn green mini" onclick="videoOp'
+                                +'(this,'+data[j].deviceid+')">'
                                 +'<i class="icon-play icon-white"></i><span>实时视频</span></button>'
                                 + '</li>';
                         innHTML = innHTML + str;
@@ -301,9 +320,7 @@
                 function closeInfoWindow() {
                     map.clearInfoWindow();
                 }
-                function openVideo() {
-                    alert(123);
-                }
+
             </script>
         </div>
     </div>
@@ -317,8 +334,10 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
+        //把这个div设置为可拖动的属性
+        var dragdiv = document.getElementById("videoDiv");
+        drag(dragdiv);
     });
-
 </script>
 </body>
 </html>

@@ -13,14 +13,12 @@
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
 
-    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
-    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
-
-    <script type="text/javascript" src="${s.base}/res/js/WGS84_to_GCJ02.js"></script>ssss
+    <script type="text/javascript" src="${s.base}/res/js/WGS84_to_GCJ02.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 
-
+    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
+    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
 
 </head>
 <style>
@@ -64,19 +62,7 @@ span{
 #fightStatus{
     color: #fff;
 }
-.main-wrapVideo{
-    display: none;
-    position:absolute;
-    top:10px;
-    min-width: 520px;
-    max-width: 760px;
-    z-index: 999;
-    margin-left: 80px;
-}
 
-.main-wrapVideo video{
-    width: 100%;
-}
 </style>
 
 <body>
@@ -84,12 +70,17 @@ span{
 <input type="hidden" id="plane" value="${uav2.deviceid!}"><br/>
 <input type="hidden" id="peoplerole" value="${role!}"><br/>
 <div class="headerUav" style="font-size:2.0rem;">
-<font size="4">飞机状态：<span id="fightStatus">暂无</span></font>
+<font size="4">飞机状态：<span id="fightStatus">暂未连接</span></font>
 </div>
 <div class="main-wrapVideo" id="videoDiv">
-    <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
-        <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
-    </video>
+    <div class="videoheader" id="videoHeader">
+        <span>无人机实时视频</span>
+    </div>
+    <div class="videocontain" id="videoContainer">
+        <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
+            <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+        </video>
+    </div>
 </div>
 
 <div id="UavInfo">
@@ -127,22 +118,26 @@ span{
         <!-- UI组件库 1.0 -->
         <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
         <script type="text/javascript">
-           
-            function videoOp() {
 
-                if($('#videoDiv').css('display') === 'none'){
-                    $("#videoDiv").css('display','block');
+            //把这个div设置为可拖动的属性
+            var dragdiv = document.getElementById("videoDiv");
+            drag(dragdiv);
+
+            function videoOp() {
+                if($('#videoHeader').css('display') === 'none'){
+                    $("#videoHeader").css('display','block');
+                    $("#videoContainer").css('display','block');
                     $("#videobtn").text("关闭视频");
                     //ajax获取后台视频流
 
-
                 }else{
-                    $("#videoDiv").css('display','none');
+                    $("#videoHeader").css('display','none');
+                    $("#videoContainer").css('display','none');
                     $("#videobtn").text("实时视频");
                     //关闭视频流
                 }
             }
-            
+
 			var uavdata = ${uav};
 			var flyingPath = ${path};
 

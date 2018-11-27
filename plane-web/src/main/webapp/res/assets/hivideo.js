@@ -5,6 +5,69 @@
  * @author heavi, 2016.08.04
  */
 
+//拖拽原理：改变obj的top值与left值
+function drag(obj)
+{
+    addEvent(obj,'mousedown',function(ev){
+        var oEvent=ev||event;
+        //不变的参考距离＝mousedown时鼠标坐标－obj到页面的左边距
+        var disX=oEvent.clientX-obj.offsetLeft;
+        var disY=oEvent.clientY-obj.offsetTop;
+        addEvent(document,'mousemove',move);
+        addEvent(document,'mouseup',up);
+        oEvent.preventDefault();//阻止默认事件，取消文字选中
+        function move(ev)
+        {
+            var oEvent=ev||event;
+            var left=oEvent.clientX-disX;
+            var top=oEvent.clientY-disY;
+            obj.style.left=left+'px';
+            obj.style.top=top+'px';
+            obj.setCapture&&obj.setCapture();//低版本IE阻止默认事件，取消文字选中
+        }
+        function up()
+        {
+            removeEvent(document,'mousemove',move);
+            removeEvent(document,'mouseup',up);
+            obj.releaseCapture&&obj.releaseCapture();//低版本IE取消阻止默认事件
+        }
+    });
+}
+//添加事件绑定
+function addEvent(obj,sEv,fn)
+{
+    if(obj.addEventListener)
+    {
+        obj.addEventListener(sEv,fn,false);
+    }else{
+        obj.attachEvent('on'+sEv,fn);
+    }
+}
+
+//删除事件绑定
+function removeEvent(obj,sEv,fnName)
+{
+    if(obj.removeEventListener)
+    {
+        obj.removeEventListener(sEv,fnName,false);
+    }else{
+        obj.detachEvent('on'+sEv,fnName);
+    }
+}
+
+function ready(fn)
+{
+    if(document.addEventListener)
+    {
+        document.addEventListener('DOMContentLoaded',fn,false)
+    }else{
+        document.attachEvent('onreadystatechange',function(){
+            if(document.readyState=='complete')
+            {fn();}
+        })
+    }
+}
+
 (function(global, factory){
     "use strict";
 

@@ -92,8 +92,9 @@
         </form>
         <div id="ocAlertTip" class="alert alert-success f-16" style="display:none;"><span id="al_info"></span>
             <button type="button" class="close"  onclick="closeAlert()">
-                <span aria-hidden="true">×</span>
-            </button></div>
+                <#--<span aria-hidden="true">×</span>-->
+            </button>
+        </div>
     </div>
 
     <div class="modal-footer">
@@ -205,7 +206,7 @@
                                     </#if>
                                     </td>
 
-                                    <td><a class="pointer" onclick="showDetail(${alarm.id})">详细信息</a></td>
+                                    <td><a class="pointer" onclick="showDetail(${alarm.id})" style="cursor:pointer;">详细信息</a></td>
                                         <#if !Session["super_administrator"]?exists>
                                     <td><a class="pointer" onclick="modifyDes(${alarm.id})">修改告警描述</a></td>
                                         </#if>
