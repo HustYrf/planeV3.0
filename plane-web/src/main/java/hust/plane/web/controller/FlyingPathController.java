@@ -31,7 +31,6 @@ import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.RouteVO;
-import sun.plugin2.message.JavaScriptBaseMessage;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
