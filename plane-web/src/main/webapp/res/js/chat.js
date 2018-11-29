@@ -110,6 +110,8 @@ var PlaneHandleServiceUtil ={
 
             var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
 
+           // markerlistMap.get().setPosition(realdata);
+
             planeMarker = new AMap.Marker({
                 //position:  data,
                 position:  realdata,

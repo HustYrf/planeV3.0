@@ -25,7 +25,6 @@
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
 
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
-
     <style>
         .main-wrapVideo{
             position:absolute;
@@ -262,7 +261,12 @@
 
                 var markersize = data.length;
 
-                var markerlist = new Array();
+                //初始化三个全局变量用于记录无人机位置
+                var markerlistMap = new Map();
+                var uavStartPointMap= new Map();
+                var uavSelectedStatusMap=new Map();
+
+               // var markerlist = new Array();
 
                 for (var i = 0; i < markersize; i++) {
                 	
@@ -275,17 +279,21 @@
                         }),
                         offset: new AMap.Pixel(-16,-16)   // 相对于基点的偏移位置
                     });
+                    //添加到marker集合里面
+                    markerlistMap.set(data[i].deviceid,markeritem);
+                    uavStartPointMap.set(data[i].deviceid,markeritem.getPosition());
+                    uavSelectedStatusMap.set(data[i].deviceid,0);
+
                     //实例化信息窗体
-                    var title = '无人机名称:<span>' + data[i].name + '</span>';
-                    var content = [];
-                    content.push("设备id：" + data[i].deviceid);
-                    content.push("描述：" + data[i].description);
-                    content.push("更新时间：" + data[i].updatetime);
+                    // var title = '无人机名称:<span>' + data[i].name + '</span>';
+                    // var content = [];
+                    // content.push("设备id：" + data[i].deviceid);
+                    // content.push("描述：" + data[i].description);
+                    // content.push("更新时间：" + data[i].updatetime);
+                    // markeritem.content = createInfoWindow(title, content.join("<br/>"));
 
-                    markeritem.content = createInfoWindow(title, content.join("<br/>"));
-                    markeritem.on('click', markerClick);
-
-                    markerlist.push(markeritem);
+                   // markeritem.on('click', markerClick);  去掉点击事件
+                   //   markerlist.push(markeritem);
                 }
 
                 function markerClick(e) {
@@ -301,16 +309,17 @@
                     var innHTML = "";
                     for (var j = 0; j < data.length; j++) {
 
-                        var str = '<li class="poibox" onclick="showUav(' + 'this,' + data[j].position + ')">无人机名称：'
+                        var str = '<li class="poibox" onclick="showUav(' + 'this,' + data[j].deviceid + ')">无人机名称：'
                                 + data[j].name
                                 +'<br>设备编号：'+data[j].deviceid
                                 //+ '<br>更新时间：' + data[j].updatetime
                                 + '<br>描述：' + data[j].description
                                 // + '<br>SIM卡1：' + data[j].phoneone
                                 // + '<br>SIM卡2：' + data[j].phonetwo
-                                + '<br><button type="button" class="btn green mini" onclick="videoOp'
-                                +'(this,'+data[j].deviceid+')">'
-                                +'<i class="icon-play icon-white"></i><span>任务详情</span></button>'
+                                //+ '<br><button type="button" class="btn green mini" onclick="videoOp'
+                                //+'(this,'+data[j].deviceid+')">'
+                               // +'<i class="icon-play icon-white"></i><span>任务详情</span></button>'
+                               // +'<span>任务详情</span></button>'
                                 + '</li>';
                         innHTML = innHTML + str;
                     }
@@ -318,20 +327,28 @@
                 }
                 showplanelist();
 
-                var pointSimplifierIns = null;
-                function showUav(e, positionX, positionY) {
-
+               // var pointSimplifierIns = null;  初始化一个闪烁点
+               // function showUav(e, positionX, positionY) {
+                function showUav(e, deviceid) {
                     //这里是点击事件的处理逻辑
-                    var posi = [positionX, positionY];
+                    //var posi = [positionX, positionY];
+                    for (var i = 0; i < markersize; i++) {
+                        uavSelectedStatusMap.set(data[i].deviceid,0);
+                    }
+                    uavSelectedStatusMap.set(deviceid,1);
+
+
+
+
+
                     var lilist = document.getElementById('my-list')
                     var eles = lilist.getElementsByTagName('li');
-
                     for(var i=0;i<eles.length;i++){
                         eles[i].className = 'poibox';
                     }
-
                     e.className ='poibox selected';
                     //添加闪烁点效果
+                    /*
                     AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
                         if (!PointSimplifier.supportCanvas) {
                             alert('当前环境不支持 Canvas！');
@@ -404,7 +421,8 @@
                         }, 500);
                         pointSimplifierIns.setData(new Array(posi));
                     });
-                    map.panTo(posi);
+                    */
+                    //map.panTo(posi);
                 }
 
                 //构建自定义信息窗体
