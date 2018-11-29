@@ -69,7 +69,7 @@ var WebSocketUtil = {
 }
 
 var PlaneHandleServiceUtil ={
-		handleStatus:function(message,status,GPS_HDG,AR_SPD,GR_SPD,lon,lat,GPS_ELV,HORI_AGL,VERT_AGL)
+		handleStatus:function(message,status,GPS_HDG,uavDeciveId,AR_SPD,GR_SPD,lon,lat,GPS_ELV,HORI_AGL,VERT_AGL)
 		{
 			//显示无人机的状态信息
 			planeStatus.innerHTML = status;
