@@ -26,7 +26,6 @@ import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.RouteVO;
-import sun.plugin2.message.JavaScriptBaseMessage;
 
 @Controller
 public class FlyingPathController {
