@@ -54,6 +54,7 @@
                 <li class="list-group-item">创建时间：<span id="createTime">暂无</span></li>
                 <li class="list-group-item">飞行任务名称：<span id="taskName">暂无</span></li>
                 <li class="list-group-item">飞行路径：<span id="flyingPathName">暂无</span></li>
+                <li class="list-group-item">信息点：<span id="infoName">暂无</span></li>
                 <li class="list-group-item">创建者：<span id="userCreatorName">暂无</span></li>
                 <li class="list-group-item">放飞员：<span id="userAName">暂无</span></li>
                 <li class="list-group-item">降落员：<span id="userZName">暂无</span></li>
@@ -91,8 +92,9 @@
         </form>
         <div id="ocAlertTip" class="alert alert-success f-16" style="display:none;"><span id="al_info"></span>
             <button type="button" class="close"  onclick="closeAlert()">
-                <span aria-hidden="true">×</span>
-            </button></div>
+                <#--<span aria-hidden="true">×</span>-->
+            </button>
+        </div>
     </div>
 
     <div class="modal-footer">
@@ -156,8 +158,8 @@
                             <div class="" style="float: right;" >
                                 <select  name="finishstatus" class="select2-container" style="margin-bottom: 3px;">
                                     <option value=-1>全部</option>
-                                    <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if>>已处理告警</option>
-                                    <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>未处理告警</option>
+                                    <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if>>已处理告警</option>
+                                    <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if>>未处理告警</option>
                                 </select>
                                 <input  name="inputId" type="text" value="${taskId!}" class="search-text" placeholder=" 请输入任务编号" style="margin-bottom: 3px;">
                                 <input type="submit" class="btn green" value="搜索" style="height: 30px;margin-bottom: 3px;">
@@ -188,14 +190,14 @@
                                     <td>${alarm.updatetime!}</td>
                                     <td>
                                      <#if Session["super_administrator"]?exists>
-                                        <#if alarm.status ==0>
+                                        <#if alarm.status ==1>
                                             <span class="btn mini green">已处理告警 </span>
                                         <#else>
                                         <button type="button" class="btn mini red">
                                             未处理告警  </button>
                                         </#if>
                                     <#else>
-                                         <#if alarm.status ==0>
+                                         <#if alarm.status ==1>
                                          <span class="btn mini green">已处理告警 </span>
                                          <#else>
                                          <button type="button" class="btn mini red" onclick="dealAlarm(${alarm.id})">
@@ -204,7 +206,7 @@
                                     </#if>
                                     </td>
 
-                                    <td><a class="pointer" onclick="showDetail(${alarm.id})">详细信息</a></td>
+                                    <td><a class="pointer" onclick="showDetail(${alarm.id})" style="cursor:pointer;">详细信息</a></td>
                                         <#if !Session["super_administrator"]?exists>
                                     <td><a class="pointer" onclick="modifyDes(${alarm.id})">修改告警描述</a></td>
                                         </#if>
@@ -306,6 +308,7 @@
                     $("#description").html(result.data.descripte);
                     $("#taskName").html(result.data.taskName);
                     $("#flyingPathName").html(result.data.flyingPathName);
+                    $("#infoName").html(result.data.infoName);
                     $("#createTime").html(result.data.createTime);
                     $("#userCreatorName").html(result.data.userCreatorName);
                     $("#userAName").html(result.data.userAName);

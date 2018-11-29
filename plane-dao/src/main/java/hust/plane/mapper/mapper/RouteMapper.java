@@ -27,4 +27,8 @@ public interface RouteMapper {
 	Route getRouteByName(String name);
 
     List<Route> queryRoutePage(Route route, TailPage<Route> page);
+
+    Route getRouteWithFlagDataById(Integer id);
+
+    int getIdByName(String name);
 }

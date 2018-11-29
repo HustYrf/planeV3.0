@@ -28,4 +28,5 @@ public interface FlyingPathMapper {
 
     FlyingPath selectByFlyingPathIdWithoutData(Integer id);
 
+    int countByName(String name);
 }

@@ -54,7 +54,7 @@
                     <a href="#">光缆路由</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="${s.base}/routeList.action">路由一览</a></li>
+                <li><a href="${s.base}/routeList.action">光缆一览</a></li>
             </ul>
         </div>
         <!-- END PAGE TITLE & BREADCRUMB-->
@@ -66,25 +66,25 @@
                         <!-- BEGIN EXAMPLE TABLE PORTLET-->
                         <div class="portlet box yellow">
                             <div class="portlet-title">
-                                <div class="caption"><i class="icon-edit"></i>路由列表</div>
+                                <div class="caption"><i class="icon-edit"></i>光缆列表</div>
                             </div>
                             <div class="portlet-body">
                                 <div class="" style="float: right;" >
                                     <select  name="type" class="select2-container" style="margin-bottom: 8px;">
                                         <option value=-1>全部</option>
-                                        <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if> >混合路由</option>
-                                        <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if> >一干路由</option>
-                                        <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if> >二干路由</option>
+                                        <option value=0 <#if (selectStatus)?? && selectStatus ==0>selected="selected"</#if> >混合光缆</option>
+                                        <option value=1 <#if (selectStatus)?? && selectStatus ==1>selected="selected"</#if> >一干光缆</option>
+                                        <option value=2 <#if (selectStatus)?? && selectStatus ==2>selected="selected"</#if> >二干光缆</option>
                                     </select>
-                                    <input name="name" type="text" value="${inputName!}" class="search-text" placeholder="请输入路由名称" style="margin-bottom: 8px;">
+                                    <input name="name" type="text" value="${inputName!}" class="search-text" placeholder="请输入光缆名称" style="margin-bottom: 8px;">
                                     <input type="submit" class="btn green"  style="height: 30px;margin-bottom: 8px;">
                                 <#-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 3px;">创建时间逆序查看</button>-->
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable" id="sample_editable_1">
                                     <thead>
                                     <tr>
-                                        <th>路由编号${findname!}</th>
-                                        <th>路由名称</th>
+                                        <th>光缆编号${findname!}</th>
+                                        <th>光缆名称</th>
                                         <th>类型</th>
                                         <th>导入时间</th>
                                         <th>描述</th>
@@ -100,9 +100,9 @@
                                                         <td>${routepojo.id!}</td>
                                                         <td><a target="_blank" href="${s.base}/showRouteDetail.action?name=${routepojo.name!}">${routepojo.name!}</a></td>
                                                         <td>
-                                                            <#if routepojo.type == 0> 混合路由
-                                                            <#elseif routepojo.type == 1> 一干路由
-                                                            <#elseif routepojo.type == 2> 二干路由
+                                                            <#if routepojo.type == 0> 混合光缆
+                                                            <#elseif routepojo.type == 1> 一干光缆
+                                                            <#elseif routepojo.type == 2> 二干光缆
                                                             </#if>
                                                         </td>
                                                         <td>${routepojo.createtime?datetime!}</td>
@@ -152,7 +152,7 @@
                 <h4 class="modal-title">删除确认</h4>
             </div>
             <div class="modal-body">
-                <p>您确认要删除该条路由吗？</p>
+                <p>您确认要删除该条光缆吗？</p>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="routeid"/>    <!-- 用于隐藏信息 -->

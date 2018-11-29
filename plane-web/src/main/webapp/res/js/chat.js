@@ -1,4 +1,6 @@
 var angle = 0;//定义全局变量飞机角度，待验证
+var startpoint;
+var wgs84_to_gcj02 = new WGS84_to_GCJ02();
 var WebTypeUtil=
 {
 		WEBUSERLOGIN:"web@login",
@@ -11,9 +13,9 @@ var WebSocketUtil = {
 	timeOuter : null,
 	isActive : true,
 	connect : function() {
-		//部署的时候该ip改成本机地址
-		WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
-       // WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+		//部署的时候该ip改成固定ip
+		//WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
+		WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
 		WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
 		WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
 		WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;
@@ -50,7 +52,7 @@ var WebSocketUtil = {
 		//alert("收到消息"+event.data);
 	},
 	onError : function(event) {
-		alert("出错了");
+		alert("未连接到服务器！");
 	},
 	sendMessage : function(content)
 	{
@@ -67,7 +69,7 @@ var WebSocketUtil = {
 }
 
 var PlaneHandleServiceUtil ={
-		handleStatus:function(message,status,AR_SPD,GR_SPD,lon,lat,GPS_ELV,GPS_HDG,HORI_AGL,VERT_AGL)
+		handleStatus:function(message,status,GPS_HDG,AR_SPD,GR_SPD,lon,lat,GPS_ELV,HORI_AGL,VERT_AGL)
 		{
 			//显示无人机的状态信息
 			planeStatus.innerHTML = status;
@@ -88,20 +90,41 @@ var PlaneHandleServiceUtil ={
 	        //新加入start，待验证
 	        var prePosition = planeMarker.getPosition();//上一个marker的位置
 
-			map.remove(planeMarker);
-    	   planeMarker = new AMap.Marker({
-                //map: map,
-                position:  data,
-                icon: new AMap.Icon({
-                size: new AMap.Size(32,32), //图标大小
-                image: "i/uav-32.png",
-                offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
-                }),
-               angle:GPS_HDG,
+            var endpoint2 = JSON.parse(JSON.stringify(data));
+		    newline = [startpoint,endpoint2];
+
+            var  endpoint = JSON.parse(JSON.stringify(data));  //保存新的点作为下一个线段的起始点
+            startpoint = endpoint;
+
+            var polyline = new AMap.Polyline({
+                map: map,
+                path: newline, //设置线覆盖物路径
+                strokeColor: '#436EEE', //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight:6 , //线宽
+                strokeStyle: "solid", //线样式
+                strokeDasharray: [10, 5] //补充线样式
             });
-		    map.setCenter(data); 
-		    map.add(planeMarker);
+
+            map.remove(planeMarker);
+
+            var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
+
+            planeMarker = new AMap.Marker({
+                //position:  data,
+                position:  realdata,
+                icon: new AMap.Icon({
+                    size: new AMap.Size(32,32), //图标大小
+                    image: "i/uav-32.png",
+                    offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
+                }),
+                angle:GPS_HDG,
+            });
+            map.setCenter(data);
+            map.add(planeMarker);
 		}
+
+
 	
 }
 var HomeChatOperateUtil = {

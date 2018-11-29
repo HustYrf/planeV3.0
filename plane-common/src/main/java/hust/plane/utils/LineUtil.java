@@ -22,6 +22,18 @@ public class LineUtil {
 		}
 		return list;
 	}
+	//将信息点字符串转化为数组
+	public static ArrayList<String> stringflaginfoToList(String s)
+	{
+		//s="LineString(1,1,2,2)"
+		ArrayList<String> list= new ArrayList<String>();
+		String slist[]=s.split(", ");
+		for(int i=0;i<slist.length;i++)
+		{
+			list.add(slist[i]);
+		}
+		return list;
+	}
 	
 	//将高度列表字符串转化为数组
 	public static ArrayList<Double> stringpointToList(String s)

@@ -8,7 +8,6 @@
     <meta content="" name="author"/>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-
     <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
     <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -17,10 +16,14 @@
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
+    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
+    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
+
+    <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
 </head>
 <body class="page-header-fixed">
@@ -36,7 +39,6 @@
             <!-- END BEGIN STYLE CUSTOMIZER -->
 
             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-
             <!--  下面这块内容是在页面写死的  -->
             <!--<h4 class="page-title">设施管理
                 <small>无人机查看</small>
@@ -58,27 +60,29 @@
         <!-- END PAGE HEADER-->
         <div id="dashboard"  style="position:relative;">
 
+            <div class="main-wrapVideo" id="videoDiv">
+                <div class="videoheader" id="videoHeader">
+                    <span>无人机实时视频</span>
+                </div>
+                <div class="videocontain" id="videoContainer">
+                    <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
+                        <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+                    </video>
+                </div>
+            </div>
+
             <div id="container" ></div>
-            <div class="portlet box yellow" id="panel" style="margin: 0;">
+
+            <div class="portlet box yellow" id="panel" style="">
                 <div class="portlet-title">
-                    <div class="caption"><i class="icon-plane"></i>无人机查看</div>
+                    <div class="caption"><i class="icon-plane"></i>无人机实时查看</div>
                     <div class="tools">
                         <a href="" class="collapse"></a>
                     </div>
                 </div>
                 <div class="portlet-body" >
                     <div class="tabbable portlet-tabs">
-                        <div >
-                            <div id="planeSelect" class="control-group">
-                                <p>
-                                    <input type="checkbox" name="optionsRadiosinline" id="optionsRadios0" value="0"  onclick="showplane(0)"><span style="color: #2114F4;">飞行中</span>
-                                    <input type="checkbox" name="optionsRadiosinline" id="optionsRadios1" value="1"  onclick="showplane(1)" ><span style="color: #8e44ad">已入库</span>
-                                    <input type="checkbox" name="optionsRadiosinline" id="optionsRadios2" value="2"  onclick="showplane(2)"><span style="color: #27ae60">待放飞</span>
-                                    <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="3"  onclick="showplane(3)"><span style="color: #e74c3c">故障中</span>
-                                </p>
-                            </div>
                             <ul id="my-list"></ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -86,23 +90,39 @@
 
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
-            <script type="text/javascript">
+            <script>
 
-                data = ${planelist!};
+                function videoOp(a,deviceid) {
+                    if($('#videoHeader').css('display') === 'none'){
+                        $('#videoHeader').css('display','block');
+                        $('#videoContainer').css('display','block');
+                        $(a).html('<i class="icon-stop icon-white"></i><span>关闭视频</span>');
+                        //ajax获取后台视频流
+                    }else{
+                        $("#videoHeader").css('display','none');
+                        $("#videoContainer").css('display','none');
+                        $(a).html('<i class="icon-play icon-white"></i><span>实时视频</span>');
+                        //关闭视频流
+                        //console.log( $(a).attr("class"));
+                    }
+                }
+
+                data = ${uavlist!};
                 //创建地图
                 var map = new AMap.Map('container', {
                     zoom: 15,
                     center: [107.79876,23.06781], //中心点坐标
                 });
-                map.plugin(["AMap.Scale"],function(){    //加载比例尺插件
-                    var scale = new AMap.Scale({
+
+                map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
+                    var scale = new AMap.Scale({          //生成 比例尺插件
                         visible: true,
                         position:'LB',
                     });
                     map.addControl(scale);
                     scale.show();
+                    map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
                 });
-
                 if(location.href.indexOf('&guide=1')!==-1){
                     map.setStatus({scrollWheel:false})
                 }
@@ -118,36 +138,27 @@
                     isCustom: true,
                     offset: new AMap.Pixel(20, -25)
                 });
-                var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
-                var statuscode = [0, 1, 2, 3];
-                var Statusdec = ['飞行中', '已入库', '待放飞', '故障'];
-                var Imgsrc = ['fly-32.png', 'store-32.png', 'wait-32.png', 'warn-32.png'];
-                var markersize = data.length;
-                var markerlist = {};
-                for (var m = 0; m < 4; m++) {
-                    markerlist[statuscode[m]] = new Array();
-                }
 
+                var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
+
+                var markersize = data.length;
+
+                var markerlist = new Array();
 
                 for (var i = 0; i < markersize; i++) {
-                    var statusDec = Statusdec[data[i].status];
-                    var imgsrc = 'i/' + Imgsrc[data[i].status];
 
                     var markeritem = new AMap.Marker({
-                        //map: map,
+                        map: map,
                         position: data[i].position,
                         icon: new AMap.Icon({
                             size: new AMap.Size(32, 32), //图标大小
-                            image: imgsrc,
-                            offset: new AMap.Pixel(-16,-16) // 相对于基点的偏移位置
+                            image: 'i/uav-32.png',
                         }),
-
+                        offset: new AMap.Pixel(-16,-16)   // 相对于基点的偏移位置
                     });
-
                     //实例化信息窗体
                     var title = '无人机名称:<span>' + data[i].name + '</span>';
                     var content = [];
-                    content.push("状态：" + statusDec);
                     content.push("设备id：" + data[i].deviceid);
                     content.push("描述：" + data[i].description);
                     content.push("更新时间：" + data[i].updatetime);
@@ -155,7 +166,7 @@
                     markeritem.content = createInfoWindow(title, content.join("<br/>"));
                     markeritem.on('click', markerClick);
 
-                    markerlist[data[i].status].push(markeritem);
+                    markerlist.push(markeritem);
                 }
 
                 function markerClick(e) {
@@ -165,44 +176,33 @@
 
 
                 //选中无人机类型进行显示,并且展示相关列表
-                function showplane(index) {
+                function showplanelist() {
 
-                    var disRouteCheckbox = document.getElementById("optionsRadios" + index);
-                    if (disRouteCheckbox.checked == true) {
-                        map.add(markerlist[statuscode[index]]);
-
-                    } else {
-                        map.remove(markerlist[statuscode[index]]);
-                    }
                     document.getElementById("my-list").innerHTML = "";
-                    var flaglist = [];
                     var innHTML = "";
-                    for (var i = 0; i < 4; i++) {
-                        var checkfg = document.getElementById("optionsRadios" + i);
-                        if (checkfg.checked == true) {
-                            flaglist.push(i);
-                        }
-                    }
                     for (var j = 0; j < data.length; j++) {
-                        if (flaglist.indexOf(data[j].status) >= 0) {
-                            var str = '<li class="poibox" onclick="showPlan(' + 'this,' + data[j].position + ')">无人机名称：'
-                                    + data[j].name + '&nbsp;&nbsp;&nbsp;&nbsp;状态：' + Statusdec[data[j].status]
-                                    +'<br>设备id：'+data[j].deviceid
-                                    + '<br>更新时间：' + data[j].updatetime
-                                    + '<br>描述：' + data[j].description
-                                    + '<br>SIM卡1：' + data[j].phoneone
-                                    + '<br>SIM卡2：' + data[j].phonetwo
-                                    + '</li>';
 
-                            innHTML = innHTML + str;
-                        }
+                        var str = '<li class="poibox" onclick="showUav(' + 'this,' + data[j].position + ')">无人机名称：'
+                                + data[j].name
+                                +'<br>设备编号：'+data[j].deviceid
+                                + '<br>更新时间：' + data[j].updatetime
+                                + '<br>描述：' + data[j].description
+                                // + '<br>SIM卡1：' + data[j].phoneone
+                                // + '<br>SIM卡2：' + data[j].phonetwo
+                                + '<br><button type="button" class="btn green mini" onclick="videoOp'
+                                +'(this,'+data[j].deviceid+')">'
+                                +'<i class="icon-play icon-white"></i><span>实时视频</span></button>'
+                                + '</li>';
+                        innHTML = innHTML + str;
                     }
                     document.getElementById("my-list").innerHTML = innHTML;
                 }
+                showplanelist();
 
                 var pointSimplifierIns = null;
-                function showPlan(e, positionX, positionY) {
+                function showUav(e, positionX, positionY) {
 
+                    //这里是点击事件的处理逻辑
                     var posi = [positionX, positionY];
                     var lilist = document.getElementById('my-list')
                     var eles = lilist.getElementsByTagName('li');
@@ -210,8 +210,8 @@
                     for(var i=0;i<eles.length;i++){
                         eles[i].className = 'poibox';
                     }
-                    e.className ='poibox selected';
 
+                    e.className ='poibox selected';
                     //添加闪烁点效果
                     AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
                         if (!PointSimplifier.supportCanvas) {
@@ -320,6 +320,7 @@
                 function closeInfoWindow() {
                     map.clearInfoWindow();
                 }
+
             </script>
         </div>
     </div>
@@ -333,8 +334,10 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
+        //把这个div设置为可拖动的属性
+        var dragdiv = document.getElementById("videoDiv");
+        drag(dragdiv);
     });
-
 </script>
 </body>
 </html>

@@ -26,6 +26,9 @@ body {
   display:none;
 }
 
+.pointer{
+  cursor:pointer;
+}
 /***
 General typography 
 ***/

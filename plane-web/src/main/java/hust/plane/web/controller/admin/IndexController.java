@@ -2,6 +2,7 @@ package hust.plane.web.controller.admin;
 
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.User;
+import hust.plane.service.interFace.DepartmentService;
 import hust.plane.service.interFace.UserGroupService;
 import hust.plane.service.interFace.UserService;
 import hust.plane.utils.PlaneUtils;
@@ -58,6 +59,8 @@ public class IndexController {
 	private UserService userService;
 	@Resource
 	private UserGroupService userGroupService;
+	@Resource
+	private DepartmentService departmentService;
 
 	/**
 	 * 登陆Get请求
@@ -201,6 +204,22 @@ public class IndexController {
 	public String profileEditView(Model mv, HttpServletRequest request) {
 
 		User user = PlaneUtils.getLoginUser(request);
+		StringBuilder userPosition = new StringBuilder();
+		List<Integer> userGroupList = userGroupService.selectGroupIdWithUserId(user.getId());
+		if (userGroupList.size() > 0 && userGroupList.contains(Integer.valueOf(1))) {
+			userPosition.append("浏览者 ");
+//                userPojo.setPosition(");
+		}
+		if (userGroupList.size() > 0 && userGroupList.contains(Integer.valueOf(2))) {
+			userPosition.append("任务管理员 ");
+//                userPojo.setPosition("");
+		}
+		if (userGroupList.size() > 0 && userGroupList.contains(Integer.valueOf(3))) {
+			userPosition.append("巡检员");
+//                userPojo.setPosition("巡检员");
+		}
+
+		mv.addAttribute("department",userPosition);
 		mv.addAttribute("user", user);
 		mv.addAttribute("curNav", "profileEdit");
 		return "profileEdit";

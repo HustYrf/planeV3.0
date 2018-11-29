@@ -1,0 +1,149 @@
+/***
+Search Page
+***/
+.search-forms {
+  margin-bottom:25px;
+  background:#f0f6fa;
+}
+
+/*search default*/
+.search-default form {
+  margin-bottom:0;
+  padding:12px 14px;
+}
+
+.search-default .chat-form {
+  margin:0;
+  padding:0;
+  background:none;
+  position:relative;
+}
+
+.search-default .chat-form .buttonright {
+  top:0;
+  left:614px;
+  position:absolute;
+}
+
+.search-default .chat-form .searchselect {
+  width: 120px;
+  height: 34px;
+  line-height: 34px;
+  color: white !important;
+  background-color: #1d943b !important;
+  position:absolute;
+  text-align: center;
+}
+
+.search-default .chat-form .input-cont {
+  margin-left:120px;
+}
+
+.search-default .chat-form .input-cont input:focus{
+  border: 1px solid #35aa47 !important;
+}
+
+.search-result {
+  background:#fafafa;
+}
+
+.search-result .portfolio-text img {
+  border-left:solid 3px #169ef4;
+}
+
+.search-result .portfolio-text h4 {
+  color:#555d69;
+  font-size:20px;
+  font-weight:400;
+  margin-top:10px;
+}
+
+.search-result .portfolio-info {
+  padding:12px 20px;
+}
+
+.search-result .portfolio-info span {
+  font-size:28px;
+}
+
+.search-result .portfolio-info span em {
+  font-size:24px;
+  font-style:normal;
+  text-transform:none;
+}
+
+/*portfolio block*/
+.portfolio-block {
+  background:#f7f7f7;
+  margin-bottom:15px;
+}
+
+.portfolio-block .span5 {
+  overflow:hidden;
+}
+
+/*portfolio text*/
+.portfolio-text {
+  overflow:hidden;
+}
+
+.portfolio-text h4 {
+}
+
+.portfolio-text img {
+  float:left;
+  margin-right:15px;
+}
+
+.portfolio-text .portfolio-text-info {
+  overflow:hidden;
+}
+
+/*portfolio button*/
+.portfolio-btn a {
+  display:block;
+  padding:28px 0;
+  background:#ddd !important;
+}
+
+.portfolio-btn a:hover {
+  background:#1d943b !important;
+}
+
+.portfolio-btn span {
+  color:#fff;
+  font-size:22px;
+  font-weight:200;  
+}
+
+
+/*search classic*/
+.search-classic {
+  margin-bottom:30px;
+}
+
+.search-classic h4 {
+  margin-bottom:3px;
+}
+
+#selectoptions{
+
+  z-index: 1000;
+  position: absolute;
+  background: red;
+  position: absolute;
+  top: 60%;
+  left: 0;
+  float: left;
+  list-style: none;
+  text-shadow: none;
+  padding: 0px;
+  margin: 0px;
+  -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-family: "Segoe UI",Helvetica, Arial, sans-serif;
+  border: 1px solid #ddd;
+}
+

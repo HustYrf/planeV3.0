@@ -16,4 +16,6 @@ public interface UavService {
 	Uav getPlaneByPlane(Uav plane);
 
     String getNameById(Integer id);
+
+    Uav getUavById(Integer id);
 }

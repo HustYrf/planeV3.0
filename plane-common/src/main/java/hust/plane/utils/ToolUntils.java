@@ -11,6 +11,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 常用函数工具类
  * @author rfYang
@@ -88,4 +91,21 @@ public class ToolUntils {
 
         return false;
     }
+
+    public static boolean isEmail(String string) {
+        if (string == null)
+            return false;
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(string);
+        if (m.matches())
+            return true;
+        else
+            return false;
+    }
+
+
+
 }

@@ -172,9 +172,10 @@
                                             <div class="controls">
                                                 <div class="select2-wrapper">
                                                     <select id="uavId" class="span8" name="uavName" type="select">
-                                                        <#if taskvo.uavName??>
+                                                        <#if taskvo.uavName?? && taskvo.uavName != "">
                                                             <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
                                                         </#if>
+                                                        <option value=""></option>
                                                         <#if uavs?? && uavs?size gt 0>
                                                             <#list uavs as uav>
                                                             <option value="${uav.id!}">${uav.name!}</option>
@@ -282,6 +283,19 @@
             showMeridian: 1
         });
         App.init();
+
+        //去掉select重复
+        $("#flyingpathid option").each(function() {
+            var val = $(this).val();
+            if ( $("#flyingpathid option[value='" + val + "']").length > 1 )
+                $("#flyingpathid option[value='" + val + "']:gt(0)").remove();
+        });
+
+        $("#uavId option").each(function() {
+            var val = $(this).val();
+            if ( $("#uavId option[value='" + val + "']").length > 1 )
+                $("#uavId option[value='" + val + "']:gt(0)").remove();
+        });
 
     }
 

@@ -5,5 +5,11 @@
     <id column="FlyingPath_id" property="flyingpathId" jdbcType="INTEGER" />
     <id column="Route_id" property="routeId" jdbcType="INTEGER" />
   </resultMap>
-  
+
+  <select id="getAllRouteByFlyingPathId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select FlyingPath_id,Route_id
+	from K_FlyingPath_has_Route
+	where FlyingPath_id  = #{id,jdbcType=INTEGER}
+  </select>
+
 </mapper>

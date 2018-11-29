@@ -23,7 +23,7 @@
                 <script type="text/javascript">
 
                     var colors = ['#1ef22a', '#260cff', '#eb0aff'];
-                    var routeStatusCode = ['混合路由','一干路由', '二干路由'];
+                    var routeStatusCode = ['混合光缆','一干光缆', '二干光缆'];
 
                     var  route =${routedata};
 
@@ -75,10 +75,10 @@
                             position: route.routepathdata[0],
                             animation: 'AMAP_ANIMATION_DROP',
                         });
-                        var title = '路由编号：<span>' + route.id + '</span>';
+                        var title = '光缆编号：<span>' + route.id + '</span>';
                         var content = [];
                         content.push("名称：" + route.name );
-                        content.push("路由类型："+routeStatusCode[Number(route.type)])
+                        content.push("光缆类型："+routeStatusCode[Number(route.type)])
                         content.push("描述：" + route.description );
                         content.push("创建时间：" + route.createtime );
 
@@ -102,10 +102,10 @@
                             position: route.routepathdata[pos],
                             animation: 'AMAP_ANIMATION_DROP',
                         });
-                        var title = '路由编号：<span>' + route.id + '</span>';
+                        var title = '光缆编号：<span>' + route.id + '</span>';
                         var content = [];
                         content.push("名称：" + route.name );
-                        content.push("路由类型："+routeStatusCode[Number(route.type)])
+                        content.push("光缆类型："+routeStatusCode[Number(route.type)])
                         content.push("描述：" + route.description );
                         content.push("创建时间：" + route.createtime);
                         end.content = createInfoWindow(title, content.join("<br/>"));

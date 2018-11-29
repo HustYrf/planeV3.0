@@ -118,36 +118,6 @@ public class AlarmVO {
 		this.positionList = positionList;
 	}
 
-	public void setImgBaseCode() {
-		try {
-			//url = new URL("http://218.65.240.246:18089/ImageTask/24/ImageAlarm/alarm1.jpg");
-			URL url = new URL(this.image);
-			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			connection.setDoInput(true);
-			connection.setRequestMethod("POST");
-			InputStream inputStream = connection.getInputStream();
-			byte[] data = null;
-			try {
-
-				data = new byte[inputStream.available()];
-				inputStream.read(data,0,inputStream.available());
-
-				inputStream.close();         //关闭所有连接
-				connection.disconnect();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			BASE64Encoder encoder = new BASE64Encoder();
-			this.image = encoder.encode(data);
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void setBase(){
 
 		try{

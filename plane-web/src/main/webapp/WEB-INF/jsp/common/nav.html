@@ -72,10 +72,10 @@
     </a>
         <ul class="sub-menu">
             <#if !Session[ "super_administrator"]?exists>
-            <li <#if (curNav)?? && curNav =="routeImport">class="active"</#if>><a href="${s.base}/routeImport.action">路由导入</a></li>
+            <li <#if (curNav)?? && curNav =="routeImport">class="active"</#if>><a href="${s.base}/routeImport.action">光缆导入</a></li>
             </#if>
-          <#--  <li><a href="${s.base}/routeMap.action">路由地图</a></li>-->
-            <li <#if (curNav)?? && curNav =="routeList">class="active"</#if>><a href="${s.base}/routeList.action">路由一览</a></li>
+            <#--<li><a href="${s.base}/routeMap.action">光缆地图</a></li>-->
+            <li <#if (curNav)?? && curNav =="routeList">class="active"</#if>><a href="${s.base}/routeList.action">光缆一览</a></li>
         </ul>
     </li>
 </#if>
@@ -99,7 +99,7 @@
         </a>
             <ul class="sub-menu">
                 <#if !Session[ "super_administrator"]?exists>
-                <li <#if (curNav)?? && curNav =="setFlyPath">class="active"</#if>><a href="${s.base}/setFlyingPath.action">设定路经</a></li>
+                   <li <#if (curNav)?? && curNav =="flyingPathImport">class="active"</#if>><a href="${s.base}/flyingPathImport.action">飞巡路径导入</a></li>
                 </#if>
                 <li <#if (curNav)?? && curNav =="flyingPathList">class="active"</#if>><a href="${s.base}/doGetFlyingPathList.action">路经一览</a></li>
             </ul>
@@ -108,7 +108,7 @@
 
 
 <#if curNav??>
-    <#if curNav =="planeAllList">
+    <#if curNav =="uavAllList">
          <li class="active">
     <#else >
          <li class="">
@@ -116,7 +116,7 @@
 	<a href="javascript:;">
         <i class=" icon-plane"></i>
         <span class="title">设施管理</span>
-         <#if curNav =="planeAllList">
+         <#if curNav =="uavAllList">
                    <span class="selected"></span>
          <#else>
                    <span class=""></span>
@@ -124,7 +124,7 @@
         <span class="arrow "></span>
     </a>
     <ul class="sub-menu">
-        <li <#if (curNav)?? && curNav =="planeAllList">class="active"</#if>><a href="${s.base}/uavList.action">无人机查看</a></li>
+        <li <#if (curNav)?? && curNav =="uavAllList">class="active"</#if>><a href="${s.base}/uavList.action">无人机查看</a></li>
         <li><a href="#">无人机注册</a></li>
         <li><a href="#">三盯摄像头</a></li>
         <li><a href="#">摄像头注册</a></li>
@@ -220,20 +220,12 @@
     </#if>
     <span class="arrow "></span>
     </a>
-    <!--<ul class="sub-menu">-->
-        <!--<li>-->
-            <!--<a href="javascript:;">修改信息-->
-                <!--<span class="arrow"></span>-->
-            <!--</a>-->
+        <ul class="sub-menu">
+            <li <#if (curNav)?? && curNav =="profileEdit">class="active"</#if>><a href="${s.base}/admin/profileEdit">个人信息</a></li>
+            <li <#if (curNav)?? && curNav =="passwordEdit">class="active"</#if>><a href="${s.base}/admin/passwordEdit">修改密码</a></li>
+            <li <#if (curNav)?? && curNav =="logout">class="active"</#if>><a href="${s.base}/admin/logout">退出</a></li>
 
-            <ul class="sub-menu">
-                <li <#if (curNav)?? && curNav =="profileEdit">class="active"</#if>><a href="${s.base}/admin/profileEdit">个人信息</a></li>
-                <li <#if (curNav)?? && curNav =="passwordEdit">class="active"</#if>><a href="${s.base}/admin/passwordEdit">修改密码</a></li>
-                <li <#if (curNav)?? && curNav =="logout">class="active"</#if>><a href="${s.base}/admin/logout">退出</a></li>
-
-            </ul>
-        <!--</li>-->
-    <!--</ul>-->
+        </ul>
  </li>
 </#if>
 

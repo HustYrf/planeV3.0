@@ -104,132 +104,165 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                <#if page.items?exists && ((page.items)?size gt 0)>
-                                    <#list page.items as taskpojo>
-                                    <tr>
-                                        <td>${taskpojo.task.id!}</td>
-                                        <td>${taskpojo.task.name!}</td>
-                                        <td>${taskpojo.userCreatorName!}</td>
-                                        <td>${taskpojo.userAName!}</td>
-                                        <td>${taskpojo.userZName!}</td>
-                                        <td>
-                                            <#if taskpojo.task.status == 9>
-                                                <a target="_blank" href="${s.base}/getTaskPlaneLocation?uavid=${taskpojo.task.uavId!}&taskid=${taskpojo.task.id!}" style="cursor:pointer;">${taskpojo.uavName!}</a>
-                                            <#else>${taskpojo.uavName!}
-                                            </#if>
-                                        </td>
-                                        <td>${taskpojo.deviceId!}</td>
-                                        <td>${(taskpojo.task.createtime?datetime)!}</td>
-                                        <td>${(taskpojo.task.planstarttime?datetime)!}</td>
-                                        <td>${(taskpojo.task.planendtime?datetime)!}</td>
-                                        <td>
-                                            <a href="${s.base}/alarmWithId.action?id=${taskpojo.task.id!}" target="_blank">${taskpojo.flyingPathName!}</a>
-                                        </td>
-                                        <td class="listlabel">
-                                            <#if taskpojo.task.status??>
-                                                <#if  taskpojo.task.status == -1><span class="label label-danger">故障或异常</span>
-                                                <#elseif taskpojo.task.status == 0><span class="label label-warning">任务创建中</span>
-                                                <#elseif taskpojo.task.status == 1><span class="label label-primary">任务已提交</span>
-                                                <#elseif taskpojo.task.status == 2><span class="label label-primary">任务已分派</span>
-                                                <#elseif taskpojo.task.status == 3><span class="label label-primary">放飞员已确认</span>
-                                                <#elseif taskpojo.task.status == 4><span class="label label-info">接机员已确认</span>
-                                                <#elseif taskpojo.task.status == 5><span class="label label-info">无人机自检</span>
-                                                <#elseif taskpojo.task.status == 6><span class="label label-success">无人机待飞</span>
-                                                <#elseif taskpojo.task.status == 7><span class="label label-primary">执行待批准</span>
-                                                <#elseif taskpojo.task.status == 8><span class="label label-info">准飞</span>
-                                                <#elseif taskpojo.task.status == 9><span class="label label-success">飞行中</span>
-                                                <#elseif taskpojo.task.status == 10><span class="label label-success">无人机到达</span>
-                                                <#elseif taskpojo.task.status == 11><span class="label label-success">传图识别中</span>
-                                                <#elseif taskpojo.task.status == 12><span class="label label-success">识别完成</span>
-                                                <#elseif taskpojo.task.status == 13><span class="label label-success">完成任务</span>
-                                                <#elseif taskpojo.task.status == 14><span class="label label-success">已归档</span>
-                                                </#if>
-                                            </#if>
-                                        </td>
-                                        <td>
-	                                	   <#if  taskpojo.task.status==1>
-                                               <#if !Session["super_administrator"]?exists>
-		                                		<button type="button" class="btn green" onclick="assignTask(${taskpojo.task.id!})">分派</button>
-                                               <button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>
-                                               <#else>
-                                                 <span class="label label-warning">无操作权限</span>
-                                               </#if>
-                                           </#if>
+                                        <#if page.items?exists && ((page.items)?size gt 0)>
+                                        <#list page.items as taskpojo>
+                                            <tr>
+                                                <td>${taskpojo.task.id!}</td>
+                                                <td>${taskpojo.task.name!}</td>
+                                                <td>${taskpojo.userCreatorName!}</td>
+                                                <td>${taskpojo.userAName!}</td>
+                                                <td>${taskpojo.userZName!}</td>
+                                                <td>
+                                                    <#if taskpojo.task.status == 9>
+                                                        <a target="_blank" href="${s.base}/getTaskPlaneLocation?uavid=${taskpojo.task.uavId!}&taskid=${taskpojo.task.id!}" style="cursor:pointer;">${taskpojo.uavName!}</a>
+                                                    <#else>${taskpojo.uavName!}
+                                                    </#if>
+                                                </td>
+                                                <td>${taskpojo.deviceId!}</td>
+                                                <td>${(taskpojo.task.createtime?datetime)!}</td>
+                                                <td>${(taskpojo.task.planstarttime?datetime)!}</td>
+                                                <td>${(taskpojo.task.planendtime?datetime)!}</td>
+                                                <td>
+                                                    <a href="${s.base}/alarmWithId.action?id=${taskpojo.task.id!}" target="_blank">${taskpojo.flyingPathName!}</a>
+                                                </td>
+                                                <td class="listlabel">
+                                                    <#if taskpojo.task.status??>
+                                                        <#if  taskpojo.task.status == -1><span class="label label-danger">故障或异常</span>
+                                                        <#elseif taskpojo.task.status == 0><span class="label label-warning">任务创建中</span>
+                                                        <#elseif taskpojo.task.status == 1><span class="label label-primary">任务已提交</span>
+                                                        <#elseif taskpojo.task.status == 2><span class="label label-primary">任务已分派</span>
+                                                        <#elseif taskpojo.task.status == 3><span class="label label-primary">放飞员已确认</span>
+                                                        <#elseif taskpojo.task.status == 4><span class="label label-info">接机员已确认</span>
+                                                        <#elseif taskpojo.task.status == 5><span class="label label-info">无人机自检</span>
+                                                        <#elseif taskpojo.task.status == 6><span class="label label-success">无人机待飞</span>
+                                                        <#elseif taskpojo.task.status == 7><span class="label label-primary">执行待批准</span>
+                                                        <#elseif taskpojo.task.status == 8><span class="label label-info">准飞</span>
+                                                        <#elseif taskpojo.task.status == 9><span class="label label-success">飞行中</span>
+                                                        <#elseif taskpojo.task.status == 10><span class="label label-success">无人机到达</span>
+                                                        <#elseif taskpojo.task.status == 11><span class="label label-success">传图识别中</span>
+                                                        <#elseif taskpojo.task.status == 12><span class="label label-success">识别完成</span>
+                                                        <#elseif taskpojo.task.status == 13><span class="label label-success">完成任务</span>
+                                                        <#elseif taskpojo.task.status == 14><span class="label label-success">已归档</span>
+                                                        </#if>
+                                                    </#if>
+                                                </td>
+                                                <td>
+                                                   <#if  taskpojo.task.status==1>
+                                                       <#if !Session["super_administrator"]?exists>
+                                                           <button type="button" class="btn green" onclick="assignTask(${taskpojo.task.id!})">
+                                                               <i class="icon-signin icon-white"></i>
+                                                               <span>分派</span>
+                                                           </button>
+                                                       <button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">
+                                                           <i class="icon-remove-sign icon-white"></i>
+                                                           <span>取消</span>
+                                                       </button>
+                                                       <#else>
+                                                         <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-                                           <#if taskpojo.task.status==-1 >
-                                               <#if !Session["super_administrator"]?exists>
-                                            <button type="button" class="btn green" onclick="reStartTask(${taskpojo.task.id!})">重启</button>
-                                           <#--<button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>-->
-                                               <#else>
-                                             <span class="label label-warning">无操作权限</span>
-                                               </#if>
-                                           </#if>
+                                                   <#if taskpojo.task.status==-1 >
+                                                       <#if !Session["super_administrator"]?exists>
+                                                    <button type="button" class="btn green" onclick="reStartTask(${taskpojo.task.id!})">
+                                                        <i class="icon-share-alt icon-white"></i>
+                                                        <span>重启</span>
+                                                    </button>
+                                                       <#--<button type="button" class="btn blue" onclick="cancelTask(${taskpojo.task.id!})">取消</button>-->
+                                                       <#else>
+                                                     <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-										    <#if taskpojo.task.status==0>
-                                                <#if !Session["super_administrator"]?exists>
-		                                		<a class="btn" href="${s.base}/toTaskCreate.action?id=${taskpojo.task.id!}">编辑</a>
-		                                		<button type="button" class="btn red" onclick="deleteTask(${taskpojo.task.id!})">删除</button>
-                                                <#else>
-                                                 <span class="label label-warning">无操作权限</span>
-                                                </#if>
-                                            </#if>
+                                                   <#if taskpojo.task.status==0>
+                                                       <#if !Session["super_administrator"]?exists>
+                                                        <button type="button" class="btn blue" onclick="toedit(${taskpojo.task.id!})">
+                                                            <i class="icon-edit icon-white"></i>
+                                                            <span>编辑</span>
+                                                        </button>
 
-                                            <#if taskpojo.task.status==10>
-                                            <#if !Session["super_administrator"]?exists>
-                                            <button type="button" class="btn blue start" onclick="uploadPic(${taskpojo.task.id!})">
-                                                <i class="icon-upload icon-white"></i>
-                                                <span>传图</span></button>
+                                                        <button type="button" class="btn red" onclick="deleteTask(${taskpojo.task.id!})">
+                                                            <i class=" icon-trash icon-white"></i>
+                                                            <span>删除</span>
+                                                        </button>
+                                                       <#else>
+                                                         <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-                                            <button type="button" class="btn red delete" onclick="recongizePic(${taskpojo.task.id!})">
-                                                <i class="icon-camera icon-white"></i>
-                                                <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span></button>
-                                                <#else>
-                                           <span class="label label-warning">无操作权限</span>
-                                               </#if>
-                                            </#if>
+                                                   <#if taskpojo.task.status==10>
+                                                       <#if !Session["super_administrator"]?exists>
+                                                            <button type="button" class="btn blue start" onclick="uploadPic(${taskpojo.task.id!})">
+                                                                <i class="icon-upload icon-white"></i>
+                                                                <span>传图</span>
+                                                            </button>
+                                                            <button type="button" class="btn green" onclick="taskImage(${taskpojo.task.id!})">
+                                                                 <i class="icon-camera-retro"></i>
+                                                                 <span class="glyphicon glyphicon-picture" aria-hidden="true">图片</span>
+                                                            </button>
+                                                            <button type="button" class="btn red delete" onclick="recongizePic(${taskpojo.task.id!})">
+                                                                <i class="icon-camera icon-white"></i>
+                                                                <span class="glyphicon glyphicon-picture" aria-hidden="true">识别</span>
+                                                            </button>
+                                                       <#else>
+                                                            <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-	                                		<#if taskpojo.task.status==7>
-                                                <#if !Session["super_administrator"]?exists>
-	                                		    <button type="button" class="btn default" onclick="onsureFly('${taskpojo.task.id!}')">批准</button>
-	                                		    <button type="button" class="btn blue btn-xs" onclick="rejectFly('${taskpojo.task.id!}')">驳回</button>
-                                                <#else>
-                                                <span class="label label-warning">无操作权限</span>
-                                                </#if>
+                                                   <#if taskpojo.task.status==7>
+                                                       <#if !Session["super_administrator"]?exists>
+                                                        <button type="button" class="btn green" onclick="onsureFly('${taskpojo.task.id!}')">
+                                                            <i class="icon-ok icon-white"></i>
+                                                            <span>批准</span>
+                                                        </button>
+                                                        <button type="button" class="btn blue btn-xs" onclick="rejectFly('${taskpojo.task.id!}')">
+                                                            <i class="icon-remove icon-white"></i>
+                                                            <span>驳回</span>
+                                                        </button>
+                                                       <#else>
+                                                        <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-                                            <#elseif taskpojo.task.status==12>
-                                            <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
-                                            <i class="icon-exclamation-sign"></i>
-                                            <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
-                                             <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
-                                                    <i class=" icon-print"></i>
-                                                    <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
-                                             </button>
+                                                   <#if taskpojo.task.status==12>
+                                                        <button type="button" class="btn red delete" onclick="taskAlarm(${taskpojo.task.id!})" style="cursor:pointer;">
+                                                            <i class="icon-exclamation-sign"></i>
+                                                            <span class="glyphicon glyphicon-picture" aria-hidden="true">告警</span></button>
+                                                        <button type="button" class="btn green" onclick="taskImage(${taskpojo.task.id!})">
+                                                            <i class="icon-camera-retro"></i>
+                                                            <span class="glyphicon glyphicon-picture" aria-hidden="true">图片</span>
+                                                        </button>
+                                                         <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                             <i class=" icon-print icon-white"></i>
+                                                             <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                                         </button>
+                                                   </#if>
 
-                                            <#elseif taskpojo.task.status==14>
+                                                   <#if taskpojo.task.status==14>
+                                                         <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                             <i class=" icon-print icon-white"></i>
+                                                             <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                                         </button>
+                                                   </#if>
 
-                                             <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
-                                                 <i class=" icon-print"></i>
-                                                 <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
-                                             </button>
+                                                   <#if taskpojo.task.status=13>
+                                                       <#if !Session["super_administrator"]?exists>
+                                                           <button type="button" class="btn blue" onclick="finishTask(${taskpojo.task.id!})">
+                                                               <i class="icon-save icon-white"></i>
+                                                               <span class="glyphicon glyphicon-picture"  aria-hidden="true">归档</span>
+                                                           </button>
+                                                             <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
+                                                                 <i class=" icon-print icon-white"></i>
+                                                                 <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
+                                                             </button>
+                                                       <#else>
+                                                        <span class="label label-warning">无操作权限</span>
+                                                       </#if>
+                                                   </#if>
 
-                                           <#elseif taskpojo.task.status=13>
-                                                <#if !Session["super_administrator"]?exists>
-                                                   <button type="button" class="btn blue" onclick="finishTask(${taskpojo.task.id!})">
-                                                       <i class="icon-save"></i>
-                                                       <span class="glyphicon glyphicon-picture"  aria-hidden="true">归档</span>
-                                                   </button>
-                                                     <button type="button" class="btn default" onclick="getReport('${s.base}/taskReport.action?id=${taskpojo.task.id!}')">
-                                                         <i class=" icon-print"></i>
-                                                         <span class="glyphicon glyphicon-picture"  aria-hidden="true">报告</span>
-                                                     </button>
-                                                <#else>
-                                                <span class="label label-warning">无操作权限</span>
-                                                </#if>
-                                            <#else>
-                                            </#if>
-                                        </td>
-                                    </tr>
-                                    </#list>
+                                                </td>
+                                            </tr>
+                                        </#list>
                                     </#if>
                                     </tbody>
                                 </table>
@@ -301,7 +334,6 @@
     </div>
 </div>
 <!-- 任务重启确认 -->
-
 <!-- 任务取消确认 -->
 <div class="modal fade" id="cancelfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -379,11 +411,10 @@
 			    'id':taskid
 			},
 			 success: function (result) {
-	                if (result.errcode == 0 && result.message == "SUCCESS") {
-	                	
-	                	Modal.show('_ocDialogModal');
-	                	document.getElementById("resText").innerHTML=result.data;
-	                	setTimeout("window.location.reload()",2000);
+	                if (result.errcode == 0) {
+                        document.getElementById("resText").innerHTML=result.message
+                        Modal.show('ocDialogModal');
+                        setTimeout("document.location.reload();",2000);
 	                } 
 	            },
 	         error:function(){
@@ -396,6 +427,9 @@
     }
     function alarmMap(url) {
         window.open(url);   //打开新窗口显示告警
+    }
+    function toedit(taskId) {
+        window.location.href = '${s.base}/toTaskCreate.action?id='+  taskId;
     }
     function getReport(url) {
         window.open(url);
@@ -583,6 +617,10 @@
 
     function  taskAlarm(taskid) {
         window.open("${s.base}/alarmWithId.action?id="+taskid);
+    }
+
+    function taskImage(taskId) {
+        window.open("${s.base}/imageWithId.action?id="+taskId)
     }
 
     function onsureTaskOver(taskid){

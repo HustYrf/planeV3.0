@@ -23,5 +23,7 @@ public class RouteExcel {
 		this.latitude = latitude;
 	}
 
-
+	public String getPositon() {
+		return "POINT("+ String.valueOf(longitude)+" "+String.valueOf(latitude) +")";
+	}
 }

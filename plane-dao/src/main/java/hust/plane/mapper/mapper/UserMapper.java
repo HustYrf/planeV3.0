@@ -69,4 +69,6 @@ public interface UserMapper {
 	User getUserByName(String name);
 
     Integer selectUserIdByUserName(String addUsername);
+
+    Integer selectByUserWorkNumber(String addUserWorkNumber);
 }

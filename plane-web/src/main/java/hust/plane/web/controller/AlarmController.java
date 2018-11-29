@@ -59,6 +59,9 @@ public class AlarmController {
     @Value("${BASE_IMAGE_URL}") // 服务器地址
     private String BASE_IMAGE_URL;
 
+    @Value("${TASK_DIR}")
+    private String TASK_DIR;
+
     @Value("${IMAGE_ALARM}") // 文件夹
     private String ALARM_DIR;
 
@@ -80,6 +83,7 @@ public class AlarmController {
             RouteVO routeVo = new RouteVO(allRoute.get(i));
             routeList.add(routeVo);
         }
+
         model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
         model.addAttribute("alarmList", JsonUtils.objectToJson(alarmList));
         model.addAttribute("curNav", "alarmList");
@@ -98,8 +102,7 @@ public class AlarmController {
     public String getAlarmInfo(@RequestParam(value = "id") int id) {
 
         Alarm alarm = alarmService.selectAlarmById(id);
-//        private String BASE_IMAGE_URL;
-//        private String ALARM_DIR;
+
         Task task = new Task();
         task.setId(alarm.getTaskId());
         Task task1 = taskServiceImpl.getTaskByTask(task);
@@ -110,8 +113,8 @@ public class AlarmController {
 
         AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
         //设置从文件服务器查看图片
-        alarmDetailVO.setImage(BASE_IMAGE_URL + ALARM_DIR + alarmDetailVO.getImage());
 
+        alarmDetailVO.setImage(BASE_IMAGE_URL + TASK_DIR + task1.getId() +"/"+ ALARM_DIR + alarmDetailVO.getImage());
         alarmDetailVO.setUav(uav1);
 
         alarmDetailVO.setTaskName(task1.getName());
@@ -122,17 +125,6 @@ public class AlarmController {
 
         return JsonView.render(0, WebConst.SUCCESS_RESULT, alarmDetailVO);
     }
-
-
-
-
-   /* @RequestMapping(value = "alarmImport", method = RequestMethod.GET)
-    public String toAlarmImport(Model model) {
-    	
-        model.addAttribute("curNav", "alarmImport");
-        return "importAlarm";
-    }
-*/
 
     @RequestMapping(value = "alarmImport", method = RequestMethod.GET)
     public String toAlarmImport(Model model, HttpServletRequest request) {

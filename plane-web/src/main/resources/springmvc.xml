@@ -82,6 +82,7 @@
 			<mvc:exclude-mapping path="/upload/**"/>
 			<mvc:exclude-mapping path="/fonts/**"/>
 			<mvc:exclude-mapping path="/media/**"/>
+			<mvc:exclude-mapping path="/res/assets/**"/>
 			<bean class="hust.plane.web.interceptor.BaseInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

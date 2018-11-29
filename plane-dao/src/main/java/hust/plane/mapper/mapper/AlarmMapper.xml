@@ -23,7 +23,7 @@
 		select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
 		from K_Alarm 
 		where 
-		Status ="1"
+		Status = 0
 	</select>
 
     <select id="selectAllAlarmByCreateTimeDesc" resultMap="BaseResultMap">
@@ -33,7 +33,7 @@
     </select>
 
     <select id="alarmCount" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Alarm">
-        select count(1) from K_Alarm
+        select count(*) from K_Alarm
         WHERE 1=1
         <if test="taskId != null">
             AND Task_id = #{taskId}
@@ -69,11 +69,13 @@
         select
         <include refid="Base_Column_List"/>
         from K_Alarm
-        where Task_id=#{taskId,, jdbcType=INTEGER}
+        where 1=1
+        AND Task_id=#{taskId,, jdbcType=INTEGER}
+        AND Status = 0
     </select>
 
     <update id="updateByAlarmId" parameterType="java.lang.String">
-    	update K_Alarm set Status=0 where id=#{id}
+    	update K_Alarm set Status=1 where id=#{id}
     </update>
 
     <update id="updateDesByAlarmId">
@@ -125,7 +127,7 @@
                 #{imageurl,jdbcType=VARCHAR},
             </if>
             <if test="position != null">
-                #{position,jdbcType=OTHER},
+                geomfromtext(#{position,jdbcType=OTHER}),
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},

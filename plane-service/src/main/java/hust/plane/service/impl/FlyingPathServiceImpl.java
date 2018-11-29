@@ -19,8 +19,8 @@ public class FlyingPathServiceImpl implements FlyingPathService {
 	@Autowired
 	private FlyingPathMapper flyingPathMapper;
 
+	//导出飞向路径
 	@Override
-
 	public void importFlyingPath(FlyingPath flyingPath, String filePath) {
 		FlyingPath planePathList = flyingPathMapper.selectByFlyingPathVO(flyingPath);
 		List<PlanePathVo> plist = KMLUtil.textToList(planePathList.getPathdata(), planePathList.getHeightdata());

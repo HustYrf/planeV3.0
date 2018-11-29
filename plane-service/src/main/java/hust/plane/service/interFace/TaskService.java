@@ -42,4 +42,6 @@ public interface TaskService {
 	List<Task> getAllTaskByRole(Task task);
 
 	List<Task> getFlyingPathByFlyingId(Integer id);
+
+	List<Task> getTaskByCreatorAndStatus(User user, Integer status);
 }

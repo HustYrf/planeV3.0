@@ -10,6 +10,7 @@ import hust.plane.mapper.pojo.UserExample;
 import hust.plane.service.interFace.UserService;
 import hust.plane.utils.DateKit;
 import hust.plane.utils.PlaneUtils;
+import hust.plane.utils.ToolUntils;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.UserPojo;
 import hust.plane.utils.pojo.TipException;
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
             throw new TipException("该用户名已经存在!");
         }
         int worknumberCount = userDao.countByWorkNumber(worknumber);
-        if(worknumberCount >= 1){
+        if (worknumberCount >= 1) {
             throw new TipException("该工号已使用！");
         }
         User user = new User();
@@ -197,6 +198,9 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(addUsername)) {
             throw new TipException("新增用户名获取失败");
         } else {
+            if (userDao.selectByUserName(addUsername) != 0) {
+                throw new TipException("新增用户名重复");
+            }
             user.setName(addUsername);
         }
         if (StringUtils.isBlank(addUserPaw)) {
@@ -207,15 +211,24 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(addUserWorkNumber)) {
             throw new TipException("新增用户工号获取失败");
         } else {
+            if (userDao.selectByUserWorkNumber(addUserWorkNumber) != 0) {
+                throw new TipException("新增用户工号已注册");
+            }
             user.setWorknumber(addUserWorkNumber);
         }
         if (StringUtils.isNotBlank(addUserNickname)) {
             user.setNickname(addUserNickname);
         }
         if (StringUtils.isNotBlank(addUserEmail)) {
+            if (!ToolUntils.isEmail(addUserEmail)) {
+                throw new TipException("新增邮箱格式错误");
+            }
             user.setEmail(addUserEmail);
         }
         if (StringUtils.isNotBlank(addUserPhone)) {
+            if (addUserPhone.length() != 13) {
+                throw new TipException("新增手机号码有误");
+            }
             user.setPhoneone(addUserPhone);
         }
         user.setCreatetime(DateKit.getNowTime());
@@ -308,7 +321,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page,String pageNum) {
+    public TailPage<UserPojo> getUserByGroupIdOruserNameWithPage(Integer groupId, String userName, TailPage<UserPojo> page, String pageNum) {
         if (groupId == null && StringUtils.isBlank(userName)) {
             LOGGER.error("查询条件有误");
             throw new TipException("查询条件有误");
@@ -349,10 +362,10 @@ public class UserServiceImpl implements UserService {
             if (userName.length() == 4) {
                 User userByName = userDao.selectUserByUserName(userName);
                 if (userByName != null) {
-                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
-                    if(groupId==null||groupList.contains(groupId)){
-                    userList.add(userByName);
-                    page.setItemsTotalCount(1);
+                    List<Integer> groupList = user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if (groupId == null || groupList.contains(groupId)) {
+                        userList.add(userByName);
+                        page.setItemsTotalCount(1);
                     }
                 } else {
                     userName = userName.substring(0, 3);
@@ -361,8 +374,8 @@ public class UserServiceImpl implements UserService {
             if (userName.length() == 3) {
                 User userByName = userDao.selectUserByUserName(userName);
                 if (userByName != null) {
-                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
-                    if(groupId==null||groupList.contains(groupId)) {
+                    List<Integer> groupList = user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if (groupId == null || groupList.contains(groupId)) {
                         userList.add(userByName);
                         page.setItemsTotalCount(1);
                     }
@@ -373,8 +386,8 @@ public class UserServiceImpl implements UserService {
             if (userName.length() == 2) {
                 User userByName = userDao.selectUserByUserName(userName);
                 if (userByName != null) {
-                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
-                    if(groupId==null||groupList.contains(groupId)) {
+                    List<Integer> groupList = user_has_groupKeyMapper.getGroupIdByUserId(userByName.getId());
+                    if (groupId == null || groupList.contains(groupId)) {
                         userList.add(userByName);
                         page.setItemsTotalCount(1);
                     }
@@ -386,11 +399,11 @@ public class UserServiceImpl implements UserService {
                 int count = userDao.selectCountByFuzzyName(userName);
                 List<User> users = new ArrayList<>(count);
                 users = userDao.selectByFuzzyNameWithPage(userName, page);
-                for(int i=0;i<users.size();i++){
-                    List<Integer> groupList=user_has_groupKeyMapper.getGroupIdByUserId(users.get(i).getId());
-                    if(groupId!=null&&!groupList.contains(groupId)) {
+                for (int i = 0; i < users.size(); i++) {
+                    List<Integer> groupList = user_has_groupKeyMapper.getGroupIdByUserId(users.get(i).getId());
+                    if (groupId != null && !groupList.contains(groupId)) {
                         --count;
-                    }else{
+                    } else {
                         userList.add(users.get(i));
                     }
                 }
@@ -410,7 +423,7 @@ public class UserServiceImpl implements UserService {
 //            }
             page.setItems(userVoList);
         }
-         return page;
+        return page;
     }
 
     @Override

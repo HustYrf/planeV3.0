@@ -1,5 +1,10 @@
 package hust.plane.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,10 @@ import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.RouteVO;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class FlyingPathController {
   private static final Logger logger = LoggerFactory.getLogger(FlyingPathController.class);
@@ -42,22 +51,56 @@ public class FlyingPathController {
 	/*@Autowired
 	private AirportService airportServiceImpl;*/
 
-    @RequestMapping("/toImportPlanePath")
-    public String toImportPlanePath(Model model) {
-        model.addAttribute("curNav", "importPlanePath");
-        return "importPlanePath";
+	//跳转飞行路径导入页面
+    @RequestMapping("/flyingPathImport")
+    public String toflyingPathImport(Model model){
+        model.addAttribute("curNav","flyingPathImport");
+        return "importFlyingPath";
     }
 
-    @RequestMapping("/importPlanePath")
-    @ResponseBody
-    public String importPlanePath(FlyingPath flyingPath) {
-        if (flyingPath != null) {
-            //E:\\hello.kml
-            String filePath = "E:\\\\" + flyingPath.getName() + ".kml";//设置文件名
-            flyingPathServiceImpl.importFlyingPath(flyingPath, filePath);
+    //提供 飞行路径模板下载
+    @RequestMapping("/flyingPathExcelDownloed")
+    public void flyingPathExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String 	basepath = request.getSession().getServletContext().getRealPath("");
+        //String basepath = request.getSession().getServletContext().getRealPath("/WEB-INF/ftl"); 
+        File file = null;
+        InputStream fin = null;
+        ServletOutputStream out = null;
+        try {
+            // 调用工具类的createDoc方法生成excel文档
+            file = new File(basepath +file.separator+ "RouteTemplate.xlsx");
+            fin = new FileInputStream(file);
+
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            // 设置浏览器以下载的方式处理该文件名
+            response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(URLEncoder.encode("RouteTemplate.xlsx", "UTF-8"))));
+
+            out = response.getOutputStream();
+            byte[] buffer = new byte[1024];  // 缓冲区
+            int bytesToRead = -1;
+            // 通过循环将读入的excel文件的内容输出到浏览器中
+            while((bytesToRead = fin.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesToRead);
+            }
+        } finally {
+            if(fin != null) fin.close();
+            if(out != null) out.close();
         }
-        return new JsonView(0).toString();
+
     }
+//    //导出飞行路径kml
+//    @RequestMapping("/importPlanePath")
+//    @ResponseBody
+//    public String importPlanePath(FlyingPath flyingPath) {
+//        if (flyingPath != null) {
+//            //E:\\hello.kml
+//            String filePath = "E:\\\\" + flyingPath.getName() + ".kml";//设置文件名
+//            flyingPathServiceImpl.importFlyingPath(flyingPath, filePath);
+//        }
+//        return new JsonView(0).toString();
+//    }
 
     //返回设定飞行路径页面，返回所有路由数据，并在前台显示
     @RequestMapping("/setFlyingPath")
@@ -80,10 +123,7 @@ public class FlyingPathController {
     @ResponseBody
     public String doSetFlyPath(FlyingPath flyingPath) {
 
-        //System.out.println(route.getRoutePath());
-
         if (flyingPathServiceImpl.insertFlyingPath(flyingPath) == true)
-
             return "success";
         else
             return "failed";
