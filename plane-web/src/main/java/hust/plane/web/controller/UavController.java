@@ -81,6 +81,7 @@ public class UavController {
                 Uav uav = uavServiceimpl.getUavById(taskList.get(i).getUavId());
                 UavVO planevo = new UavVO(uav);
                 planeList.add(planevo);
+
             }
         }
 

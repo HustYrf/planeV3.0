@@ -25,6 +25,72 @@
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
 
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
+
+    <style>
+        .main-wrapVideo{
+            position:absolute;
+            min-width: 520px;
+            max-width: 760px;
+            z-index: 999;
+            margin-left: 382px;
+        }
+        #UavInfo{
+            position:absolute;
+            z-index:99;
+            min-width:330px;
+            right:2px;
+            top:0;
+            opacity:0.8;
+            border: 0;
+        }
+        #UavInfo .portlet-body{
+             overflow-y:scroll;
+             max-height: 600px;
+         }
+        #UavInfo .portlet-body::-webkit-scrollbar {/*滚动条整体样式*/
+            width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+            height: 4px;
+        }
+        #UavInfo .portlet-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.2);
+        }
+        #UavInfo .portlet-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            border-radius: 0;
+            background: rgba(0,0,0,0.1);
+        }
+        #UavInfo .list-group{
+            padding-left: 0;
+            margin-bottom: 20px;
+            margin-top: 0;
+            display: block;
+            list-style-type: disc;
+            margin-block-start: .5em;
+            margin-block-end: .5em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-size: 0.9rem;
+        }
+        #UavInfo .list-group .liheader{
+            background-color: #d4d4d4;
+            font-size: 1rem;
+        }
+        #UavInfo .list-group-item{
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            list-style-type: disc;
+        }
+        #UavInfo .list-group-item span{
+            color: #f01414;
+        }
+    </style>
 </head>
 <body class="page-header-fixed">
 <#include "common/header.html" />
@@ -71,9 +137,46 @@
                 </div>
             </div>
 
-            <div id="container" ></div>
+            <div class="portlet box blue" id="UavInfo">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-plane"></i>当前任务查看</div>
+                    <div class="tools">
+                        <a href="" class="collapse"></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                        <div class="baseInfo">
+                            <ul class="list-group">
+                                <li class="list-group-item liheader" >
+                                    <b>任务基本信息</b>
+                                    <button type="button" class="btn blue" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
+                                </li>
+                                <li class="list-group-item" >巡检任务名称：<span id="taskName"></span></li>
+                                <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
+                                <li class="list-group-item">起飞员：<span></span></li>
+                                <li class="list-group-item">降落员：<span></span></li>
+                                <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
+                                <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
+                                <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
+                            </ul>
+                        </div>
+                        <div class="flyingInfo">
+                            <ul class="list-group">
+                                <li class="list-group-item liheader"><b>无人机信息</b></li>
+                                <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span><span><strong>(m/s)</strong></span></li>
+                                <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span><span><strong>(m/s)</strong></span></li>
+                                <li class="list-group-item">无人机纬度：<span id="fightLat">暂无</span></li>
+                                <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
+                                <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
+                                <li class="list-group-item">无人机航向：<span id="fightHDG">暂无</span></li>
+                                <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
+                                <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
 
-            <div class="portlet box yellow" id="panel" style="">
+            <div class="portlet box blue" id="panel">
                 <div class="portlet-title">
                     <div class="caption"><i class="icon-plane"></i>无人机实时查看</div>
                     <div class="tools">
@@ -86,24 +189,40 @@
                     </div>
                 </div>
             </div>
-            <!-- UI组件库 1.0 -->
 
+            <!-- UI组件库 1.0 -->
+            <div id="container" ></div>
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script>
 
-                function videoOp(a,deviceid) {
+                // function videoOp(a,deviceid) {
+                //     if($('#videoHeader').css('display') === 'none'){
+                //         $('#videoHeader').css('display','block');
+                //         $('#videoContainer').css('display','block');
+                //         $(a).html('<i class="icon-stop icon-white"></i><span>关闭视频</span>');
+                //         //ajax获取后台视频流
+                //     }else{
+                //         $("#videoHeader").css('display','none');
+                //         $("#videoContainer").css('display','none');
+                //         $(a).html('<i class="icon-play icon-white"></i><span>实时视频</span>');
+                //         //关闭视频流
+                //         //console.log( $(a).attr("class"));
+                //     }
+                // }
+
+                function videoOp() {
                     if($('#videoHeader').css('display') === 'none'){
-                        $('#videoHeader').css('display','block');
-                        $('#videoContainer').css('display','block');
-                        $(a).html('<i class="icon-stop icon-white"></i><span>关闭视频</span>');
+                        $("#videoHeader").css('display','block');
+                        $("#videoContainer").css('display','block');
+                        $("#videobtn").text("关闭视频");
                         //ajax获取后台视频流
+
                     }else{
                         $("#videoHeader").css('display','none');
                         $("#videoContainer").css('display','none');
-                        $(a).html('<i class="icon-play icon-white"></i><span>实时视频</span>');
+                        $("#videobtn").text("实时视频");
                         //关闭视频流
-                        //console.log( $(a).attr("class"));
                     }
                 }
 
@@ -185,13 +304,13 @@
                         var str = '<li class="poibox" onclick="showUav(' + 'this,' + data[j].position + ')">无人机名称：'
                                 + data[j].name
                                 +'<br>设备编号：'+data[j].deviceid
-                                + '<br>更新时间：' + data[j].updatetime
+                                //+ '<br>更新时间：' + data[j].updatetime
                                 + '<br>描述：' + data[j].description
                                 // + '<br>SIM卡1：' + data[j].phoneone
                                 // + '<br>SIM卡2：' + data[j].phonetwo
                                 + '<br><button type="button" class="btn green mini" onclick="videoOp'
                                 +'(this,'+data[j].deviceid+')">'
-                                +'<i class="icon-play icon-white"></i><span>实时视频</span></button>'
+                                +'<i class="icon-play icon-white"></i><span>任务详情</span></button>'
                                 + '</li>';
                         innHTML = innHTML + str;
                     }

@@ -1,18 +1,10 @@
 /* 全局样式 */
-.main-wrapVideo{
-    position:absolute;
-    top:10px;
-    min-width: 520px;
-    max-width: 760px;
-    z-index: 999;
-    margin-left: 80px;
-}
 
-.main-wrapVideo video{
-    width: 100%;
-}
 .none{
     display: none;
+}
+.main-wrapVideo video{
+    width: 100%;
 }
 .videocontain{
     bottom: 0;
@@ -21,11 +13,10 @@
 .videoheader{
     text-align: center;
     height: 30px;
-    background: coral;
+    background: #d4d4d4;
     display: none;
 }
 .videoheader span{
-    color: #FFFFFF;
     line-height: 30px;
 }
 .hi-video-wrapper{

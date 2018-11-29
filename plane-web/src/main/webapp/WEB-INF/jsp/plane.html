@@ -62,6 +62,14 @@ span{
 #fightStatus{
     color: #fff;
 }
+.main-wrapVideo{
+    position:absolute;
+    top:10px;
+    min-width: 520px;
+    max-width: 760px;
+    z-index: 999;
+    margin-left: 80px;
+}
 
 </style>
 
@@ -148,7 +156,7 @@ span{
 
             //创建地图
             var map = new AMap.Map('container', {
-                zoom: 12,
+                zoom: 15,
                 center: flyingPath.pathdata[0], //中心点坐标
             });
             map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
