@@ -125,11 +125,15 @@ span{
            
         <!-- UI组件库 1.0 -->
         <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+
         <script type="text/javascript">
 
             //把这个div设置为可拖动的属性
             var dragdiv = document.getElementById("videoDiv");
             drag(dragdiv);
+
+
+
 
             function videoOp() {
                 if($('#videoHeader').css('display') === 'none'){
@@ -188,6 +192,29 @@ span{
                 strokeStyle: "solid", //线样式
                 strokeDasharray: [10, 5] //补充线样式
             });
+
+
+            //海量信息点
+            var style =  [{
+                url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
+                anchor: new AMap.Pixel(6, 6),
+                size: new AMap.Size(11, 11)
+            }];
+            var points=[{"lnglat":[117.190182,39.125596],"name":"天津市","style":0},{"lnglat":[116.405285,39.904989],"name":"北京市","style":0}];
+            var mass = new AMap.MassMarks(points, {
+                opacity: 0.8,
+                zIndex: 111,
+                cursor: 'pointer',
+                style: style
+            });
+            var pointmarker = new AMap.Marker({content: ' ', map: map});
+            mass.on('mouseover', function (e) {
+                pointmarker.setPosition(e.data.lnglat);
+                pointmarker.setLabel({content: e.data.name})
+            });
+            mass.setMap(map);
+
+
 
             startpoint =  new Array(JSON.parse(JSON.stringify(uavdata.position)));
 

@@ -46,20 +46,7 @@
              overflow-y:scroll;
              max-height: 600px;
          }
-        #UavInfo .portlet-body::-webkit-scrollbar {/*滚动条整体样式*/
-            width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
-            height: 4px;
-        }
-        #UavInfo .portlet-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
-            border-radius: 5px;
-            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-            background: rgba(0,0,0,0.2);
-        }
-        #UavInfo .portlet-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
-            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-            border-radius: 0;
-            background: rgba(0,0,0,0.1);
-        }
+
         #UavInfo .list-group{
             padding-left: 0;
             margin-bottom: 20px;
@@ -100,17 +87,7 @@
     <div class="page-content">
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
-
-            <!-- END BEGIN STYLE CUSTOMIZER -->
-
-            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-            <!--  下面这块内容是在页面写死的  -->
-            <!--<h4 class="page-title">设施管理
-                <small>无人机查看</small>
-            </h4>-->
-
             <h4 class="page-title"></h4>
-
             <ul class="breadcrumb">
                 <li>
                     <i class="icon-home"></i>
@@ -119,22 +96,21 @@
                 </li>
                 <li><a href="${s.base}/uavList.action">无人机查看</a></li>
             </ul>
-
             <!-- END PAGE TITLE & BREADCRUMB-->
         </div>
         <!-- END PAGE HEADER-->
         <div id="dashboard"  style="position:relative;">
 
-            <div class="main-wrapVideo" id="videoDiv">
-                <div class="videoheader" id="videoHeader">
-                    <span>无人机实时视频</span>
-                </div>
-                <div class="videocontain" id="videoContainer">
-                    <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
-                        <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
-                    </video>
-                </div>
+        <div class="main-wrapVideo" id="videoDiv">
+            <div class="videoheader" id="videoHeader">
+                <span>无人机实时视频</span>
             </div>
+            <div class="videocontain" id="videoContainer">
+                <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
+                    <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+                </video>
+            </div>
+        </div>
 
             <div class="portlet box blue" id="UavInfo">
                 <div class="portlet-title">
@@ -144,34 +120,34 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                        <div class="baseInfo">
-                            <ul class="list-group">
-                                <li class="list-group-item liheader" >
-                                    <b>任务基本信息</b>
-                                    <button type="button" class="btn blue" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
-                                </li>
-                                <li class="list-group-item" >巡检任务名称：<span id="taskName"></span></li>
-                                <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
-                                <li class="list-group-item">起飞员：<span></span></li>
-                                <li class="list-group-item">降落员：<span></span></li>
-                                <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
-                                <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
-                                <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
-                            </ul>
-                        </div>
-                        <div class="flyingInfo">
-                            <ul class="list-group">
-                                <li class="list-group-item liheader"><b>无人机信息</b></li>
-                                <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span><span><strong>(m/s)</strong></span></li>
-                                <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span><span><strong>(m/s)</strong></span></li>
-                                <li class="list-group-item">无人机纬度：<span id="fightLat">暂无</span></li>
-                                <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
-                                <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
-                                <li class="list-group-item">无人机航向：<span id="fightHDG">暂无</span></li>
-                                <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
-                                <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
-                            </ul>
-                        </div>
+                    <div class="baseInfo">
+                        <ul class="list-group">
+                            <li class="list-group-item liheader" >
+                                <b>任务基本信息</b>
+                                <button type="button" class="btn blue" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
+                            </li>
+                            <li class="list-group-item" >巡检任务名称：<span id="taskName"></span></li>
+                            <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
+                            <li class="list-group-item">起飞员：<span></span></li>
+                            <li class="list-group-item">降落员：<span></span></li>
+                            <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
+                            <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
+                            <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
+                        </ul>
+                    </div>
+                    <div class="flyingInfo">
+                        <ul class="list-group">
+                            <li class="list-group-item liheader"><b>无人机信息</b></li>
+                            <li class="list-group-item">无人机空速：<span id="fightArSpd">暂无</span><span><strong>(m/s)</strong></span></li>
+                            <li class="list-group-item">无人机地速：<span id="fightGrSpd">暂无</span><span><strong>(m/s)</strong></span></li>
+                            <li class="list-group-item">无人机纬度：<span id="fightLat">暂无</span></li>
+                            <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
+                            <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
+                            <li class="list-group-item">无人机航向：<span id="fightHDG">暂无</span></li>
+                            <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
+                            <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -336,9 +312,6 @@
                         uavSelectedStatusMap.set(data[i].deviceid,0);
                     }
                     uavSelectedStatusMap.set(deviceid,1);
-
-
-
 
 
                     var lilist = document.getElementById('my-list')
