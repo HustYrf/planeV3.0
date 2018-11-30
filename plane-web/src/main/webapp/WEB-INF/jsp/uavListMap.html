@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
     <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
 
+    <script type="text/javascript" src="${s.base}/res/js/WGS84_to_GCJ02.js"></script>
+
     <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
@@ -170,22 +172,7 @@
             <!-- UI组件库 1.0 -->
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script>
-
-                // function videoOp(a,deviceid) {
-                //     if($('#videoHeader').css('display') === 'none'){
-                //         $('#videoHeader').css('display','block');
-                //         $('#videoContainer').css('display','block');
-                //         $(a).html('<i class="icon-stop icon-white"></i><span>关闭视频</span>');
-                //         //ajax获取后台视频流
-                //     }else{
-                //         $("#videoHeader").css('display','none');
-                //         $("#videoContainer").css('display','none');
-                //         $(a).html('<i class="icon-play icon-white"></i><span>实时视频</span>');
-                //         //关闭视频流
-                //         //console.log( $(a).attr("class"));
-                //     }
-                // }
-
+                var wgs84_to_gcj02 = new WGS84_to_GCJ02();
                 function videoOp() {
                     if($('#videoHeader').css('display') === 'none'){
                         $("#videoHeader").css('display','block');
@@ -261,13 +248,13 @@
                 var markersize = data.length;
                 //初始化三个全局变量用于记录无人机位置
                 var markerlistMap = new Map();
-                var uavStartPointMap= new Map();
+                //var uavStartPointMap= new Map();
 
                 for (var i = 0; i < markersize; i++) {
                 	
                     var markeritem = new AMap.Marker({
                         map: map,
-                        position: data[i].position,
+                        position: flyingpathdata[i].pathdata[0],
                         icon: new AMap.Icon({
                             size: new AMap.Size(32, 32), //图标大小
                             image: 'i/uav-32.png',
@@ -287,7 +274,7 @@
 
                     //添加到marker集合里面
                     markerlistMap.set(data[i].deviceid,markeritem);
-                    uavStartPointMap.set(data[i].deviceid,markeritem.getPosition());
+                    //uavStartPointMap.set(data[i].deviceid,markeritem.getPosition());
 
                     //实例化信息窗体
                     // var title = '无人机名称:<span>' + data[i].name + '</span>';
@@ -320,21 +307,49 @@
             	        var value2=messageType[8]*1;
             	        data[0] = value;
             	        data[1] = value2;
-            	        console.log(markerlistMap.get(uavDecivedId));
-            	        map.remove(markerlistMap.get(uavDecivedId));
-            	        var planeMarker = new AMap.Marker({
-                            position:  data,
-                            //position:  realdata,
-                            icon: new AMap.Icon({
-                                size: new AMap.Size(32,32), //图标大小
-                                image: "i/uav-32.png",
-                                offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
-                            }),
-                            angle:messageType[3],
-                        });
-                        map.add(planeMarker);
-                        markerlistMap.set(uavDecivedId,planeMarker);
-                 		//console.log("点的信息"+data);
+
+                        var nowMarker = markerlistMap.get(uavDecivedId);
+                        var nowPosition = nowMarker.getPosition();  //旧点
+
+                         // var nextpositon;
+                         // AMap.convertFrom(data, 'gps', function (status, result) {
+                         //     if (result.info === 'ok') {
+                         //         nextpositon = [result.locations[0].lng,result.locations[0].lat]; // Array.<LngLat>
+                         //         nowMarker.setPosition(nextpositon);
+                         //     }
+                         // });
+
+                         var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
+                         var linedata = [nowPosition,realdata];
+
+                         var polyline = new AMap.Polyline({
+                             map: map,
+                             path: linedata, //设置线覆盖物路径
+                             strokeColor: '#436EEE', //线颜色
+                             strokeOpacity: 1, //线透明度
+                             strokeWeight:6 , //线宽
+                             strokeStyle: "solid", //线样式
+                             strokeDasharray: [10, 5] //补充线样式
+                         });
+
+                         nowMarker.setPosition(realdata);
+                         nowMarker.setAngle(messageType[3]);
+                         markerlistMap.set(uavDecivedId,nowMarker);
+
+            	       // console.log(markerlistMap.get(uavDecivedId));
+            	        // map.remove(markerlistMap.get(uavDecivedId));
+            	        // var planeMarker = new AMap.Marker({
+                        //     position:  data,
+                        //     //position:  realdata,
+                        //     icon: new AMap.Icon({
+                        //         size: new AMap.Size(32,32), //图标大小
+                        //         image: "i/uav-32.png",
+                        //         offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
+                        //     }),
+                        //     angle:messageType[3],
+                        // });
+                        // map.add(planeMarker);
+                        // markerlistMap.set(uavDecivedId,planeMarker);
 
                  		if(uavDecivedId ==selectStatus.value)
                  		{
