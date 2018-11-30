@@ -109,8 +109,13 @@ var PlaneHandleServiceUtil ={
             map.remove(planeMarker);
 
             var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
-
-           // markerlistMap.get().setPosition(realdata);
+            // var realdata;
+            // AMap.convertFrom(lnglat,'gps', function (status, result) {
+            //     if (result.info === 'ok') {
+            //         realdata = result.locations[0];
+            //     }
+            // });
+           // markerlistMap.get().setPosition(realdata);    //将marker移动位置
 
             planeMarker = new AMap.Marker({
                 //position:  data,
