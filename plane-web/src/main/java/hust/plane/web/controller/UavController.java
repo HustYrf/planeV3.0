@@ -8,12 +8,12 @@ import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.User;
-import hust.plane.service.interFace.FlyingPathService;
-import hust.plane.service.interFace.TaskService;
+import hust.plane.service.interFace.*;
 import hust.plane.utils.AngleUtil;
 import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
+import hust.plane.web.controller.vo.TaskVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import hust.plane.mapper.pojo.Uav;
-import hust.plane.service.interFace.UavService;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PointUtil;
 import hust.plane.web.controller.vo.UavVO;
@@ -46,6 +45,12 @@ public class UavController {
     @Autowired
     private FlyingPathService flyingPathServiceImpl;
 
+    @Autowired
+    private UserGroupService userGroupService;
+
+    @Autowired
+    private UserService userServiceImpl;
+
     @RequestMapping("/plane")
     //获取飞机信息
     //实例解决经纬度路径
@@ -62,37 +67,50 @@ public class UavController {
     public String getPlaneList(Model model, HttpServletRequest request) {
 
         User user = PlaneUtils.getLoginUser(request);
-
+        String role = null;
+        //判别是观察者和浏览者
+        List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(user.getId());
+        if (groupIdList.contains(Integer.valueOf(1))) {
+            //是浏览者
+            role = "1";
+        } else {
+            //是观察者
+            role = "2";
+        }
         List<Task> taskList = taskService.getTaskByCreatorAndStatus(user, 9);
 
-        // List<FlyingPathVO> flyingPathVOList = new ArrayList<FlyingPathVO>();   //初始化向前台传送的数据
+        List<FlyingPathVO> flyingPathVOList = new ArrayList<FlyingPathVO>();   //初始化向前台传送的数据
         List<UavVO> planeList = new ArrayList<>();
+        List<TaskVO> taskVOList = new ArrayList<>();
 
-        //去除重复的无人机 暂时的方案
-        List listTemp = new ArrayList<Integer>();
+
         for (int i = 0; i < taskList.size(); i++) {
 
-            //FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(taskList.get(i).getFlyingpathId());
-            //FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
-            //flyingPathVOList.add(flyingPathVO);
-            if(!listTemp.contains(taskList.get(i).getUavId())){    //为了去除重复的无人机
-                listTemp.add(taskList.get(i).getUavId());
+            FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(taskList.get(i).getFlyingpathId());
+            FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
+            flyingPathVOList.add(flyingPathVO);
 
-                Uav uav = uavServiceimpl.getUavById(taskList.get(i).getUavId());
-                UavVO planevo = new UavVO(uav);
-                planeList.add(planevo);
+            Task tasktemp = taskList.get(i);
+            TaskVO taskVO = new TaskVO();
+            taskVO.setTaskVO(tasktemp);
 
-            }
+            taskVO.setFlyingpathName(flyingPath.getName());
+            taskVO.setUserAName(userServiceImpl.getNameByUserId(tasktemp.getUserA()));
+            taskVO.setUserZName(userServiceImpl.getNameByUserId(tasktemp.getUserZ()));
+            taskVO.setUserCreatorName(userServiceImpl.getNameByUserId(tasktemp.getUsercreator()));
+            taskVOList.add(taskVO);
+
+            Uav uav = uavServiceimpl.getUavById(taskList.get(i).getUavId());
+            UavVO planevo = new UavVO(uav);
+            planeList.add(planevo);
         }
-
-        //model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
+        model.addAttribute("tasklist",JsonUtils.objectToJson(taskVOList));
+        model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
         model.addAttribute("uavlist", JsonUtils.objectToJson(planeList));
         model.addAttribute("curNav", "uavAllList");
 
         return "uavListMap";
     }
-
-
 
 
     //多条件查询无人机：根据负责人id查询 或者 登记起始时间到登记终止时间段内查询

@@ -128,8 +128,8 @@
                             </li>
                             <li class="list-group-item" >巡检任务名称：<span id="taskName"></span></li>
                             <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
-                            <li class="list-group-item">起飞员：<span></span></li>
-                            <li class="list-group-item">降落员：<span></span></li>
+                            <li class="list-group-item">起飞员：<span id="userAName"></span></li>
+                            <li class="list-group-item">降落员：<span id="userZName"></span></li>
                             <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
                             <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
                             <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
@@ -218,7 +218,11 @@
             	fightHDG=document.getElementById("fightHDG");
             	fightHAgl =document.getElementById("fightHAgl");
             	fightGrVAgl =document.getElementById("fightGrVAgl");
+
                 data = ${uavlist!};
+                taskdata = ${tasklist};
+                flyingpathdata=${flyingPath};
+
                 if(data!=null)
                 {
 	                selectStatus.value =data[0].deviceid
@@ -254,16 +258,10 @@
                     offset: new AMap.Pixel(20, -25)
                 });
 
-                var colors = ['#0cc2f2', '#4fd2b1', '#90e36f', '#ffe700', '#ff9e00', '#ff6700', '#ff1800',];
-
                 var markersize = data.length;
-
                 //初始化三个全局变量用于记录无人机位置
                 var markerlistMap = new Map();
                 var uavStartPointMap= new Map();
-
-
-               // var markerlist = new Array();
 
                 for (var i = 0; i < markersize; i++) {
                 	
@@ -276,6 +274,17 @@
                         }),
                         offset: new AMap.Pixel(-16,-16)   // 相对于基点的偏移位置
                     });
+
+                    var polyline = new AMap.Polyline({
+                        map: map,
+                        path: flyingpathdata[i].pathdata, //设置线覆盖物路径
+                        strokeColor: '#ff6700', //线颜色
+                        strokeOpacity: 1, //线透明度
+                        strokeWeight: 3, //线宽
+                        strokeStyle: "solid", //线样式
+                        strokeDasharray: [10, 5] //补充线样式
+                    });
+
                     //添加到marker集合里面
                     markerlistMap.set(data[i].deviceid,markeritem);
                     uavStartPointMap.set(data[i].deviceid,markeritem.getPosition());
@@ -295,7 +304,6 @@
                 for (var i = 0; i < markersize; i++) {
                     	 var contentss=data[i].deviceid+"watch@all";
                     	 connect(contentss);
-
                 }
                 function connect(contentss){
                 	 var ws = new WebSocket("ws:///127.0.0.1:17020");
@@ -326,7 +334,7 @@
                         });
                         map.add(planeMarker);
                         markerlistMap.set(uavDecivedId,planeMarker);
-                 		console.log("点的信息"+data);
+                 		//console.log("点的信息"+data);
 
                  		if(uavDecivedId ==selectStatus.value)
                  		{
@@ -382,7 +390,20 @@
                     //这里是点击事件的处理逻辑
                     //var posi = [positionX, positionY];
                     selectStatus.value = deviceid;
-                    console.log("点击了"+ selectStatus.value);
+
+                    for(var i=0;i<data.length;i++){
+                        if(data[i].deviceid == deviceid){
+                            document.getElementById("taskName").innerHTML= taskdata[i].name;
+                            document.getElementById("flyingPathName").innerHTML = taskdata[i].flyingpathName;
+                            document.getElementById("userAName").innerHTML = taskdata[i].userAName;
+                            document.getElementById("userZName").innerHTML = taskdata[i].userZName;
+                            document.getElementById("uavDeviceId").innerHTML = deviceid;
+                            document.getElementById("uavName").innerHTML = data[i].name;
+                            document.getElementById("uavDescription").innerHTML = data[i].description;
+                        }
+                    }
+
+                    //console.log("点击了"+ selectStatus.value);
                     var lilist = document.getElementById('my-list')
                     var eles = lilist.getElementsByTagName('li');
                     for(var i=0;i<eles.length;i++){
