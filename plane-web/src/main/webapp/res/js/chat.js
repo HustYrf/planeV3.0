@@ -43,7 +43,7 @@ var WebSocketUtil = {
 		case WebTypeUtil.MESSAGETYPESTATUS:
 			//处理接收到的经纬度消息
 			PlaneHandleServiceUtil.handleStatus(messageType[1],messageType[2],messageType[3],messageType[4],messageType[5],
-					messageType[6],messageType[7],messageType[8],messageType[9],messageType[10]);
+					messageType[6],messageType[7],messageType[8],messageType[9],messageType[10],messageType[11]);
 			break;
 		}
 

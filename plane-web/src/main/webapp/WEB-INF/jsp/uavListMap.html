@@ -96,7 +96,7 @@
 <div class="page-container">
     <#include "common/nav.html" />
     <!-- BEGIN PAGE -->
-
+	<input type="hidden" id="selectStatus">
     <div class="page-content">
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
@@ -224,8 +224,29 @@
                         //关闭视频流
                     }
                 }
-
+                var fightArSpd = null;
+                var fightGrSpd = null;
+                var fightLat = null;
+                var fightLon = null;
+                var fightElv = null;
+                var fightHDG = null;
+                var fightHAgl = null;
+                var fightGrVAgl = null;  
+                var selectStatus = null;
+                selectStatus = document.getElementById("selectStatus")
+            	fightArSpd=document.getElementById("fightArSpd");
+            	fightGrSpd =document.getElementById("fightGrSpd");
+            	fightLat =document.getElementById("fightLat");
+            	fightLon =document.getElementById("fightLon");
+            	fightElv = document.getElementById("fightElv");
+            	fightHDG=document.getElementById("fightHDG");
+            	fightHAgl =document.getElementById("fightHAgl");
+            	fightGrVAgl =document.getElementById("fightGrVAgl");
                 data = ${uavlist!};
+                if(data!=null)
+                {
+	                selectStatus.value =data[0].deviceid
+                }
                 //创建地图
                 var map = new AMap.Map('container', {
                     zoom: 15,
@@ -264,8 +285,8 @@
                 //初始化三个全局变量用于记录无人机位置
                 var markerlistMap = new Map();
                 var uavStartPointMap= new Map();
-                var uavSelectedStatusMap=new Map();
-
+                
+               
                // var markerlist = new Array();
 
                 for (var i = 0; i < markersize; i++) {
@@ -282,7 +303,6 @@
                     //添加到marker集合里面
                     markerlistMap.set(data[i].deviceid,markeritem);
                     uavStartPointMap.set(data[i].deviceid,markeritem.getPosition());
-                    uavSelectedStatusMap.set(data[i].deviceid,0);
 
                     //实例化信息窗体
                     // var title = '无人机名称:<span>' + data[i].name + '</span>';
@@ -295,7 +315,60 @@
                    // markeritem.on('click', markerClick);  去掉点击事件
                    //   markerlist.push(markeritem);
                 }
-
+                //建立websocket
+                for (var i = 0; i < markersize; i++) {
+                    	 var contentss=data[i].deviceid+"watch@all";
+                    	 connect(contentss);
+                	
+                }
+                function connect(contentss){
+                	 var ws = new WebSocket("ws:///127.0.0.1:17020");
+                     ws.onopen = function() {
+                         ws.send(contentss);
+                       }
+                     ws.onmessage = function(event) {
+                    	//绘制飞机
+                    	var message = event.data;
+                 		var messageType = message.split(":");
+                 		var uavDecivedId = messageType[4];
+                 		var data = new Array();
+            	        var value = messageType[7] *1;
+            	        var value2=messageType[8]*1;
+            	        data[0] = value;
+            	        data[1] = value2;
+            	        console.log(markerlistMap.get(uavDecivedId));
+            	        map.remove(markerlistMap.get(uavDecivedId));
+            	        var planeMarker = new AMap.Marker({
+                            position:  data,
+                            //position:  realdata,
+                            icon: new AMap.Icon({
+                                size: new AMap.Size(32,32), //图标大小
+                                image: "i/uav-32.png",
+                                offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
+                            }),
+                            angle:messageType[3],
+                        });
+                        map.add(planeMarker);
+                        markerlistMap.set(uavDecivedId,planeMarker); 
+                 		console.log("点的信息"+data);
+                 		
+                 		if(uavDecivedId ==selectStatus.value)
+                 		{
+                 			map.setCenter(data);
+                			fightHDG.innerHTML = messageType[3]+"";
+                			fightArSpd.innerHTML = messageType[5]+"";
+                			fightGrSpd.innerHTML = messageType[6]+"";
+                			fightLon.innerHTML = messageType[7]+"";
+                			fightLat.innerHTML = messageType[8]+"";
+                			fightElv.innerHTML = messageType[9]+"";
+                			fightHAgl.innerHTML = messageType[10]+"";
+                			fightGrVAgl.innerHTML = messageType[11]+"";
+                 		}
+                     }
+                    ws.onclose = function() 
+                    {
+                    } 
+                }
                 function markerClick(e) {
                     infoWindow.setContent(e.target.content);
                     infoWindow.open(map, e.target.getPosition());
@@ -332,15 +405,8 @@
                 function showUav(e, deviceid) {
                     //这里是点击事件的处理逻辑
                     //var posi = [positionX, positionY];
-                    for (var i = 0; i < markersize; i++) {
-                        uavSelectedStatusMap.set(data[i].deviceid,0);
-                    }
-                    uavSelectedStatusMap.set(deviceid,1);
-
-
-
-
-
+                    selectStatus.value = deviceid;
+                    console.log("点击了"+ selectStatus.value);
                     var lilist = document.getElementById('my-list')
                     var eles = lilist.getElementsByTagName('li');
                     for(var i=0;i<eles.length;i++){
