@@ -31,4 +31,6 @@ public interface RouteMapper {
     Route getRouteWithFlagDataById(Integer id);
 
     int getIdByName(String name);
+
+    List<String> fuzzySearchByName(String name);
 }

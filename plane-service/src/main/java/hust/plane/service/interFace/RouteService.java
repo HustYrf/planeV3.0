@@ -22,4 +22,6 @@ public interface RouteService {
     int getNumOfRouteByType(int i);
 
     Route getRouteWithFlagDataById(Integer routeId);
+
+    List<String> fuzzySearchByName(String name);
 }

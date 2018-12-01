@@ -22,4 +22,8 @@ public interface FlyingPathService {
 	FlyingPath selectByFlyingPathIdWithoutData(Integer id);
 
 	String getNameById(Integer id);
+
+    List<String> fuzzySearchByName(String queryString);
+
+	FlyingPath getFlyingPathByName(String name);
 }

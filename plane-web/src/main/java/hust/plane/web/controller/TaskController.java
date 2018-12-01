@@ -71,13 +71,9 @@ public class TaskController {
     private AlarmService alarmserviceImpl;
     @Autowired
     private AlarmService alarmService;
-    @Autowired
-    private RouteService routeServiceImpl;
-    @Autowired
-    private UserGroupService userGroupService;
 
     @Autowired
-    private FlyingPath_has_RouteKeyService flyingPath_has_routeKeyService;
+    private UserGroupService userGroupService;
 
     @RequestMapping("/task")
     public String gettestTask() {

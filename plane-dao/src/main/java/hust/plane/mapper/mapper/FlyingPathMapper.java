@@ -29,4 +29,8 @@ public interface FlyingPathMapper {
     FlyingPath selectByFlyingPathIdWithoutData(Integer id);
 
     int countByName(String name);
+
+    List<String> fuzzySearchByName(String name);
+
+	FlyingPath getFlyingPathByName(String name);
 }

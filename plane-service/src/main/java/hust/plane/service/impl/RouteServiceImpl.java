@@ -31,16 +31,16 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public List<Route> getRouteByNameAndType(String name, int type) {
         List<Route> routeList = new ArrayList<>();
-      
+
         if (StringUtils.isBlank(name)) {
             LOGGER.error("查询的路由name为空");
             routeList = routeMapper.getRouteByType(type);
-        }else {
-           routeList = routeMapper.getRouteByNameAndType(name, type);
+        } else {
+            routeList = routeMapper.getRouteByNameAndType(name, type);
         }
-        
+
         return routeList;
-      
+
     }
 
     //路由列表分页
@@ -49,12 +49,12 @@ public class RouteServiceImpl implements RouteService {
         List<Route> routeList = null;
         int itemsTotalCount = routeMapper.routeCount(route);
         //查看当前条目的分页的页数
-        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount/page.getPageSize():itemsTotalCount/page.getPageSize() + 1;
+        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount / page.getPageSize() : itemsTotalCount / page.getPageSize() + 1;
 
-        if(page.getPageNum()== 0 || page.getPageNum() > totalPageNum){
+        if (page.getPageNum() == 0 || page.getPageNum() > totalPageNum) {
             page.setPageNum(1);
         }
-        if(itemsTotalCount>0){
+        if (itemsTotalCount > 0) {
             routeList = routeMapper.queryRoutePage(route, page);
         }
 
@@ -67,7 +67,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public boolean deleteRouteById(Integer id) {
 
-        if(routeMapper.deleteRouteById(id) == 1){
+        if (routeMapper.deleteRouteById(id) == 1) {
             return true;
         }
         return false;
@@ -83,23 +83,31 @@ public class RouteServiceImpl implements RouteService {
         return routeMapper.getRouteByName(name);
     }
 
-	@Override
-	public int getNumOfRouteByType(int i) {
-		Route route = new Route();
-		route.setType(i);
-		int count = routeMapper.routeCount(route);
-		if(count !=0)
-		{
-			return count;
-		}
-		return 0;
-	}
+    @Override
+    public int getNumOfRouteByType(int i) {
+        Route route = new Route();
+        route.setType(i);
+        int count = routeMapper.routeCount(route);
+        if (count != 0) {
+            return count;
+        }
+        return 0;
+    }
 
     @Override
     public Route getRouteWithFlagDataById(Integer routeId) {
         Route route = null;
         route = routeMapper.getRouteWithFlagDataById(routeId);
         return route;
+
+    }
+
+    @Override
+    public List<String> fuzzySearchByName(String name) {
+
+        List<String> routeNameList = null;
+        routeNameList = routeMapper.fuzzySearchByName(name);
+        return routeNameList;
 
     }
 }

@@ -62,6 +62,24 @@ public class FlyingPathServiceImpl implements FlyingPathService {
 	}
 
 	@Override
+	public List<String> fuzzySearchByName(String queryString) {
+
+		List<String> flyingPathNameList = null;
+		flyingPathNameList = flyingPathMapper.fuzzySearchByName(queryString);
+
+		return flyingPathNameList;
+
+	}
+
+	@Override
+	public FlyingPath getFlyingPathByName(String name) {
+
+		FlyingPath flyingPath=null;
+		flyingPath = flyingPathMapper.getFlyingPathByName(name);
+		return flyingPath;
+	}
+
+	@Override
 	public TailPage<FlyingPath> queryFlyingPathWithPage(FlyingPath flyingPath, TailPage<FlyingPath> page) {
 
 		List<FlyingPath> flyingPaths = null;

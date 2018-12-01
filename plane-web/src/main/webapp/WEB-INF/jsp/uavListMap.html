@@ -322,6 +322,19 @@
                          var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
                          var linedata = [nowPosition,realdata];
 
+                         if(uavDecivedId ==selectStatus.value)   //如果是被选中的无人机的话那就显示该架无人机的实时信息
+                         {
+                             map.setCenter(realdata);
+                             fightHDG.innerHTML = messageType[3]+"";
+                             fightArSpd.innerHTML = messageType[5]+"";
+                             fightGrSpd.innerHTML = messageType[6]+"";
+                             fightLon.innerHTML = messageType[7]+"";
+                             fightLat.innerHTML = messageType[8]+"";
+                             fightElv.innerHTML = messageType[9]+"";
+                             fightHAgl.innerHTML = messageType[10]+"";
+                             fightGrVAgl.innerHTML = messageType[11]+"";
+                         }
+
                          var polyline = new AMap.Polyline({
                              map: map,
                              path: linedata, //设置线覆盖物路径
@@ -331,38 +344,10 @@
                              strokeStyle: "solid", //线样式
                              strokeDasharray: [10, 5] //补充线样式
                          });
-
                          nowMarker.setPosition(realdata);
                          nowMarker.setAngle(messageType[3]);
                          markerlistMap.set(uavDecivedId,nowMarker);
 
-            	       // console.log(markerlistMap.get(uavDecivedId));
-            	        // map.remove(markerlistMap.get(uavDecivedId));
-            	        // var planeMarker = new AMap.Marker({
-                        //     position:  data,
-                        //     //position:  realdata,
-                        //     icon: new AMap.Icon({
-                        //         size: new AMap.Size(32,32), //图标大小
-                        //         image: "i/uav-32.png",
-                        //         offset: new AMap.Pixel(-16, -16)// 相对于基点的偏移位置
-                        //     }),
-                        //     angle:messageType[3],
-                        // });
-                        // map.add(planeMarker);
-                        // markerlistMap.set(uavDecivedId,planeMarker);
-
-                 		if(uavDecivedId ==selectStatus.value)
-                 		{
-                 			map.setCenter(data);
-                			fightHDG.innerHTML = messageType[3]+"";
-                			fightArSpd.innerHTML = messageType[5]+"";
-                			fightGrSpd.innerHTML = messageType[6]+"";
-                			fightLon.innerHTML = messageType[7]+"";
-                			fightLat.innerHTML = messageType[8]+"";
-                			fightElv.innerHTML = messageType[9]+"";
-                			fightHAgl.innerHTML = messageType[10]+"";
-                			fightGrVAgl.innerHTML = messageType[11]+"";
-                 		}
                      }
                     ws.onclose = function()
                     {

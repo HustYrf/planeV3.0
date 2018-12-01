@@ -109,5 +109,12 @@
         from K_Route
         where  id=#{id,jdbcType=INTEGER}
     </select>
+    <select id="fuzzySearchByName" parameterType="java.lang.String" resultType="java.lang.String">
+		select Name
+		from K_Route
+		where Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+	</select>
+
+
 
 </mapper>
