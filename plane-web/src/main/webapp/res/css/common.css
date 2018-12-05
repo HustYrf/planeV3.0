@@ -37,7 +37,7 @@
     width: 300px;
     z-index: 199;
     left: 80px;
-    border-left: 1px solid #eaeaea;
+    border:0;
     background: #fff;
     padding-top: 10px;
     opacity:0.8;
@@ -113,19 +113,6 @@ background:#f6f6f6;
 #my-list li.poibox:last-child{
 border-bottom:none;
 }
-
-#panel h3 {
-    margin: 10px 0;
-}
-
-#panel dd {
-    margin: 5px 5px;
-}
-
-#panel dl {
-    margin: 5px 0;
-}
-
 
 .info {
     border: solid 1px silver;

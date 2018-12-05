@@ -17,8 +17,8 @@
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
 	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 
-    <link rel="stylesheet" href="${s.base}/res/assets/hivideo.css" />
-    <script type="text/javascript" src="${s.base}/res/assets/hivideo.js"></script>
+    <link href="${s.base}/res/assets/video-js.css" rel="stylesheet">
+    <script src="${s.base}/res/assets/videojs-ie8.min.js"></script>
 
 </head>
 <style>
@@ -69,8 +69,17 @@ span{
     max-width: 760px;
     z-index: 999;
     margin-left: 80px;
+    visibility: hidden;
 }
-
+.videoheader{
+    text-align: center;
+    height: 30px;
+    width: 100%;
+    background: #d4d4d4;
+}
+.videoheader span{
+    line-height: 30px;
+}
 </style>
 
 <body>
@@ -80,13 +89,15 @@ span{
 <div class="headerUav" style="font-size:2.0rem;">
 <font size="4">飞机状态：<span id="fightStatus">暂未连接</span></font>
 </div>
+
 <div class="main-wrapVideo" id="videoDiv">
     <div class="videoheader" id="videoHeader">
         <span>无人机实时视频</span>
     </div>
     <div class="videocontain" id="videoContainer">
-        <video ishivideo="true" autoplay="false" isrotate="true" autoHide="true">
-            <source src="${s.base}/res/assets/video.mp4" type="video/mp4" id="videosrc">
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" poster="${s.base}/res/i/bing.png" data-setup="{}">
+            <!-- <source src="1.mp4" type="video/mp4"> -->
+            <source src="rtmp://218.65.240.246/live/stream" type="rtmp/flv">
         </video>
     </div>
 </div>
@@ -124,31 +135,90 @@ span{
 <div id="container"></div>
            
         <!-- UI组件库 1.0 -->
-        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script src="${s.base}/res/assets/video.js"></script>
+        <script>
+            //拖拽原理：改变obj的top值与left值
+            function drag()
+            {
+                var dragdiv = document.getElementById("videoHeader");
+                var targetdiv = document.getElementById("videoDiv");
 
-        <script type="text/javascript">
+                addEvent(dragdiv,'mousedown',function(ev){
+                    var oEvent=ev||event;
+                    //不变的参考距离＝mousedown时鼠标坐标－obj到页面的左边距
+                    var disX=oEvent.clientX-targetdiv.offsetLeft;
+                    var disY=oEvent.clientY-targetdiv.offsetTop;
+                    addEvent(document,'mousemove',move);
+                    addEvent(document,'mouseup',up);
+                    oEvent.preventDefault();//阻止默认事件，取消文字选中
+                    function move(ev)
+                    {
+                        var oEvent=ev||event;
+                        var left=oEvent.clientX-disX;
+                        var top=oEvent.clientY-disY;
+                        targetdiv.style.left=left+'px';
+                        targetdiv.style.top=top+'px';
+                        dragdiv.setCapture&&dragdiv.setCapture();//低版本IE阻止默认事件，取消文字选中
+                    }
+                    function up()
+                    {
+                        removeEvent(document,'mousemove',move);
+                        removeEvent(document,'mouseup',up);
+                        dragdiv.releaseCapture&&dragdiv.releaseCapture();//低版本IE取消阻止默认事件
+                    }
+                });
+            }
+            //添加事件绑定
+            function addEvent(obj,sEv,fn)
+            {
+                if(obj.addEventListener)
+                {
+                    obj.addEventListener(sEv,fn,false);
+                }else{
+                    obj.attachEvent('on'+sEv,fn);
+                }
+            }
 
-            //把这个div设置为可拖动的属性
-            var dragdiv = document.getElementById("videoDiv");
-            drag(dragdiv);
+            //删除事件绑定
+            function removeEvent(obj,sEv,fnName)
+            {
+                if(obj.removeEventListener)
+                {
+                    obj.removeEventListener(sEv,fnName,false);
+                }else{
+                    obj.detachEvent('on'+sEv,fnName);
+                }
+            }
 
-
-
-
+            function ready(fn)
+            {
+                if(document.addEventListener)
+                {
+                    document.addEventListener('DOMContentLoaded',fn,false)
+                }else{
+                    document.attachEvent('onreadystatechange',function(){
+                        if(document.readyState=='complete')
+                        {fn();}
+                    })
+                }
+            }
             function videoOp() {
-                if($('#videoHeader').css('display') === 'none'){
-                    $("#videoHeader").css('display','block');
-                    $("#videoContainer").css('display','block');
+                if($('#videoDiv').css('visibility') === 'hidden'){
+                    $("#videoDiv").css('visibility','visible');
+                    $(".vjs-control-bar").css('visibility','visible');
                     $("#videobtn").text("关闭视频");
                     //ajax获取后台视频流
-
                 }else{
-                    $("#videoHeader").css('display','none');
-                    $("#videoContainer").css('display','none');
+                    $("#videoDiv").css('visibility','hidden');
+                    $(".vjs-control-bar").css('visibility','hidden');
                     $("#videobtn").text("实时视频");
                     //关闭视频流
                 }
             }
+            drag();   //div拖动初始化
+        </script>
+        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script type="text/javascript">
 
 			var uavdata = ${uav};
 			var flyingPath = ${path};

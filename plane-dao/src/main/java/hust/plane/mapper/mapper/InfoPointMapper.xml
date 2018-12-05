@@ -52,6 +52,12 @@
         </foreach>
     </select>
 
+    <select id="selectAllInfoPoint" parameterType="java.util.List" resultType="hust.plane.mapper.pojo.InfoPoint">
+        select
+        <include refid="Base_Column_List"/>
+        from K_InfoPoint
+    </select>
+
     <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.InfoPoint">
         insert into K_InfoPoint
         <trim prefix="(" suffix=")" suffixOverrides=",">

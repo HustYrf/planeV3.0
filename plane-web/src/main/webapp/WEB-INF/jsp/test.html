@@ -1,46 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>主页</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="js/jquery.form.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/highcharts-4.1.min.js"></script>
-    <script type="text/javascript" src="js/oc.min.js"></script>
-    <script type="text/javascript" src="js/calendar.min.js"></script>
-    <link rel="icon" type="image/png" href="i/ico.png" sizes="16x16">
-    
-    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
-    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-    <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
-
+    <title>视频播放测试</title>
+    <link href="${s.base}/res/assets/video-js.css" rel="stylesheet">
+    <script src="${s.base}/res/assets/videojs-ie8.min.js"></script>
 </head>
 <body>
-	<#include "common/header.html" />
-    <#include "common/nav.html" />
-     <div class="content">
-        <div class="container-fluid">
 
-               <div class="row-fluid">
-                   <div class="block span6">
-                  <div id="container"></div>
-					<div id="tip">点击地图试试</div>
-                   	<script type="text/javascript">
-					    //初始化地图对象，加载地图
-					    var map = new AMap.Map("container", {
-					        resizeEnable: true
-					    });
-					    map.on('click', function(e) {
-					        alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-					    });
-					</script>
-            	      </div>
-				 </div>
-            </div>
-          </div>
-	</body>
+<video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+    <!-- <source src="1.mp4" type="video/mp4"> -->
+    <source src="rtmp://218.65.240.246/live/stream" type="rtmp/flv">
+    <p class="vjs-no-js">浏览器不支持播放视频流<a href="http://videojs.com/html5-video-support/" target="_blank">解决方案</a></p>
+</video>
+
+<script src="${s.base}/res/assets/video.js"></script>
+</body>
 </html>

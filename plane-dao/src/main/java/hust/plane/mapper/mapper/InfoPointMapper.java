@@ -11,4 +11,5 @@ public interface InfoPointMapper {
 
     int insertInfoPointList(@Param("infoPoints")List<InfoPoint> infoPoints);
 
+    List<InfoPoint> selectAllInfoPoint();
 }

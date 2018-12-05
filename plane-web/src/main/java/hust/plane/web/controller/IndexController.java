@@ -1,5 +1,6 @@
 package hust.plane.web.controller;
 
+import com.sun.tools.internal.ws.processor.model.Model;
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Route;
@@ -78,8 +79,10 @@ public class IndexController {
         return JsonView.render(0, WebConst.SUCCESS_RESULT, flyingPathVO);
     }
 
-
-
-
+    //测试视频流界面
+    @RequestMapping("test")
+    public String test(){
+        return "test";
+    }
 
 }
