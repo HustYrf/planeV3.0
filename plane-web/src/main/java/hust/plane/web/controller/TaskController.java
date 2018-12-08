@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.*;
 import hust.plane.service.interFace.*;
-import hust.plane.utils.DateKit;
-import hust.plane.utils.GetFileName;
-import hust.plane.utils.JsonUtils;
+import hust.plane.utils.*;
 import hust.plane.utils.pojo.TipException;
 import hust.plane.web.controller.vo.*;
 
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.DetectModule.Detector.Detector;
 
-import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.TaskPojo;
 import hust.plane.utils.pojo.JsonView;
@@ -58,6 +55,9 @@ public class TaskController {
 
     @Value(value = "${SERVER_NAME}")
     private String SERVER_NAME;
+
+    @Value(value = "${DETECT_SERVER}")
+    private String DETECT_SERVER;
 
     @Autowired
     private TaskService taskServiceImpl;
@@ -471,79 +471,29 @@ public class TaskController {
         if (task2.getFlyingpathId() == null || task2.getFlyingpathId() == 0) {
             return JsonView.render(1, "未指定飞行路径,任务分派失败!");
         }
-//        if (task2.getUavId() == null || task2.getUavId() == 0) {
-//            return JsonView.render(1, "未指定无人机,任务分派失败!");
-//        }
 
-        User userA = userServiceImpl.getUserById(task2.getUserA());
-        User userZ = userServiceImpl.getUserById(task2.getUserZ());
-        if (taskServiceImpl.setStatusTaskByTask(task2, 2) == true) {// 设置任务分派
+        //跨域请求创建文件夹
+        String url = DETECT_SERVER + "makeTaskDir.action";
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("taskId",""+task.getId());
+        String alarmlistString = HttpClientUtil.doPost(url,params);
+        System.out.println(alarmlistString);
 
-            //task2.setImgfolder("" + task2.getId());  //图片文件夹命名，直接使用任务的id命名即可
-            taskServiceImpl.updataImgFolderByTask(task2);  //写入数据库
+        if(alarmlistString.equals("success")){
+            User userA = userServiceImpl.getUserById(task2.getUserA());
+            User userZ = userServiceImpl.getUserById(task2.getUserZ());
+            if (taskServiceImpl.setStatusTaskByTask(task2, 2) == true) {// 设置任务分派
 
-            // 这里新建文件夹，并授予权限,,,在不同的电脑上要修改这部分的配置
-            StringBuilder taskFileAddress = new StringBuilder();
-            taskFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId());//任务文件夹地址
+                taskServiceImpl.updataImgFolderByTask(task2);  //写入数据库
 
-            StringBuilder sourceFileAddress = new StringBuilder();
-            sourceFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId()).append(File.separator).append("ImageResource");//源任务文件夹地址
+                userServiceImpl.updataTasknumByUser(userA); // 增加az任务数目
+                userServiceImpl.updataTasknumByUser(userZ);
 
-            StringBuilder alarmFileAddress = new StringBuilder();
-            alarmFileAddress.append(File.separator).append("home").append(File.separator).append(SERVER_NAME).append(File.separator).append("file-workspace")
-                    .append(File.separator).append("ImageTask").append(File.separator).append(task2.getId()).append(File.separator).append("ImageAlarm");//告警任务文件夹地址
-
-            File file2 = new File(taskFileAddress.toString());
-            if(!file2.exists()){
-                boolean mkdirs = file2.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务基本文件夹创建失败！");
-                }
+                return JsonView.render(1, "任务分派成功!");
+            } else {
+                return JsonView.render(1, "任务分派失败!");
             }
-
-            File file3 = new File(sourceFileAddress.toString());
-            if(!file3.exists())
-            {
-                boolean mkdirs = file3.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务源文件夹创建失败！");
-                }
-            }
-
-            File file4 = new File(alarmFileAddress.toString());
-            if(!file4.exists())
-            {
-                boolean mkdirs = file4.mkdirs();
-                if(mkdirs == false){
-                    System.out.println("任务告警文件夹创建失败！");
-                }
-            }
-
-            File basefile = new File(taskFileAddress.toString());   //如果文件夹存在的话，那么递归赋权限
-            if(basefile.exists()){
-                try {
-                    Process proc = Runtime.getRuntime().exec("chmod -R 777 " + taskFileAddress.toString());
-                    InputStream stderr = proc.getErrorStream();
-                    InputStreamReader isr = new InputStreamReader(stderr);
-                    BufferedReader br = new BufferedReader(isr);
-                    String line = null;
-                    while ((line = br.readLine()) != null)
-                        System.out.println(line);
-                    int exitVal = proc.waitFor();
-                   // System.out.println("Process exitValue: " + exitVal);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("任务文件夹及子文件夹权限授予失败！");
-                }
-            }
-
-            userServiceImpl.updataTasknumByUser(userA); // 增加az任务数目
-            userServiceImpl.updataTasknumByUser(userZ);
-
-            return JsonView.render(1, "任务分派成功!");
-        } else {
+        }else{
             return JsonView.render(1, "任务分派失败!");
         }
 
@@ -766,11 +716,28 @@ public class TaskController {
     @RequestMapping(value = "imageWithId")
     public String getTaskImageWithId(@RequestParam(value = "id") int id,Model model) {
         if(Integer.valueOf(id)!=null){
-            String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
-            List<String> picNameList = null;
-            picNameList = GetFileName.getFiles(picDir);
+//            String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
+//            List<String> picNameList = null;
+//            picNameList = GetFileName.getFiles(picDir);
             String fileROOT = BASE_IMAGE_URL + imgPath;
             String folder = IMAGE_SOURCE;
+
+            List<String> picNameList = null;
+            //跨域请求文件服务器上的图片文件名列表
+            String url = DETECT_SERVER + "taskImages.action";
+            Map<String,String> params = new HashMap<String, String>();
+            params.put("taskId",""+id);
+            String alarmlistString = HttpClientUtil.doPost(url,params);
+            System.out.println(alarmlistString);
+
+            if(alarmlistString.equals("null")){
+              model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
+            }
+            else{
+              String[] pictures = alarmlistString.split(",");    //分割得到的字符串
+              picNameList= Arrays.asList(pictures);                      //加入到list对象中
+              model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
+            }
 
             model.addAttribute("baseImageUrl",fileROOT);
             model.addAttribute("folder",folder);
@@ -789,20 +756,32 @@ public class TaskController {
     @RequestMapping(value = "recongize", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String recongizePicture(Task task) {
-        taskServiceImpl.setStatusTaskByTask(task, 12);
-        //改成异步的操作
+
+
  //       Detector detector = new Detector();
-        //生成源文件的地址和告警图片的地址
+        //       生成源文件的地址和告警图片的地址
 //        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
 //        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
 //        detector.run(sourcePath, imageAlarm);
 //       taskServiceImpl.setStatusTaskByTask(task, 12);
 
-        //读取告警图片并且添加告警点数据库
-        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" +  IMAGE_ALARM;
-        alarmService.insertAlarm(task,alarmDir);
+        //跨域请求进行识别
+        String url = DETECT_SERVER + "createAlarm.action";
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("taskId",""+task.getId());
+        String alarmlistString = HttpClientUtil.doPost(url,params);
+        System.out.println(alarmlistString);
+        if(alarmlistString.equals("success")){
+            taskServiceImpl.setStatusTaskByTask(task, 12);
+            return JsonView.render(0, "识别完成!");
+        }else{
+            return JsonView.render(0, "识别未完成！");
+        }
 
-        return JsonView.render(0, "识别完成!");
+        //读取告警图片并且添加告警点数据库
+//        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" +  IMAGE_ALARM;
+//        alarmService.insertAlarm(task,alarmDir);
+//        return JsonView.render(0, "识别完成!");
     }
 
 }

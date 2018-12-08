@@ -149,26 +149,11 @@ public class AlarmServiceImpl implements AlarmService {
 
     }
 
-//    public static void main(String[] args) {
-//        File file = new File("D:\\pic");
-//        System.out.println("遍历该文件夹！");
-//        if (file.exists()) {
-//            System.out.println("进入该文件夹！");
-//            File[] files = file.listFiles();
-//            for (File file2 : files) {
-//                if (file2.isDirectory()) {
-//                } else {
-//                    System.out.println(file2.getName());
-//                }
-//            }
-//        }
-//    }
-
     public List<Alarm> processlcoaldir(int taskid, String alarmDir) {
 
         List<Alarm> alarmList = new ArrayList<Alarm>();
-        //File file = new File(alarmDir);
-        File file = new File("D:\\pic");
+        File file = new File(alarmDir);
+        //File file = new File("D:\\pic");
 
         if (file.exists()) {
             File[] files = file.listFiles();
