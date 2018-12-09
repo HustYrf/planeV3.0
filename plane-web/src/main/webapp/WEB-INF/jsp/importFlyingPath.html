@@ -71,10 +71,10 @@
                                       enctype="multipart/form-data">
 
                                     <div class="control-group">
-                                        <label class="control-label">飞行路径文件(.xls/.xls)：</label>
+                                        <label class="control-label">飞行路径文件(txt格式)：</label>
                                         <div class="controls">
                                             <input type="file" id="routePathExcel" name="routePathExcel" class="default" multiple="multiple"
-                                                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                   accept="text/plain">
                                         </div>
                                     </div>
 
@@ -87,14 +87,14 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label"><a href="${s.base}/flyingPathExcelDownloed.action">飞行路径数据模板下载</a></label>
+                                        <label class="control-label"><a href="${s.base}/flyingPathTemplateDownloed.action">飞行路径数据模板下载</a></label>
                                     </div>
 
                                     <!-- tip提示-start -->
                                     <div id="ocAlertTip" class="alert"
                                          style="display:none;">
                                         <button type="button" class="close" onclick="closeAlert()"></button>
-                                        <span id="al_info" >请选择 .xlsx或.xls 格式的文件</span>
+                                        <span id="al_info" >请选择txt格式飞行路径文件</span>
                                     </div>
                                     <!-- tip提示-end -->
 

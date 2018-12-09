@@ -95,7 +95,7 @@
                                                 <#list page.items as planepath>
                                                     <td>${planepath.id}</td>
                                                     <td>${planepath.name}</td>
-                                                    <td>${planepath.description}</td>
+                                                    <td>${planepath.description!}</td>
                                                     <td>${planepath.createtime?datetime}</td>
                                                     <td>${planepath.updatetime?datetime}</td>
                                                     <td><a href="${s.base}/showPlanePath.action?id=${planepath.id}" target="_blank">详细信息</a></td>

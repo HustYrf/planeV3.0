@@ -333,7 +333,6 @@ public class ExcelUtil {
                     // 得到经度
                     Cell cell1 = row.getCell(1);
                     Double Longitude = 0.0;
-                    ;
                     try {
                         Longitude = Double.parseDouble(cell1.getStringCellValue());
                     } catch (Exception e) {

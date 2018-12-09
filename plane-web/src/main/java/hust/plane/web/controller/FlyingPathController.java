@@ -58,8 +58,8 @@ public class FlyingPathController {
         return "importFlyingPath";
     }
 
-    //提供 飞行路径模板下载
-    @RequestMapping("/flyingPathExcelDownloed")
+    //提供 飞行路径模板txt下载
+    @RequestMapping("/flyingPathTemplateDownloed")
     public void flyingPathExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String 	basepath = request.getSession().getServletContext().getRealPath("");
@@ -69,13 +69,13 @@ public class FlyingPathController {
         ServletOutputStream out = null;
         try {
             // 调用工具类的createDoc方法生成excel文档
-            file = new File(basepath +file.separator+ "RouteTemplate.xlsx");
+            file = new File(basepath +file.separator+ "flyingpathTemplate.txt");
             fin = new FileInputStream(file);
 
             response.setCharacterEncoding("utf-8");
-            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setContentType("text/plain;charset=utf-8");
             // 设置浏览器以下载的方式处理该文件名
-            response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(URLEncoder.encode("RouteTemplate.xlsx", "UTF-8"))));
+            response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(URLEncoder.encode("flyingpathTemplate.txt", "UTF-8"))));
 
             out = response.getOutputStream();
             byte[] buffer = new byte[1024];  // 缓冲区
@@ -112,7 +112,6 @@ public class FlyingPathController {
             RouteVO routeVo = new RouteVO(allRoute.get(i));
             routeList.add(routeVo);
         }
-
         model.addAttribute("routeList", JsonUtils.objectToJson(routeList));
         model.addAttribute("curNav", "setFlyPath");
         return "setFlyingPath";

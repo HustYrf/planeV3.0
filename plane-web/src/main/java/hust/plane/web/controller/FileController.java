@@ -113,7 +113,8 @@ public class FileController {
 		return JsonView.render(0, reString);
 	}
 
-	// 导入飞行路径功能
+	// 导入飞行路径功能，使用txt文件
+
 	@RequestMapping(value = "flyingPathfileImport", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String flyingPathfileImport(@RequestParam(value = "flyingPathExcel", required = true) MultipartFile[] files,
@@ -128,7 +129,7 @@ public class FileController {
 				String fileName = files[i].getOriginalFilename();// 获取到上传文件的名字
 				File f = null; // 把MultipartFile转化成File
 				if (files[i].getSize() <= 0 || files.equals("")) {
-					errfile.add(fileName + "文件内容为空；");
+					errfile.add(fileName + "的文件内容为空；");
 				} else {
 					InputStream ins;
 					try {
@@ -138,7 +139,7 @@ public class FileController {
 						ExcelUtil.inputStreamToFile(ins, f);
 
 						if (FileServiceImpl.insertFlyingPath(f) == false) {
-							errfile.add(fileName + "的格式错误或路由名称重复");
+							errfile.add(fileName + "的格式错误或飞行路径名称重复");
 						}else {
 							succfile.add(fileName);
 						}

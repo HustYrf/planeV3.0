@@ -14,6 +14,9 @@
 	<resultMap id="ResultMapWithBLOBs" type="hust.plane.mapper.pojo.FlyingPath"
 		extends="BaseResultMap">
 		<result column="HeightData" property="heightdata" jdbcType="LONGVARCHAR" />
+		<result column="ParamOne" property="paramOne" jdbcType="LONGVARCHAR" />
+		<result column="ParamTwo" property="paramTwo" jdbcType="LONGVARCHAR" />
+		<result column="PointType" property="pointType" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_list"> id,Airport_Z,Airport_A,Name,AsText(PathData) as	PathData,Description,CreateTime,UpdateTime
@@ -31,11 +34,11 @@
 
 	<insert id="insertFlyingPath" parameterType="hust.plane.mapper.pojo.FlyingPath">
 		insert into
-		K_FlyingPath(Name,Description,CreateTime,UpdateTime,PathData)
+		K_FlyingPath(Name,Description,CreateTime,UpdateTime,PathData,HeightData,ParamOne,ParamTwo,PointType)
 		values
 		(#{name,jdbcType=VARCHAR},
 		#{description,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP},
-		#{updatetime,jdbcType=TIMESTAMP},GeomFromText(#{pathdata,jdbcType=VARCHAR}))
+		#{updatetime,jdbcType=TIMESTAMP},GeomFromText(#{pathdata,jdbcType=VARCHAR}),#{heightdata,jdbcType=LONGVARCHAR},#{paramOne,jdbcType=LONGVARCHAR},#{paramTwo,jdbcType=LONGVARCHAR},#{pointType,jdbcType=LONGVARCHAR})
 	</insert>
 
 	<select id="selectByFlyingPathId" parameterType="hust.plane.mapper.pojo.FlyingPath"

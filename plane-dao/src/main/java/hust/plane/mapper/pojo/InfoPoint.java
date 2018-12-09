@@ -76,4 +76,6 @@ public class InfoPoint {
         this.geohash = geohash == null ? null : geohash.trim();
     }
 
+
+
 }

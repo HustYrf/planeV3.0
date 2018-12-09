@@ -9,6 +9,7 @@ import hust.plane.mapper.mapper.FlyingPathMapper;
 import hust.plane.mapper.mapper.InfoPointMapper;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.InfoPoint;
+import hust.plane.utils.TxtReaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class FileServiceImpl implements FileService {
     public boolean insertFlyingPath(File f) {
 
         FlyingPath flyingPath = new FlyingPath();
-        if (ExcelUtil.readFlyingPathExcel(f, flyingPath) == false) {
+        if(TxtReaderUtil.readFlyingPathFromTxt(f, flyingPath)== false){
             return false;
         }
         flyingPath.setCreatetime(new Date());
