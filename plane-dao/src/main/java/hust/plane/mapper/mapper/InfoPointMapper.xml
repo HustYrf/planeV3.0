@@ -52,9 +52,8 @@
         </foreach>
     </select>
 
-    <select id="selectAllInfoPoint" parameterType="java.util.List" resultType="hust.plane.mapper.pojo.InfoPoint">
-        select
-        <include refid="Base_Column_List"/>
+    <select id="selectAllInfoPoint" resultType="hust.plane.mapper.pojo.InfoPoint">
+        select  id, Name, AsText(Position) as	Position, Altitude, Route_id, Route_name
         from K_InfoPoint
     </select>
 

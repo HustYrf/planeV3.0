@@ -133,7 +133,7 @@ span{
     </div>
 </div>
 <div id="container"></div>
-           
+
         <!-- UI组件库 1.0 -->
         <script src="${s.base}/res/assets/video.js"></script>
         <script>
@@ -263,14 +263,13 @@ span{
                 strokeDasharray: [10, 5] //补充线样式
             });
 
-
             //海量信息点
-            var style =  [{
+            var style = {
                 url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
                 anchor: new AMap.Pixel(6, 6),
                 size: new AMap.Size(11, 11)
-            }];
-            var points=[{"lnglat":[117.190182,39.125596],"name":"天津市","style":0},{"lnglat":[116.405285,39.904989],"name":"北京市","style":0}];
+            };
+            var points = ${infoPoints};
             var mass = new AMap.MassMarks(points, {
                 opacity: 0.8,
                 zIndex: 111,
@@ -279,12 +278,11 @@ span{
             });
             var pointmarker = new AMap.Marker({content: ' ', map: map});
             mass.on('mouseover', function (e) {
-                pointmarker.setPosition(e.data.lnglat);
+                console.log(e);
+                pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
                 pointmarker.setLabel({content: e.data.name})
             });
             mass.setMap(map);
-
-
 
             startpoint =  new Array(JSON.parse(JSON.stringify(uavdata.position)));
 

@@ -560,15 +560,17 @@ public class TaskController {
             //是观察者
             role = "2";
         }
+
         //输出所有的信息点
-        /*List<InfoPoint> infoPoints =infoPointServiceImpl.getAllInfoPoint();
+       List<InfoPoint> infoPoints =infoPointServiceImpl.getAllInfoPoint();
         List<InfoPointVO> infoPointVOList = new ArrayList<>();
         Iterator<InfoPoint> infoPointIterator = infoPoints.iterator();
         while (infoPointIterator.hasNext()){
             InfoPointVO infoPointVO = new InfoPointVO(infoPointIterator.next());
             infoPointVOList.add(infoPointVO);
         }
-        model.addAttribute("path", JsonUtils.objectToJson(infoPointVOList));*/
+        model.addAttribute("infoPoints", JsonUtils.objectToJson(infoPointVOList));
+
 
         Task task = new Task();
         task.setId(taskid);

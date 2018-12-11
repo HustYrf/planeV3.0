@@ -13,9 +13,10 @@ public class InfoPointVO {
 
     private Integer id;
 
+
     private String name;
 
-    private List<Double> position;
+    private List<Double> lnglat;
 
     private Float altitude;
 
@@ -24,25 +25,26 @@ public class InfoPointVO {
     private String routeName;
 
     //初始化
-    public  InfoPointVO(InfoPoint infoPoint){
+    public InfoPointVO(InfoPoint infoPoint) {
 
-        this.id =  infoPoint.getId();
-        if(infoPoint.getName()!=null){
+        this.id = infoPoint.getId();
+        if (infoPoint.getName() != null) {
             this.name = infoPoint.getName();
         }
-        if(infoPoint.getAltitude()!=null){
+        if (infoPoint.getAltitude() != null) {
             this.altitude = infoPoint.getAltitude();
         }
-        if(infoPoint.getRouteId()!=null){
+        if (infoPoint.getRouteId() != null) {
             this.routeId = infoPoint.getRouteId();
         }
-        if(this.getRouteName()!=null){
+        if (infoPoint.getRouteName() != null) {
             this.routeName = infoPoint.getRouteName();
         }
-        if(this.getPosition()!=null){
-            this.position = PointUtil.StringPointToList(infoPoint.getPosition());
+        if (infoPoint.getPosition() != null) {
+            this.lnglat = PointUtil.StringPointToList(infoPoint.getPosition());
         }
     }
+
     public Integer getId() {
         return id;
     }
@@ -59,13 +61,14 @@ public class InfoPointVO {
         this.name = name;
     }
 
-    public List<Double> getPosition() {
-        return position;
+    public List<Double> getLnglat() {
+        return lnglat;
     }
 
-    public void setPosition(List<Double> position) {
-        this.position = position;
+    public void setLnglat(List<Double> lnglat) {
+        this.lnglat = lnglat;
     }
+
 
     public Float getAltitude() {
         return altitude;
