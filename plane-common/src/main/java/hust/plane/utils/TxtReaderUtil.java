@@ -36,7 +36,7 @@ public class TxtReaderUtil {
                 //设定飞行路径名称
                 flyingPath.setName(line);
                 while ((line = br.readLine()) != null) {
-                    if (line.length() == 0) {
+                    if (line.length() == 0 ) {
                         continue;
                     }
 
@@ -87,27 +87,25 @@ public class TxtReaderUtil {
         return false;
     }
 
-   /* public static void main(String[] args) throws FileNotFoundException {
-
-        File file = new File("D:\\航线112701.txt");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStreamReader reader = new InputStreamReader(fileInputStream); // 建立一个输入流对象reader
-        BufferedReader br = new BufferedReader(reader);
-
-        String line = "";
-        try {
-            line = br.readLine();
-            System.out.println(line);
-            while ((line = br.readLine()) != null) {
-                if ( line.length() == 0 ) {
-                    System.out.println("@@@") ;
-                    continue;
-                }
-                String[] subline = line.split("\\s+");
-                System.out.println(line + "**"  + subline.length) ;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+//    public static void main(String[] args) throws FileNotFoundException {
+//
+//        File file = new File("D:\\航线112701.txt");
+//        FileInputStream fileInputStream = new FileInputStream(file);
+//        InputStreamReader reader = new InputStreamReader(fileInputStream); // 建立一个输入流对象reader
+//        BufferedReader br = new BufferedReader(reader);
+//
+//        String line = "";
+//        try {
+//            while ((line = br.readLine()) != null) {
+////                if ( line.length() == 0 ) {
+////                    System.out.println("@@@") ;
+////                    continue;
+////                }
+//                String[] subline = line.split("\\s+");
+//                System.out.println(line + "**"  + line.length()) ;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

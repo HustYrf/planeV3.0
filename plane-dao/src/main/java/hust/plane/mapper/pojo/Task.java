@@ -17,6 +17,8 @@ public class Task {
 
 	private Integer flyingpathId;
 
+	private String missionId;
+
 	private Integer uavId;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -168,6 +170,15 @@ public class Task {
 
 	public void setReporturl(String reporturl) {
 		this.reporturl = reporturl == null ? null : reporturl.trim();
+	}
+
+
+	public String getMissionId() {
+		return missionId;
+	}
+
+	public void setMissionId(String missionId) {
+		this.missionId = missionId;
 	}
 
 }

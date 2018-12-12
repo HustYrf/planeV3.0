@@ -138,6 +138,10 @@ public class DateKit {
             return dateFormat(date, "yyyy-MM-dd HH:mm:ss");
         }
 
+    public static String getMissionId(Date date) {
+        return dateFormat(date, "yyMMdd");
+    }
+
         public static boolean isExpiredDay(Date date1) {
             long day = ((new Date()).getTime() - date1.getTime()) / 86400000L;
             return day >= 1L;

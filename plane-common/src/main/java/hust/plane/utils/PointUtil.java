@@ -1,6 +1,7 @@
 package hust.plane.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import hust.plane.utils.pojo.Point;
@@ -53,5 +54,13 @@ public class PointUtil {
 //		list.add(123.43);
 //		list.add(1.43);
 //		System.out.println(pointToSqlString(list));
+
+		Integer intHao = 6;
+		String strHao = intHao.toString();
+		while (strHao.length() < 4) {
+			strHao = "0" + strHao;
+		}
+		System.out.println(strHao);
+
 	}
 }

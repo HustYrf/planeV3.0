@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Task">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="Name" property="name" jdbcType="VARCHAR" />
+		<result column="Mission_id" property="missionId" jdbcType="VARCHAR" />
 		<result column="UserCreator" property="usercreator" jdbcType="INTEGER" />
 		<result column="User_A" property="userA" jdbcType="INTEGER" />
 		<result column="User_Z" property="userZ" jdbcType="INTEGER" />
@@ -87,7 +88,7 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, Name, UserCreator, User_A, User_Z, FlyingPath_id, Uav_id, CreateTime,
+		id, Name,Mission_id, UserCreator, User_A, User_Z, FlyingPath_id, Uav_id, CreateTime,
 		PlanStartTime,
 		PlanEndTime, ExecuteStartTime, ExecuteEndTime, Status, FinishStatus, ImgFolder,
 		ReportUrl
@@ -125,13 +126,13 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="hust.plane.mapper.pojo.Task">
-		insert into K_Task (id, Name, UserCreator,
+		insert into K_Task (id, Name,Mission_id, UserCreator,
 		User_A, User_Z, FlyingPath_id,
 		Uav_id, CreateTime, PlanStartTime,
 		PlanEndTime, ExecuteStartTime, ExecuteEndTime,
 		Status, FinishStatus, ImgFolder,
 		ReportUrl)
-		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{missionId,jdbcType=VARCHAR}
 		#{usercreator,jdbcType=INTEGER},
 		#{userA,jdbcType=INTEGER}, #{userZ,jdbcType=INTEGER}, #{flyingpathId,jdbcType=INTEGER},
 		#{uavId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
@@ -150,6 +151,9 @@
 			</if>
 			<if test="name != null">
 				Name,
+			</if>
+			<if test="missionId != null">
+				Mission_id,
 			</if>
 			<if test="usercreator != null">
 				UserCreator,
@@ -200,6 +204,9 @@
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="missionId != null">
+				#{missionId,jdbcType=VARCHAR},
 			</if>
 			<if test="usercreator != null">
 				#{usercreator,jdbcType=INTEGER},
@@ -261,6 +268,9 @@
 			<if test="record.name != null">
 				Name = #{record.name,jdbcType=VARCHAR},
 			</if>
+			<if test="record.missionId != null">
+				Mission_id = #{record.missionId,jdbcType=VARCHAR},
+			</if>
 			<if test="record.usercreator != null">
 				UserCreator = #{record.usercreator,jdbcType=INTEGER},
 			</if>
@@ -312,6 +322,7 @@
 		update K_Task
 		set id = #{record.id,jdbcType=INTEGER},
 		Name = #{record.name,jdbcType=VARCHAR},
+		Mission_id = #{record.missionId,jdbcType=VARCHAR},
 		UserCreator = #{record.usercreator,jdbcType=INTEGER},
 		User_A = #{record.userA,jdbcType=INTEGER},
 		User_Z = #{record.userZ,jdbcType=INTEGER},
@@ -335,6 +346,9 @@
 		<set>
 			<if test="name != null">
 				Name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="missionId != null">
+				Mission_id = #{missionId,jdbcType=VARCHAR},
 			</if>
 			<if test="usercreator != null">
 				UserCreator = #{usercreator,jdbcType=INTEGER},
@@ -384,6 +398,7 @@
 	<update id="updateByPrimaryKey" parameterType="hust.plane.mapper.pojo.Task">
 		update K_Task
 		set Name = #{name,jdbcType=VARCHAR},
+		Mission_id = #{record.missionId,jdbcType=VARCHAR},
 		UserCreator = #{usercreator,jdbcType=INTEGER},
 		User_A = #{userA,jdbcType=INTEGER},
 		User_Z = #{userZ,jdbcType=INTEGER},

@@ -250,6 +250,7 @@ public class TaskController {
             task.setCreatetime(taskVO.getCreatetime());
         }
 
+
         task.setName(taskVO.getName());
         //task.setCreatetime(new Date());
         task.setUsercreator(createUser.getId());
@@ -260,6 +261,16 @@ public class TaskController {
         // 提交的任务
 
         if (taskServiceImpl.saveTask(task) == true) {
+            //目前服务器生成规则为YYMMDDXXXX。年份采用两位表示
+            Task task2 = taskServiceImpl.getTaskByName(taskVO.getName());
+            String pre =  DateKit.getMissionId(task2.getCreatetime());
+            String suf = task2.getId().toString();
+            while (suf.length() < 4) {
+                suf = "0" + suf;
+            }
+            task2.setMissionId(pre + suf);
+            taskServiceImpl.saveTask(task2);
+
             return JsonView.render(1, "任务提交成功!");
         }
         return JsonView.render(1, "任务提交失败!");
