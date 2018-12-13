@@ -15,6 +15,7 @@ public class TaskVO {
 	private String uavName;
 	private Integer flyingpathId;
 	private String flyingpathName;
+	private String missionId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")	
 	private Date planstarttime;
@@ -43,6 +44,9 @@ public class TaskVO {
 		this.id = task.getId();
 		if (task.getName() != null) {
 			this.name = task.getName();
+		}
+		if(task.getMissionId()!=null){
+			this.missionId = task.getMissionId();
 		}
 		if (task.getUsercreator() != null) {
 			this.usercreator = task.getUsercreator();
@@ -74,6 +78,7 @@ public class TaskVO {
 		if(task.getCreatetime()!=null){
 	        this.createtime = task.getCreatetime();
 		}
+
 
 	}
 
@@ -245,4 +250,11 @@ public class TaskVO {
 		this.reporturl = reporturl;
 	}
 
+	public String getMissionId() {
+		return missionId;
+	}
+
+	public void setMissionId(String missionId) {
+		this.missionId = missionId;
+	}
 }

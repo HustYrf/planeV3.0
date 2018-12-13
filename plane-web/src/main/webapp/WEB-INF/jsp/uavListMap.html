@@ -144,6 +144,7 @@
                                 <button type="button" class="btn blue" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
                             </li>
                             <li class="list-group-item" >巡检任务名称：<span id="taskName"></span></li>
+                            <li class="list-group-item" >任务MissionID：<span id="taskMissionId"></span></li>
                             <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
                             <li class="list-group-item">起飞员：<span id="userAName"></span></li>
                             <li class="list-group-item">降落员：<span id="userZName"></span></li>
@@ -474,6 +475,7 @@
                     for(var i=0;i<data.length;i++){
                         if(data[i].deviceid == deviceid){
                             document.getElementById("taskName").innerHTML= taskdata[i].name;
+                            document.getElementById("taskMissionId").innerHTML = taskdata[i].missionId;
                             document.getElementById("flyingPathName").innerHTML = taskdata[i].flyingpathName;
                             document.getElementById("userAName").innerHTML = taskdata[i].userAName;
                             document.getElementById("userZName").innerHTML = taskdata[i].userZName;

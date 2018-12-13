@@ -109,10 +109,11 @@ span{
                 <b>任务基本信息</b>
                 <button type="button" class="btn btn-success" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
             </li>
-            <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name}</span></li>
+            <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name!}</span></li>
+            <li class="list-group-item" >任务MissionID：<span id="taskMissionId">${task.missionId!}</span></li>
             <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
-            <li class="list-group-item">起飞员：<span>${task.userAName}</span></li>
-            <li class="list-group-item">降落员：<span>${task.userZName}</span></li>
+            <li class="list-group-item">起飞员：<span>${task.userAName!}</span></li>
+            <li class="list-group-item">降落员：<span>${task.userZName!}</span></li>
             <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
             <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
             <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
