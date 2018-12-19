@@ -14,8 +14,8 @@ var WebSocketUtil = {
 	isActive : true,
 	connect : function() {
 		//部署的时候该ip改成固定ip
-		//WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
-		WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+		WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:17020");
+		// WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
 		WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
 		WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
 		WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;

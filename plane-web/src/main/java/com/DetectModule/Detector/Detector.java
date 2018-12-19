@@ -14,7 +14,7 @@ public class Detector
 		System.load(CudaLibPath + "/" + "libcurand.so.10.0");
 		System.load(CudaLibPath + "/" + "libcusolver.so.10.0");
 		System.load(LibPath + "/" + "darknet.so");
-	}
+}
 
 	public static void main( String[] args )
 	{

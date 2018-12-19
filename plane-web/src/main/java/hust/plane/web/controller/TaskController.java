@@ -487,7 +487,7 @@ public class TaskController {
         //跨域请求创建文件夹
         String url = DETECT_SERVER + "makeTaskDir.action";
         Map<String,String> params = new HashMap<String, String>();
-        params.put("taskId",""+task.getId());
+        params.put("missionId",""+task2.getMissionId());
         String alarmlistString = HttpClientUtil.doPost(url,params);
         System.out.println(alarmlistString);
 
@@ -793,7 +793,7 @@ public class TaskController {
         Map<String,String> params = new HashMap<String, String>();
         params.put("taskId",""+task.getId());
         String alarmlistString = HttpClientUtil.doPost(url,params);
-        System.out.println(alarmlistString);
+        //System.out.println(alarmlistString);
         if(alarmlistString.equals("success")){
             taskServiceImpl.setStatusTaskByTask(task, 12);
             return JsonView.render(0, "识别完成!");

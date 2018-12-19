@@ -41,6 +41,9 @@ public class ImgController {
     @Value(value = "${uploadHost}")
     private String FILE_UPLOAD_HOST;
 
+    @Value(value = "${uploadLocalHost}")
+    private String FILE_UPLOAD_Local_HOST;
+
     @Value(value = "${SERVER_NAME}")
     private String SERVER_NAME;
 
@@ -104,7 +107,11 @@ public class ImgController {
             List<String> realPathList = new ArrayList<>();
 
             for (MultipartFile pic : files.values()) {
-                String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
+
+                //采用内外跨域
+                String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_Local_HOST, imgPath, taskDir);
+                //采用本机上传
+                //String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
                 //  String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");

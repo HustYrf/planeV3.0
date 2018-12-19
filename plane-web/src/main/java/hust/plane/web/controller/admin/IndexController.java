@@ -55,6 +55,10 @@ public class IndexController {
 	@Value(value = "${uploadHost}")
 	private String FILE_UPLOAD_HOST;
 
+	@Value(value = "${uploadLocalHost}")
+	private String FILE_UPLOAD_Local_HOST;
+
+
 	@Autowired
 	private UserService userService;
 	@Resource
@@ -258,9 +262,13 @@ public class IndexController {
 					Client client = Client.create();
 					// 把文件关联到远程服务器
 
-					WebResource resource = client.resource(FILE_UPLOAD_HOST + USER_DIR + newFileName + suffix);
+					//传输到内网中
+					WebResource resource = client.resource(FILE_UPLOAD_Local_HOST + USER_DIR + newFileName + suffix);
+					//传输到外网ip地址
+					//WebResource resource = client.resource(FILE_UPLOAD_HOST + USER_DIR + newFileName + suffix);
+					// 传输到本机则使用localhost
 					//WebResource resource = client.resource(BASE_IMAGE_URL + USER_DIR + newFileName + suffix);
-					// 上传
+
 					resource.put(String.class, fbytes);
 					user2.setIcon(newFileName + suffix);
 				}
