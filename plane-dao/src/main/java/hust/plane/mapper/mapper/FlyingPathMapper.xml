@@ -19,11 +19,11 @@
 		<result column="PointType" property="pointType" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	
-	<sql id="Base_Column_list"> id,Airport_Z,Airport_A,Name,AsText(PathData) as	PathData,Description,CreateTime,UpdateTime
+	<sql id="Base_Column_list"> id,Airport_Z,Airport_A,Name,AsText(PathData) as	PathData,PointType,Description,CreateTime,UpdateTime
 	</sql>
 	
 	<select id="selectByFlyingPathVO" parameterType="hust.plane.mapper.pojo.FlyingPath"
-		resultMap="BaseResultMap">
+		resultMap="ResultMapWithBLOBs">
 		select
 		<include refid="Base_Column_list" />
 		from K_FlyingPath
@@ -42,7 +42,7 @@
 	</insert>
 
 	<select id="selectByFlyingPathId" parameterType="hust.plane.mapper.pojo.FlyingPath"
-		resultMap="BaseResultMap">
+		resultMap="ResultMapWithBLOBs">
 		select
 		<include refid="Base_Column_list" />
 		from K_FlyingPath

@@ -159,7 +159,7 @@
 
                 var  planePath =${flyingPath};
                 var centerpoint;
-                if(planePath.length>0){
+                if(planePath.length>0 && planePath[0].pathdata[0]!=null){
                     centerpoint = planePath[0].pathdata[0];
                 }else{
                     centerpoint = [107.79876, 23.06781];

@@ -33,9 +33,6 @@ public class FlyingPathVO {
 		if(flyingPath.getName()!=null) {
 			this.name = flyingPath.getName();
 		}
-		if (flyingPath.getPathdata() != null) {
-			this.pathdata = LineUtil.stringLineToList(flyingPath.getPathdata());
-		}
 		if (flyingPath.getHeightdata() != null) {
 			this.heightdata = LineUtil.stringpointToList(flyingPath.getHeightdata());
 		}
@@ -48,7 +45,37 @@ public class FlyingPathVO {
 		if (flyingPath.getUpdatetime() != null) {
 			this.updatetime = DateKit.dateFormat(flyingPath.getUpdatetime(), "yyyy/MM/dd HH:mm:ss");
 		}
+        //对类型为178和206的数据需要进行处理，不作为航线落图的数据，但是仍需要作为航线数据进行下发。
+		if (flyingPath.getPathdata() != null && flyingPath.getPointType()!= null) {
 
+			this.pathdata = new ArrayList<ArrayList<Double>>();
+			String sub=flyingPath.getPathdata().substring(11, flyingPath.getPathdata().length()-1);
+			String slist[]=sub.split(",");
+			String pointType[] = flyingPath.getPointType().split(",");
+			for(int i=0;i<slist.length;i++)
+			{
+				if(pointType[i].equals("178")|| pointType[i].equals("206")){
+					continue;
+				}
+				ArrayList<Double> point=new ArrayList<Double>();
+				point.add(Double.parseDouble(slist[i].split(" ")[0]));
+				point.add(Double.parseDouble(slist[i].split(" ")[1]));
+				this.pathdata.add(point);
+			}
+		}else if(flyingPath.getPathdata() != null && flyingPath.getPointType()== null){
+			//如果航点类型为空，则全部都显示
+			this.pathdata = new ArrayList<ArrayList<Double>>();
+			String sub=flyingPath.getPathdata().substring(11, flyingPath.getPathdata().length()-1);
+			String slist[]=sub.split(",");
+			for(int i=0;i<slist.length;i++)
+			{
+				ArrayList<Double> point=new ArrayList<Double>();
+				point.add(Double.parseDouble(slist[i].split(" ")[0]));
+				point.add(Double.parseDouble(slist[i].split(" ")[1]));
+				this.pathdata.add(point);
+			}
+
+		}
 	}
 
 	public Integer getId() {
