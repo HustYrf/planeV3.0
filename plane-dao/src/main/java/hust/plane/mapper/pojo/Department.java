@@ -1,7 +1,7 @@
 package hust.plane.mapper.pojo;
 
 public class Department {
-	
+
     private Integer id;
 
     private String name;

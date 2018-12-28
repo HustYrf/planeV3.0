@@ -1,248 +1,259 @@
 package hust.plane.web.controller.vo;
 
-import java.util.Date;
-
+import hust.plane.mapper.pojo.Task;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import hust.plane.mapper.pojo.Task;
+import java.util.Date;
 
 public class TaskVO {
 
-	private String name;
-	private String userAName;
-	private String userZName;
-	private Integer uavId;
-	private String uavName;
-	private Integer flyingpathId;
-	private String flyingpathName;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")	
-	private Date planstarttime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date planendtime;
+    private String name;
+    private String userAName;
+    private String userZName;
+    private Integer uavId;
+    private String uavName;
+    private Integer flyingpathId;
+    private String flyingpathName;
+    private String missionId;
 
-	private Integer id;	
-	private Integer usercreator;
-	private Integer userA;
-	private Integer userZ;
-	private String userCreatorName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date planstarttime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date planendtime;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date createtime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date executestarttime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date executeendtime;
-	private Integer status;
-	private Integer finishstatus;
-	private String imgfolder;
-	private String reporturl;
+    private Integer id;
+    private Integer usercreator;
+    private Integer userA;
+    private Integer userZ;
+    private String userCreatorName;
 
-	public void setTaskVO(Task task) {
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date executestarttime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date executeendtime;
+    private Integer status;
+    private Integer finishstatus;
+    private String imgfolder;
+    private String reporturl;
 
-		this.id = task.getId();
-		if (task.getName() != null) {
-			this.name = task.getName();
-		}
-		if (task.getUsercreator() != null) {
-			this.usercreator = task.getUsercreator();
-		}
-		if (task.getUserA() != null) {
-			this.userA = task.getUserA();
-		}
-		if (task.getUserZ() != null) {
-			this.userZ = task.getUserZ();
-		}
-		if (task.getFlyingpathId() != null) {
-			this.flyingpathId = task.getFlyingpathId();
-		}
-		if (task.getUavId() != null) {
-			this.uavId = task.getUavId();
-		}
-		if (task.getPlanstarttime() != null) {
-			this.planstarttime = task.getPlanstarttime();
-		}
-		if (task.getPlanendtime() != null) {
-			this.planendtime = task.getPlanendtime();
-		}
-		if (task.getExecutestarttime() != null) {
-			this.executestarttime = task.getExecutestarttime();
-		}
-		if (task.getExecuteendtime() != null) {
-			this.executeendtime = task.getExecuteendtime();
-		}
-		if(task.getCreatetime()!=null){
-	        this.createtime = task.getCreatetime();
-		}
+    public void setTaskVO(Task task) {
 
-	}
+        this.id = task.getId();
+        if (task.getName() != null) {
+            this.name = task.getName();
+        }
+        if (task.getMissionId() != null) {
+            this.missionId = task.getMissionId();
+        }
+        if (task.getUsercreator() != null) {
+            this.usercreator = task.getUsercreator();
+        }
+        if (task.getUserA() != null) {
+            this.userA = task.getUserA();
+        }
+        if (task.getUserZ() != null) {
+            this.userZ = task.getUserZ();
+        }
+        if (task.getFlyingpathId() != null) {
+            this.flyingpathId = task.getFlyingpathId();
+        }
+        if (task.getUavId() != null) {
+            this.uavId = task.getUavId();
+        }
+        if (task.getPlanstarttime() != null) {
+            this.planstarttime = task.getPlanstarttime();
+        }
+        if (task.getPlanendtime() != null) {
+            this.planendtime = task.getPlanendtime();
+        }
+        if (task.getExecutestarttime() != null) {
+            this.executestarttime = task.getExecutestarttime();
+        }
+        if (task.getExecuteendtime() != null) {
+            this.executeendtime = task.getExecuteendtime();
+        }
+        if (task.getCreatetime() != null) {
+            this.createtime = task.getCreatetime();
+        }
 
-	public String getUavName() {
-		return uavName;
-	}
 
-	public void setUavName(String uavName) {
-		this.uavName = uavName;
-	}
+    }
 
-	public String getFlyingpathName() {
-		return flyingpathName;
-	}
+    public String getUavName() {
+        return uavName;
+    }
 
-	public void setFlyingpathName(String flyingpathName) {
-		this.flyingpathName = flyingpathName;
-	}
+    public void setUavName(String uavName) {
+        this.uavName = uavName;
+    }
 
-	public String getUserAName() {
-		return userAName;
-	}
+    public String getFlyingpathName() {
+        return flyingpathName;
+    }
 
-	public void setUserAName(String userAName) {
-		this.userAName = userAName;
-	}
+    public void setFlyingpathName(String flyingpathName) {
+        this.flyingpathName = flyingpathName;
+    }
 
-	public String getUserZName() {
-		return userZName;
-	}
+    public String getUserAName() {
+        return userAName;
+    }
 
-	public void setUserZName(String userZName) {
-		this.userZName = userZName;
-	}
+    public void setUserAName(String userAName) {
+        this.userAName = userAName;
+    }
 
-	public String getUserCreatorName() {
-		return userCreatorName;
-	}
+    public String getUserZName() {
+        return userZName;
+    }
 
-	public void setUserCreatorName(String userCreatorName) {
-		this.userCreatorName = userCreatorName;
-	}
+    public void setUserZName(String userZName) {
+        this.userZName = userZName;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public String getUserCreatorName() {
+        return userCreatorName;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setUserCreatorName(String userCreatorName) {
+        this.userCreatorName = userCreatorName;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getUsercreator() {
-		return usercreator;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUsercreator(Integer usercreator) {
-		this.usercreator = usercreator;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getUserA() {
-		return userA;
-	}
+    public Integer getUsercreator() {
+        return usercreator;
+    }
 
-	public void setUserA(Integer userA) {
-		this.userA = userA;
-	}
+    public void setUsercreator(Integer usercreator) {
+        this.usercreator = usercreator;
+    }
 
-	public Integer getUserZ() {
-		return userZ;
-	}
+    public Integer getUserA() {
+        return userA;
+    }
 
-	public void setUserZ(Integer userZ) {
-		this.userZ = userZ;
-	}
+    public void setUserA(Integer userA) {
+        this.userA = userA;
+    }
 
-	public Integer getFlyingpathId() {
-		return flyingpathId;
-	}
+    public Integer getUserZ() {
+        return userZ;
+    }
 
-	public void setFlyingpathId(Integer flyingpathId) {
-		this.flyingpathId = flyingpathId;
-	}
+    public void setUserZ(Integer userZ) {
+        this.userZ = userZ;
+    }
 
-	public Integer getUavId() {
-		return uavId;
-	}
+    public Integer getFlyingpathId() {
+        return flyingpathId;
+    }
 
-	public void setUavId(Integer uavId) {
-		this.uavId = uavId;
-	}
+    public void setFlyingpathId(Integer flyingpathId) {
+        this.flyingpathId = flyingpathId;
+    }
 
-	public Date getCreatetime() {
-		return createtime;
-	}
+    public Integer getUavId() {
+        return uavId;
+    }
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
+    public void setUavId(Integer uavId) {
+        this.uavId = uavId;
+    }
 
-	public Date getPlanstarttime() {
-		return planstarttime;
-	}
+    public Date getCreatetime() {
+        return createtime;
+    }
 
-	public void setPlanstarttime(Date planstarttime) {
-		this.planstarttime = planstarttime;
-	}
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
 
-	public Date getPlanendtime() {
-		return planendtime;
-	}
+    public Date getPlanstarttime() {
+        return planstarttime;
+    }
 
-	public void setPlanendtime(Date planendtime) {
-		this.planendtime = planendtime;
-	}
+    public void setPlanstarttime(Date planstarttime) {
+        this.planstarttime = planstarttime;
+    }
 
-	public Date getExecutestarttime() {
-		return executestarttime;
-	}
+    public Date getPlanendtime() {
+        return planendtime;
+    }
 
-	public void setExecutestarttime(Date executestarttime) {
-		this.executestarttime = executestarttime;
-	}
+    public void setPlanendtime(Date planendtime) {
+        this.planendtime = planendtime;
+    }
 
-	public Date getExecuteendtime() {
-		return executeendtime;
-	}
+    public Date getExecutestarttime() {
+        return executestarttime;
+    }
 
-	public void setExecuteendtime(Date executeendtime) {
-		this.executeendtime = executeendtime;
-	}
+    public void setExecutestarttime(Date executestarttime) {
+        this.executestarttime = executestarttime;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Date getExecuteendtime() {
+        return executeendtime;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setExecuteendtime(Date executeendtime) {
+        this.executeendtime = executeendtime;
+    }
 
-	public Integer getFinishstatus() {
-		return finishstatus;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public void setFinishstatus(Integer finishstatus) {
-		this.finishstatus = finishstatus;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public String getImgfolder() {
-		return imgfolder;
-	}
+    public Integer getFinishstatus() {
+        return finishstatus;
+    }
 
-	public void setImgfolder(String imgfolder) {
-		this.imgfolder = imgfolder;
-	}
+    public void setFinishstatus(Integer finishstatus) {
+        this.finishstatus = finishstatus;
+    }
 
-	public String getReporturl() {
-		return reporturl;
-	}
+    public String getImgfolder() {
+        return imgfolder;
+    }
 
-	public void setReporturl(String reporturl) {
-		this.reporturl = reporturl;
-	}
+    public void setImgfolder(String imgfolder) {
+        this.imgfolder = imgfolder;
+    }
 
+    public String getReporturl() {
+        return reporturl;
+    }
+
+    public void setReporturl(String reporturl) {
+        this.reporturl = reporturl;
+    }
+
+    public String getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(String missionId) {
+        this.missionId = missionId;
+    }
 }

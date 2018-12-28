@@ -1,7 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.2.xsd
@@ -9,71 +10,71 @@
        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-	<import resource="classpath:redis.xml" />
-	<!--加载数据资源属性文件 -->
-    <bean id="propertyConfigurer"  
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+    <import resource="classpath:redis.xml"/>
+    <!--加载数据资源属性文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
-        	<list>
-        		<value>classpath:properties/*.properties</value>
-        	</list>
+            <list>
+                <value>classpath:properties/*.properties</value>
+            </list>
         </property>
     </bean>
 
-	<!-- 配置组件扫描器，使用注解方式开发,不用配置dao和service 把Controller注解的类排除,防止重复扫描出错-->
-	<context:component-scan base-package="hust.plane">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
+    <!-- 配置组件扫描器，使用注解方式开发,不用配置dao和service 把Controller注解的类排除,防止重复扫描出错-->
+    <context:component-scan base-package="hust.plane">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-	<!-- 数据源 -->
-	<bean id="dataSource" 	class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="driverClassName" value="${driverClassName}" />
-		<property name="url" value="${url}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
-		<property name="maxActive" value="10" />
-		<property name="minIdle" value="5" />
-	</bean>
+    <!-- 数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxActive" value="10"/>
+        <property name="minIdle" value="5"/>
+    </bean>
 
-	<!-- 配置session工厂 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:hust/plane/mapper/**/*.xml" />
-		<!-- <property name="configLocation" value="classpath:mybatis-config.xml" 
-			/> -->
-	</bean>
+    <!-- 配置session工厂 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:hust/plane/mapper/**/*.xml"/>
+        <!-- <property name="configLocation" value="classpath:mybatis-config.xml"
+            /> -->
+    </bean>
 
-	<!-- 装配dao接口 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="hust.plane.mapper.mapper" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-	</bean>
+    <!-- 装配dao接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="hust.plane.mapper.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
 
-	<!-- 事务管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+    <!-- 事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-	<!-- 配置AOP通知 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<!-- 配置事务属性 -->
-		<tx:attributes>
-			<!-- 添加事务管理的方法 -->
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="select*" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
+    <!-- 配置AOP通知 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 配置事务属性 -->
+        <tx:attributes>
+            <!-- 添加事务管理的方法 -->
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="select*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 
-	<!-- 配置AOP，为添加事务管理的操作配置AOP -->
-	<aop:config>
-		<!-- 引入的Spring定义的事务通知，需要使用aop:advisor -->
-		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* hust.plane.service.**.*(..))" />
-	</aop:config>
+    <!-- 配置AOP，为添加事务管理的操作配置AOP -->
+    <aop:config>
+        <!-- 引入的Spring定义的事务通知，需要使用aop:advisor -->
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut="execution(* hust.plane.service.**.*(..))"/>
+    </aop:config>
 
 
 </beans>

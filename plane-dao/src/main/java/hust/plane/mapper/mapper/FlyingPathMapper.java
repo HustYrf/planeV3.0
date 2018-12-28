@@ -1,30 +1,30 @@
 package hust.plane.mapper.mapper;
 
 
-import java.util.List;
-
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.utils.page.TailPage;
 
+import java.util.List;
+
 public interface FlyingPathMapper {
-	
-	FlyingPath selectByFlyingPathVO(FlyingPath flyingPath);
 
-	 //void insertFlyingPath();
+    FlyingPath selectByFlyingPathVO(FlyingPath flyingPath);
 
-	int insertFlyingPath(FlyingPath flyingPath);
+    //void insertFlyingPath();
 
-	FlyingPath selectByFlyingPathId(Integer id);
+    int insertFlyingPath(FlyingPath flyingPath);
 
-	int flyingPathCount(FlyingPath flyingPath);
+    FlyingPath selectByFlyingPathId(Integer id);
 
-	List<FlyingPath> queryFlyingPathPage(FlyingPath flyingPath, TailPage<FlyingPath> page);
+    int flyingPathCount(FlyingPath flyingPath);
 
-	List<FlyingPath> findAllFlyingPath();
+    List<FlyingPath> queryFlyingPathPage(FlyingPath flyingPath, TailPage<FlyingPath> page);
 
-	int deleteFlyingPath(FlyingPath flyingPath);
+    List<FlyingPath> findAllFlyingPath();
 
-	String getNameById(Integer id);
+    int deleteFlyingPath(FlyingPath flyingPath);
+
+    String getNameById(Integer id);
 
     FlyingPath selectByFlyingPathIdWithoutData(Integer id);
 
@@ -32,5 +32,5 @@ public interface FlyingPathMapper {
 
     List<String> fuzzySearchByName(String name);
 
-	FlyingPath getFlyingPathByName(String name);
+    FlyingPath getFlyingPathByName(String name);
 }

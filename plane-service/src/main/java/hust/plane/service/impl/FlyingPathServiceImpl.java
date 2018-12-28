@@ -1,118 +1,117 @@
 package hust.plane.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import hust.plane.mapper.mapper.FlyingPathMapper;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.service.interFace.FlyingPathService;
 import hust.plane.utils.KMLUtil;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.PlanePathVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class FlyingPathServiceImpl implements FlyingPathService {
 
-	@Autowired
-	private FlyingPathMapper flyingPathMapper;
+    @Autowired
+    private FlyingPathMapper flyingPathMapper;
 
-	//导出飞向路径
-	@Override
-	public void importFlyingPath(FlyingPath flyingPath, String filePath) {
-		FlyingPath planePathList = flyingPathMapper.selectByFlyingPathVO(flyingPath);
-		List<PlanePathVo> plist = KMLUtil.textToList(planePathList.getPathdata(), planePathList.getHeightdata());
-		KMLUtil.importKML(filePath, plist);
-	}
+    //导出飞向路径
+    @Override
+    public void importFlyingPath(FlyingPath flyingPath, String filePath) {
+        FlyingPath planePathList = flyingPathMapper.selectByFlyingPathVO(flyingPath);
+        List<PlanePathVo> plist = KMLUtil.textToList(planePathList.getPathdata(), planePathList.getHeightdata());
+        KMLUtil.importKML(filePath, plist);
+    }
 
-	// 插入一条飞行路径
-	@Override
-	public boolean insertFlyingPath(FlyingPath flyingPath) {
+    // 插入一条飞行路径
+    @Override
+    public boolean insertFlyingPath(FlyingPath flyingPath) {
 
-		flyingPath.setPathdata("LINESTRING" + flyingPath.getPathdata());
-		Date date = new Date();
-		flyingPath.setCreatetime(date);
-		flyingPath.setUpdatetime(date);
-		
-		// 然后在下面进行插入数据
-		if (flyingPathMapper.insertFlyingPath(flyingPath) == 1)
-			return true;
-		else
-			return false;
-	}
+        flyingPath.setPathdata("LINESTRING" + flyingPath.getPathdata());
+        Date date = new Date();
+        flyingPath.setCreatetime(date);
+        flyingPath.setUpdatetime(date);
 
-	@Override
-	public FlyingPath selectByFlyingPathId(Integer id) {
+        // 然后在下面进行插入数据
+        if (flyingPathMapper.insertFlyingPath(flyingPath) == 1)
+            return true;
+        else
+            return false;
+    }
 
-		FlyingPath path = flyingPathMapper.selectByFlyingPathId(id);
-		return path;
-	}
+    @Override
+    public FlyingPath selectByFlyingPathId(Integer id) {
 
-	@Override
-	public FlyingPath selectByFlyingPathIdWithoutData(Integer id) {
-		FlyingPath path = flyingPathMapper.selectByFlyingPathIdWithoutData(id);
-		return path;
-	}
+        FlyingPath path = flyingPathMapper.selectByFlyingPathId(id);
+        return path;
+    }
 
-	@Override
-	public String getNameById(Integer id) {
-		return flyingPathMapper.getNameById(id);
-	}
+    @Override
+    public FlyingPath selectByFlyingPathIdWithoutData(Integer id) {
+        FlyingPath path = flyingPathMapper.selectByFlyingPathIdWithoutData(id);
+        return path;
+    }
 
-	@Override
-	public List<String> fuzzySearchByName(String queryString) {
+    @Override
+    public String getNameById(Integer id) {
+        return flyingPathMapper.getNameById(id);
+    }
 
-		List<String> flyingPathNameList = null;
-		flyingPathNameList = flyingPathMapper.fuzzySearchByName(queryString);
+    @Override
+    public List<String> fuzzySearchByName(String queryString) {
 
-		return flyingPathNameList;
+        List<String> flyingPathNameList = null;
+        flyingPathNameList = flyingPathMapper.fuzzySearchByName(queryString);
 
-	}
+        return flyingPathNameList;
 
-	@Override
-	public FlyingPath getFlyingPathByName(String name) {
+    }
 
-		FlyingPath flyingPath=null;
-		flyingPath = flyingPathMapper.getFlyingPathByName(name);
-		return flyingPath;
-	}
+    @Override
+    public FlyingPath getFlyingPathByName(String name) {
 
-	@Override
-	public TailPage<FlyingPath> queryFlyingPathWithPage(FlyingPath flyingPath, TailPage<FlyingPath> page) {
+        FlyingPath flyingPath = null;
+        flyingPath = flyingPathMapper.getFlyingPathByName(name);
+        return flyingPath;
+    }
 
-		List<FlyingPath> flyingPaths = null;
+    @Override
+    public TailPage<FlyingPath> queryFlyingPathWithPage(FlyingPath flyingPath, TailPage<FlyingPath> page) {
 
-		int itemsTotalCount = flyingPathMapper.flyingPathCount(flyingPath);
-		// 避免 搜索结果的分页页码数大于数据条数
-		//查看当前条目的分页的页数
-		int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount/page.getPageSize():itemsTotalCount/page.getPageSize() + 1;
+        List<FlyingPath> flyingPaths = null;
 
-		if(page.getPageNum()== 0 || page.getPageNum() > totalPageNum){
-			page.setPageNum(1);
-		}
-		if(itemsTotalCount>0){
-			flyingPaths = flyingPathMapper.queryFlyingPathPage(flyingPath, page);
-		}
+        int itemsTotalCount = flyingPathMapper.flyingPathCount(flyingPath);
+        // 避免 搜索结果的分页页码数大于数据条数
+        //查看当前条目的分页的页数
+        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount / page.getPageSize() : itemsTotalCount / page.getPageSize() + 1;
 
-		page.setItemsTotalCount(itemsTotalCount);
-		page.setItems(flyingPaths);
-		return page;
-	}
+        if (page.getPageNum() == 0 || page.getPageNum() > totalPageNum) {
+            page.setPageNum(1);
+        }
+        if (itemsTotalCount > 0) {
+            flyingPaths = flyingPathMapper.queryFlyingPathPage(flyingPath, page);
+        }
 
-	@Override
-	public List<FlyingPath> findAllFlyingPath() {
+        page.setItemsTotalCount(itemsTotalCount);
+        page.setItems(flyingPaths);
+        return page;
+    }
 
-		List<FlyingPath> planePaths = flyingPathMapper.findAllFlyingPath();
-		return planePaths;
-	}
+    @Override
+    public List<FlyingPath> findAllFlyingPath() {
 
-	@Override
-	public boolean deleteFlyingPath(FlyingPath flyingPath) {
+        List<FlyingPath> planePaths = flyingPathMapper.findAllFlyingPath();
+        return planePaths;
+    }
 
-		flyingPathMapper.deleteFlyingPath(flyingPath);
-		return true;
-	}
+    @Override
+    public boolean deleteFlyingPath(FlyingPath flyingPath) {
+
+        flyingPathMapper.deleteFlyingPath(flyingPath);
+        return true;
+    }
 
 }

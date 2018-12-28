@@ -5,20 +5,16 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
-import hust.plane.mapper.mapper.AlarmMapper;
 import hust.plane.mapper.pojo.Alarm;
-import hust.plane.mapper.pojo.InfoPoint;
 import hust.plane.utils.pojo.ImgPicToAlarm;
 import hust.plane.utils.pojo.RouteExcel;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ImgUtils {
 
@@ -54,7 +50,7 @@ public class ImgUtils {
                 }
             }
         } else {
-            System.out.println("文件不存在！！");
+//            System.out.println("文件不存在！！");
         }
         alarm.setPosition(imgPicToAlarm.setLongLatitude(imgPicToAlarm.getLongitude(), imgPicToAlarm.getLatitude()));
         System.out.println(alarm.toString());
@@ -63,7 +59,7 @@ public class ImgUtils {
 
     public static List<Alarm> processlcoaldir(int taskid, String alarmDir) {
 
-        String localfiledir =  alarmDir;
+        String localfiledir = alarmDir;
 
         List<Alarm> alarmList = new ArrayList<Alarm>();
         File file = new File(localfiledir);
@@ -71,7 +67,7 @@ public class ImgUtils {
             File[] files = file.listFiles();
             for (File file2 : files) {
                 if (file2.isDirectory()) {
-                   // System.out.println("文件夹:" + file2.getAbsolutePath() + "跳过");
+                    // System.out.println("文件夹:" + file2.getAbsolutePath() + "跳过");
                 } else {
                     //System.out.println("文件:" + file2.getAbsolutePath() + "处理");
 
@@ -106,14 +102,14 @@ public class ImgUtils {
 
                         RouteExcel routeExcel = new RouteExcel();
 
-                        routeExcel.setLatitude((double)lat);
-                        routeExcel.setLatitude((double)lon);
+                        routeExcel.setLatitude((double) lat);
+                        routeExcel.setLatitude((double) lon);
 
                         alarm.setPosition(routeExcel.getPositon());
                         alarm.setDescription("这是一张无人机从" + elv + " 高度拍摄告警照片！");
 
                         //在这里匹配最近的信息点
-                       // String geohash = GeohashUtil.getGeoHashBase32(routeExcel);
+                        // String geohash = GeohashUtil.getGeoHashBase32(routeExcel);
 
                         List<String> geohash9area = GeohashUtil.getGeoHashBase32For9(routeExcel);
 
@@ -167,22 +163,22 @@ public class ImgUtils {
 
     public static float getFloat(byte[] b, int index) {
 
-        byte sndlen[] =new byte[4];
-        sndlen[3]=b[index + 3];
-        sndlen[2]=b[index + 2];
-        sndlen[1]=b[index + 1];
-        sndlen[0]=b[index + 0];
-        long data = (long)(Byte2Int(sndlen)&0x0FFFFFFFFl);
+        byte sndlen[] = new byte[4];
+        sndlen[3] = b[index + 3];
+        sndlen[2] = b[index + 2];
+        sndlen[1] = b[index + 1];
+        sndlen[0] = b[index + 0];
+        long data = (long) (Byte2Int(sndlen) & 0x0FFFFFFFFl);
         //获取长度
-        return data/10000000.0f;       //把float字节码转换成float
+        return data / 10000000.0f;       //把float字节码转换成float
     }
 
-    public static int Byte2Int(byte[]bytes) {
+    public static int Byte2Int(byte[] bytes) {
 
-        return (bytes[0]&0xff)<<24
-                | (bytes[1]&0xff)<<16
-                | (bytes[2]&0xff)<<8
-                | (bytes[3]&0xff);
+        return (bytes[0] & 0xff) << 24
+                | (bytes[1] & 0xff) << 16
+                | (bytes[2] & 0xff) << 8
+                | (bytes[3] & 0xff);
     }
 
     static void buff2Image(byte[] b, String tagSrc) throws Exception {

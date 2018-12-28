@@ -13,11 +13,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 /**
  * 该web项目常用工具类
+ *
+ * @param
  * @author rfYang
  * @date 2018/7/3 18:18
- * @param
  * @return
  */
 public class PlaneUtils {
@@ -134,7 +136,7 @@ public class PlaneUtils {
             boolean isSSL = false;
             Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, val);
             cookie.setPath("/");
-          /*  cookie.setMaxAge(60 * 30);*/
+            /*  cookie.setMaxAge(60 * 30);*/
             cookie.setMaxAge(-1);
             cookie.setSecure(isSSL);
             response.addCookie(cookie);
@@ -142,6 +144,7 @@ public class PlaneUtils {
             e.printStackTrace();
         }
     }
+
     /**
      * 退出登录状态
      *
@@ -159,10 +162,11 @@ public class PlaneUtils {
             LOGGER.error(e.getMessage(), e);
         }
     }
+
     public static void main(String[] args) {
 
         System.out.println(MD5encode("glzyl123456"));
 
-	}
+    }
 
 }

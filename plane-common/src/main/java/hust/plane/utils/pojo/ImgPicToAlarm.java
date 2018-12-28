@@ -4,8 +4,8 @@ public class ImgPicToAlarm {
     private String longitude;
     private String latitude;
 
-    public  String setLongLatitude(String longitude,String latitude){
-        return "POINT("+longitude+" "+latitude+")";
+    public String setLongLatitude(String longitude, String latitude) {
+        return "POINT(" + longitude + " " + latitude + ")";
     }
 
     public String getLongitude() {

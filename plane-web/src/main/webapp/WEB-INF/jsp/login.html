@@ -13,12 +13,13 @@
     <script type="text/javascript" src="${s.base}/res/js/jquery.form.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/bootstrap.js"></script>
     <link rel="icon" type="image/png" href="${s.base}/res/i/ico.png" sizes="16x16">
- 
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <style>
-	    ::-ms-clear,::-ms-reveal{ 
-		    display:none;
+        ::-ms-clear, ::-ms-reveal {
+            display: none;
         }
+
         .main {
             position: absolute;
             z-index: 2;
@@ -100,7 +101,7 @@
             color: #00b4ef;
         }
 
-        .form-horizontal .fa-eye,.fa-eye-slash{
+        .form-horizontal .fa-eye, .fa-eye-slash {
             display: inline-block;
             position: absolute;
             top: 10px;
@@ -196,28 +197,29 @@
             margin-left: 20px;
         }
 
+        .tooltip-inner {
 
-		.tooltip-inner{
-		  
-		   background: #fafafa !important;
-		   text-align: left !important;
-		   color: #EE3B3B !important;
-		   border:1px solid #dedede;
-		   max-width: 400px !important;
-		}
-		.tooltip-arrow{
-		 
-		   border-bottom-color: #fafafa  !important;
-		   background: #fafafa !important;
-		   opacity: 0.8;
-		}
-		.tooltip{
-		   margin-left:130px;	   
-		   opacity: 0.8 !important;
-		 }
+            background: #fafafa !important;
+            text-align: left !important;
+            color: #EE3B3B !important;
+            border: 1px solid #dedede;
+            max-width: 400px !important;
+        }
+
+        .tooltip-arrow {
+
+            border-bottom-color: #fafafa !important;
+            background: #fafafa !important;
+            opacity: 0.8;
+        }
+
+        .tooltip {
+            margin-left: 130px;
+            opacity: 0.8 !important;
+        }
 
     </style>
-         
+
 </head>
 
 <body><!-- ${s.base}/upload/DJI_0002.JPG -->
@@ -235,7 +237,7 @@
                 </div>
                 <div class="form-group help">
                     <input type="password" name="password" class="form-control" id="inputpassword" placeholder="请输入密码"
-                    data-toggle="tooltip" data-placement="auto"  title="请输入6-12位长度的密码" delay="500">
+                           data-toggle="tooltip" data-placement="auto" title="请输入6-12位长度的密码" delay="500">
                     <i class="fa fa-lock"></i>
                     <a class="fa fa-eye" id="changePwdView"></a>
                 </div>
@@ -249,7 +251,8 @@
                     <button type="button" class="btn btn-default" id="login">登录</button>
                 </div>
                 <div class="form-group" style="margin-bottom: 5px;">
-                    <span class="text"><a href="${s.base}/AppDownload.action" style="cursor:pointer;color:red;font-size:1.6rem;text-decoration:underline;">无人机智能巡检APP下载</a></span>
+                    <span class="text"><a href="${s.base}/AppDownload.action"
+                                          style="cursor:pointer;color:red;font-size:1.6rem;text-decoration:underline;">无人机智能巡检APP下载</a></span>
                 </div>
                 <div id="alertDiv" style="display: none;">
                 </div>
@@ -260,74 +263,75 @@
 </div>
 <script type="text/javascript">
 
-	$(document).ready(function(){
-		
-		$("[data-toggle='tooltip']").tooltip();
-		
-		var oForm = document.getElementById('loginForm');
-	    var oUser = document.getElementById('inputusername');
-	    var oPswd = document.getElementById('inputpassword');
-	    var oRemember = document.getElementById('checkbox1');
-	    //页面初始化时，如果帐号密码cookie存在则填充
-	 
-	    if(getCookie('flightuser') && getCookie('flightpswd')){
-	     
-	      oUser.value = getCookie('flightuser');
-	      oPswd.value = getCookie('flightpswd');
-	      oRemember.checked = true;
-	         
-	    }
-	    
-	    //取消提示
-	    $("#inputpassword").bind('input porpertychange',function(){
-	    	$('#inputpassword').tooltip('hide');	    	
-	    });
-	    
-	    
-		$("#login").click(function () {
-			
-			if(oRemember.checked){ 
-		        setCookie('flightuser',oUser.value,7); //保存帐号到cookie，有效期7天
-		        setCookie('flightpswd',oPswd.value,7); //保存密码到cookie，有效期7天
-		      }else{
-		    	deleteCookie('flightuser');
-		    	deleteCookie('flightpswd');
-		    }
-	        $.ajax({
-	            type: "post",
-	            url: "${s.base}/admin/login.action",
-	            data: $("#loginForm").serialize(),
-	            success: function (result) {
-	                //alert(JSON.stringify(result));
-	                if (result.errcode == 0 && result.message == "success") {
-	                    window.location = '${s.base}/home.action';
-	                } else {
-	                    showAlert(result.message);
-	                }
-	            }
-	        });
-	    });
+    $(document).ready(function () {
 
-	    $("#register").click(function () {
-	        window.location.href = '${s.base}/admin/register.action';
-	    });
+        $("[data-toggle='tooltip']").tooltip();
 
-	    $("#changePwdView").click(function(){
-	    	//更改密码可见 和不可见
-	    	var pwd = document.getElementById("inputpassword");
-	    	var changebtn = document.getElementById("changePwdView");
-	    	var btnclass = changebtn.className;
-	    	if(btnclass=="fa fa-eye"){
-	    		changebtn.setAttribute("class","fa fa-eye-slash");
-	    		pwd.setAttribute('type','text');  		
-	    	}else{
-	    		changebtn.setAttribute("class","fa fa-eye");
-	    		pwd.setAttribute('type','password');    		
-	    	}
-	    	
-	    });
-			
-	});
+        var oForm = document.getElementById('loginForm');
+        var oUser = document.getElementById('inputusername');
+        var oPswd = document.getElementById('inputpassword');
+        var oRemember = document.getElementById('checkbox1');
+        //页面初始化时，如果帐号密码cookie存在则填充
+
+        if (getCookie('flightuser') && getCookie('flightpswd')) {
+
+            oUser.value = getCookie('flightuser');
+            oPswd.value = getCookie('flightpswd');
+            oRemember.checked = true;
+
+        }
+
+        //取消提示
+        $("#inputpassword").bind('input porpertychange', function () {
+            $('#inputpassword').tooltip('hide');
+        });
+
+
+        $("#login").click(function () {
+
+            if (oRemember.checked) {
+                setCookie('flightuser', oUser.value, 7); //保存帐号到cookie，有效期7天
+                setCookie('flightpswd', oPswd.value, 7); //保存密码到cookie，有效期7天
+            } else {
+                deleteCookie('flightuser');
+                deleteCookie('flightpswd');
+            }
+            $.ajax({
+                type: "post",
+                url: "${s.base}/admin/login.action",
+                data: $("#loginForm").serialize(),
+                success: function (result) {
+                    //alert(JSON.stringify(result));
+                    if (result.errcode == 0 && result.message == "success") {
+                        window.location = '${s.base}/home.action';
+                    } else {
+                        showAlert(result.message);
+                    }
+                }
+            });
+        });
+
+        $("#register").click(function () {
+            window.location.href = '${s.base}/admin/register.action';
+        });
+
+        $("#changePwdView").click(function () {
+            //更改密码可见 和不可见
+            var pwd = document.getElementById("inputpassword");
+            var changebtn = document.getElementById("changePwdView");
+            var btnclass = changebtn.className;
+            if (btnclass == "fa fa-eye") {
+                changebtn.setAttribute("class", "fa fa-eye-slash");
+                pwd.setAttribute('type', 'text');
+            } else {
+                changebtn.setAttribute("class", "fa fa-eye");
+                pwd.setAttribute('type', 'password');
+            }
+
+        });
+
+    });
+
     //提示出错信息
     function showAlert(message) {
         var alertitem = document.getElementById("alertDiv");
@@ -335,37 +339,39 @@
         alertitem.innerHTML = innHTMl;
         alertitem.style.display = "block";
     }
-   
+
     /*添加cookie*/
-    function setCookie(name,value,outTime){  
-    	
-        var expdate=new Date();
-        var outms=outTime*24*60*60*1000;//过期时间，以天为单位‘1’表示一天
-        expdate.setTime(expdate.getTime()+outms);
-        var cookieStr=name+"="+escape(value)+";expires="+expdate.toGMTString();
+    function setCookie(name, value, outTime) {
+
+        var expdate = new Date();
+        var outms = outTime * 24 * 60 * 60 * 1000;//过期时间，以天为单位‘1’表示一天
+        expdate.setTime(expdate.getTime() + outms);
+        var cookieStr = name + "=" + escape(value) + ";expires=" + expdate.toGMTString();
         //escape方法的作用是进行编码，主要防止value中有特殊字符
-        document.cookie=cookieStr;
+        document.cookie = cookieStr;
     }
+
     /*删除cookie  cookie的删除并不是物理意义上的直接删除， 而是将cookie的有效期设置为失效，然后由浏览器删除失效的cookie删除 */
-    function deleteCookie(cookiename){
+    function deleteCookie(cookiename) {
         var date = new Date();
-        var outTime=date.getTime()-1000;//将cookie的有效期设置为失效
+        var outTime = date.getTime() - 1000;//将cookie的有效期设置为失效
         date.setTime(outTime);
-        document.cookie=cookiename+"='';expires="+date.toGMTString();
+        document.cookie = cookiename + "='';expires=" + date.toGMTString();
     }
+
     /*读取cookie*/
-    function getCookie(cookieName){
-    	
-    	var reg = RegExp(cookieName+'=([^;]+)');   	
-        var arr = document.cookie.match(reg);       
-      
-        if(arr){
-          return unescape(arr[1]);
-        }else{
-          return '';
-        }     
+    function getCookie(cookieName) {
+
+        var reg = RegExp(cookieName + '=([^;]+)');
+        var arr = document.cookie.match(reg);
+
+        if (arr) {
+            return unescape(arr[1]);
+        } else {
+            return '';
+        }
     }
-   
+
 </script>
 </body>
 </html>

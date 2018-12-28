@@ -9,11 +9,11 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
@@ -35,9 +35,9 @@
         <div class="container-fluid">
 
             <!--  下面这块内容是在页面写死的  -->
-           <!-- <h4 class="page-title">光缆路由
-                <small>路由一览</small>
-            </h4>-->
+            <!-- <h4 class="page-title">光缆路由
+                 <small>路由一览</small>
+             </h4>-->
 
             <h4 class="page-title"></h4>
 
@@ -54,7 +54,7 @@
         </div>
 
         <!-- END PAGE HEADER-->
-        <div id="dashboard"   style="position:relative;min-height: 790px;">
+        <div id="dashboard" style="position:relative;min-height: 790px;">
 
             <div id="container"></div>
             <!-- UI组件库 1.0 -->
@@ -79,9 +79,9 @@
 
                 var routeList = ${routeList!};
 
-                if(routeList.length>0){
+                if (routeList.length > 0) {
                     mapcenter = routeList[0].routepathdata[0];
-                }else{
+                } else {
                     mapcenter = [107.79962, 23.06691];
                 }
 
@@ -93,10 +93,10 @@
                     zoom: 13
                 });
 
-                map.plugin(["AMap.Scale"],function(){    //加载比例尺插件
+                map.plugin(["AMap.Scale"], function () {    //加载比例尺插件
                     var scale = new AMap.Scale({
                         visible: true,
-                        position:'LB',
+                        position: 'LB',
 
                     });
                     map.addControl(scale);
@@ -130,7 +130,7 @@
                     }
                 }
 
-                if(routeList!=null){
+                if (routeList != null) {
                     showrouteList(routeList);
                     AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
 

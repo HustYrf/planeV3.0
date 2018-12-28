@@ -1,11 +1,12 @@
 package hust.plane.mapper.mapper;
+
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.TaskExample;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.TaskPojo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TaskMapper {
     int countByExample(TaskExample example);
@@ -29,24 +30,24 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKey(Task record);
-    
+
     //以下为自定义查询方法
 
     int countByTask(Task task);
-    
+
     List<Task> queryPage(Task task, TailPage<TaskPojo> page);
 
-	String getStatusByTask(Task task);
+    String getStatusByTask(Task task);
 
-	List<Task> getTasklistByUserCreator(int userCreator);
+    List<Task> getTasklistByUserCreator(int userCreator);
 
     List<Task> queryPageWithTime(Task task, TailPage<TaskPojo> page);
 
-	int updateStatusByTask(Task task);
+    int updateStatusByTask(Task task);
 
-	int updateImgFolderByTask(Task task);
+    int updateImgFolderByTask(Task task);
 
-	Task getTaskByName(String name);
+    Task getTaskByName(String name);
 
     int setTaskOver(Task task);
 

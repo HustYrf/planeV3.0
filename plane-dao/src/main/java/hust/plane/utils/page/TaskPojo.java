@@ -3,77 +3,76 @@ package hust.plane.utils.page;
 import hust.plane.mapper.pojo.Task;
 
 public class TaskPojo {
-	
-	private Task task;
-	
-	private String userCreatorName;
 
-	private String userAName;
-	
-	private String userZName;
-	
-	private String uavName;
+    private Task task;
 
-	private String deviceId;
-	
-	private String flyingPathName;
+    private String userCreatorName;
 
-	public String getDeviceId() {
-		return deviceId;
-	}
+    private String userAName;
 
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+    private String userZName;
 
-	public String getUavName() {
-		return uavName;
-	}
+    private String uavName;
 
-	public void setUavName(String uavName) {
-		this.uavName = uavName;
-	}
+    private String deviceId;
 
-	public String getFlyingPathName() {
-		return flyingPathName;
-	}
+    private String flyingPathName;
 
-	public void setFlyingPathName(String flyingPathName) {
-		this.flyingPathName = flyingPathName;
-	}
+    public String getDeviceId() {
+        return deviceId;
+    }
 
-	public Task getTask() {
-		return task;
-	}
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
-	public void setTask(Task task) {
-		this.task = task;
-	}
+    public String getUavName() {
+        return uavName;
+    }
 
-	public String getUserCreatorName() {
-		return userCreatorName;
-	}
+    public void setUavName(String uavName) {
+        this.uavName = uavName;
+    }
 
-	public void setUserCreatorName(String userCreatorName) {
-		this.userCreatorName = userCreatorName;
-	}
+    public String getFlyingPathName() {
+        return flyingPathName;
+    }
 
-	public String getUserAName() {
-		return userAName;
-	}
+    public void setFlyingPathName(String flyingPathName) {
+        this.flyingPathName = flyingPathName;
+    }
 
-	public void setUserAName(String userAName) {
-		this.userAName = userAName;
-	}
+    public Task getTask() {
+        return task;
+    }
 
-	public String getUserZName() {
-		return userZName;
-	}
+    public void setTask(Task task) {
+        this.task = task;
+    }
 
-	public void setUserZName(String userZName) {
-		this.userZName = userZName;
-	}
+    public String getUserCreatorName() {
+        return userCreatorName;
+    }
 
-	
+    public void setUserCreatorName(String userCreatorName) {
+        this.userCreatorName = userCreatorName;
+    }
+
+    public String getUserAName() {
+        return userAName;
+    }
+
+    public void setUserAName(String userAName) {
+        this.userAName = userAName;
+    }
+
+    public String getUserZName() {
+        return userZName;
+    }
+
+    public void setUserZName(String userZName) {
+        this.userZName = userZName;
+    }
+
 
 }

@@ -1,30 +1,30 @@
 package hust.plane.mapper.mapper;
 
-import java.util.List;
-
 import hust.plane.mapper.pojo.Route;
 import hust.plane.utils.page.TailPage;
 
+import java.util.List;
+
 public interface RouteMapper {
-	List<Route> selectALLRoute();
+    List<Route> selectALLRoute();
 
-	int insert(Route route);
+    int insert(Route route);
 
-	List<Route> getRouteByNameAndType(String name, int type);
+    List<Route> getRouteByNameAndType(String name, int type);
 
-	List<Route> selectRoute(String name, int type);
+    List<Route> selectRoute(String name, int type);
 
-	List<Route> getRouteByType(int type);
+    List<Route> getRouteByType(int type);
 
-	int countByName(String name);
+    int countByName(String name);
 
     int routeCount(Route route);
 
     int deleteRouteById(Integer id);
 
-	Route getRouteById(Integer id);
+    Route getRouteById(Integer id);
 
-	Route getRouteByName(String name);
+    Route getRouteByName(String name);
 
     List<Route> queryRoutePage(Route route, TailPage<Route> page);
 

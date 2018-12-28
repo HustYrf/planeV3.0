@@ -21,8 +21,8 @@
 <script type="text/javascript">
     var baseurl = '${baseImageUrl}';
     var folder = '${folder}';
-    var taskId = '${taskId}' + '/';
-    var port = baseurl + taskId + folder;
+    var missionId = '${missionId}' + '/';
+    var port = baseurl + missionId + folder;
     var taskPic = ${picNameList};
     if (taskPic.errcode == 0) {
         alert(taskPic.message);
@@ -32,9 +32,9 @@
             var imgAddress = port + taskPic.data[i];
             //console.log(imgAddress);
             $ul.append('<li>' +
-                '<img data-original="' + imgAddress +
-                '" src="' + imgAddress +
-                '">' + '</li>');
+                    '<img data-original="' + imgAddress +
+                    '" src="' + imgAddress +
+                    '">' + '</li>');
         }
     }
 </script>

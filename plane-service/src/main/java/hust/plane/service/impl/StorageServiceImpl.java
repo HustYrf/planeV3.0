@@ -86,10 +86,10 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void uploadFileByMappedByteBuffer(MultipartFileParam param,String taskDir) throws IOException {
+    public void uploadFileByMappedByteBuffer(MultipartFileParam param, String taskDir) throws IOException {
         taskDir = taskDir + "/";
         String fileName = param.getName();
-        String uploadDirPath = finalDirPath + taskDir+param.getMd5();
+        String uploadDirPath = finalDirPath + taskDir + param.getMd5();
         String tempFileName = fileName + "_tmp";
         File tmpDir = new File(uploadDirPath);
         File tmpFile = new File(uploadDirPath, tempFileName);

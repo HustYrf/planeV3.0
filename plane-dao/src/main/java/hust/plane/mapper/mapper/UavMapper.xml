@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="hust.plane.mapper.mapper.UavMapper" >
- <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Uav" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="DeviceId" property="deviceid" jdbcType="VARCHAR" />
-    <result column="Name" property="name" jdbcType="VARCHAR" />
-    <result column="PassWord" property="password" jdbcType="VARCHAR" />
-    <result column="Status" property="status" jdbcType="INTEGER" />
-    <result column="Owner" property="owner" jdbcType="INTEGER" />
-    <result column="Position" property="position" jdbcType="VARCHAR" />
-    <result column="Height" property="height" jdbcType="REAL" />
-    <result column="Description" property="description" jdbcType="VARCHAR" />
-    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
-    <result column="PhoneOne" property="phoneone" jdbcType="VARCHAR" />
-    <result column="PhoneTwo" property="phonetwo" jdbcType="VARCHAR" />
-  </resultMap>
-     <sql id="Base_Column_List">
-  		id,DeviceId,Name,PassWord,Status,Owner,AsText(Position) as Position,Height,Description,CreateTime,UpdateTime,PhoneOne,PhoneTwo
+<mapper namespace="hust.plane.mapper.mapper.UavMapper">
+    <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Uav">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="DeviceId" property="deviceid" jdbcType="VARCHAR"/>
+        <result column="Name" property="name" jdbcType="VARCHAR"/>
+        <result column="PassWord" property="password" jdbcType="VARCHAR"/>
+        <result column="Status" property="status" jdbcType="INTEGER"/>
+        <result column="Owner" property="owner" jdbcType="INTEGER"/>
+        <result column="Position" property="position" jdbcType="VARCHAR"/>
+        <result column="Height" property="height" jdbcType="REAL"/>
+        <result column="Description" property="description" jdbcType="VARCHAR"/>
+        <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP"/>
+        <result column="PhoneOne" property="phoneone" jdbcType="VARCHAR"/>
+        <result column="PhoneTwo" property="phonetwo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,DeviceId,Name,PassWord,Status,Owner,AsText(Position) as
+        Position,Height,Description,CreateTime,UpdateTime,PhoneOne,PhoneTwo
     </sql>
-	<select id="selectALLPlane" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from K_Uav
-	</select>
-	<select id="selectPlaneByOption" resultMap="BaseResultMap">
-		select 
-		<include refid="Base_Column_List" />
-		from K_Uav
-		where
-		<if test="#{param1}!=null and #{param1}!=''">
-			Owner = #{param1} or
-		</if>
-		<if test="#{param2}!=null and #{param2}!=''">
-          <![CDATA[  DATE_FORMAT(CreateTime, '%Y-%m-%d')>=  DATE_FORMAT(#{param2}, '%Y-%m-%d')   ]]>
-		</if>
-		<if test="#{param3}!=null and #{param3}!=''">
-          <![CDATA[  and DATE_FORMAT(CreateTime, '%Y-%m-%d') <= DATE_FORMAT(#{param3}, '%Y-%m-%d')    ]]>
-		</if>
-	</select>
-	<select id="selectByPlaneStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from K_Uav
-		where Status=#{status,jdbcType=INTEGER}
-	</select>
-	<select id="getPlaneByPlane" parameterType="hust.plane.mapper.pojo.Uav"
-		resultMap="BaseResultMap">
-		select 
-		<include refid="Base_Column_List" />
-		from K_Uav
-		where id=#{id,,jdbcType=INTEGER}
-	</select>
-	<select id="getNameById" parameterType="java.lang.Integer"
-		resultType="java.lang.String">
-		select Name
-		from K_Uav
-		where id=#{id,,jdbcType=INTEGER}
-	</select>
-	<select id="getUavById" parameterType="java.lang.Integer" 	resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from K_Uav
-		where id=#{id,,jdbcType=INTEGER}
-	</select>
+    <select id="selectALLPlane" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Uav
+    </select>
+    <select id="selectPlaneByOption" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Uav
+        where
+        <if test="#{param1}!=null and #{param1}!=''">
+            Owner = #{param1} or
+        </if>
+        <if test="#{param2}!=null and #{param2}!=''">
+            <![CDATA[  DATE_FORMAT(CreateTime, '%Y-%m-%d')>=  DATE_FORMAT(#{param2}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="#{param3}!=null and #{param3}!=''">
+            <![CDATA[  and DATE_FORMAT(CreateTime, '%Y-%m-%d') <= DATE_FORMAT(#{param3}, '%Y-%m-%d')    ]]>
+        </if>
+    </select>
+    <select id="selectByPlaneStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Uav
+        where Status=#{status,jdbcType=INTEGER}
+    </select>
+    <select id="getPlaneByPlane" parameterType="hust.plane.mapper.pojo.Uav"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Uav
+        where id=#{id,,jdbcType=INTEGER}
+    </select>
+    <select id="getNameById" parameterType="java.lang.Integer"
+            resultType="java.lang.String">
+        select Name
+        from K_Uav
+        where id=#{id,,jdbcType=INTEGER}
+    </select>
+    <select id="getUavById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Uav
+        where id=#{id,,jdbcType=INTEGER}
+    </select>
 </mapper>

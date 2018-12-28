@@ -1,11 +1,11 @@
 package hust.plane.mapper.mapper;
 
-import java.util.List;
-
 import hust.plane.mapper.pojo.User_has_GroupKey;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.UserPojo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface User_has_GroupKeyMapper {
@@ -22,5 +22,5 @@ public interface User_has_GroupKeyMapper {
 
     List<Integer> getAllGroup();
 
-    int selectCountWithGroupId(@Param(value = "Group_id")Integer groupId);
+    int selectCountWithGroupId(@Param(value = "Group_id") Integer groupId);
 }

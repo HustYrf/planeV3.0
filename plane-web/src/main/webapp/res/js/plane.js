@@ -1,7 +1,7 @@
 /**
  * jquery form fill
  */
-(function($){
+(function ($) {
     function Fill() {
         this.defaults = {
             styleElementName: 'none',	// object | none
@@ -11,8 +11,8 @@
         };
     };
     $.extend(Fill.prototype, {
-        clear : function (obj, _element) {
-            _element.find("*").each(function(i, item){
+        clear: function (obj, _element) {
+            _element.find("*").each(function (i, item) {
                 if ($(item).is("input") || $(item).is("select") || $(item).is("textarea")) {
                     try {
                         switch ($(item).attr("type")) {
@@ -23,27 +23,28 @@
                                 $(item).val('');
                                 break;
                             case "select":
-                                $(item).get(0).selectedIndex=0;//选中第一个
+                                $(item).get(0).selectedIndex = 0;//选中第一个
                                 break;
                             case "radio":
                             case "checkbox":
                                 $(item).attr("checked", false);
                                 break;
                         }
-                    } catch(e) {}
+                    } catch (e) {
+                    }
                 }
             });
         },
 
-        fill : function (obj, _element, settings) {
-            this.clear(obj,_element);
+        fill: function (obj, _element, settings) {
+            this.clear(obj, _element);
             options = $.extend({}, this.defaults, settings);
-            _element.find("*").each(function(i, item){
+            _element.find("*").each(function (i, item) {
                 if ($(item).is("input") || $(item).is("select") || $(item).is("textarea")) {
                     try {
-                        var objName=null;
-                        var arrayAtribute=null;
-                        var value=null;
+                        var objName = null;
+                        var arrayAtribute = null;
+                        var value = null;
                         try {
                             if (options.styleElementName == "object") {
                                 if ($(item).attr("name").match(/\[[0-9]*\]/i)) {
@@ -57,16 +58,16 @@
                                 objName = 'obj.' + $(item).attr("name");
                             }
                             value = eval(objName);
-                        } catch(e) {
+                        } catch (e) {
                             if (options.debug) {
                                 debug(e.message);
                             }
                         }
                         if (value != null) {
                             var _type = $(item).attr("type");
-                            if(_type == "hidden" || _type == "password"){
+                            if (_type == "hidden" || _type == "password") {
                                 $(item).val(value);
-                            }else if(_type == "text"){
+                            } else if (_type == "text") {
                                 if ($(item).hasClass("hasDatepicker")) {
                                     var re = /^[-+]*[0-9]*$/;
                                     var dateValue = null;
@@ -83,19 +84,19 @@
                                 } else {
                                     $(item).val(value);
                                 }
-                            }else if(_type == "select-one"){
+                            } else if (_type == "select-one") {
                                 if (value) {
                                     $(item).val(value);
                                 }
-                            }else if(_type == "radio"){
+                            } else if (_type == "radio") {
                                 $(item).each(function (i, radio) {
                                     if ($(radio).val() == value) {
                                         $(radio).attr("checked", "checked");
                                     }
                                 });
-                            }else if(_type == "checkbox"){
+                            } else if (_type == "checkbox") {
                                 if ($.isArray(value)) {
-                                    $.each(value, function(i, arrayItem) {
+                                    $.each(value, function (i, arrayItem) {
                                         if (typeof(arrayItem) == 'object') {
                                             arrayItemValue = eval("arrayItem." + arrayAtribute);
                                         } else {
@@ -110,11 +111,11 @@
                                         $(item).attr("checked", "checked");
                                     }
                                 }
-                            }else{
+                            } else {
                                 $(item).val(value);
                             }
                         }
-                    } catch(e) {
+                    } catch (e) {
                         if (options.debug) {
                             debug(e.message);
                         }
@@ -134,24 +135,25 @@
     $.fill = new Fill();
 })(jQuery);
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     //点击模态框的 x ，关闭模态框
-    $('.close').click(function(){
-        $('.modal').css('display','none');
+    $('.close').click(function () {
+        $('.modal').css('display', 'none');
     });
 
-    $('button.closebtn').click(function(){
-        $('.modal').css('display','none');
+    $('button.closebtn').click(function () {
+        $('.modal').css('display', 'none');
     });
 
-    OcModal = function (){};
+    OcModal = function () {
+    };
     OcModal.prototype = {
 
         //根据id show dialog
-        show : function(id){
-            if(id){
-                $('#' + id).find('form').each(function(i,item){
+        show: function (id) {
+            if (id) {
+                $('#' + id).find('form').each(function (i, item) {
                     $(item).clear();
                 });
                 $('#' + id).modal('show');
@@ -159,7 +161,7 @@ $(document).ready(function(){
             }
         },
 
-        hide : function(id){
+        hide: function (id) {
             $('#' + id).modal('hide');
         },
 
@@ -167,3 +169,5 @@ $(document).ready(function(){
     Modal = new OcModal();
 
 });
+
+

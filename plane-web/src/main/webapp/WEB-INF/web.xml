@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-    id="WebApp_ID" version="3.0">
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
 
     <!-- 配置监听器 -->
     <listener>
@@ -29,28 +29,28 @@
     </servlet-mapping>
 
 
-<!--     <servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.woff</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.eot</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.ttf</url-pattern>
-	</servlet-mapping>
-		<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.svg</url-pattern>
-	</servlet-mapping>
-	</servlet-mapping>
-		<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.woff2</url-pattern>
-	</servlet-mapping> -->
-   <!-- 配置Spring提供的字符编码过滤器 -->
+    <!--     <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>*.woff</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>*.eot</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>*.ttf</url-pattern>
+        </servlet-mapping>
+            <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>*.svg</url-pattern>
+        </servlet-mapping>
+        </servlet-mapping>
+            <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>*.woff2</url-pattern>
+        </servlet-mapping> -->
+    <!-- 配置Spring提供的字符编码过滤器 -->
     <filter>
         <filter-name>SpringCharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -70,17 +70,17 @@
 
 
     <filter>
-       <filter-name>
-           DisableUrlSessionFilter
-       </filter-name>
-       <filter-class>
-          hust.plane.web.interceptor.DisableUrlSessionFilter
-       </filter-class>
+        <filter-name>
+            DisableUrlSessionFilter
+        </filter-name>
+        <filter-class>
+            hust.plane.web.interceptor.DisableUrlSessionFilter
+        </filter-class>
     </filter>
-	<filter-mapping>
-  		<filter-name>DisableUrlSessionFilter</filter-name>
-  		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <filter-mapping>
+        <filter-name>DisableUrlSessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
     <error-page>

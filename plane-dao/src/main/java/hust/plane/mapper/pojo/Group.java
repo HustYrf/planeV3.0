@@ -1,7 +1,7 @@
 package hust.plane.mapper.pojo;
 
 public class Group {
-	
+
     private String name;
 
     private Integer permission;

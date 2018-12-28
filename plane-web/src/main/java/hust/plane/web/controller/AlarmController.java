@@ -1,16 +1,11 @@
 package hust.plane.web.controller;
 
 import hust.plane.constant.WebConst;
-import hust.plane.mapper.pojo.Alarm;
-import hust.plane.mapper.pojo.Route;
-import hust.plane.mapper.pojo.Task;
-import hust.plane.mapper.pojo.Uav;
-import hust.plane.mapper.pojo.User;
+import hust.plane.mapper.pojo.*;
 import hust.plane.service.interFace.*;
 import hust.plane.utils.ImgUtils;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PlaneUtils;
-import hust.plane.utils.pojo.InfoTplData;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.utils.pojo.TipException;
 import hust.plane.web.controller.vo.AlarmDetailVO;
@@ -114,7 +109,7 @@ public class AlarmController {
         AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
         //设置从文件服务器查看图片
 
-        alarmDetailVO.setImage(BASE_IMAGE_URL + TASK_DIR + task1.getId() +"/"+ ALARM_DIR + alarmDetailVO.getImage());
+        alarmDetailVO.setImage(BASE_IMAGE_URL + TASK_DIR + task1.getMissionId() + "/" + ALARM_DIR + alarmDetailVO.getImage());
         alarmDetailVO.setUav(uav1);
 
         alarmDetailVO.setTaskName(task1.getName());
@@ -142,7 +137,7 @@ public class AlarmController {
     @RequestMapping(value = "importAlarm", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doImportAlarm(@RequestParam(value = "planeId") int planeId, HttpServletRequest request) {
-        try{
+        try {
             alarmService.insertAlarmById(planeId);
         } catch (Exception e) {
             String msg = "插入告警点失败";

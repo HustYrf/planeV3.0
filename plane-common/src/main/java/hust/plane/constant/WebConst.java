@@ -7,15 +7,16 @@ import java.util.Map;
 
 /**
  * 定义一些常用的字符串
+ *
+ * @param
  * @author rfYang
  * @date 2018/7/3 18:22
- * @param
  * @return
  */
 @Component
 public class WebConst {
     public static final String SUPER_ADMINISTRATOR_VIEW = "super_administrator";
-    public static final String SEARCH_NO_USERNAME ="S_N_NAME" ;
+    public static final String SEARCH_NO_USERNAME = "S_N_NAME";
 
     public static String LOGIN_SESSION_KEY = "login_user";
 

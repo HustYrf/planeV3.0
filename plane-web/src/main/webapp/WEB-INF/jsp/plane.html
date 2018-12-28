@@ -1,85 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>无人机位置</title>
+    <meta charset="UTF-8">
+    <title>无人机位置</title>
 
 
     <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="${s.base}/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
     <!-- BEGIN PAGE LEVEL STYLES -->
-	<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14'></script>
 
     <script type="text/javascript" src="${s.base}/res/js/WGS84_to_GCJ02.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/home.js"></script>
-	<script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/chat.js"></script>
 
-    <link href="${s.base}/res/assets/video-js.css" rel="stylesheet">
+    <link href="${s.base}/res/assets/video-js.css" rel="stylesheet"/>
     <script src="${s.base}/res/assets/videojs-ie8.min.js"></script>
 
+    <link href="${s.base}/res/css/common.css" rel="stylesheet"/>
 </head>
 <style>
-.headerUav{
-  position:absolute;
-  z-index:99;
-  width:400px;;
-  height:50px;
-  text-align:center;
-  background-color:red;
-  left:50%;
-    top:10px;
-  line-height:50px;
-  transform: translate(-50%, 0);
-  border-radius:10px;
-  -moz-border-radius:10px; /* 老的 Firefox */
-  opacity:0.6;
-  color:#fff;
-}
-#UavInfo{
-    position:absolute;
-    z-index:99;
-    width:330px;
-    min-height: 420px;
-    right:0;
-    top:0;
-    background-color:#fff;
-    border-radius:10px;
-    -moz-border-radius:10px; /* 老的 Firefox */
-    opacity:0.8;
-    padding: 10px;
-    font-size:1.4rem;
-}
-span{
-     color:#f01414;
- }
-.liheader{
-    background-color:#d4d4d4;
-    font-size:1.8rem;
-}
-#fightStatus{
-    color: #fff;
-}
-.main-wrapVideo{
-    position:absolute;
-    top:10px;
-    min-width: 520px;
-    max-width: 760px;
-    z-index: 999;
-    margin-left: 80px;
-    visibility: hidden;
-}
-.videoheader{
-    text-align: center;
-    height: 30px;
-    width: 100%;
-    background: #d4d4d4;
-}
-.videoheader span{
-    line-height: 30px;
-}
+    .headerUav {
+        position: absolute;
+        z-index: 99;
+        width: 400px;;
+        height: 50px;
+        text-align: center;
+        background-color: red;
+        left: 50%;
+        top: 10px;
+        line-height: 50px;
+        transform: translate(-50%, 0);
+        border-radius: 10px;
+        -moz-border-radius: 10px; /* 老的 Firefox */
+        opacity: 0.6;
+        color: #fff;
+    }
+
+    #UavInfo {
+        position: absolute;
+        z-index: 99;
+        width: 330px;
+        min-height: 420px;
+        right: 0;
+        top: 0;
+        background-color: #fff;
+        border-radius: 10px;
+        -moz-border-radius: 10px; /* 老的 Firefox */
+        opacity: 0.8;
+        padding: 10px;
+        font-size: 1.4rem;
+    }
+
+    span {
+        color: #f01414;
+    }
+
+    .liheader {
+        background-color: #d4d4d4;
+        font-size: 1.8rem;
+    }
+
+    #fightStatus {
+        color: #fff;
+    }
+
+    .main-wrapVideo {
+        position: absolute;
+        top: 10px;
+        min-width: 520px;
+        max-width: 760px;
+        z-index: 999;
+        margin-left: 80px;
+        visibility: hidden;
+    }
+
+    .videoheader {
+        text-align: center;
+        height: 30px;
+        width: 100%;
+        background: #d4d4d4;
+    }
+
+    .videoheader span {
+        line-height: 30px;
+    }
+
+    #showSelections .checkbox-inline input {
+        margin-top: 10px !important;
+    }
 </style>
 
 <body>
@@ -87,7 +99,7 @@ span{
 <input type="hidden" id="plane" value="${uav2.deviceid!}"><br/>
 <input type="hidden" id="peoplerole" value="${role!}"><br/>
 <div class="headerUav" style="font-size:2.0rem;">
-<font size="4">飞机状态：<span id="fightStatus">暂未连接</span></font>
+    <font size="4">飞机状态：<span id="fightStatus">暂未连接</span></font>
 </div>
 
 <div class="main-wrapVideo" id="videoDiv">
@@ -95,7 +107,8 @@ span{
         <span>无人机实时视频</span>
     </div>
     <div class="videocontain" id="videoContainer">
-        <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" width="640" height="360" poster="${s.base}/res/i/bing.png" data-setup="{}">
+        <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+               width="640" height="360" poster="${s.base}/res/i/bing.png" data-setup="{}">
             <!-- <source src="1.mp4" type="video/mp4"> -->
             <source src="rtmp://218.65.240.246:11935/live/stream" type="rtmp/flv">
         </video>
@@ -105,17 +118,20 @@ span{
 <div id="UavInfo">
     <div class="baseInfo">
         <ul class="list-group">
-            <li class="list-group-item liheader" >
+            <li class="list-group-item liheader">
                 <b>任务基本信息</b>
-                <button type="button" class="btn btn-success" id="videobtn" style="margin-left:70px;" onclick="videoOp()">实时视频</button>
+                <button type="button" class="btn btn-success" id="videobtn" style="margin-left:70px;"
+                        onclick="videoOp()">实时视频
+                </button>
             </li>
-            <li class="list-group-item" >巡检任务名称：<span id="taskName">${task.name}</span></li>
-            <li class="list-group-item" >飞行路径名称：<span id="flyingPathName"></span></li>
-            <li class="list-group-item">起飞员：<span>${task.userAName}</span></li>
-            <li class="list-group-item">降落员：<span>${task.userZName}</span></li>
-            <li class="list-group-item" >无人机设备号：<span id="uavDeviceId"></span></li>
-            <li class="list-group-item" >无人机名称：<span id="uavName"></span></li>
-            <li class="list-group-item" >无人机描述：<span id="uavDescription"></span></li>
+            <li class="list-group-item">巡检任务名称：<span id="taskName">${task.name!}</span></li>
+            <li class="list-group-item">任务MissionID：<span id="taskMissionId">${task.missionId!}</span></li>
+            <li class="list-group-item">飞行路径名称：<span id="flyingPathName"></span></li>
+            <li class="list-group-item">起飞员：<span>${task.userAName!}</span></li>
+            <li class="list-group-item">降落员：<span>${task.userZName!}</span></li>
+            <li class="list-group-item">无人机设备号：<span id="uavDeviceId"></span></li>
+            <li class="list-group-item">无人机名称：<span id="uavName"></span></li>
+            <li class="list-group-item">无人机描述：<span id="uavDescription"></span></li>
         </ul>
     </div>
     <div class="flyingInfo">
@@ -127,177 +143,195 @@ span{
             <li class="list-group-item">无人机经度：<span id="fightLon">暂无</span></li>
             <li class="list-group-item">无人机海拔高度：<span id="fightElv">暂无</span></li>
             <li class="list-group-item">无人机航向：<span id="fightHDG">暂无</span></li>
-             <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
+            <li class="list-group-item">无人机水平倾角：<span id="fightHAgl">暂无</span></li>
             <li class="list-group-item">无人机垂直倾角：<span id="fightGrVAgl">暂无</span></li>
-            </ul>
+        </ul>
     </div>
 </div>
 <div id="container"></div>
+<div id="showSelections">
+    <label class="checkbox-inline">
+        <input type="checkbox" id="infoPointbtn" value="option1" onchange="showInfoPoint(this)"> 信息点图层
+    </label>
+</div>
+<!-- UI组件库 1.0 -->
+<script src="${s.base}/res/assets/video.js"></script>
+<script>
+    //拖拽原理：改变obj的top值与left值
+    function drag() {
+        var dragdiv = document.getElementById("videoHeader");
+        var targetdiv = document.getElementById("videoDiv");
 
-        <!-- UI组件库 1.0 -->
-        <script src="${s.base}/res/assets/video.js"></script>
-        <script>
-            //拖拽原理：改变obj的top值与left值
-            function drag()
-            {
-                var dragdiv = document.getElementById("videoHeader");
-                var targetdiv = document.getElementById("videoDiv");
-
-                addEvent(dragdiv,'mousedown',function(ev){
-                    var oEvent=ev||event;
-                    //不变的参考距离＝mousedown时鼠标坐标－obj到页面的左边距
-                    var disX=oEvent.clientX-targetdiv.offsetLeft;
-                    var disY=oEvent.clientY-targetdiv.offsetTop;
-                    addEvent(document,'mousemove',move);
-                    addEvent(document,'mouseup',up);
-                    oEvent.preventDefault();//阻止默认事件，取消文字选中
-                    function move(ev)
-                    {
-                        var oEvent=ev||event;
-                        var left=oEvent.clientX-disX;
-                        var top=oEvent.clientY-disY;
-                        targetdiv.style.left=left+'px';
-                        targetdiv.style.top=top+'px';
-                        dragdiv.setCapture&&dragdiv.setCapture();//低版本IE阻止默认事件，取消文字选中
-                    }
-                    function up()
-                    {
-                        removeEvent(document,'mousemove',move);
-                        removeEvent(document,'mouseup',up);
-                        dragdiv.releaseCapture&&dragdiv.releaseCapture();//低版本IE取消阻止默认事件
-                    }
-                });
+        addEvent(dragdiv, 'mousedown', function (ev) {
+            var oEvent = ev || event;
+            //不变的参考距离＝mousedown时鼠标坐标－obj到页面的左边距
+            var disX = oEvent.clientX - targetdiv.offsetLeft;
+            var disY = oEvent.clientY - targetdiv.offsetTop;
+            addEvent(document, 'mousemove', move);
+            addEvent(document, 'mouseup', up);
+            oEvent.preventDefault();//阻止默认事件，取消文字选中
+            function move(ev) {
+                var oEvent = ev || event;
+                var left = oEvent.clientX - disX;
+                var top = oEvent.clientY - disY;
+                targetdiv.style.left = left + 'px';
+                targetdiv.style.top = top + 'px';
+                dragdiv.setCapture && dragdiv.setCapture();//低版本IE阻止默认事件，取消文字选中
             }
-            //添加事件绑定
-            function addEvent(obj,sEv,fn)
-            {
-                if(obj.addEventListener)
-                {
-                    obj.addEventListener(sEv,fn,false);
-                }else{
-                    obj.attachEvent('on'+sEv,fn);
+
+            function up() {
+                removeEvent(document, 'mousemove', move);
+                removeEvent(document, 'mouseup', up);
+                dragdiv.releaseCapture && dragdiv.releaseCapture();//低版本IE取消阻止默认事件
+            }
+        });
+    }
+
+    //添加事件绑定
+    function addEvent(obj, sEv, fn) {
+        if (obj.addEventListener) {
+            obj.addEventListener(sEv, fn, false);
+        } else {
+            obj.attachEvent('on' + sEv, fn);
+        }
+    }
+
+    //删除事件绑定
+    function removeEvent(obj, sEv, fnName) {
+        if (obj.removeEventListener) {
+            obj.removeEventListener(sEv, fnName, false);
+        } else {
+            obj.detachEvent('on' + sEv, fnName);
+        }
+    }
+
+    function ready(fn) {
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', fn, false)
+        } else {
+            document.attachEvent('onreadystatechange', function () {
+                if (document.readyState == 'complete') {
+                    fn();
                 }
-            }
+            })
+        }
+    }
 
-            //删除事件绑定
-            function removeEvent(obj,sEv,fnName)
-            {
-                if(obj.removeEventListener)
-                {
-                    obj.removeEventListener(sEv,fnName,false);
-                }else{
-                    obj.detachEvent('on'+sEv,fnName);
-                }
-            }
+    function videoOp() {
+        if ($('#videoDiv').css('visibility') === 'hidden') {
+            $("#videoDiv").css('visibility', 'visible');
+            $(".vjs-control-bar").css('visibility', 'visible');
+            $("#videobtn").text("关闭视频");
+            //ajax获取后台视频流
+        } else {
+            $("#videoDiv").css('visibility', 'hidden');
+            $(".vjs-control-bar").css('visibility', 'hidden');
+            $("#videobtn").text("实时视频");
+            //关闭视频流
+        }
+    }
 
-            function ready(fn)
-            {
-                if(document.addEventListener)
-                {
-                    document.addEventListener('DOMContentLoaded',fn,false)
-                }else{
-                    document.attachEvent('onreadystatechange',function(){
-                        if(document.readyState=='complete')
-                        {fn();}
-                    })
-                }
-            }
-            function videoOp() {
-                if($('#videoDiv').css('visibility') === 'hidden'){
-                    $("#videoDiv").css('visibility','visible');
-                    $(".vjs-control-bar").css('visibility','visible');
-                    $("#videobtn").text("关闭视频");
-                    //ajax获取后台视频流
-                }else{
-                    $("#videoDiv").css('visibility','hidden');
-                    $(".vjs-control-bar").css('visibility','hidden');
-                    $("#videobtn").text("实时视频");
-                    //关闭视频流
-                }
-            }
-            drag();   //div拖动初始化
-        </script>
-        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
-        <script type="text/javascript">
+    drag();   //div拖动初始化
+</script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript">
 
-			var uavdata = ${uav};
-			var flyingPath = ${path};
+    var uavdata = ${uav};
+    var flyingPath = ${path};
 
-			$("#flyingPathName").html(flyingPath.name);
-            $("#uavDeviceId").html(uavdata.deviceid);
-            $("#uavName").html(uavdata.name);
-            $("#uavDescription").html(uavdata.description);
+    $("#flyingPathName").html(flyingPath.name);
+    $("#uavDeviceId").html(uavdata.deviceid);
+    $("#uavName").html(uavdata.name);
+    $("#uavDescription").html(uavdata.description);
 
-            //创建地图
-            var map = new AMap.Map('container', {
-                zoom: 15,
-                center: flyingPath.pathdata[0], //中心点坐标
-            });
-            map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
-                var scale = new AMap.Scale({          //生成 比例尺插件
-                    visible: true,
-                    position:'LB',
-                });
-                map.addControl(scale);
-                scale.show();
-                map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
-            });
-            if(location.href.indexOf('&guide=1')!==-1){
-                map.setStatus({scrollWheel:false})
-            }
-            AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+    //创建地图
+    var map = new AMap.Map('container', {
+        zoom: 15,
+        center: flyingPath.pathdata[0], //中心点坐标
+    });
+    map.plugin(["AMap.ToolBar", "AMap.Scale"], function () {
+        var scale = new AMap.Scale({          //生成 比例尺插件
+            visible: true,
+            position: 'LB',
+        });
+        map.addControl(scale);
+        scale.show();
+        map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
+    });
+    if (location.href.indexOf('&guide=1') !== -1) {
+        map.setStatus({scrollWheel: false})
+    }
+    AMapUI.loadUI(['control/BasicControl'], function (BasicControl) {
 
-                var layerCtrl1 = new BasicControl.LayerSwitcher({
-                    position: 'RB'
-                });
-                map.addControl(layerCtrl1);
-            });
+        var layerCtrl1 = new BasicControl.LayerSwitcher({
+            position: 'RB'
+        });
+        map.addControl(layerCtrl1);
+    });
 
-            var polyline = new AMap.Polyline({
-                map: map,
-                path: flyingPath.pathdata, //设置线覆盖物路径
-                strokeColor: '#ff6700', //线颜色
-                strokeOpacity: 1, //线透明度
-                strokeWeight: 3, //线宽
-                strokeStyle: "solid", //线样式
-                strokeDasharray: [10, 5] //补充线样式
-            });
+    var polyline = new AMap.Polyline({
+        map: map,
+        path: flyingPath.pathdata, //设置线覆盖物路径
+        strokeColor: '#ff6700', //线颜色
+        strokeOpacity: 1, //线透明度
+        strokeWeight: 3, //线宽
+        strokeStyle: "solid", //线样式
+        strokeDasharray: [10, 5] //补充线样式
+    });
 
-            //海量信息点
-            var style = {
-                url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
-                anchor: new AMap.Pixel(6, 6),
-                size: new AMap.Size(11, 11)
-            };
-            var points = ${infoPoints};
-            var mass = new AMap.MassMarks(points, {
-                opacity: 0.8,
-                zIndex: 111,
-                cursor: 'pointer',
-                style: style
-            });
-            var pointmarker = new AMap.Marker({content: ' ', map: map});
-            mass.on('mouseover', function (e) {
-                console.log(e);
-                pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
-                pointmarker.setLabel({content: e.data.name})
-            });
+    //海量信息点
+
+    startpoint = new Array(JSON.parse(JSON.stringify(uavdata.position)));
+
+    var planeMarker = new AMap.Marker({
+        map: map,
+        // position: uavdata.position,
+        position: flyingPath.pathdata[0],
+        icon: new AMap.Icon({
+            size: new AMap.Size(32, 32), //图标大小
+            image: 'i/uav-32.png'
+        }),
+        offset: new AMap.Pixel(-16, -16), // 相对于基点的偏移位置
+    });
+    map.add(planeMarker);
+
+</script>
+<script src="${s.base}/res/js/infoPoint.js"></script>
+<script>
+    var style = [ {
+        url: 'https://a.amap.com/jsapi_demos/static/images/mass1.png',
+        anchor: new AMap.Pixel(4, 4),
+        size: new AMap.Size(7, 7)
+    },{
+        url: 'https://a.amap.com/jsapi_demos/static/images/mass2.png',
+        anchor: new AMap.Pixel(3, 3),
+        size: new AMap.Size(5, 5)
+    },{
+        url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
+        anchor: new AMap.Pixel(6, 6),
+        size: new AMap.Size(11, 11)
+    }];
+    var mass = new AMap.MassMarks(city, {
+        opacity: 0.8,
+        zIndex: 111,
+        cursor: 'pointer',
+        style: style
+    });
+    var pointmarker = new AMap.Marker({content: ' ', map: map});
+    mass.on('mouseover', function (e) {
+        pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
+        pointmarker.setLabel({content: e.data.name})
+    });
+
+    function showInfoPoint(obj){
+        if (obj.checked){
+            //显示信息点
             mass.setMap(map);
-
-            startpoint =  new Array(JSON.parse(JSON.stringify(uavdata.position)));
-
-	        var planeMarker = new AMap.Marker({
-	                map: map,
-                   // position: uavdata.position,
-                    position: flyingPath.pathdata[0],
-                    icon: new AMap.Icon({
-                    size: new AMap.Size(32, 32), //图标大小
-                    image: 'i/uav-32.png'
-                    }),
-                offset: new AMap.Pixel(-16, -16), // 相对于基点的偏移位置
-            });
-	        map.add(planeMarker);
-
-        </script>
-	</body>
+        }else{
+            //隐藏信息点
+            map.remove(mass);
+        }
+    }
+</script>
+</body>
 </html>

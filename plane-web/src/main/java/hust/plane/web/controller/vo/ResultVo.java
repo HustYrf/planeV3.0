@@ -1,6 +1,6 @@
 package hust.plane.web.controller.vo;
 
-public class ResultVo<T>{
+public class ResultVo<T> {
     private ResultStatus status;
 
     private String msg;

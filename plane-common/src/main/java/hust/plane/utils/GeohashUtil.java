@@ -1,6 +1,5 @@
 package hust.plane.utils;
 
-import hust.plane.mapper.pojo.Route;
 import hust.plane.utils.pojo.RouteExcel;
 
 import java.util.ArrayList;
@@ -19,7 +18,8 @@ public class GeohashUtil {
     public static final double MINLNG = -180;
     public static final double MAXLNG = 180;
 
-    /**  精度：
+    /**
+     * 精度：
      * 1 2500km;2 630km;3 78km;4 30km
      * 5 2.4km; 6 610m; 7 76m; 8 19m
      */
@@ -43,11 +43,11 @@ public class GeohashUtil {
      * @Description: 设置经纬度的最小单位
      */
     private static void setMinLatLng() {
-        minLat =  MAXLAT - MINLAT;
+        minLat = MAXLAT - MINLAT;
         for (int i = 0; i < latLength; i++) {
             minLat /= 2.0;
         }
-        minLng =MAXLNG - MINLNG;
+        minLng = MAXLNG - MINLNG;
         for (int i = 0; i < lngLength; i++) {
             minLng /= 2.0;
         }
@@ -137,7 +137,7 @@ public class GeohashUtil {
      */
     public static String getGeoHashBase32(RouteExcel routeExcel) {
         setMinLatLng();
-        return getGeoHashBase32(routeExcel.getLatitude(),routeExcel.getLongitude());
+        return getGeoHashBase32(routeExcel.getLatitude(), routeExcel.getLongitude());
     }
 
     /**
@@ -195,7 +195,7 @@ public class GeohashUtil {
      * @Description: 获取坐标的geo二进制字符串
      */
     private static boolean[] getGeoBinary(double lat, double lng) {
-        boolean[] latArray = getHashArray(lat,MINLAT, MAXLAT, latLength);
+        boolean[] latArray = getHashArray(lat, MINLAT, MAXLAT, latLength);
         boolean[] lngArray = getHashArray(lng, MINLNG, MAXLNG, lngLength);
         return merge(latArray, lngArray);
     }

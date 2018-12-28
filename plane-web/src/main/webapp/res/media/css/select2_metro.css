@@ -21,7 +21,7 @@ to hide search box
 .select2-container,
 .select2-drop,
 .select2-search,
-.select2-search input{
+.select2-search input {
     /*
       Force border-box so that % widths fit the parent
       container without overlap because of margin/padding.
@@ -70,9 +70,9 @@ to hide search box
 .select2-container.select2-drop-above .select2-choice {
     border-bottom-color: #e5e5e5;
 
-    -webkit-border-radius:0 0 4px 4px;
-    -moz-border-radius:0 0 4px 4px;
-    border-radius:0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 .select2-container.select2-dropdown-open.select2-drop-above .select2-choice {
@@ -91,7 +91,6 @@ to hide search box
     text-overflow: ellipsis;
 }
 
-
 .select2-container .select2-choice abbr {
     display: block;
     width: 12px;
@@ -108,6 +107,7 @@ to hide search box
     cursor: pointer;
     outline: 0;
 }
+
 .select2-container .select2-choice abbr:hover {
     background-position: right -11px;
     cursor: pointer;
@@ -127,7 +127,7 @@ to hide search box
 
 .select2-drop {
     width: 100%;
-    margin-top:-1px;
+    margin-top: -1px;
     position: absolute;
     z-index: 9992;
     top: 100%;
@@ -268,6 +268,7 @@ to hide search box
     border-left: none;
     filter: none;
 }
+
 .select2-dropdown-open .select2-choice div b {
     background-position: -18px 1px;
 }
@@ -280,20 +281,40 @@ to hide search box
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .select2-results ul.select2-result-sub {
     margin: 0;
 }
 
-.select2-results ul.select2-result-sub > li .select2-result-label { padding-left: 20px }
-.select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 40px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 60px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 80px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 100px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 110px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 120px }
+.select2-results ul.select2-result-sub > li .select2-result-label {
+    padding-left: 20px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 40px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 60px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 80px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 100px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 110px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 120px
+}
 
 .select2-results li {
     list-style: none;
@@ -339,7 +360,6 @@ to hide search box
     color: #000;
 }
 
-
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
@@ -356,6 +376,7 @@ disabled look for disabled choices in the results dropdown
     display: list-item;
     cursor: default;
 }
+
 .select2-results .select2-disabled {
     background: #f4f4f4;
     display: list-item;
@@ -394,7 +415,6 @@ disabled look for disabled choices in the results dropdown
     display: none
 }
 
-
 /* multiselect */
 
 .select2-container-multi .select2-choices {
@@ -424,10 +444,12 @@ disabled look for disabled choices in the results dropdown
     border: 1px solid #999999 !important;
     outline: none;
 }
+
 .select2-container-multi .select2-choices li {
     float: left;
     list-style: none;
 }
+
 .select2-container-multi .select2-choices .select2-search-field {
     margin: 0;
     padding: 0;
@@ -499,9 +521,11 @@ disabled look for disabled choices in the results dropdown
     background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
     */
 }
+
 .select2-container-multi .select2-choices .select2-search-choice span {
     cursor: default;
 }
+
 .select2-container-multi .select2-choices .select2-search-choice-focus {
     background: #ffffff;
 }
@@ -525,12 +549,13 @@ disabled look for disabled choices in the results dropdown
 .select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
     background-position: right -11px;
 }
+
 .select2-container-multi .select2-choices .select2-search-choice-focus .select2-search-choice-close {
     background-position: right -11px;
 }
 
 /* disabled styles */
-.select2-container-multi.select2-container-disabled .select2-choices{
+.select2-container-multi.select2-container-disabled .select2-choices {
     background-color: #ffffff;
     background-image: none;
     border: 1px solid #ddd;
@@ -547,8 +572,8 @@ disabled look for disabled choices in the results dropdown
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
     display: none;
 }
-/* end multiselect */
 
+/* end multiselect */
 
 .select2-result-selectable .select2-match,
 .select2-result-unselectable .select2-match {
@@ -568,12 +593,13 @@ disabled look for disabled choices in the results dropdown
 
 /* Retina-ize icons */
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
     .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
         background-image: url('../image/select2x2.png') !important;
         background-repeat: no-repeat !important;
         background-size: 60px 40px !important;
     }
+
     .select2-search input {
         background-position: 100% -21px !important;
     }

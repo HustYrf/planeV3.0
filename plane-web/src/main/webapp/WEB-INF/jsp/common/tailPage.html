@@ -1,39 +1,41 @@
 <#if (page.pageTotalCount)?? && page.pageTotalCount gt 1>
 <div class="pagination" style="float:right;">
-			<input type="hidden" id="_id_pageNum" name="pageNum" value="${page.pageNum}"/>
-            <ul>
+    <input type="hidden" id="_id_pageNum" name="pageNum" value="${page.pageNum}"/>
+    <ul>
 			<#if !page.firstPage>
 				<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a></li>
-				<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a></li>
-			</#if>
+				<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
+                </li>
+            </#if>
 			<#list page.showNums as n>
-				<#if page.showDot && n_index == 6>
+                <#if page.showDot && n_index == 6>
 					<span class="page-omit">...</span>
-				</#if>
-				<#if page.pageNum == n>
+                </#if>
+                <#if page.pageNum == n>
 				<li><a class="page-cur" href="javascript:void(0);" style="background-color: darkgrey">${n}</a></li>
-				<#else>
+                <#else>
 				<li><a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
-				</#if>
-			</#list>
+                </#if>
+            </#list>
 			<#if !page.lastPage>
-			<li><a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageNum+1}')">下一页</a> </li>
-			<li><a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a> </li>
-			</#if>
-            </ul>
+			<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum+1}')">下一页</a></li>
+			<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a>
+            </li>
+            </#if>
+    </ul>
 </div>
 </#if>
 <script type="text/javascript">
-	function _queryPage(page){
-        if(page == undefined){
+    function _queryPage(page) {
+        if (page == undefined) {
             page = 1;
         }
         $('#_id_pageNum').val(page);
-		var query = $('#queryPageForm').attr('queryPage');
-		if(query && Number(query) == 1){
-			queryPage(page);
-		}else{
-			$('#queryPageForm').submit();
-		}
-	}
+        var query = $('#queryPageForm').attr('queryPage');
+        if (query && Number(query) == 1) {
+            queryPage(page);
+        } else {
+            $('#queryPageForm').submit();
+        }
+    }
 </script>

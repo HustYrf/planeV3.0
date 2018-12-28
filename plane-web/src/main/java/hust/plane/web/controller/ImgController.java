@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +39,9 @@ public class ImgController {
 
     @Value(value = "${uploadHost}")
     private String FILE_UPLOAD_HOST;
+
+    @Value(value = "${uploadLocalHost}")
+    private String FILE_UPLOAD_Local_HOST;
 
     @Value(value = "${SERVER_NAME}")
     private String SERVER_NAME;
@@ -90,13 +92,13 @@ public class ImgController {
 //        JsonUtils.renderJson(response, jo);
 //    }
 
-    @RequestMapping(value = "uploadSysHeadImg/{taskDir}", method = RequestMethod.POST)
+    @RequestMapping(value = "uploadSysHeadImg/{missionId}", method = RequestMethod.POST)
     @ResponseBody
-    public void uploadSysHeadImg(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "taskDir") String taskDir) {
+    public void uploadSysHeadImg(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "missionId") String missionId) {
         JSONObject jo = new JSONObject();
         try {
 
-            MultipartHttpServletRequest Murequest = (MultipartHttpServletRequest)request;
+            MultipartHttpServletRequest Murequest = (MultipartHttpServletRequest) request;
             Map<String, MultipartFile> files = Murequest.getFileMap();//得到文件map对象
             Client client = new Client();//实例化一个jersey
             List<String> fileNameList = new ArrayList<>();
@@ -104,7 +106,11 @@ public class ImgController {
             List<String> realPathList = new ArrayList<>();
 
             for (MultipartFile pic : files.values()) {
-                String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
+
+                //采用内外跨域
+                String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_Local_HOST, imgPath, missionId);
+                //采用本机上传
+                //String uploadInfo = Upload.upload(client, pic, uploadHost, FILE_UPLOAD_HOST, imgPath, taskDir);
                 //  String uploadInfo = Upload.upload(client, pic, uploadHost,imgPath,taskDir);
                 if (!"".equals(uploadInfo)) {    //上传成功
                     String[] infoList = uploadInfo.split(";");
@@ -126,6 +132,6 @@ public class ImgController {
             jo.put("success", 0);
             jo.put("error", "上传失败");
         }
-        JsonUtils.renderJson(response,jo);
+        JsonUtils.renderJson(response, jo);
     }
 }

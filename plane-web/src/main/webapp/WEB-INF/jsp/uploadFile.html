@@ -16,12 +16,14 @@
             font-size: 12px;
             margin: 10px;
         }
+
         .file-item .progress {
             position: relative;
             height: 6px;
             width: 100%;
             background-color: #ddd;
         }
+
         .file-item .progress span {
             position: absolute;
             left: 0;
@@ -30,6 +32,7 @@
             height: 6px;
             background-color: dodgerblue;
         }
+
         .suc-img-item {
             display: inline-block;
             height: 100px;
@@ -56,28 +59,28 @@
 <script>
     var $btn = $('#btn');
     var imgFolder = $btn.val();
-    $(function() {
+    $(function () {
         var $ = jQuery,
-            $list = $('#fileList'),
-            $successImgList = $('#successImgList'),
-            ratio = window.devicePixelRatio || 1,  // 优化retina, 在retina下这个值是2 (window.devicePixelRatio是设备上物理像素和设备独立像素(device-independent pixels (dips))的比例)
-            thumbnailWidth = 50 * ratio,   // 缩略图宽度
-            thumbnailHeight = 50 * ratio,  // 缩略图高度
-            uploader;    // Web Uploader实例
+                $list = $('#fileList'),
+                $successImgList = $('#successImgList'),
+                ratio = window.devicePixelRatio || 1,  // 优化retina, 在retina下这个值是2 (window.devicePixelRatio是设备上物理像素和设备独立像素(device-independent pixels (dips))的比例)
+                thumbnailWidth = 50 * ratio,   // 缩略图宽度
+                thumbnailHeight = 50 * ratio,  // 缩略图高度
+                uploader;    // Web Uploader实例
 
         // 初始化WebUploader
         uploader = WebUploader.create({
             auto: false,   // 自动上传
-            swf:'../js/Uploader.swf',   // swf文件路径
-            server: 'uploadSysHeadImg/'+imgFolder,  // 文件接收服务端接口地址
-            threads:'10',        //同时运行10个线程传输
-            fileNumLimit:'500',  //文件总数量只能选择500个
+            swf: '../js/Uploader.swf',   // swf文件路径
+            server: 'uploadSysHeadImg/' + imgFolder,  // 文件接收服务端接口地址
+            threads: '10',        //同时运行10个线程传输
+            fileNumLimit: '500',  //文件总数量只能选择500个
             duplicate: false, //可以重复上传
 
             // 选择文件的按钮，可选
             pick: {
-                id:'#filePicker',  //选择文件的按钮
-                multiple:true      //允许可以同时选择多个图片
+                id: '#filePicker',  //选择文件的按钮
+                multiple: true      //允许可以同时选择多个图片
             },
 
             quality: 90,        // 图片质量，只有type为`image/jpeg`的时候才有效
@@ -98,20 +101,20 @@
 
 
         // 当有文件添加进来的时候，创建img显示缩略图使用
-        uploader.on('fileQueued', function(file) {
-            var $li = $('<div id="' + file.id + '" class="file-item thumbnail">'+'<span id="removePic" class="glyphicon glyphicon-remove" style="padding-left: 45px"></span>' +
-                '<img>'+
-                '<div class="info">' + file.name + '</div>' +
-                '<div class="progress"><span></span></div>' +
-                '</div>'),
-                $img = $li.find('img');
+        uploader.on('fileQueued', function (file) {
+            var $li = $('<div id="' + file.id + '" class="file-item thumbnail">' + '<span id="removePic" class="glyphicon glyphicon-remove" style="padding-left: 45px"></span>' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '<div class="progress"><span></span></div>' +
+                    '</div>'),
+                    $img = $li.find('img');
 
             $list.append($li);    // $list为容器jQuery实例
 
             // 创建缩略图
             // 如果为非图片文件，可以不用调用此方法。
             // thumbnailWidth x thumbnailHeight 为 50 x 50
-            uploader.makeThumb(file, function(error, src) {
+            uploader.makeThumb(file, function (error, src) {
                 if (error) {
                     $img.replaceWith('<span>不能预览</span>');
                     return;
@@ -121,11 +124,11 @@
         });
 
         // 文件上传过程中创建进度条实时显示。  uploadProgress事件：上传过程中触发，携带上传进度。 file：文件对象；percentage：传输进度 Nuber：类型
-        uploader.on('uploadProgress', function(file, percentage){
+        uploader.on('uploadProgress', function (file, percentage) {
             console.log(file);
             console.log(percentage);
-            var $li = $('#'+file.id),
-                $percent = $li.find('.progress span');
+            var $li = $('#' + file.id),
+                    $percent = $li.find('.progress span');
 
             // 避免重复创建
             if (!$percent.length) {
@@ -135,10 +138,10 @@
         });
 
         // 文件上传成功时候触发，给item添加成功class, 用样式标记上传成功。 file：文件对象，    response：服务器返回数据
-        uploader.on('uploadSuccess', function(file,res) {
-            $('#'+file.id).addClass('upload-state-done');
+        uploader.on('uploadSuccess', function (file, res) {
+            $('#' + file.id).addClass('upload-state-done');
             // $("#upInfo").html("<font color='red'>"+res._raw+"</font>");
-            $successImgList.append('<img class="suc-img-item" src="'+res.realPathList[0]+'">');
+            $successImgList.append('<img class="suc-img-item" src="' + res.realPathList[0] + '">');
             // var oDivs = document.getElementById(file.id);
             // var oDiv2 = document.getElementById(file.id + '_');
             // var oDiv3 = document.createElement('div');
@@ -149,24 +152,24 @@
         });
 
         // 文件上传失败                                file:文件对象 ， code：出错代码
-        uploader.on('uploadError', function(file,code) {
-            var $li = $( '#'+file.id ),
-                $error = $li.find('div.error');
+        uploader.on('uploadError', function (file, code) {
+            var $li = $('#' + file.id),
+                    $error = $li.find('div.error');
 
             // 避免重复创建
-            if(!$error.length) {
+            if (!$error.length) {
                 $error = $('<div class="error"></div>').appendTo($li);
             }
             $error.text('上传失败!');
         });
 
         // 不管成功或者失败，文件上传完成时触发。 file： 文件对象
-        uploader.on('uploadComplete', function( file ) {
+        uploader.on('uploadComplete', function (file) {
             // $('#'+file.id ).find('.progress').remove();
         });
 
         //绑定提交事件
-        $("#btn").click(function() {
+        $("#btn").click(function () {
             console.log("上传...");
             uploader.upload();   //执行手动提交
             console.log("上传成功");

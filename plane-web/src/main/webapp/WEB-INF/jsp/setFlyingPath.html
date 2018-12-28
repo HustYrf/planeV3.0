@@ -9,20 +9,20 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
-    <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css" />
+    <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css"/>
 
     <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css" />
-    <link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/bootstrap-toggle-buttons.css" />
+    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css"/>
+    <link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/bootstrap-toggle-buttons.css"/>
 
     <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 
@@ -74,62 +74,65 @@
         </div>
 
         <!-- END PAGE HEADER-->
-        <div id="dashboard"   style="position:relative;min-height: 790px;">
+        <div id="dashboard" style="position:relative;min-height: 790px;">
             <div id="selectbtns">
                 <form class="" role="form">
                     <p>
                     <div class="control-group">
-                            <button type="button" class="btn green" onclick="startSelect()" id="beginbtn">开始选择</button>
-                            <input type="text" class="m-wrap" style="width: 720px;background-color: #FFFFFF" id="flypath" placeholder="已选路径...">
-                            <button type="button" class="btn green" onclick="showData()">显示结果</button>
-                            <button type="button" class="btn green" onclick="clearSelect()">清除已选</button>
-                            <button type="button" class="btn green" onclick="submitData()">提交结果</button>
+                        <button type="button" class="btn green" onclick="startSelect()" id="beginbtn">开始选择</button>
+                        <input type="text" class="m-wrap" style="width: 720px;background-color: #FFFFFF" id="flypath"
+                               placeholder="已选路径...">
+                        <button type="button" class="btn green" onclick="showData()">显示结果</button>
+                        <button type="button" class="btn green" onclick="clearSelect()">清除已选</button>
+                        <button type="button" class="btn green" onclick="submitData()">提交结果</button>
                     </div>
                     </p>
                 </form>
             </div>
-            <div id="container" ></div>
+            <div id="container"></div>
         </div>
     </div>
 
     <!-- 设定飞行路径弹出层 -start -->
     <div class="modal fade" id="setplanepathModal" tabindex="-1" aria-hidden="true">
         <div class="modal_wapper">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                        <h4 class="modal-title">设定飞行路径</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" id="eee" method="post" action="#">
-                            <div class="control-group">
-                                <label class="control-label">飞行路径名称：</label>
-                                <div class="controls">
-                                    <input type="text" class="m-wrap " id="planepathid" onchange="" placeholder="请输入飞行路径名称" style="width: 97%" />
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">飞行路径：</label>
-                                <div class="controls">
-                                    <input type="text" class="m-wrap" id="planepath" disabled style="width: 97%" />
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">飞行路径描述：</label>
-                                <div class="controls">
-                                    <input type="text" class="m-wrap" id="descripte" placeholder="请输入飞行路径描述" style="width: 97%" />
-                                </div>
-                            </div>
-                            <div id="ocAlertTip" class="alert alert-success" style="display: none;">
-                                <h4><span id="al_info" class="m-wrap">请完整填写所有信息</span></h4>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn blue" onclick="dopostPlanepath();">提交</button>
-                        <button type="button" class="btn closebtn" data-dismiss="modal">关闭</button>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title">设定飞行路径</h4>
                 </div>
+                <div class="modal-body">
+                    <form role="form" id="eee" method="post" action="#">
+                        <div class="control-group">
+                            <label class="control-label">飞行路径名称：</label>
+                            <div class="controls">
+                                <input type="text" class="m-wrap " id="planepathid" onchange="" placeholder="请输入飞行路径名称"
+                                       style="width: 97%"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">飞行路径：</label>
+                            <div class="controls">
+                                <input type="text" class="m-wrap" id="planepath" disabled style="width: 97%"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">飞行路径描述：</label>
+                            <div class="controls">
+                                <input type="text" class="m-wrap" id="descripte" placeholder="请输入飞行路径描述"
+                                       style="width: 97%"/>
+                            </div>
+                        </div>
+                        <div id="ocAlertTip" class="alert alert-success" style="display: none;">
+                            <h4><span id="al_info" class="m-wrap">请完整填写所有信息</span></h4>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn blue" onclick="dopostPlanepath();">提交</button>
+                    <button type="button" class="btn closebtn" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- 设定飞行路径弹出层 -end -->
@@ -152,7 +155,7 @@
 <script type="text/javascript">
 
     var colors = ['#1ef22a', '#260cff', '#eb0aff'];
-    var routeStatusCode = ['混合路由','一干路由', '二干路由' ]
+    var routeStatusCode = ['混合路由', '一干路由', '二干路由']
     ;
     var routeList = ${routeList};
 
@@ -164,10 +167,10 @@
         center: targetRouteList[0].routepathdata[0],
         zoom: 14
     });
-    map.plugin(["AMap.Scale"],function(){    //加载比例尺插件
+    map.plugin(["AMap.Scale"], function () {    //加载比例尺插件
         var scale = new AMap.Scale({
             visible: true,
-            position:'LB',
+            position: 'LB',
         });
         map.addControl(scale);
         scale.show();
@@ -185,7 +188,7 @@
             var polyline = new AMap.Polyline({
                 map: map,
                 path: targetRouteList[i].routepathdata, //设置线覆盖物路径
-                strokeColor:  colors[Number(targetRouteList[i].type)], //线颜色
+                strokeColor: colors[Number(targetRouteList[i].type)], //线颜色
                 strokeOpacity: 1, //线透明度
                 strokeWeight: 5, //线宽
                 strokeStyle: "solid", //线样式
@@ -201,7 +204,7 @@
     var PointList = []; //选定的点列表数据
     var PointListStr = '' //显示的点列表字符串
     var PlanePath = []; //最终选定的路径坐标序列
-    var PlanePathStr=''; //最终选定的路径坐标
+    var PlanePathStr = ''; //最终选定的路径坐标
     var startFlag = false; //设置标志位，确定是否可以开始选择点
     var lineSelected;
 
@@ -216,12 +219,13 @@
         }
         return true;
     }
+
     //数组转字符串
     function getString(objarr) {
         var typeNO = objarr.length;
         var tree = "(";
         for (var i = 0; i < typeNO; i++) {
-            tree +=  objarr[i][0];
+            tree += objarr[i][0];
             tree += " " + objarr[i][1];
             if (i < typeNO - 1) {
                 tree += ",";
@@ -241,6 +245,7 @@
         PointList.push(point);
 
     }
+
     //生成飞行路径
     function merge() {
 
@@ -294,6 +299,7 @@
         }
 
     }
+
     //清除已选择的内容
     function clearSelect() {
         PointList.splice(0, PointList.length);
@@ -322,37 +328,37 @@
     }
 
     //在模态框中提交飞行路径
-    function dopostPlanepath(){
+    function dopostPlanepath() {
 
         var planepathid = $('#planepathid').val();
         var descripte = $("#descripte").val();
-        if(planepathid=='' || descripte==''){
-            $('#ocAlertTip').css('display','block');
-        }else{
+        if (planepathid == '' || descripte == '') {
+            $('#ocAlertTip').css('display', 'block');
+        } else {
             $.ajax({
                 url: '${s.base}/doSetFlyPath.action',
                 type: 'POST',
                 async: true, //或false,是否异步
                 data: {
-                    'name':planepathid,
-                    'pathdata':PlanePathStr,
-                    'description':descripte,
+                    'name': planepathid,
+                    'pathdata': PlanePathStr,
+                    'description': descripte,
                 },
                 timeout: 5000, //超时时间
-                success: function(data) {
+                success: function (data) {
                     //console.log(data);
                     $('#setplanepathModal').modal('hide');
                     clearSelect();
                     alert("飞行路径设定成功!");   //该提示框可以修改的更好看
                 },
-                error: function(xhr, textStatus) {
+                error: function (xhr, textStatus) {
                     console.log('设定飞行路径发生错误');
                 }
             });
         }
     }
 
-    AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+    AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
         for (var i = 0; i < targetRouteList.length; i++) {
             //启动页面
             var start = new SimpleMarker({
@@ -408,6 +414,7 @@
 
         }
     });
+
     //构建自定义信息窗体
     function createInfoWindow(title, content) {
         var info = document.createElement("div");
@@ -436,16 +443,18 @@
         info.appendChild(middle);
         return info;
     }
+
     // 打开信息窗体
     function markerClick(e) {
         // alert(e.target.getExtData());
         infoWindow.setContent(e.target.content);
         infoWindow.open(map, e.target.getPosition());
-        if(startFlag == true){
+        if (startFlag == true) {
             addPoint(e.target.getExtData());
         }
 
     }
+
     // 关闭信息窗体
     function closeInfoWindow() {
         map.clearInfoWindow();

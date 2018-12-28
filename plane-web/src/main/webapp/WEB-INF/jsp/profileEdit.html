@@ -9,10 +9,10 @@
     <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
-   <#-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="${s.base}/res/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">-->
+<#-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+ <link href="${s.base}/res/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">-->
 
-   <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
@@ -48,11 +48,13 @@
         .lf15px {
             left: 15px;
         }
-        .controls button{
+
+        .controls button {
             margin: 20px 15px;
         }
-        .help-block{
-            color:red;
+
+        .help-block {
+            color: red;
         }
     </style>
 </head>
@@ -91,109 +93,112 @@
 
         <div id="dashboard" style="min-height: 86%;">
             <!-- 填充内容 start-->
-                <div class="row-fluid" style="margin:auto 30%;">
-                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form class="form-horizontal" method="post" id="profileForm" role="form"  enctype="multipart/form-data">
-                                            <div style="width:150px;margin:10px 240px;">
-                                                <div style="width:100%;height:150px;background-color:blue; border-radius:75px;overflow: hidden;">
-                                                    <img src=${Session["login_user"].icon} id="image"
-                                                         style="height: 100%;width: 100%;" alt="">
-                                                </div>
-                                                <center style="margin-top:20px;">
-                                                    <input type="file" name="file" id="file" class="inputfile"
-                                                           accept="image/jpeg,image/jpg,image/png"/>
-                                                    <label for="file" class="btn green">选择图片</label>
-                                                </center>
-                                            </div>
+            <div class="row-fluid" style="margin:auto 30%;">
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <form class="form-horizontal" method="post" id="profileForm" role="form" enctype="multipart/form-data">
+                    <div style="width:150px;margin:10px 240px;">
+                        <div style="width:100%;height:150px;background-color:blue; border-radius:75px;overflow: hidden;">
+                            <img src=${Session["login_user"].icon} id="image"
+                                 style="height: 100%;width: 100%;" alt="">
+                        </div>
+                        <center style="margin-top:20px;">
+                            <input type="file" name="file" id="file" class="inputfile"
+                                   accept="image/jpeg,image/jpg,image/png"/>
+                            <label for="file" class="btn green">选择图片</label>
+                        </center>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="username" class="control-label">账号</label>
-                                                <div class="controls form-control">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
-                                                    <input type="text" id="username" class="m-wrap span4"  id="role"  name="name" value="${user.name!}" disabled>
-                                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="username" class="control-label">账号</label>
+                        <div class="controls form-control">
+                            <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                            <input type="text" id="username" class="m-wrap span4" id="role" name="name"
+                                   value="${user.name!}" disabled>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="role" class="control-label">角色</label>
-                                                <div class="controls form-control">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                    <div class="control-group form-group has-feedback">
+                        <label for="role" class="control-label">角色</label>
+                        <div class="controls form-control">
+                            <!-- 此处只能存放45(varchar)/2个汉字。 -->
                                                     <#if Session["super_administrator"]?exists>
-                                                        <input type="text"  class="m-wrap span4" value="${department!}" id="role" disabled>
+                                                        <input type="text" class="m-wrap span4" value="${department!}"
+                                                               id="role" disabled>
                                                     <#else >
-                                                        <input type="text"  class="m-wrap span4" value="${department!}"  id="role" disabled>
+                                                        <input type="text" class="m-wrap span4" value="${department!}"
+                                                               id="role" disabled>
                                                     </#if>
-                                                    <span class="glyphicon glyphicon-user form-control-feedback" ></span>
-                                                </div>
-                                            </div>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="worknumber" class="col-sm-2 control-label">工号</label>
-                                                <div class="controls">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
-                                                    <input type="text" class="m-wrap span4" name="worknumber"
-                                                           id="worknumber" value="${user.worknumber!}" maxlength="20" disabled>
-                                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="worknumber" class="col-sm-2 control-label">工号</label>
+                        <div class="controls">
+                            <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                            <input type="text" class="m-wrap span4" name="worknumber"
+                                   id="worknumber" value="${user.worknumber!}" maxlength="20" disabled>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="nickname" class="control-label">昵称</label>
-                                                <div class="controls form-control">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
-                                                    <input type="text" class="m-wrap span4" name="nickname"
-                                                           id="nickname" value="${user.nickname!}" maxlength="20">
-                                                    <span class="glyphicon glyphicon-user form-control-feedback" ></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="nickname" class="control-label">昵称</label>
+                        <div class="controls form-control">
+                            <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                            <input type="text" class="m-wrap span4" name="nickname"
+                                   id="nickname" value="${user.nickname!}" maxlength="20">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="email" class="col-sm-2 control-label">邮箱</label>
-                                                <div class="controls ">
-                                                    <input type="email" class="m-wrap span4" id="email" name="email"
-                                                           value="${user.email!}">
-                                                    <span class="glyphicon glyphicon-user form-control-feedback" ></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="email" class="col-sm-2 control-label">邮箱</label>
+                        <div class="controls ">
+                            <input type="email" class="m-wrap span4" id="email" name="email"
+                                   value="${user.email!}">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="phone1" class="col-sm-2 control-label">电话1</label>
-                                                <div class="controls">
-                                                    <input type="text" class="m-wrap span4" id="phonenumber1"
-                                                           name="phoneone" value="${user.phoneone!}">
-                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="phone1" class="col-sm-2 control-label">电话1</label>
+                        <div class="controls">
+                            <input type="text" class="m-wrap span4" id="phonenumber1"
+                                   name="phoneone" value="${user.phoneone!}">
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="phone2" class="col-sm-2 control-label">电话2</label>
-                                                <div class="controls">
-                                                    <input type="text" class="m-wrap span4" id="phonenumber2"
-                                                           name="phonetwo" value="${user.phonetwo!}">
-                                                    <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="phone2" class="col-sm-2 control-label">电话2</label>
+                        <div class="controls">
+                            <input type="text" class="m-wrap span4" id="phonenumber2"
+                                   name="phonetwo" value="${user.phonetwo!}">
+                            <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <label for="description" class="col-sm-2 control-label">个人简介</label>
-                                                <div class="controls">
-                                                    <!-- 此处只能存放45(varchar)/2个汉字。 -->
-                                                    <input type="textarea" class="m-wrap span4" rows="4"
-                                                           maxlength="20" id="description" name="description"
-                                                           value="${user.description!}"/>
-                                                    <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
-                                                </div>
-                                            </div>
+                    <div class="control-group form-group has-feedback">
+                        <label for="description" class="col-sm-2 control-label">个人简介</label>
+                        <div class="controls">
+                            <!-- 此处只能存放45(varchar)/2个汉字。 -->
+                            <input type="textarea" class="m-wrap span4" rows="4"
+                                   maxlength="20" id="description" name="description"
+                                   value="${user.description!}"/>
+                            <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                        </div>
+                    </div>
 
-                                            <div class="control-group form-group has-feedback">
-                                                <div class="controls">
-                                                    <button type="reset" class="btn" id="restart">重置</button>
-                                                    <button type="button" class="btn green" id="modify">修改</button>
-                                                </div>
-                                            </div>
-                                    </form>
-                </div>
+                    <div class="control-group form-group has-feedback">
+                        <div class="controls">
+                            <button type="reset" class="btn" id="restart">重置</button>
+                            <button type="button" class="btn green" id="modify">修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -204,7 +209,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                    <div class="modal-title f-16" >提示信息</div>
+                    <div class="modal-title f-16">提示信息</div>
                 </div>
                 <div class="modal-body">
                     <div><span class="color-oc f-16" id="resText" style="font-size:1.2rem;">修改个人信息成功！</span></div>

@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <title>路由详情</title>
     <link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
-    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <link href="res/css/common.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -18,14 +19,19 @@
         <div class="row-fluid">
             <div class="block span6">
                 <div id="container"></div>
+                <div id="showSelections">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="infoPointbtn" value="option1" onchange="showInfoPoint(this)"> 信息点图层
+                    </label>
+                </div>
                 <!-- UI组件库 1.0 -->
                 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
                 <script type="text/javascript">
 
                     var colors = ['#1ef22a', '#260cff', '#eb0aff'];
-                    var routeStatusCode = ['混合光缆','一干光缆', '二干光缆'];
+                    var routeStatusCode = ['混合光缆', '一干光缆', '二干光缆'];
 
-                    var  route =${routedata};
+                    var route =${routedata};
 
                     //创建一个地图
                     var map = new AMap.Map('container', {
@@ -33,10 +39,10 @@
                         center: route.routepathdata[0],
                         zoom: 15
                     });
-                    map.plugin(["AMap.Scale"],function(){    //加载比例尺插件
+                    map.plugin(["AMap.Scale"], function () {    //加载比例尺插件
                         var scale = new AMap.Scale({
                             visible: true,
-                            position:'LB',
+                            position: 'LB',
                         });
                         map.addControl(scale);
                         scale.show();
@@ -57,7 +63,7 @@
                     });
 
 
-                    AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+                    AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
 
                         //启动页面
                         var start = new SimpleMarker({
@@ -77,10 +83,10 @@
                         });
                         var title = '光缆编号：<span>' + route.id + '</span>';
                         var content = [];
-                        content.push("名称：" + route.name );
-                        content.push("光缆类型："+routeStatusCode[Number(route.type)])
-                        content.push("描述：" + route.description );
-                        content.push("创建时间：" + route.createtime );
+                        content.push("名称：" + route.name);
+                        content.push("光缆类型：" + routeStatusCode[Number(route.type)])
+                        content.push("描述：" + route.description);
+                        content.push("创建时间：" + route.createtime);
 
                         start.content = createInfoWindow(title, content.join("<br/>"));
                         start.on('click', markerClick);
@@ -104,9 +110,9 @@
                         });
                         var title = '光缆编号：<span>' + route.id + '</span>';
                         var content = [];
-                        content.push("名称：" + route.name );
-                        content.push("光缆类型："+routeStatusCode[Number(route.type)])
-                        content.push("描述：" + route.description );
+                        content.push("名称：" + route.name);
+                        content.push("光缆类型：" + routeStatusCode[Number(route.type)])
+                        content.push("描述：" + route.description);
                         content.push("创建时间：" + route.createtime);
                         end.content = createInfoWindow(title, content.join("<br/>"));
                         end.on('click', markerClick);
@@ -141,6 +147,7 @@
                         info.appendChild(middle);
                         return info;
                     }
+
                     //打开信息窗体
                     function markerClick(e) {
 
@@ -148,9 +155,47 @@
                         infoWindow.open(map, e.target.getPosition());
 
                     }
+
                     //关闭信息窗体
                     function closeInfoWindow() {
                         map.clearInfoWindow();
+                    }
+                </script>
+                <script src="${s.base}/res/js/infoPoint.js"></script>
+                <script>
+                    var style = [ {
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass1.png',
+                        anchor: new AMap.Pixel(4, 4),
+                        size: new AMap.Size(7, 7)
+                    },{
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass2.png',
+                        anchor: new AMap.Pixel(3, 3),
+                        size: new AMap.Size(5, 5)
+                    },{
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
+                        anchor: new AMap.Pixel(6, 6),
+                        size: new AMap.Size(11, 11)
+                    }];
+                    var mass = new AMap.MassMarks(city, {
+                        opacity: 0.8,
+                        zIndex: 111,
+                        cursor: 'pointer',
+                        style: style
+                    });
+                    var pointmarker = new AMap.Marker({content: ' ', map: map});
+                    mass.on('mouseover', function (e) {
+                        pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
+                        pointmarker.setLabel({content: e.data.name})
+                    });
+
+                    function showInfoPoint(obj){
+                        if (obj.checked){
+                            //显示信息点
+                            mass.setMap(map);
+                        }else{
+                            //隐藏信息点
+                            map.remove(mass);
+                        }
                     }
                 </script>
             </div>

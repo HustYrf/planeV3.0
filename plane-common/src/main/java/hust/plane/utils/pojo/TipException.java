@@ -1,6 +1,6 @@
 package hust.plane.utils.pojo;
 
-public class TipException extends RuntimeException{
+public class TipException extends RuntimeException {
     public TipException() {
     }
 

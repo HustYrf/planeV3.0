@@ -3,7 +3,6 @@ package hust.plane.web.interceptor;
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.User;
 import hust.plane.service.interFace.UserService;
-import hust.plane.utils.IPKIT;
 import hust.plane.utils.PlaneUtils;
 import hust.plane.utils.UUID;
 import hust.plane.utils.pojo.MapCache;
@@ -48,14 +47,14 @@ public class BaseInterceptor implements HandlerInterceptor {
         User user = PlaneUtils.getLoginUser(httpServletRequest);
         if (user == null) {
             Integer uid = PlaneUtils.getCookieUid(httpServletRequest);
-            if (uid != null) {        	
+            if (uid != null) {
                 user = userService.queryUserById(uid.intValue());
                 httpServletRequest.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
             }
         }
 
 
-        if (uri.startsWith(contextPath) && !uri.startsWith(contextPath + "/admin/login")&&!uri.startsWith(contextPath+"/admin/register") && user == null) {
+        if (uri.startsWith(contextPath) && !uri.startsWith(contextPath + "/admin/login") && !uri.startsWith(contextPath + "/admin/register") && user == null) {
             httpServletResponse.sendRedirect(contextPath + "/admin/login");
             return false;
         }

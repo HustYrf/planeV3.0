@@ -24,7 +24,7 @@ public class AlarmHistoryController {
     @RequestMapping(value = "alarmHistory")
     public String alarmHistoryQueryPage(Alarm alarm, TailPage<AlarmPojo> page, Model model,
                                         @RequestParam(required = false) String finishstatus, @RequestParam(required = false) String inputId,
-                                        @RequestParam(required = false)String pageNum ){
+                                        @RequestParam(required = false) String pageNum) {
 
         if (finishstatus == null || Integer.valueOf(finishstatus) == -1) {
             alarm.setStatus(null);
@@ -37,9 +37,9 @@ public class AlarmHistoryController {
             int id = Integer.parseInt(inputId);
             alarm.setTaskId(id);
         }
-        page = alarmService.queryAlarmWithPage(alarm, page,pageNum);
-        if(StringUtils.isNotBlank(inputId)){
-            model.addAttribute("taskId",inputId);
+        page = alarmService.queryAlarmWithPage(alarm, page, pageNum);
+        if (StringUtils.isNotBlank(inputId)) {
+            model.addAttribute("taskId", inputId);
         }
         model.addAttribute("selectStatus", alarm.getStatus());
         model.addAttribute("page", page);
@@ -48,14 +48,14 @@ public class AlarmHistoryController {
     }
 
     //处理告警
-    @RequestMapping(value = "dealWithAlarm",method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "dealWithAlarm", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String dealWithAlarm(Alarm alarm) {
 
-        if(alarmService.updateAlarmStatus(alarm.getId()) == true){
+        if (alarmService.updateAlarmStatus(alarm.getId()) == true) {
 
             return JsonView.render(1, "告警处理成功！");
-        }else{
+        } else {
             return JsonView.render(1, "告警处理失败，请重试！");
         }
     }

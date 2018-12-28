@@ -1,35 +1,28 @@
 package hust.plane.web.controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
+import hust.plane.mapper.pojo.Uav;
 import hust.plane.mapper.pojo.User;
 import hust.plane.service.interFace.*;
-import hust.plane.utils.AngleUtil;
+import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PlaneUtils;
-import hust.plane.utils.pojo.JsonView;
+import hust.plane.utils.PointUtil;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.TaskVO;
+import hust.plane.web.controller.vo.UavVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import hust.plane.mapper.pojo.Uav;
-import hust.plane.utils.JsonUtils;
-import hust.plane.utils.PointUtil;
-import hust.plane.web.controller.vo.UavVO;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UavController {
@@ -104,7 +97,7 @@ public class UavController {
             UavVO planevo = new UavVO(uav);
             planeList.add(planevo);
         }
-        model.addAttribute("tasklist",JsonUtils.objectToJson(taskVOList));
+        model.addAttribute("tasklist", JsonUtils.objectToJson(taskVOList));
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
         model.addAttribute("uavlist", JsonUtils.objectToJson(planeList));
         model.addAttribute("curNav", "uavAllList");

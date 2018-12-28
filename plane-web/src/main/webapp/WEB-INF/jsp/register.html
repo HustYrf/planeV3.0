@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <!-- 引入资源文件 -->
-    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" src="${s.base}/res/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/jquery.form.js"></script>
@@ -16,9 +16,10 @@
     <link rel="icon" type="image/png" href="${s.base}/res/i/ico.png" sizes="16x16">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <style>
-         ::-ms-clear,::-ms-reveal{ 
-		    display:none;
-         }
+        ::-ms-clear, ::-ms-reveal {
+            display: none;
+        }
+
         .main {
             position: absolute;
             z-index: 2;
@@ -96,7 +97,7 @@
             transition: all 0.5s ease 0s;
         }
 
-        .form-horizontal .form-control:focus+i {
+        .form-horizontal .form-control:focus + i {
             color: #00b4ef;
         }
 
@@ -110,7 +111,7 @@
             transition: all 0.5s ease 0s;
         }
 
-        .form-horizontal .fa-eye,.fa-eye-slash{
+        .form-horizontal .fa-eye, .fa-eye-slash {
             display: inline-block;
             position: absolute;
             top: 10px;
@@ -119,6 +120,7 @@
             color: #808080;
             transition: all 0.5s ease 0s;
         }
+
         .form-horizontal .eye:hover {
             color: #000;
         }
@@ -163,7 +165,7 @@
             visibility: hidden;
         }
 
-        .form-horizontal .main-checkbox input[type=checkbox]:checked+label:after {
+        .form-horizontal .main-checkbox input[type=checkbox]:checked + label:after {
             opacity: 1;
         }
 
@@ -191,9 +193,11 @@
             .form-horizontal .form-group {
                 padding: 0 25px;
             }
+
             .form-horizontal .form-group i {
                 left: 45px;
             }
+
             .form-horizontal .btn {
                 padding: 10px 20px;
             }
@@ -206,214 +210,224 @@
         #alertDiv {
             display: none;
         }
+
         /*提示框信息*/
-        .hint{
+        .hint {
             float: left;
             margin-left: 45px;
-            
-            font-weight:700;
-            padding:5px 0;
+
+            font-weight: 700;
+            padding: 5px 0;
             display: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="main" style="position:absolute;z-index:-1;width:100%;height:100%;"> <img src="${s.base}/res/i/bing.png" width="100%" height="100%" />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-                <form class="form-horizontal" id="registerForm">
-                    <span class="heading">用户注册</span>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username" required="required" maxlength="20">
-                        <i class="fa fa-user"></i>
-                        <!-- 用户名不为空提示框 -->
-                         <span class="hint" id="usernamealert">
-                        <span class="glyphicon glyphicon-remove-circle" ></span>用户名不能为空!</span>
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="password" placeholder="输入密码" name="password" required="required">
-                        <i class="fa fa-lock"></i>
-                       <a class="fa fa-eye-slash selectview"></a>
-                     
-                        <span class="hint" id="passwordalert1">
-                        <span class="glyphicon glyphicon-remove-circle" ></span>密码长度必须大于6小于12!</span>
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="passwordensure" placeholder="确认密码" required="required">
-                        <i class="fa fa-lock "></i>
-                        <a class="fa fa-eye-slash selectview"></a>
-                       
-                         <!-- 弹出新密码和确认密码不一致提示信息 -->
-                        <span class="hint" id="passwordalert">
-                            <span class="glyphicon glyphicon-remove-circle" ></span>两次密码输入不一致!</span>
-                    </div>
-                    <!-- 工号 -->
-                    <div class="form-group help">
-                        <input type="text" class="form-control" id="worknumber" placeholder="工号" name="worknumber"  required="required" maxlength="20">
-                        <i class="fa fa-edit"></i>
-                        <span class="hint" id="worknumberalert">
-                            <span class="glyphicon glyphicon-remove-circle" ></span>工号不能为空!</span>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default" id="register">注册</button>
-                        <button type="reset" class="btn btn-default" id="reset">重置</button>
-                    </div>
-                    <div id="alertDiv">
-                    </div>
-                </form>
+<div class="main" style="position:absolute;z-index:-1;width:100%;height:100%;"><img src="${s.base}/res/i/bing.png"
+                                                                                    width="100%" height="100%"/>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-horizontal" id="registerForm">
+                <span class="heading">用户注册</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username"
+                           required="required" maxlength="20">
+                    <i class="fa fa-user"></i>
+                    <!-- 用户名不为空提示框 -->
+                    <span class="hint" id="usernamealert">
+                        <span class="glyphicon glyphicon-remove-circle"></span>用户名不能为空!</span>
+                </div>
+                <div class="form-group help">
+                    <input type="password" class="form-control" id="password" placeholder="输入密码" name="password"
+                           required="required">
+                    <i class="fa fa-lock"></i>
+                    <a class="fa fa-eye-slash selectview"></a>
 
-            </div>
+                    <span class="hint" id="passwordalert1">
+                        <span class="glyphicon glyphicon-remove-circle"></span>密码长度必须大于6小于12!</span>
+                </div>
+                <div class="form-group help">
+                    <input type="password" class="form-control" id="passwordensure" placeholder="确认密码"
+                           required="required">
+                    <i class="fa fa-lock "></i>
+                    <a class="fa fa-eye-slash selectview"></a>
+
+                    <!-- 弹出新密码和确认密码不一致提示信息 -->
+                    <span class="hint" id="passwordalert">
+                            <span class="glyphicon glyphicon-remove-circle"></span>两次密码输入不一致!</span>
+                </div>
+                <!-- 工号 -->
+                <div class="form-group help">
+                    <input type="text" class="form-control" id="worknumber" placeholder="工号" name="worknumber"
+                           required="required" maxlength="20">
+                    <i class="fa fa-edit"></i>
+                    <span class="hint" id="worknumberalert">
+                            <span class="glyphicon glyphicon-remove-circle"></span>工号不能为空!</span>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" id="register">注册</button>
+                    <button type="reset" class="btn btn-default" id="reset">重置</button>
+                </div>
+                <div id="alertDiv">
+                </div>
+            </form>
+
         </div>
     </div>
-    <script type="text/javascript">
-        $(function() {
-            
-            // 在光标离开用户名input后，提示用户名不能为空
-            $("#username").blur(function(){
-                if($(this).val()=='')
-                  $('#usernamealert').css('display','block');
-            });
-            // 在其用户名input获取焦点时,不显示提示框
-            $("#username").focus(function(){
-             $('#usernamealert').css('display','none');
-            });
-            $("#worknumber").blur(function(){
-                if($(this).val()=='')
-                  $('#worknumberalert').css('display','block');
-            });
-            // 在其用户名input获取焦点时,不显示提示框
-            $("#worknumber").focus(function(){
-             $('#worknumberalert').css('display','none');
-            });
-            // 判断工号是否满足要求,不能为空
-            $("#worknumber").bind("input propertychange", function() {
-              if($(this).val().length<0)
-                {         
-                          $("#worknumberalert").css("display","block");
-                 }
-                 else{
-                          $("#worknumberalert").css("display","none");
-                 }
-            });
-            // 判断密码是否符合要求，长度要求
-            $("#password").bind("input propertychange", function() {
-                 if($(this).val().length<6||$(this).val().length>12){
-                          $("#passwordalert1").css("display","block");
-                 }
-                 else{
-                          $("#passwordalert1").css("display","none");
-                 }
-                 if($('#passwordensure').val().length!=0)
-                 pwequalspwen();
-            });
+</div>
+<script type="text/javascript">
+    $(function () {
 
-
-            // 新密码必须输入，保证新密码和新密码确认是一致的，且密码是6-12位
-            $('#passwordensure').focus(function(){
-                // 实时判断ensure值和密码是否一致
-                $("#passwordensure").bind("input propertychange", function() {
-                    pwequalspwen();
-            });
-                
-            })
-            $('#register').click(
-                 function(){
-                // 检测所有Input都不能为空
-                if(checkInputNotNull()){
-                
-                	var username=$("#username").val();
-                    var password=$("#password").val();
-                    var worknumber=$("#worknumber").val();
-                    
-                    $.ajax({
-                        url: '${s.base}/admin/register.action',
-                        type: 'POST',
-                        data: {
-                            'name': username,
-                            'password': password,
-                            'worknumber':worknumber,
-                        },
-                        timeout: 5000, //超时时间
-                        dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-                        success: function(data) {
-                            if (data.statue == "success")
-                            //在此重定位
-                            {
-                                showAlert(data.message);
-                                window.location.href = "${s.base}/login.action";
-                            } else {
-                                //注册失败提示
-                                showAlert(data.message);
-                            }
-                        },
-                        error: function(xhr, textStatus) {
-                            console.log('发送错误')
-                            console.log(xhr)
-                            console.log(textStatus)
-                        }
-
-                    })
-
-                }});
-            /**func name checkInputNotNull
-            *如果username password worknumber都不为空则返回1
-            *否则 return 0
-            */
-            function checkInputNotNull(){
-                var username=$("#username").val();
-                var password=$("#password").val();
-                var worknumber=$("#worknumber").val();
-                if(username&&password&&worknumber)
-                    return 1;
-                else return 0;
-            }
-            function showAlert(message) {
-                var alertitem = document.getElementById("alertDiv");
-                var innHTMl = '<div class="alert alert-danger alert-dismissable" id="alerth"><button type="button" class="close" data-dismiss="alert" >&times;</button>' + message + '</div>';
-                alertitem.innerHTML = innHTMl;
-                alertitem.style.display = "block";
-            }
-             // 密码不相等则弹出，密码相等则消失
-            function pwequalspwen(){
-                if($('#password').val()!=$('#passwordensure').val())
-                    $('#passwordalert').css('display','block');
-                else 
-                    $('#passwordalert').css('display','none');
-            }
-            //reset重置按钮 清空隐藏提示信息
-            $("#reset").click(function(){
-                $('#passwordalert').css('display','none');
-                $("#passwordalert1").css("display","none");
-                $('#usernamealert').css('display','none');
-                $("#worknumberalert").css("display","none");
-            })
-            
-            
-            $(".selectview").click(function(){
-            	
-            	if($(this).hasClass("fa-eye-slash")){
-            		
-            		$(this).removeClass("fa-eye-slash");
-               	    $(this).addClass("fa-eye");
-               	    $(this).parent().children('input').first().attr('type', 'text');
-            		
-            		return;
-            	}
-            	if($(this).hasClass("fa-eye")){
-            		
-            		 $(this).removeClass("fa-eye");
-                	 $(this).addClass("fa-eye-slash");
-                	 $(this).parent().children('input').first().attr('type', 'password');
-                	 
-                	 return;
-            	}
-            });
-           
+        // 在光标离开用户名input后，提示用户名不能为空
+        $("#username").blur(function () {
+            if ($(this).val() == '')
+                $('#usernamealert').css('display', 'block');
         });
-    </script>
+        // 在其用户名input获取焦点时,不显示提示框
+        $("#username").focus(function () {
+            $('#usernamealert').css('display', 'none');
+        });
+        $("#worknumber").blur(function () {
+            if ($(this).val() == '')
+                $('#worknumberalert').css('display', 'block');
+        });
+        // 在其用户名input获取焦点时,不显示提示框
+        $("#worknumber").focus(function () {
+            $('#worknumberalert').css('display', 'none');
+        });
+        // 判断工号是否满足要求,不能为空
+        $("#worknumber").bind("input propertychange", function () {
+            if ($(this).val().length < 0) {
+                $("#worknumberalert").css("display", "block");
+            }
+            else {
+                $("#worknumberalert").css("display", "none");
+            }
+        });
+        // 判断密码是否符合要求，长度要求
+        $("#password").bind("input propertychange", function () {
+            if ($(this).val().length < 6 || $(this).val().length > 12) {
+                $("#passwordalert1").css("display", "block");
+            }
+            else {
+                $("#passwordalert1").css("display", "none");
+            }
+            if ($('#passwordensure').val().length != 0)
+                pwequalspwen();
+        });
+
+
+        // 新密码必须输入，保证新密码和新密码确认是一致的，且密码是6-12位
+        $('#passwordensure').focus(function () {
+            // 实时判断ensure值和密码是否一致
+            $("#passwordensure").bind("input propertychange", function () {
+                pwequalspwen();
+            });
+
+        })
+        $('#register').click(
+                function () {
+                    // 检测所有Input都不能为空
+                    if (checkInputNotNull()) {
+
+                        var username = $("#username").val();
+                        var password = $("#password").val();
+                        var worknumber = $("#worknumber").val();
+
+                        $.ajax({
+                            url: '${s.base}/admin/register.action',
+                            type: 'POST',
+                            data: {
+                                'name': username,
+                                'password': password,
+                                'worknumber': worknumber,
+                            },
+                            timeout: 5000, //超时时间
+                            dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+                            success: function (data) {
+                                if (data.statue == "success")
+                                //在此重定位
+                                {
+                                    showAlert(data.message);
+                                    window.location.href = "${s.base}/login.action";
+                                } else {
+                                    //注册失败提示
+                                    showAlert(data.message);
+                                }
+                            },
+                            error: function (xhr, textStatus) {
+                                console.log('发送错误')
+                                console.log(xhr)
+                                console.log(textStatus)
+                            }
+
+                        })
+
+                    }
+                });
+
+        /**func name checkInputNotNull
+         *如果username password worknumber都不为空则返回1
+         *否则 return 0
+         */
+        function checkInputNotNull() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var worknumber = $("#worknumber").val();
+            if (username && password && worknumber)
+                return 1;
+            else return 0;
+        }
+
+        function showAlert(message) {
+            var alertitem = document.getElementById("alertDiv");
+            var innHTMl = '<div class="alert alert-danger alert-dismissable" id="alerth"><button type="button" class="close" data-dismiss="alert" >&times;</button>' + message + '</div>';
+            alertitem.innerHTML = innHTMl;
+            alertitem.style.display = "block";
+        }
+
+        // 密码不相等则弹出，密码相等则消失
+        function pwequalspwen() {
+            if ($('#password').val() != $('#passwordensure').val())
+                $('#passwordalert').css('display', 'block');
+            else
+                $('#passwordalert').css('display', 'none');
+        }
+
+        //reset重置按钮 清空隐藏提示信息
+        $("#reset").click(function () {
+            $('#passwordalert').css('display', 'none');
+            $("#passwordalert1").css("display", "none");
+            $('#usernamealert').css('display', 'none');
+            $("#worknumberalert").css("display", "none");
+        })
+
+
+        $(".selectview").click(function () {
+
+            if ($(this).hasClass("fa-eye-slash")) {
+
+                $(this).removeClass("fa-eye-slash");
+                $(this).addClass("fa-eye");
+                $(this).parent().children('input').first().attr('type', 'text');
+
+                return;
+            }
+            if ($(this).hasClass("fa-eye")) {
+
+                $(this).removeClass("fa-eye");
+                $(this).addClass("fa-eye-slash");
+                $(this).parent().children('input').first().attr('type', 'password');
+
+                return;
+            }
+        });
+
+    });
+</script>
 </body>
 
 </html>

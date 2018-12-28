@@ -1,501 +1,516 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="hust.plane.mapper.mapper.TaskMapper">
-	<resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Task">
-		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="Name" property="name" jdbcType="VARCHAR" />
-		<result column="UserCreator" property="usercreator" jdbcType="INTEGER" />
-		<result column="User_A" property="userA" jdbcType="INTEGER" />
-		<result column="User_Z" property="userZ" jdbcType="INTEGER" />
-		<result column="FlyingPath_id" property="flyingpathId"
-			jdbcType="INTEGER" />
-		<result column="Uav_id" property="uavId" jdbcType="INTEGER" />
-		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
-		<result column="PlanStartTime" property="planstarttime"
-			jdbcType="TIMESTAMP" />
-		<result column="PlanEndTime" property="planendtime" jdbcType="TIMESTAMP" />
-		<result column="ExecuteStartTime" property="executestarttime"
-			jdbcType="TIMESTAMP" />
-		<result column="ExecuteEndTime" property="executeendtime"
-			jdbcType="TIMESTAMP" />
-		<result column="Status" property="status" jdbcType="INTEGER" />
-		<result column="FinishStatus" property="finishstatus" jdbcType="INTEGER" />
-		<result column="ImgFolder" property="imgfolder" jdbcType="VARCHAR" />
-		<result column="ReportUrl" property="reporturl" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Example_Where_Clause">
-		<where>
-			<foreach collection="oredCriteria" item="criteria" separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" suffix=")" prefixOverrides="and">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach collection="criterion.value" item="listItem"
-										open="(" close=")" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Update_By_Example_Where_Clause">
-		<where>
-			<foreach collection="example.oredCriteria" item="criteria"
-				separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" suffix=")" prefixOverrides="and">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach collection="criterion.value" item="listItem"
-										open="(" close=")" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Base_Column_List">
-		id, Name, UserCreator, User_A, User_Z, FlyingPath_id, Uav_id, CreateTime,
-		PlanStartTime,
-		PlanEndTime, ExecuteStartTime, ExecuteEndTime, Status, FinishStatus, ImgFolder,
-		ReportUrl
-	</sql>
-	<select id="selectByExample" resultMap="BaseResultMap"
-		parameterType="hust.plane.mapper.pojo.TaskExample">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		<include refid="Base_Column_List" />
-		from K_Task
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from K_Task
-		where id = #{id,jdbcType=INTEGER}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from K_Task
-		where id = #{id,jdbcType=INTEGER}
-	</delete>
-	<delete id="deleteByExample" parameterType="hust.plane.mapper.pojo.TaskExample">
-		delete from K_Task
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</delete>
-	<insert id="insert" parameterType="hust.plane.mapper.pojo.Task">
-		insert into K_Task (id, Name, UserCreator,
-		User_A, User_Z, FlyingPath_id,
-		Uav_id, CreateTime, PlanStartTime,
-		PlanEndTime, ExecuteStartTime, ExecuteEndTime,
-		Status, FinishStatus, ImgFolder,
-		ReportUrl)
-		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-		#{usercreator,jdbcType=INTEGER},
-		#{userA,jdbcType=INTEGER}, #{userZ,jdbcType=INTEGER}, #{flyingpathId,jdbcType=INTEGER},
-		#{uavId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
-		#{planstarttime,jdbcType=TIMESTAMP},
-		#{planendtime,jdbcType=TIMESTAMP},
-		#{executestarttime,jdbcType=TIMESTAMP},
-		#{executeendtime,jdbcType=TIMESTAMP},
-		#{status,jdbcType=INTEGER}, #{finishstatus,jdbcType=INTEGER}, #{imgfolder,jdbcType=VARCHAR},
-		#{reporturl,jdbcType=VARCHAR})
-	</insert>
-	<insert id="insertSelective" parameterType="hust.plane.mapper.pojo.Task">
-		insert into K_Task
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="name != null">
-				Name,
-			</if>
-			<if test="usercreator != null">
-				UserCreator,
-			</if>
-			<if test="userA != null">
-				User_A,
-			</if>
-			<if test="userZ != null">
-				User_Z,
-			</if>
-			<if test="flyingpathId != null">
-				FlyingPath_id,
-			</if>
-			<if test="uavId != null">
-				Uav_id,
-			</if>
-			<if test="createtime != null">
-				CreateTime,
-			</if>
-			<if test="planstarttime != null">
-				PlanStartTime,
-			</if>
-			<if test="planendtime != null">
-				PlanEndTime,
-			</if>
-			<if test="executestarttime != null">
-				ExecuteStartTime,
-			</if>
-			<if test="executeendtime != null">
-				ExecuteEndTime,
-			</if>
-			<if test="status != null">
-				Status,
-			</if>
-			<if test="finishstatus != null">
-				FinishStatus,
-			</if>
-			<if test="imgfolder != null">
-				ImgFolder,
-			</if>
-			<if test="reporturl != null">
-				ReportUrl,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-			<if test="usercreator != null">
-				#{usercreator,jdbcType=INTEGER},
-			</if>
-			<if test="userA != null">
-				#{userA,jdbcType=INTEGER},
-			</if>
-			<if test="userZ != null">
-				#{userZ,jdbcType=INTEGER},
-			</if>
-			<if test="flyingpathId != null">
-				#{flyingpathId,jdbcType=INTEGER},
-			</if>
-			<if test="uavId != null">
-				#{uavId,jdbcType=INTEGER},
-			</if>
-			<if test="createtime != null">
-				#{createtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="planstarttime != null">
-				#{planstarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="planendtime != null">
-				#{planendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="executestarttime != null">
-				#{executestarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="executeendtime != null">
-				#{executeendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="status != null">
-				#{status,jdbcType=INTEGER},
-			</if>
-			<if test="finishstatus != null">
-				#{finishstatus,jdbcType=INTEGER},
-			</if>
-			<if test="imgfolder != null">
-				#{imgfolder,jdbcType=VARCHAR},
-			</if>
-			<if test="reporturl != null">
-				#{reporturl,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<select id="countByExample" parameterType="hust.plane.mapper.pojo.TaskExample"
-		resultType="java.lang.Integer">
-		select count(*) from K_Task
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</select>
-	<update id="updateByExampleSelective" parameterType="map">
-		update K_Task
-		<set>
-			<if test="record.id != null">
-				id = #{record.id,jdbcType=INTEGER},
-			</if>
-			<if test="record.name != null">
-				Name = #{record.name,jdbcType=VARCHAR},
-			</if>
-			<if test="record.usercreator != null">
-				UserCreator = #{record.usercreator,jdbcType=INTEGER},
-			</if>
-			<if test="record.userA != null">
-				User_A = #{record.userA,jdbcType=INTEGER},
-			</if>
-			<if test="record.userZ != null">
-				User_Z = #{record.userZ,jdbcType=INTEGER},
-			</if>
-			<if test="record.flyingpathId != null">
-				FlyingPath_id = #{record.flyingpathId,jdbcType=INTEGER},
-			</if>
-			<if test="record.uavId != null">
-				Uav_id = #{record.uavId,jdbcType=INTEGER},
-			</if>
-			<if test="record.createtime != null">
-				CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.planstarttime != null">
-				PlanStartTime = #{record.planstarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.planendtime != null">
-				PlanEndTime = #{record.planendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.executestarttime != null">
-				ExecuteStartTime = #{record.executestarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.executeendtime != null">
-				ExecuteEndTime = #{record.executeendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.status != null">
-				Status = #{record.status,jdbcType=INTEGER},
-			</if>
-			<if test="record.finishstatus != null">
-				FinishStatus = #{record.finishstatus,jdbcType=INTEGER},
-			</if>
-			<if test="record.imgfolder != null">
-				ImgFolder = #{record.imgfolder,jdbcType=VARCHAR},
-			</if>
-			<if test="record.reporturl != null">
-				ReportUrl = #{record.reporturl,jdbcType=VARCHAR},
-			</if>
-		</set>
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExample" parameterType="map">
-		update K_Task
-		set id = #{record.id,jdbcType=INTEGER},
-		Name = #{record.name,jdbcType=VARCHAR},
-		UserCreator = #{record.usercreator,jdbcType=INTEGER},
-		User_A = #{record.userA,jdbcType=INTEGER},
-		User_Z = #{record.userZ,jdbcType=INTEGER},
-		FlyingPath_id = #{record.flyingpathId,jdbcType=INTEGER},
-		Uav_id = #{record.uavId,jdbcType=INTEGER},
-		CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
-		PlanStartTime = #{record.planstarttime,jdbcType=TIMESTAMP},
-		PlanEndTime = #{record.planendtime,jdbcType=TIMESTAMP},
-		ExecuteStartTime = #{record.executestarttime,jdbcType=TIMESTAMP},
-		ExecuteEndTime = #{record.executeendtime,jdbcType=TIMESTAMP},
-		Status = #{record.status,jdbcType=INTEGER},
-		FinishStatus = #{record.finishstatus,jdbcType=INTEGER},
-		ImgFolder = #{record.imgfolder,jdbcType=VARCHAR},
-		ReportUrl = #{record.reporturl,jdbcType=VARCHAR}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByPrimaryKeySelective" parameterType="hust.plane.mapper.pojo.Task">
-		update K_Task
-		<set>
-			<if test="name != null">
-				Name = #{name,jdbcType=VARCHAR},
-			</if>
-			<if test="usercreator != null">
-				UserCreator = #{usercreator,jdbcType=INTEGER},
-			</if>
-			<if test="userA != null">
-				User_A = #{userA,jdbcType=INTEGER},
-			</if>
-			<if test="userZ != null">
-				User_Z = #{userZ,jdbcType=INTEGER},
-			</if>
-			<if test="flyingpathId != null">
-				FlyingPath_id = #{flyingpathId,jdbcType=INTEGER},
-			</if>
-			<if test="uavId != null">
-				Uav_id = #{uavId,jdbcType=INTEGER},
-			</if>
-			<if test="createtime != null">
-				CreateTime = #{createtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="planstarttime != null">
-				PlanStartTime = #{planstarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="planendtime != null">
-				PlanEndTime = #{planendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="executestarttime != null">
-				ExecuteStartTime = #{executestarttime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="executeendtime != null">
-				ExecuteEndTime = #{executeendtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="status != null">
-				Status = #{status,jdbcType=INTEGER},
-			</if>
-			<if test="finishstatus != null">
-				FinishStatus = #{finishstatus,jdbcType=INTEGER},
-			</if>
-			<if test="imgfolder != null">
-				ImgFolder = #{imgfolder,jdbcType=VARCHAR},
-			</if>
-			<if test="reporturl != null">
-				ReportUrl = #{reporturl,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="hust.plane.mapper.pojo.Task">
-		update K_Task
-		set Name = #{name,jdbcType=VARCHAR},
-		UserCreator = #{usercreator,jdbcType=INTEGER},
-		User_A = #{userA,jdbcType=INTEGER},
-		User_Z = #{userZ,jdbcType=INTEGER},
-		FlyingPath_id = #{flyingpathId,jdbcType=INTEGER},
-		Uav_id = #{uavId,jdbcType=INTEGER},
-		CreateTime = #{createtime,jdbcType=TIMESTAMP},
-		PlanStartTime = #{planstarttime,jdbcType=TIMESTAMP},
-		PlanEndTime = #{planendtime,jdbcType=TIMESTAMP},
-		ExecuteStartTime = #{executestarttime,jdbcType=TIMESTAMP},
-		ExecuteEndTime = #{executeendtime,jdbcType=TIMESTAMP},
-		Status = #{status,jdbcType=INTEGER},
-		FinishStatus = #{finishstatus,jdbcType=INTEGER},
-		ImgFolder = #{imgfolder,jdbcType=VARCHAR},
-		ReportUrl = #{reporturl,jdbcType=VARCHAR}
-		where id = #{id,jdbcType=INTEGER}
-	</update>
+    <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Task">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="Name" property="name" jdbcType="VARCHAR"/>
+        <result column="Mission_id" property="missionId" jdbcType="VARCHAR"/>
+        <result column="UserCreator" property="usercreator" jdbcType="INTEGER"/>
+        <result column="User_A" property="userA" jdbcType="INTEGER"/>
+        <result column="User_Z" property="userZ" jdbcType="INTEGER"/>
+        <result column="FlyingPath_id" property="flyingpathId"
+                jdbcType="INTEGER"/>
+        <result column="Uav_id" property="uavId" jdbcType="INTEGER"/>
+        <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="PlanStartTime" property="planstarttime"
+                jdbcType="TIMESTAMP"/>
+        <result column="PlanEndTime" property="planendtime" jdbcType="TIMESTAMP"/>
+        <result column="ExecuteStartTime" property="executestarttime"
+                jdbcType="TIMESTAMP"/>
+        <result column="ExecuteEndTime" property="executeendtime"
+                jdbcType="TIMESTAMP"/>
+        <result column="Status" property="status" jdbcType="INTEGER"/>
+        <result column="FinishStatus" property="finishstatus" jdbcType="INTEGER"/>
+        <result column="ImgFolder" property="imgfolder" jdbcType="VARCHAR"/>
+        <result column="ReportUrl" property="reporturl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem"
+                                             open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria"
+                     separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem"
+                                             open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, Name,Mission_id, UserCreator, User_A, User_Z, FlyingPath_id, Uav_id, CreateTime,
+        PlanStartTime,
+        PlanEndTime, ExecuteStartTime, ExecuteEndTime, Status, FinishStatus, ImgFolder,
+        ReportUrl
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="hust.plane.mapper.pojo.TaskExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from K_Task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from K_Task
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from K_Task
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="hust.plane.mapper.pojo.TaskExample">
+        delete from K_Task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="hust.plane.mapper.pojo.Task">
+        insert into K_Task (id, Name,Mission_id, UserCreator,
+        User_A, User_Z, FlyingPath_id,
+        Uav_id, CreateTime, PlanStartTime,
+        PlanEndTime, ExecuteStartTime, ExecuteEndTime,
+        Status, FinishStatus, ImgFolder,
+        ReportUrl)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{missionId,jdbcType=VARCHAR}
+        #{usercreator,jdbcType=INTEGER},
+        #{userA,jdbcType=INTEGER}, #{userZ,jdbcType=INTEGER}, #{flyingpathId,jdbcType=INTEGER},
+        #{uavId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+        #{planstarttime,jdbcType=TIMESTAMP},
+        #{planendtime,jdbcType=TIMESTAMP},
+        #{executestarttime,jdbcType=TIMESTAMP},
+        #{executeendtime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=INTEGER}, #{finishstatus,jdbcType=INTEGER}, #{imgfolder,jdbcType=VARCHAR},
+        #{reporturl,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.Task">
+        insert into K_Task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                Name,
+            </if>
+            <if test="missionId != null">
+                Mission_id,
+            </if>
+            <if test="usercreator != null">
+                UserCreator,
+            </if>
+            <if test="userA != null">
+                User_A,
+            </if>
+            <if test="userZ != null">
+                User_Z,
+            </if>
+            <if test="flyingpathId != null">
+                FlyingPath_id,
+            </if>
+            <if test="uavId != null">
+                Uav_id,
+            </if>
+            <if test="createtime != null">
+                CreateTime,
+            </if>
+            <if test="planstarttime != null">
+                PlanStartTime,
+            </if>
+            <if test="planendtime != null">
+                PlanEndTime,
+            </if>
+            <if test="executestarttime != null">
+                ExecuteStartTime,
+            </if>
+            <if test="executeendtime != null">
+                ExecuteEndTime,
+            </if>
+            <if test="status != null">
+                Status,
+            </if>
+            <if test="finishstatus != null">
+                FinishStatus,
+            </if>
+            <if test="imgfolder != null">
+                ImgFolder,
+            </if>
+            <if test="reporturl != null">
+                ReportUrl,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="missionId != null">
+                #{missionId,jdbcType=VARCHAR},
+            </if>
+            <if test="usercreator != null">
+                #{usercreator,jdbcType=INTEGER},
+            </if>
+            <if test="userA != null">
+                #{userA,jdbcType=INTEGER},
+            </if>
+            <if test="userZ != null">
+                #{userZ,jdbcType=INTEGER},
+            </if>
+            <if test="flyingpathId != null">
+                #{flyingpathId,jdbcType=INTEGER},
+            </if>
+            <if test="uavId != null">
+                #{uavId,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planstarttime != null">
+                #{planstarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planendtime != null">
+                #{planendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executestarttime != null">
+                #{executestarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executeendtime != null">
+                #{executeendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="finishstatus != null">
+                #{finishstatus,jdbcType=INTEGER},
+            </if>
+            <if test="imgfolder != null">
+                #{imgfolder,jdbcType=VARCHAR},
+            </if>
+            <if test="reporturl != null">
+                #{reporturl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="hust.plane.mapper.pojo.TaskExample"
+            resultType="java.lang.Integer">
+        select count(*) from K_Task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update K_Task
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                Name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.missionId != null">
+                Mission_id = #{record.missionId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.usercreator != null">
+                UserCreator = #{record.usercreator,jdbcType=INTEGER},
+            </if>
+            <if test="record.userA != null">
+                User_A = #{record.userA,jdbcType=INTEGER},
+            </if>
+            <if test="record.userZ != null">
+                User_Z = #{record.userZ,jdbcType=INTEGER},
+            </if>
+            <if test="record.flyingpathId != null">
+                FlyingPath_id = #{record.flyingpathId,jdbcType=INTEGER},
+            </if>
+            <if test="record.uavId != null">
+                Uav_id = #{record.uavId,jdbcType=INTEGER},
+            </if>
+            <if test="record.createtime != null">
+                CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.planstarttime != null">
+                PlanStartTime = #{record.planstarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.planendtime != null">
+                PlanEndTime = #{record.planendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.executestarttime != null">
+                ExecuteStartTime = #{record.executestarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.executeendtime != null">
+                ExecuteEndTime = #{record.executeendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                Status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.finishstatus != null">
+                FinishStatus = #{record.finishstatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.imgfolder != null">
+                ImgFolder = #{record.imgfolder,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reporturl != null">
+                ReportUrl = #{record.reporturl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update K_Task
+        set id = #{record.id,jdbcType=INTEGER},
+        Name = #{record.name,jdbcType=VARCHAR},
+        Mission_id = #{record.missionId,jdbcType=VARCHAR},
+        UserCreator = #{record.usercreator,jdbcType=INTEGER},
+        User_A = #{record.userA,jdbcType=INTEGER},
+        User_Z = #{record.userZ,jdbcType=INTEGER},
+        FlyingPath_id = #{record.flyingpathId,jdbcType=INTEGER},
+        Uav_id = #{record.uavId,jdbcType=INTEGER},
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+        PlanStartTime = #{record.planstarttime,jdbcType=TIMESTAMP},
+        PlanEndTime = #{record.planendtime,jdbcType=TIMESTAMP},
+        ExecuteStartTime = #{record.executestarttime,jdbcType=TIMESTAMP},
+        ExecuteEndTime = #{record.executeendtime,jdbcType=TIMESTAMP},
+        Status = #{record.status,jdbcType=INTEGER},
+        FinishStatus = #{record.finishstatus,jdbcType=INTEGER},
+        ImgFolder = #{record.imgfolder,jdbcType=VARCHAR},
+        ReportUrl = #{record.reporturl,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        <set>
+            <if test="name != null">
+                Name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="missionId != null">
+                Mission_id = #{missionId,jdbcType=VARCHAR},
+            </if>
+            <if test="usercreator != null">
+                UserCreator = #{usercreator,jdbcType=INTEGER},
+            </if>
+            <if test="userA != null">
+                User_A = #{userA,jdbcType=INTEGER},
+            </if>
+            <if test="userZ != null">
+                User_Z = #{userZ,jdbcType=INTEGER},
+            </if>
+            <if test="flyingpathId != null">
+                FlyingPath_id = #{flyingpathId,jdbcType=INTEGER},
+            </if>
+            <if test="uavId != null">
+                Uav_id = #{uavId,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                CreateTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planstarttime != null">
+                PlanStartTime = #{planstarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planendtime != null">
+                PlanEndTime = #{planendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executestarttime != null">
+                ExecuteStartTime = #{executestarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executeendtime != null">
+                ExecuteEndTime = #{executeendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                Status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="finishstatus != null">
+                FinishStatus = #{finishstatus,jdbcType=INTEGER},
+            </if>
+            <if test="imgfolder != null">
+                ImgFolder = #{imgfolder,jdbcType=VARCHAR},
+            </if>
+            <if test="reporturl != null">
+                ReportUrl = #{reporturl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        set Name = #{name,jdbcType=VARCHAR},
+        Mission_id = #{record.missionId,jdbcType=VARCHAR},
+        UserCreator = #{usercreator,jdbcType=INTEGER},
+        User_A = #{userA,jdbcType=INTEGER},
+        User_Z = #{userZ,jdbcType=INTEGER},
+        FlyingPath_id = #{flyingpathId,jdbcType=INTEGER},
+        Uav_id = #{uavId,jdbcType=INTEGER},
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+        PlanStartTime = #{planstarttime,jdbcType=TIMESTAMP},
+        PlanEndTime = #{planendtime,jdbcType=TIMESTAMP},
+        ExecuteStartTime = #{executestarttime,jdbcType=TIMESTAMP},
+        ExecuteEndTime = #{executeendtime,jdbcType=TIMESTAMP},
+        Status = #{status,jdbcType=INTEGER},
+        FinishStatus = #{finishstatus,jdbcType=INTEGER},
+        ImgFolder = #{imgfolder,jdbcType=VARCHAR},
+        ReportUrl = #{reporturl,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-	<select id="queryPage" resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM K_Task
-		WHERE 1=1
-		<if test="param1.usercreator != null">
-			AND UserCreator = #{param1.usercreator}
-		</if>
-		<if test="param1.name != null">
-			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
-		</if>
-		<if test="param1.finishstatus != null">
-			AND FinishStatus = #{param1.finishstatus}
-		</if>
-		ORDER BY CreateTime DESC
-		LIMIT #{param2.startIndex, jdbcType=INTEGER} ,
-		#{param2.pageSize, jdbcType=INTEGER}
-	</select>
-	<select id="getStatusByTask" parameterType="hust.plane.mapper.pojo.Task"
-		resultType="java.lang.Integer">
-		SELECT Status
-		FROM K_Task
-		WHERE
-		id = #{id,jdbcType=INTEGER}
-	</select>
-	<select id="getTasklistByUserCreator" parameterType="hust.plane.mapper.pojo.Task"
-		resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM K_Task
-		WHERE
-		UserCreator = #{usercreator,jdbcType=INTEGER}
-	</select>
-	<select id="getTaskByName" parameterType="java.lang.String"
-		resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM K_Task
-		WHERE
-		Name = #{name,jdbcType=VARCHAR}
-	</select>
-	<select id="getAllTaskByRole" parameterType="hust.plane.mapper.pojo.Task"
-			resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM K_Task
-		WHERE 1=1
-		<if test="usercreator != null">
-			AND UserCreator = #{usercreator,jdbcType=INTEGER}
-		</if>
-	</select>
-	<select id="queryPageWithTime" resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM K_Task
-		WHERE 1=1
-		<if test="param1.usercreator != null">
-			AND UserCreator = #{param1.usercreator,jdbcType=INTEGER}
-		</if>
-		<if test="param1.name != null">
-			AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
-		</if>
-		<if test="param1.finishstatus != null">
-			AND FinishStatus = #{param1.finishstatus,jdbcType=INTEGER}
-		</if>
-		LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
+    <select id="queryPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Task
+        WHERE 1=1
+        <if test="param1.usercreator != null">
+            AND UserCreator = #{param1.usercreator}
+        </if>
+        <if test="param1.name != null">
+            AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param1.finishstatus != null">
+            AND FinishStatus = #{param1.finishstatus}
+        </if>
+        ORDER BY CreateTime DESC
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} ,
+        #{param2.pageSize, jdbcType=INTEGER}
+    </select>
+    <select id="getStatusByTask" parameterType="hust.plane.mapper.pojo.Task"
+            resultType="java.lang.Integer">
+        SELECT Status
+        FROM K_Task
+        WHERE
+        id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getTasklistByUserCreator" parameterType="hust.plane.mapper.pojo.Task"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Task
+        WHERE
+        UserCreator = #{usercreator,jdbcType=INTEGER}
+    </select>
+    <select id="getTaskByName" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Task
+        WHERE
+        Name = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="getAllTaskByRole" parameterType="hust.plane.mapper.pojo.Task"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Task
+        WHERE 1=1
+        <if test="usercreator != null">
+            AND UserCreator = #{usercreator,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="queryPageWithTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM K_Task
+        WHERE 1=1
+        <if test="param1.usercreator != null">
+            AND UserCreator = #{param1.usercreator,jdbcType=INTEGER}
+        </if>
+        <if test="param1.name != null">
+            AND Name LIKE CONCAT('%',#{param1.name,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param1.finishstatus != null">
+            AND FinishStatus = #{param1.finishstatus,jdbcType=INTEGER}
+        </if>
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize,
 		jdbcType=INTEGER}
-	</select>
-	<update id="setTaskOver" parameterType="hust.plane.mapper.pojo.Task">
-		update K_Task
-		set Status = 14,FinishStatus = 1
-		where id=#{id, jdbcType=INTEGER}
-	</update>
-	<update id="updateStatusByTask" parameterType="hust.plane.mapper.pojo.Task">
-		update K_Task
-		set Status = #{status,jdbcType=INTEGER}
-		where id=#{id, jdbcType=INTEGER}
-	</update>
-	<update id="updateImgFolderByTask" parameterType="hust.plane.mapper.pojo.Task">
-		update K_Task
-		set ImgFolder = #{imgfolder,jdbcType=VARCHAR}
-		where id=#{id, jdbcType=INTEGER}
-	</update>
-	<select id="countByTask" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Task">
-		select count(*) from K_Task
-		where 1 =1
-		<if test="usercreator!=null">
-			and UserCreator=#{usercreator,jdbcType=INTEGER}
-		</if>
-		<if test="finishstatus!=null">
-			and FinishStatus = #{finishstatus,,jdbcType=INTEGER}
-		</if>
-		<if test="name!=null">
-			and Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
-		</if>
-	</select>
+    </select>
+    <update id="setTaskOver" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        set Status = 14,FinishStatus = 1
+        where id=#{id, jdbcType=INTEGER}
+    </update>
+    <update id="updateStatusByTask" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        set Status = #{status,jdbcType=INTEGER}
+        where id=#{id, jdbcType=INTEGER}
+    </update>
+    <update id="updateImgFolderByTask" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        set ImgFolder = #{imgfolder,jdbcType=VARCHAR}
+        where id=#{id, jdbcType=INTEGER}
+    </update>
+    <select id="countByTask" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Task">
+        select count(*) from K_Task
+        where 1 =1
+        <if test="usercreator!=null">
+            and UserCreator=#{usercreator,jdbcType=INTEGER}
+        </if>
+        <if test="finishstatus!=null">
+            and FinishStatus = #{finishstatus,,jdbcType=INTEGER}
+        </if>
+        <if test="name!=null">
+            and Name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
 
 </mapper>
