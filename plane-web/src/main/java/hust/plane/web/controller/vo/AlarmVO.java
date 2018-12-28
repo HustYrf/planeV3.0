@@ -14,6 +14,7 @@ public class AlarmVO {
 
     private int id;
     private String image;
+    private String thumbnail;
     private String descripte;
     private String createTime;
     private String updateTime;
@@ -26,11 +27,14 @@ public class AlarmVO {
 
     public AlarmVO(Alarm alarm) {
 
+
         this.id = alarm.getId();
         if (alarm.getImageurl() != null) {
             this.image = alarm.getImageurl();
         }
-
+        if(alarm.getThumbnailurl()!=null){
+            this.thumbnail = alarm.getThumbnailurl();
+        }
         if (alarm.getDescription() != null) {
             this.descripte = alarm.getDescription();
         }
@@ -111,6 +115,13 @@ public class AlarmVO {
 
     public void setPositionList(List<Double> positionList) {
         this.positionList = positionList;
+    }
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public void setBase() {
