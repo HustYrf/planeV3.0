@@ -12,6 +12,8 @@ public class Alarm {
 
     private String imageurl;
 
+    private String thumbnailurl;
+
     private String position;
 
     private String description;
@@ -117,5 +119,13 @@ public class Alarm {
 
     public void setRouteId(Integer routeId) {
         this.routeId = routeId;
+    }
+
+    public String getThumbnailurl() {
+        return thumbnailurl;
+    }
+
+    public void setThumbnailurl(String thumbnailurl) {
+        this.thumbnailurl = thumbnailurl;
     }
 }

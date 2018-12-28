@@ -617,7 +617,7 @@ public class TaskController {
 
                 //读取本机图片服务器数据
                 //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
-                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getMissionId() + "/" + IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getMissionId() + "/" + IMAGE_ALARM + alarmVo.getThumbnail());
                 alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
