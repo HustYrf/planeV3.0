@@ -738,19 +738,19 @@ public class TaskController {
 
             );
             //跨域请求文件服务器上的图片文件名列表
-//            String url = DETECT_SERVER + "taskImages.action";
-//            Map<String,String> params = new HashMap<String, String>();
-//            params.put("missionId",""+ task1.getMissionId());
-//            String alarmlistString = HttpClientUtil.doPost(url,params);
+            String url = DETECT_SERVER + "taskImages.action";
+            Map<String,String> params = new HashMap<String, String>();
+            params.put("missionId",""+ task1.getMissionId());
+            String alarmlistString = HttpClientUtil.doPost(url,params);
 
-//            if(alarmlistString.equals("null")){
-//              model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
-//            }
-//            else{
-//              String[] pictures = alarmlistString.split(",");    //分割得到的字符串
-//              picNameList= Arrays.asList(pictures);                      //加入到list对象中
-//              model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
-//            }
+            if(alarmlistString.equals("null")){
+              model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
+            }
+            else{
+              String[] pictures = alarmlistString.split(",");    //分割得到的字符串
+              picNameList= Arrays.asList(pictures);                      //加入到list对象中
+              model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
+            }
 
             model.addAttribute("baseImageUrl", fileROOT);
             model.addAttribute("folder", folder);
@@ -782,9 +782,9 @@ public class TaskController {
         String url = DETECT_SERVER + "createAlarm.action";
         Task task1 = taskServiceImpl.getTaskByTask(task);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("taskid", "" + task1.getId());
-        params.put("missionid", "" + task1.getMissionId());
-        String alarmlistString = HttpClientUtil.doPost(url, params);
+        params.put("taskId", "" + task1.getId());
+        params.put("missionId", "" + task1.getMissionId());
+        String alarmlistString = HttpClientUtil.doPost(url, params);    //httpclient远程访问
         //System.out.println(alarmlistString);
         if (alarmlistString.equals("success")) {
             taskServiceImpl.setStatusTaskByTask(task, 12);
