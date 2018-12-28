@@ -45,7 +45,7 @@ public class TaskController {
     @Value(value = "${IMAGE_ALARM}")    //后台图片保存地址
     private String IMAGE_ALARM;
 
-    @Value(value = "${uploadHost}")
+    @Value(value = "${uploadLocalHost}")
     private String FILE_UPLOAD_HOST;
 
     @Value(value = "${LOCAL_ALARM_DIR}")
