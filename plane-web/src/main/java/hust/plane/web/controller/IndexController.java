@@ -1,6 +1,5 @@
 package hust.plane.web.controller;
 
-import com.sun.tools.internal.ws.processor.model.Model;
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Route;
