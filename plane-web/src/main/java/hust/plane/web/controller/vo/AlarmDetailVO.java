@@ -4,18 +4,16 @@ import hust.plane.mapper.pojo.Alarm;
 import hust.plane.mapper.pojo.Uav;
 import hust.plane.utils.DateKit;
 import hust.plane.utils.PointUtil;
-import hust.plane.utils.pojo.Point;
 
 import java.util.List;
 
 public class AlarmDetailVO {
-   //用于展示告警详情
+    //用于展示告警详情
     private int id;
     private String image;
     private String descripte;
     private String createTime;
     private String updateTime;
-
 
 
     private String infoName;
@@ -40,15 +38,7 @@ public class AlarmDetailVO {
     private String uavName;
     private String uavDeviceId;
 
-    public void setUav(Uav uav){
-        if(uav.getName()!=null){
-            this.uavName = uav.getName();
-        }
-        if(uav.getDeviceid()!=null){
-            this.uavDeviceId = uav.getDeviceid();
-        }
-    }
-    public AlarmDetailVO(Alarm alarm){
+    public AlarmDetailVO(Alarm alarm) {
 
         this.id = alarm.getId();
         if (alarm.getImageurl() != null) {
@@ -57,7 +47,7 @@ public class AlarmDetailVO {
         if (alarm.getDescription() != null) {
             this.descripte = alarm.getDescription();
         }
-        if(alarm.getPosition()!=null){
+        if (alarm.getPosition() != null) {
             this.position = PointUtil.StringPointToList(alarm.getPosition());
         }
         if (alarm.getCreatetime() != null) {
@@ -66,10 +56,20 @@ public class AlarmDetailVO {
         if (alarm.getUpdatetime() != null) {
             this.updateTime = DateKit.dateFormat(alarm.getUpdatetime(), "yyyy/MM/dd HH:mm:ss");
         }
-        if(alarm.getInfoname()!=null){
+        if (alarm.getInfoname() != null) {
             this.infoName = alarm.getInfoname();
         }
     }
+
+    public void setUav(Uav uav) {
+        if (uav.getName() != null) {
+            this.uavName = uav.getName();
+        }
+        if (uav.getDeviceid() != null) {
+            this.uavDeviceId = uav.getDeviceid();
+        }
+    }
+
     public String getUserCreatorName() {
         return userCreatorName;
     }
@@ -77,6 +77,7 @@ public class AlarmDetailVO {
     public void setUserCreatorName(String userCreatorName) {
         this.userCreatorName = userCreatorName;
     }
+
     public int getId() {
         return id;
     }
@@ -164,6 +165,7 @@ public class AlarmDetailVO {
     public void setUavDeviceId(String uavDeviceId) {
         this.uavDeviceId = uavDeviceId;
     }
+
     public String getInfoName() {
         return infoName;
     }

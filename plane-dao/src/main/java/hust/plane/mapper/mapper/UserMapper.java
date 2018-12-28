@@ -2,12 +2,11 @@ package hust.plane.mapper.mapper;
 
 import hust.plane.mapper.pojo.User;
 import hust.plane.mapper.pojo.UserExample;
-
-import java.util.List;
-
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.UserPojo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     int countByExample(UserExample example);
@@ -50,23 +49,23 @@ public interface UserMapper {
 
 //    List<User> selectUserByRole(@Param("page") TailPage<User> page, @Param("role") String searchUserStatus);
 
-	int userAddTasknum(User user);
-	
-	int userReduceTasknum(User user);
+    int userAddTasknum(User user);
+
+    int userReduceTasknum(User user);
 
     int updateLastTime(String name);
 
     int insertSelectiveIdInc(User user);
 
-	String getNameByUserId(Integer id);
+    String getNameByUserId(Integer id);
 
     User selectUserByUserName(String userName);
 
     int selectCountByFuzzyName(@Param("Name") String userName);
 
-    List<User> selectByFuzzyNameWithPage(@Param("Name")String userName, TailPage<UserPojo> page);
+    List<User> selectByFuzzyNameWithPage(@Param("Name") String userName, TailPage<UserPojo> page);
 
-	User getUserByName(String name);
+    User getUserByName(String name);
 
     Integer selectUserIdByUserName(String addUsername);
 

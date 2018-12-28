@@ -16,9 +16,10 @@ import java.util.regex.Pattern;
 
 /**
  * 常用函数工具类
+ *
+ * @param
  * @author rfYang
  * @date 2018/7/3 18:20
- * @param
  * @return
  */
 public class ToolUntils {
@@ -105,7 +106,6 @@ public class ToolUntils {
         else
             return false;
     }
-
 
 
 }

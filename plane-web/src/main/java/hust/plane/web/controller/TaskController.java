@@ -1,19 +1,18 @@
 package hust.plane.web.controller;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.*;
 import hust.plane.service.interFace.*;
-import hust.plane.utils.*;
+import hust.plane.utils.DateKit;
+import hust.plane.utils.HttpClientUtil;
+import hust.plane.utils.JsonUtils;
+import hust.plane.utils.PlaneUtils;
+import hust.plane.utils.page.TailPage;
+import hust.plane.utils.page.TaskPojo;
+import hust.plane.utils.pojo.JsonView;
 import hust.plane.utils.pojo.TipException;
 import hust.plane.web.controller.vo.*;
-
+import hust.plane.web.controller.webUtils.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.DetectModule.Detector.Detector;
-
-import hust.plane.utils.page.TailPage;
-import hust.plane.utils.page.TaskPojo;
-import hust.plane.utils.pojo.JsonView;
-import hust.plane.web.controller.webUtils.WordUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class TaskController {
@@ -118,8 +116,8 @@ public class TaskController {
                 AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarmWithIdList.get(i));
                 alarmDetailVO.setUav(uav1);
                 //设置来自图片服务器的数据
-                //                     2113.123.12.12/   ImageTask/       22/        ImageAlarm/      1.jpg
-                alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
+                //                     2113.123.12.12/   ImageTask/       YYMMDDXXXX/        ImageAlarm/      1.jpg
+                alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getMissionId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
                 alarmDetailVO.setTaskName(task1.getName());
                 alarmDetailVO.setFlyingPathName(flyingPath.getName());
                 alarmDetailVO.setUserCreatorName(userCreatorName);
@@ -192,7 +190,7 @@ public class TaskController {
                 }
                 if (task2.getUavId() != null) {
                     taskVO.setUavName(uavServiceImpl.getNameById(task2.getUavId()));
-                }else{
+                } else {
                     taskVO.setUavName("");
                 }
                 taskVO.setTaskVO(task2);
@@ -261,10 +259,10 @@ public class TaskController {
         // 提交的任务
 
         if (taskServiceImpl.saveTask(task) == true) {
-            //目前服务器生成规则为YYMMDDXXXX。年份采用两位表示
+            //目前服务器生成规则为YYMMDDXXXX。年份采用两位表示,XXXX代表序号从0001到9999
             Task task2 = taskServiceImpl.getTaskByName(taskVO.getName());
-            String pre =  DateKit.getMissionId(task2.getCreatetime());
-            String suf = task2.getId().toString();
+            String pre = DateKit.getMissionId(task2.getCreatetime());
+            String suf = task2.getId() % 9999 + "";        //防止 序号满
             while (suf.length() < 4) {
                 suf = "0" + suf;
             }
@@ -486,12 +484,12 @@ public class TaskController {
 
         //跨域请求创建文件夹
         String url = DETECT_SERVER + "makeTaskDir.action";
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("missionId",""+task2.getMissionId());
-        String alarmlistString = HttpClientUtil.doPost(url,params);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("missionId", "" + task2.getMissionId());
+        String alarmlistString = HttpClientUtil.doPost(url, params);
         System.out.println(alarmlistString);
 
-        if(alarmlistString.equals("success")){
+        if (alarmlistString.equals("success")) {
             User userA = userServiceImpl.getUserById(task2.getUserA());
             User userZ = userServiceImpl.getUserById(task2.getUserZ());
             if (taskServiceImpl.setStatusTaskByTask(task2, 2) == true) {// 设置任务分派
@@ -505,7 +503,7 @@ public class TaskController {
             } else {
                 return JsonView.render(1, "任务分派失败!");
             }
-        }else{
+        } else {
             return JsonView.render(1, "任务分派失败!");
         }
 
@@ -572,17 +570,6 @@ public class TaskController {
             role = "2";
         }
 
-        //输出所有的信息点
-       List<InfoPoint> infoPoints =infoPointServiceImpl.getAllInfoPoint();
-        List<InfoPointVO> infoPointVOList = new ArrayList<>();
-        Iterator<InfoPoint> infoPointIterator = infoPoints.iterator();
-        while (infoPointIterator.hasNext()){
-            InfoPointVO infoPointVO = new InfoPointVO(infoPointIterator.next());
-            infoPointVOList.add(infoPointVO);
-        }
-        model.addAttribute("infoPoints", JsonUtils.objectToJson(infoPointVOList));
-
-
         Task task = new Task();
         task.setId(taskid);
         Task task1 = taskServiceImpl.getTaskByTask(task);
@@ -630,7 +617,7 @@ public class TaskController {
 
                 //读取本机图片服务器数据
                 //alarmVo.setImage(BASE_IMAGE_URL+ imgPath + task2.getId() + "/" +  IMAGE_ALARM + alarmVo.getImage());
-                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getId() + "/" + IMAGE_ALARM + alarmVo.getImage());
+                alarmVo.setImage(FILE_UPLOAD_HOST + imgPath + task2.getMissionId() + "/" + IMAGE_ALARM + alarmVo.getImage());
                 alarmVo.setBase();
                 // alarmVo.setImgBaseCode();
                 alarmVos.add(alarmVo);
@@ -660,7 +647,7 @@ public class TaskController {
             //是浏览者,不改变状态
         } else {
             //是观察者，改变状态
-            if(task2.getStatus()==12){
+            if (task2.getStatus() == 12) {
                 taskServiceImpl.setStatusTaskByTask(task, 13); // 设置打印报告完成
             }
         }
@@ -716,7 +703,7 @@ public class TaskController {
             AlarmDetailVO alarmDetailVO = new AlarmDetailVO(alarm);
             alarmDetailVO.setUav(uav1);
             //设置来自图片服务器的数据
-            alarmDetailVO.setImage(BASE_IMAGE_URL+ imgPath + task1.getId() + "/" +  IMAGE_ALARM + alarmDetailVO.getImage());
+            alarmDetailVO.setImage(BASE_IMAGE_URL + imgPath + task1.getMissionId() + "/" + IMAGE_ALARM + alarmDetailVO.getImage());
 
             alarmDetailVO.setTaskName(task1.getName());
             alarmDetailVO.setFlyingPathName(flyingPathName);
@@ -736,41 +723,44 @@ public class TaskController {
     }
 
 
+    //查看上传的照片
     @RequestMapping(value = "imageWithId")
-    public String getTaskImageWithId(@RequestParam(value = "id") int id,Model model) {
-        if(Integer.valueOf(id)!=null){
-//            String picDir = LOCAL_ALARM_DIR + id + "/" + IMAGE_SOURCE;
-//            List<String> picNameList = null;
-//            picNameList = GetFileName.getFiles(picDir);
+    public String getTaskImageWithId(@RequestParam(value = "id") int id, Model model) {
+        if (Integer.valueOf(id) != null) {
+
             String fileROOT = BASE_IMAGE_URL + imgPath;
             String folder = IMAGE_SOURCE;
 
-            List<String> picNameList = null;
+            Task task = new Task();
+            task.setId(id);
+            Task task1 = taskServiceImpl.getTaskByTask(task);
+            List<String> picNameList = new ArrayList<>(
+
+            );
             //跨域请求文件服务器上的图片文件名列表
-            String url = DETECT_SERVER + "taskImages.action";
-            Map<String,String> params = new HashMap<String, String>();
-            params.put("taskId",""+id);
-            String alarmlistString = HttpClientUtil.doPost(url,params);
-            System.out.println(alarmlistString);
+//            String url = DETECT_SERVER + "taskImages.action";
+//            Map<String,String> params = new HashMap<String, String>();
+//            params.put("missionId",""+ task1.getMissionId());
+//            String alarmlistString = HttpClientUtil.doPost(url,params);
 
-            if(alarmlistString.equals("null")){
-              model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
-            }
-            else{
-              String[] pictures = alarmlistString.split(",");    //分割得到的字符串
-              picNameList= Arrays.asList(pictures);                      //加入到list对象中
-              model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
-            }
+//            if(alarmlistString.equals("null")){
+//              model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
+//            }
+//            else{
+//              String[] pictures = alarmlistString.split(",");    //分割得到的字符串
+//              picNameList= Arrays.asList(pictures);                      //加入到list对象中
+//              model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
+//            }
 
-            model.addAttribute("baseImageUrl",fileROOT);
-            model.addAttribute("folder",folder);
+            model.addAttribute("baseImageUrl", fileROOT);
+            model.addAttribute("folder", folder);
 
-            if(picNameList.size()>0)
-                model.addAttribute("picNameList",JsonView.render(1, "",JsonUtils.objectToJson(picNameList)));
+            if (picNameList.size() > 0)
+                model.addAttribute("picNameList", JsonView.render(1, "", JsonUtils.objectToJson(picNameList)));
             else
-                model.addAttribute("picNameList",JsonView.render(0, "该任务上传的图片为空！"));
+                model.addAttribute("picNameList", JsonView.render(0, "该任务上传的图片为空！"));
 
-            model.addAttribute("taskId",id);
+            model.addAttribute("missionId", task1.getMissionId());
         }
         return "taskPicture";
     }
@@ -781,7 +771,7 @@ public class TaskController {
     public String recongizePicture(Task task) {
 
 
- //       Detector detector = new Detector();
+        //       Detector detector = new Detector();
         //       生成源文件的地址和告警图片的地址
 //        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
 //        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
@@ -790,14 +780,16 @@ public class TaskController {
 
         //跨域请求进行识别
         String url = DETECT_SERVER + "createAlarm.action";
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("taskId",""+task.getId());
-        String alarmlistString = HttpClientUtil.doPost(url,params);
+        Task task1 = taskServiceImpl.getTaskByTask(task);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("taskid", "" + task1.getId());
+        params.put("missionid", "" + task1.getMissionId());
+        String alarmlistString = HttpClientUtil.doPost(url, params);
         //System.out.println(alarmlistString);
-        if(alarmlistString.equals("success")){
+        if (alarmlistString.equals("success")) {
             taskServiceImpl.setStatusTaskByTask(task, 12);
             return JsonView.render(0, "识别完成!");
-        }else{
+        } else {
             return JsonView.render(0, "识别未完成！");
         }
 

@@ -11,8 +11,8 @@
         <result column="Geohash" property="geohash" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, Name, AsText(Position) as	Position, Altitude, Route_id, Route_name, Geohash
-  </sql>
+        id, Name, AsText(Position) as Position, Altitude, Route_id, Route_name, Geohash
+    </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -21,18 +21,18 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from K_InfoPoint
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from K_InfoPoint
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 
     <insert id="insert" parameterType="hust.plane.mapper.pojo.InfoPoint">
-    insert into K_InfoPoint (id, Name, Position, 
-      Altitude, Route_id, Route_name, 
-      Geohash)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{position,jdbcType=OTHER}, 
-      #{altitude,jdbcType=REAL}, #{routeId,jdbcType=INTEGER}, #{routeName,jdbcType=VARCHAR}, 
-      #{geohash,jdbcType=VARCHAR})
-  </insert>
+        insert into K_InfoPoint (id, Name, Position,
+        Altitude, Route_id, Route_name,
+        Geohash)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{position,jdbcType=OTHER},
+        #{altitude,jdbcType=REAL}, #{routeId,jdbcType=INTEGER}, #{routeName,jdbcType=VARCHAR},
+        #{geohash,jdbcType=VARCHAR})
+    </insert>
 
     <insert id="insertInfoPointList" parameterType="java.util.List">
         insert into K_InfoPoint (Name, Position, Altitude, Route_id, Route_name, Geohash)
@@ -53,7 +53,7 @@
     </select>
 
     <select id="selectAllInfoPoint" resultType="hust.plane.mapper.pojo.InfoPoint">
-        select  id, Name, AsText(Position) as	Position, Altitude, Route_id, Route_name
+        select id, Name, AsText(Position) as Position
         from K_InfoPoint
     </select>
 

@@ -5,180 +5,180 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class Task {
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private Integer usercreator;
+    private Integer usercreator;
 
-	private Integer userA;
+    private Integer userA;
 
-	private Integer userZ;
+    private Integer userZ;
 
-	private Integer flyingpathId;
+    private Integer flyingpathId;
 
-	private String missionId;
+    private String missionId;
 
-	private Integer uavId;
+    private Integer uavId;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date createtime;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date planstarttime;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date planendtime;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date executestarttime;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date executeendtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createtime;
 
-	private Integer status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date planstarttime;
 
-	private Integer finishstatus;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date planendtime;
 
-	private String imgfolder;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date executestarttime;
 
-	private String reporturl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date executeendtime;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer status;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private Integer finishstatus;
 
-	public String getName() {
-		return name;
-	}
+    private String imgfolder;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String reporturl;
 
-	public Integer getUsercreator() {
-		return usercreator;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setUsercreator(Integer usercreator) {
-		this.usercreator = usercreator;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getUserA() {
-		return userA;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUserA(Integer userA) {
-		this.userA = userA;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getUserZ() {
-		return userZ;
-	}
+    public Integer getUsercreator() {
+        return usercreator;
+    }
 
-	public void setUserZ(Integer userZ) {
-		this.userZ = userZ;
-	}
+    public void setUsercreator(Integer usercreator) {
+        this.usercreator = usercreator;
+    }
 
-	public Integer getFlyingpathId() {
-		return flyingpathId;
-	}
+    public Integer getUserA() {
+        return userA;
+    }
 
-	public void setFlyingpathId(Integer flyingpathId) {
-		this.flyingpathId = flyingpathId;
-	}
+    public void setUserA(Integer userA) {
+        this.userA = userA;
+    }
 
-	public Integer getUavId() {
-		return uavId;
-	}
+    public Integer getUserZ() {
+        return userZ;
+    }
 
-	public void setUavId(Integer uavId) {
-		this.uavId = uavId;
-	}
+    public void setUserZ(Integer userZ) {
+        this.userZ = userZ;
+    }
 
-	public Date getCreatetime() {
-		return createtime;
-	}
+    public Integer getFlyingpathId() {
+        return flyingpathId;
+    }
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
+    public void setFlyingpathId(Integer flyingpathId) {
+        this.flyingpathId = flyingpathId;
+    }
 
-	public Date getPlanstarttime() {
-		return planstarttime;
-	}
+    public Integer getUavId() {
+        return uavId;
+    }
 
-	public void setPlanstarttime(Date planstarttime) {
-		this.planstarttime = planstarttime;
-	}
+    public void setUavId(Integer uavId) {
+        this.uavId = uavId;
+    }
 
-	public Date getPlanendtime() {
-		return planendtime;
-	}
+    public Date getCreatetime() {
+        return createtime;
+    }
 
-	public void setPlanendtime(Date planendtime) {
-		this.planendtime = planendtime;
-	}
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
 
-	public Date getExecutestarttime() {
-		return executestarttime;
-	}
+    public Date getPlanstarttime() {
+        return planstarttime;
+    }
 
-	public void setExecutestarttime(Date executestarttime) {
-		this.executestarttime = executestarttime;
-	}
+    public void setPlanstarttime(Date planstarttime) {
+        this.planstarttime = planstarttime;
+    }
 
-	public Date getExecuteendtime() {
-		return executeendtime;
-	}
+    public Date getPlanendtime() {
+        return planendtime;
+    }
 
-	public void setExecuteendtime(Date executeendtime) {
-		this.executeendtime = executeendtime;
-	}
+    public void setPlanendtime(Date planendtime) {
+        this.planendtime = planendtime;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Date getExecutestarttime() {
+        return executestarttime;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setExecutestarttime(Date executestarttime) {
+        this.executestarttime = executestarttime;
+    }
 
-	public Integer getFinishstatus() {
-		return finishstatus;
-	}
+    public Date getExecuteendtime() {
+        return executeendtime;
+    }
 
-	public void setFinishstatus(Integer finishstatus) {
-		this.finishstatus = finishstatus;
-	}
+    public void setExecuteendtime(Date executeendtime) {
+        this.executeendtime = executeendtime;
+    }
 
-	public String getImgfolder() {
-		return imgfolder;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public void setImgfolder(String imgfolder) {
-		this.imgfolder = imgfolder == null ? null : imgfolder.trim();
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public String getReporturl() {
-		return reporturl;
-	}
+    public Integer getFinishstatus() {
+        return finishstatus;
+    }
 
-	public void setReporturl(String reporturl) {
-		this.reporturl = reporturl == null ? null : reporturl.trim();
-	}
+    public void setFinishstatus(Integer finishstatus) {
+        this.finishstatus = finishstatus;
+    }
+
+    public String getImgfolder() {
+        return imgfolder;
+    }
+
+    public void setImgfolder(String imgfolder) {
+        this.imgfolder = imgfolder == null ? null : imgfolder.trim();
+    }
+
+    public String getReporturl() {
+        return reporturl;
+    }
+
+    public void setReporturl(String reporturl) {
+        this.reporturl = reporturl == null ? null : reporturl.trim();
+    }
 
 
-	public String getMissionId() {
-		return missionId;
-	}
+    public String getMissionId() {
+        return missionId;
+    }
 
-	public void setMissionId(String missionId) {
-		this.missionId = missionId;
-	}
+    public void setMissionId(String missionId) {
+        this.missionId = missionId;
+    }
 
 }

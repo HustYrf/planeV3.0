@@ -7,14 +7,14 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
-    <#--<#include "common/res.html" />-->
+<#--<#include "common/res.html" />-->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="media/css/light.css" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 
@@ -22,79 +22,88 @@
     <link href="media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="media/css/glyphicons.css" rel="stylesheet" />
-    <link href="media/css/halflings.css" rel="stylesheet" />
-    <link href="media/css/search.css" rel="stylesheet" />
+    <link href="media/css/glyphicons.css" rel="stylesheet"/>
+    <link href="media/css/halflings.css" rel="stylesheet"/>
+    <link href="media/css/search.css" rel="stylesheet"/>
     <!-- END PAGE LEVEL STYLES -->
 
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
-<style>
-    .search-forms{
-        margin: 0;
-        padding: 0;
-        display:inline-block;
-        float: right;
-        padding-right: 20px;
-    }
-    .search-forms div,button{
-       float:left;
-        margin: 0;
-    }
-    .search-div {
-        position:absolute;
-        z-index:100;
-        background-color:#FCFCFC;
-        width:532px;
-        /*display:none;*/
-        border-top: none;
-        max-height:200px;
-        overflow-y:scroll;
-        opacity: 0.8;
-    }
+    <style>
+        .search-forms {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            float: right;
+            padding-right: 20px;
+        }
 
-    .search-div::-webkit-scrollbar {/*滚动条整体样式*/
-        width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
-        height: 4px;
-    }
-    .search-div::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
-        border-radius: 5px;
-        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        background: rgba(0,0,0,0.2);
-    }
-    .search-div::-webkit-scrollbar-track {/*滚动条里面轨道*/
-        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        border-radius: 0;
-        background: rgba(0,0,0,0.1);
-    }
- 
-    .search-div ul,li{
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    .search-div li{
-        line-height:18px;
-        font-size:14px;
-        padding:5px 10px;
-    }
-    .search-div li.current{
-        background:#CCCCCC;
-        color:#0000FF;
-        cursor: pointer;
-    }
-    .search-div li:hover{
-        background:#CCCCCC;
-        color:#0000FF;
-        cursor: pointer;
-    }
-    #search-target:focus{
-        outline: none !important;
-        border:1px solid #1d943b;
-        box-shadow: 0 0 10px #1d943b;
-    }
-</style>
+        .search-forms div, button {
+            float: left;
+            margin: 0;
+        }
+
+        .search-div {
+            position: absolute;
+            z-index: 100;
+            background-color: #FCFCFC;
+            width: 532px;
+            /*display:none;*/
+            border-top: none;
+            max-height: 200px;
+            overflow-y: scroll;
+            opacity: 0.8;
+        }
+
+        .search-div::-webkit-scrollbar { /*滚动条整体样式*/
+            width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: 4px;
+        }
+
+        .search-div::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .search-div::-webkit-scrollbar-track { /*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .search-div ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-div li {
+            line-height: 18px;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+
+        .search-div li.current {
+            background: #CCCCCC;
+            color: #0000FF;
+            cursor: pointer;
+        }
+
+        .search-div li:hover {
+            background: #CCCCCC;
+            color: #0000FF;
+            cursor: pointer;
+        }
+
+        #search-target:focus {
+            outline: none !important;
+            border: 1px solid #1d943b;
+            box-shadow: 0 0 10px #1d943b;
+        }
+
+    </style>
 </head>
 <body class="page-header-fixed">
 <#include "common/header.html" />
@@ -113,7 +122,7 @@
                 <small>主页</small>
             </h4>-->
             <h4 class="page-title"></h4>
-            <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <ul class="breadcrumb" style="margin-bottom:0;">
                 <li>
                     <i class="icon-home"></i>
                     <a href="index.html">无人机通信巡检系统</a>
@@ -124,44 +133,91 @@
             <!-- END PAGE TITLE & BREADCRUMB-->
             <div class="search-forms">
                 <form class="form-search" action="#">
-                        <div class="btn-group">
-                            <a class="btn green" href="#" data-toggle="dropdown" id="search-option">
-                                <i class="icon-link"></i> 光缆&nbsp;&nbsp;
-                                <i class="icon-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu" id="type-selections">
-                                <li><a href="#"><i class="icon-link"></i>光缆</a></li>
-                                <li><a href="#"><i class="icon-link"></i>飞行路径</a></li>
-                                <#--<li><a href="#"><i class="icon-map-marker"></i>信息点</a></li>-->
+                    <div class="btn-group">
+                        <a class="btn green" href="#" data-toggle="dropdown" id="search-option">
+                            <i class="icon-link"></i> 光缆&nbsp;&nbsp;
+                            <i class="icon-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" id="type-selections">
+                            <li><a href="#"><i class="icon-link"></i>光缆</a></li>
+                            <li><a href="#"><i class="icon-link"></i>飞行路径</a></li>
+                        <#--<li><a href="#"><i class="icon-map-marker"></i>信息点</a></li>-->
+                        </ul>
+                        <input type="hidden" id="search-type" value="1">
+                    </div>
+                    <div class="input-cont">
+                        <input type="text" class="m-wrap" placeholder="Search..." id="search-target"
+                               style="width: 520px;"/>
+                        <div class="search-div" id="search-div-1">
+                            <ul id="search-result">
                             </ul>
-                            <input type="hidden" id="search-type" value="1">
                         </div>
-                        <div class="input-cont">
-                            <input type="text" class="m-wrap" placeholder="Search..." id="search-target"  style="width: 520px;"/>
-                            <div class="search-div" id="search-div-1">
-                                <ul id="search-result" >
-                                </ul>
-                            </div>
-                        </div>
-                        <button type="button" class="btn buttonright green">
-                            查找 &nbsp;<i class=" icon-search m-icon-green"></i>
-                        </button>
+                    </div>
+                    <button type="button" class="btn buttonright green">
+                        查找 &nbsp;<i class=" icon-search m-icon-green"></i>
+                    </button>
                 </form>
             </div>
 
         </div>
         <!-- END PAGE HEADER-->
         <div id="dashboard">
-            <div id="container" ></div>
+            <div id="container">
+            </div>
+            <div id="showSelections">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="infoPointbtn" value="option1" onchange="showInfoPoint(this)"> 信息点图层
+                </label>
+            </div>
             <!-- UI组件库 1.0 -->
+            <script>
+                var style = {
+                    url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
+                    anchor: new AMap.Pixel(6, 6),
+                    size: new AMap.Size(11, 11)
+                };
+                var mass;
+                var pointmarker;
+
+                function showInfoPoint(obj) {
+                    if (obj.checked) {
+                        $.ajax({
+                            type: "POST",
+                            url: "${s.base}/showInfoPoint.action",
+                            dataType: 'json',
+                            success: function (result) {
+                                //处理返回的数据
+                                mass = new AMap.MassMarks(result, {
+                                    opacity: 0.8,
+                                    zIndex: 111,
+                                    cursor: 'pointer',
+                                    style: style
+                                });
+                                pointmarker = new AMap.Marker({content: ' ', map: map});
+                                mass.on('mouseover', function (e) {
+                                    // console.log(e);
+                                    pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
+                                    pointmarker.setLabel({content: e.data.name})
+                                });
+                                mass.setMap(map);
+                            },
+                            error: function () {
+                                alert("信息点图层显示失败");
+                            }
+                        });
+                    } else {
+                        map.remove(mass);
+                    }
+                }
+            </script>
             <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
             <script type="text/javascript">
 
-                var  planePath =${flyingPath};
+                var planePath =${flyingPath};
                 var centerpoint;
-                if(planePath.length>0 && planePath[0].pathdata[0]!=null){
+                if (planePath.length > 0 && planePath[0].pathdata[0] != null) {
                     centerpoint = planePath[0].pathdata[0];
-                }else{
+                } else {
                     centerpoint = [107.79876, 23.06781];
                 }
                 //创建一个地图
@@ -171,19 +227,19 @@
                     zoom: 15
                 });
 
-                map.plugin(["AMap.ToolBar","AMap.Scale"], function() {
+                map.plugin(["AMap.ToolBar", "AMap.Scale"], function () {
                     var scale = new AMap.Scale({          //生成 比例尺插件
                         visible: true,
-                        position:'LB',
+                        position: 'LB',
                     });
                     map.addControl(scale);
                     scale.show();
                     map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
                 });
-                if(location.href.indexOf('&guide=1')!==-1){
-                    map.setStatus({scrollWheel:false})
+                if (location.href.indexOf('&guide=1') !== -1) {
+                    map.setStatus({scrollWheel: false})
                 }
-                AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+                AMapUI.loadUI(['control/BasicControl'], function (BasicControl) {
 
                     var layerCtrl1 = new BasicControl.LayerSwitcher({
                         position: 'rb',
@@ -207,15 +263,15 @@
                 //         strokeStyle: "solid", //线样式
                 //         strokeDasharray: [10, 5] //补充线样式
                 //     });
-               // }
+                // }
 
                 var alarmList = ${alarmList!};
-                AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+                AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
 
-                    if(alarmList.length==0 || alarmList==null){
+                    if (alarmList.length == 0 || alarmList == null) {
                         alert("没有告警数据！");
-                    }else{
-                        for(var i=0;i<alarmList.length;i++){
+                    } else {
+                        for (var i = 0; i < alarmList.length; i++) {
 
                             //启动页面
                             var dangerPoint = new SimpleMarker({
@@ -241,9 +297,9 @@
                             content.push("创建时间：" + alarmList[i].createTime);
                             content.push("飞行任务名称：" + alarmList[i].taskName);
                             content.push("飞行路径：" + alarmList[i].flyingPathName);
-                            content.push("信息点："+alarmList[i].infoName);
-                            content.push("描述："+alarmList[i].descripte);
-                            content.push("创建者："+alarmList[i].userCreatorName)
+                            content.push("信息点：" + alarmList[i].infoName);
+                            content.push("描述：" + alarmList[i].descripte);
+                            content.push("创建者：" + alarmList[i].userCreatorName)
                             content.push("放飞员：" + alarmList[i].userAName);
                             content.push("降落员：" + alarmList[i].userZName);
                             content.push("无人机名称：" + alarmList[i].uavName);
@@ -257,92 +313,92 @@
 
                 });
 
-        /*        AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
-                    if (!PointSimplifier.supportCanvas) {
-                        alert('当前环境不支持 Canvas！');
-                        return;
-                    }
-                    var pointSimplifierIns = new PointSimplifier({
-                        zIndex: 115,
-                        autoSetFitView: false,
-                        map: map, //所属的地图实例
-
-                        getPosition: function (item) {
-                            if (!item) {
-                                return null;
+                /*        AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], function (PointSimplifier, $) {
+                            if (!PointSimplifier.supportCanvas) {
+                                alert('当前环境不支持 Canvas！');
+                                return;
                             }
+                            var pointSimplifierIns = new PointSimplifier({
+                                zIndex: 115,
+                                autoSetFitView: false,
+                                map: map, //所属的地图实例
 
-                            return item;
-                            // var parts = item.split(',');
-                            // return [parseFloat(parts[0]), parseFloat(parts[1])];
-                        },
-                        //使用GroupStyleRender
-                        renderConstructor: PointSimplifier.Render.Canvas.GroupStyleRender,
-                        renderOptions: {
-                            eventSupport: false, //禁止事件,对性能更友好
-                            //点的样式
-                            pointStyle: {
-                                fillStyle: null,
-                                width: 5,
-                                height: 5
-                            },
-                            topNAreaStyle: null,
-                            getGroupId: function (item, idx) {
-
-                                //随机返回一个组ID
-                                return Math.ceil(4 * Math.random());
-                            },
-                            groupStyleOptions: function (gid) {
-                                //随机设置大小
-                                var radius = 10 + 10 * Math.random();
-                                return {
-
-                                    pointStyle: radius > 0 ? {
-                                        content: function (ctx, x, y, width, height) {
-
-                                            var p = {
-                                                x: x + width / 2,
-                                                y: y + height / 2,
-                                                radius: radius
-                                            };
-
-                                            ctx.beginPath();
-                                            var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                                            gradient.addColorStop(0, "rgba(255,0,0,1)");
-                                            gradient.addColorStop(1, "rgba(255,0,0,0.1)");
-                                            ctx.fillStyle = gradient;
-                                            ctx.arc(p.x, p.y, p.radius, Math.PI * 2, false);
-                                            ctx.fill();
-
-                                        },
-
-                                        //fillStyle: colors[gid % colors.length],
-                                        width: radius * 2,
-                                        height: radius * 2
-                                    } : null,
-                                    pointHardcoreStyle: {
-                                        width: radius * 2 + 3,
-                                        height: radius * 2 + 3
+                                getPosition: function (item) {
+                                    if (!item) {
+                                        return null;
                                     }
-                                };
+
+                                    return item;
+                                    // var parts = item.split(',');
+                                    // return [parseFloat(parts[0]), parseFloat(parts[1])];
+                                },
+                                //使用GroupStyleRender
+                                renderConstructor: PointSimplifier.Render.Canvas.GroupStyleRender,
+                                renderOptions: {
+                                    eventSupport: false, //禁止事件,对性能更友好
+                                    //点的样式
+                                    pointStyle: {
+                                        fillStyle: null,
+                                        width: 5,
+                                        height: 5
+                                    },
+                                    topNAreaStyle: null,
+                                    getGroupId: function (item, idx) {
+
+                                        //随机返回一个组ID
+                                        return Math.ceil(4 * Math.random());
+                                    },
+                                    groupStyleOptions: function (gid) {
+                                        //随机设置大小
+                                        var radius = 10 + 10 * Math.random();
+                                        return {
+
+                                            pointStyle: radius > 0 ? {
+                                                content: function (ctx, x, y, width, height) {
+
+                                                    var p = {
+                                                        x: x + width / 2,
+                                                        y: y + height / 2,
+                                                        radius: radius
+                                                    };
+
+                                                    ctx.beginPath();
+                                                    var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                                                    gradient.addColorStop(0, "rgba(255,0,0,1)");
+                                                    gradient.addColorStop(1, "rgba(255,0,0,0.1)");
+                                                    ctx.fillStyle = gradient;
+                                                    ctx.arc(p.x, p.y, p.radius, Math.PI * 2, false);
+                                                    ctx.fill();
+
+                                                },
+
+                                                //fillStyle: colors[gid % colors.length],
+                                                width: radius * 2,
+                                                height: radius * 2
+                                            } : null,
+                                            pointHardcoreStyle: {
+                                                width: radius * 2 + 3,
+                                                height: radius * 2 + 3
+                                            }
+                                        };
+                                    }
+
+                                }
+                            });
+                            //重复render
+                            setInterval(function () {
+                                pointSimplifierIns.render();
+                            }, 500)
+
+                            var data = new Array();
+                            if(alarmList.length>0){
+                                for(var i=0;i<alarmList.length;i++){
+                                    data[i] = alarmList[i].position;
+                                }
+                                pointSimplifierIns.setData(data);
                             }
-
-                        }
-                    });
-                    //重复render
-                    setInterval(function () {
-                        pointSimplifierIns.render();
-                    }, 500)
-
-                    var data = new Array();
-                    if(alarmList.length>0){
-                        for(var i=0;i<alarmList.length;i++){
-                            data[i] = alarmList[i].position;
-                        }
-                        pointSimplifierIns.setData(data);
-                    }
-                });
-                */
+                        });
+                        */
                 //构建自定义信息窗体
                 function createInfoWindow(title, content) {
                     var info = document.createElement("div");
@@ -371,11 +427,13 @@
                     info.appendChild(middle);
                     return info;
                 }
+
                 //打开信息窗体
                 function markerClick(e) {
                     infoWindow.setContent(e.target.content);
                     infoWindow.open(map, e.target.getPosition());
                 }
+
                 //关闭信息窗体
                 function closeInfoWindow() {
                     map.clearInfoWindow();
@@ -386,6 +444,7 @@
     </div>
     <!-- END PAGE CONTAINER-->
 </div>
+
 <!-- END PAGE -->
 <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
@@ -396,28 +455,29 @@
 
         var searchResultMarker = new Array();
 
-        $("ul#type-selections").on("click","li",function(){
-            
+        $("ul#type-selections").on("click", "li", function () {
+
             switch ($(this).text()) {
-                case '光缆':{
+                case '光缆': {
                     $('#search-option').html('<i class="icon-link"></i> 光缆&nbsp;&nbsp;<i class="icon-angle-down"></i>');
                     $("#search-type").val(1);
                     $("#search-target").val('');   //清空输入的内容
-                    $('#search-div-1').css('display','none');
+                    $('#search-div-1').css('display', 'none');
                     break;
                 }
-                case '飞行路径':{
+                case '飞行路径': {
                     $('#search-option').html('<i class="icon-link"></i>飞行路径&nbsp;&nbsp;<i class="icon-angle-down"></i>');
                     $("#search-type").val(2);
                     $("#search-target").val('');   //清空输入的内容
-                    $('#search-div-1').css('display','none');
+                    $('#search-div-1').css('display', 'none');
                     break;
                 }
-                case '信息点':{
+                case '信息点': {
                     $("#search-type").val(3);
                     break;
                 }
-                default:break;
+                default:
+                    break;
             }
         });
 
@@ -427,7 +487,7 @@
             //  type = 2 查询飞行路径
             //  type =3 查询信息点
             var reg = /^[\s]*$/;     //判断是否全是空格，减少查询次数
-            if(reg.test($("#search-target").val())){
+            if (reg.test($("#search-target").val())) {
                 return;
             }
 
@@ -462,35 +522,35 @@
             });
         });
 
-        $('#search-result').on('click','li',function(){
+        $('#search-result').on('click', 'li', function () {
             $("#search-target").val($(this).text());
-            $('#search-div-1').css('display','none');
+            $('#search-div-1').css('display', 'none');
             //把选择的数据放入到地图中
             //map.remove(searchResultMarker);
-            while (searchResultMarker.length>0){   //把标记删除
+            while (searchResultMarker.length > 0) {   //把标记删除
                 var markeritem = searchResultMarker.pop();
                 map.remove(markeritem);
             }
 
             switch ($("#search-type").val()) {
-                case '1':{
+                case '1': {
                     $.ajax({
                         type: "POST",
                         url: "${s.base}/getRouteByName.action",
                         dataType: 'json',
-                        data: { name: $(this).text() },
+                        data: {name: $(this).text()},
                         success: function (result) {
                             if (result.errcode == 0 && result.message == "SUCCESS") {
                                 //var center = JSON.parse(JSON.stringify(result.data.routepathdata[0]))
                                 map.setCenter(result.data.routepathdata[0]);
                                 var polyline = new AMap.Polyline({
-                                            map: map,
-                                            path: result.data.routepathdata, //设置线覆盖物路径
-                                            strokeColor: '#ff6700', //线颜色
-                                            strokeOpacity: 1, //线透明度
-                                            strokeWeight: 5, //线宽
-                                            strokeStyle: "solid", //线样式
-                                            strokeDasharray: [10, 5] //补充线样式
+                                    map: map,
+                                    path: result.data.routepathdata, //设置线覆盖物路径
+                                    strokeColor: '#ff6700', //线颜色
+                                    strokeOpacity: 1, //线透明度
+                                    strokeWeight: 5, //线宽
+                                    strokeStyle: "solid", //线样式
+                                    strokeDasharray: [10, 5] //补充线样式
                                 });
                                 searchResultMarker.push(polyline);
 
@@ -502,12 +562,12 @@
                     });
                     break;
                 }
-                case '2':{
+                case '2': {
                     $.ajax({
                         type: "POST",
                         url: "${s.base}/getFlyingPathByName.action",
                         dataType: 'json',
-                        data: { name: $(this).text() },
+                        data: {name: $(this).text()},
                         success: function (result) {
                             if (result.errcode == 0 && result.message == "SUCCESS") {
                                 map.setCenter(result.data.pathdata[0]);
@@ -529,23 +589,25 @@
                     });
                     break;
                 }
-                case '3':{
+                case '3': {
                     break;
                 }
-                default:break;
+                default:
+                    break;
             }
 
         });
 
-        $("#search-target").bind("input propertychange",function(event){
+        $("#search-target").bind("input propertychange", function (event) {
             var inputVal = $("#search-target").val();
             var str = inputVal.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
             if (str == '' || str == undefined || str == null) {
-                $('#search-div1').css('display','none');
+                $('#search-div1').css('display', 'none');
             }
         });
 
     });
 </script>
+
 </body>
 </html>

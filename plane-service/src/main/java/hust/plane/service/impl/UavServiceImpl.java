@@ -10,47 +10,47 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UavServiceImpl implements UavService{
-	
-	@Autowired
-	public UavMapper uavMapper;
+public class UavServiceImpl implements UavService {
 
-	@Override
-	public List<Uav> getAllPlane() {
-		
-		List<Uav> planeList = uavMapper.selectALLPlane();
-		return planeList;
-	}
+    @Autowired
+    public UavMapper uavMapper;
 
-	@Override
-	public List<Uav> getPlaneByOption(int owner, Date starttime, Date endtime) {
-	
-		List<Uav> planeList = uavMapper.selectPlaneByOption(owner,starttime,endtime);
-		return planeList;
-	}
+    @Override
+    public List<Uav> getAllPlane() {
 
-	@Override
-	public List<Uav> findByPlaneStatus(Uav uav) {
-		
-		List<Uav> planeList = uavMapper.selectByPlaneStatus(uav.getStatus());
-		return planeList;
-	}
+        List<Uav> planeList = uavMapper.selectALLPlane();
+        return planeList;
+    }
 
-	@Override
-	public Uav getPlaneByPlane(Uav uav) {
-		
-		return uavMapper.getPlaneByPlane(uav);
-	}
+    @Override
+    public List<Uav> getPlaneByOption(int owner, Date starttime, Date endtime) {
 
-	@Override
-	public String getNameById(Integer id) {
-		return uavMapper.getNameById(id);
-	}
+        List<Uav> planeList = uavMapper.selectPlaneByOption(owner, starttime, endtime);
+        return planeList;
+    }
 
-	@Override
-	public Uav getUavById(Integer id) {
-		return uavMapper.getUavById(id);
-	}
+    @Override
+    public List<Uav> findByPlaneStatus(Uav uav) {
+
+        List<Uav> planeList = uavMapper.selectByPlaneStatus(uav.getStatus());
+        return planeList;
+    }
+
+    @Override
+    public Uav getPlaneByPlane(Uav uav) {
+
+        return uavMapper.getPlaneByPlane(uav);
+    }
+
+    @Override
+    public String getNameById(Integer id) {
+        return uavMapper.getNameById(id);
+    }
+
+    @Override
+    public Uav getUavById(Integer id) {
+        return uavMapper.getUavById(id);
+    }
 
 
 }

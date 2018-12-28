@@ -1,9 +1,9 @@
 package hust.plane.service.interFace;
 
-import java.util.List;
-
 import hust.plane.mapper.pojo.Airport;
 
+import java.util.List;
+
 public interface AirportService {
-	List<Airport> getAllAirport();
+    List<Airport> getAllAirport();
 }

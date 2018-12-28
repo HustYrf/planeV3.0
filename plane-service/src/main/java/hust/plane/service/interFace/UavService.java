@@ -11,9 +11,9 @@ public interface UavService {
 
     List<Uav> getPlaneByOption(int userid, Date starttime, Date endtime);
 
-	List<Uav> findByPlaneStatus(Uav plane);
+    List<Uav> findByPlaneStatus(Uav plane);
 
-	Uav getPlaneByPlane(Uav plane);
+    Uav getPlaneByPlane(Uav plane);
 
     String getNameById(Integer id);
 

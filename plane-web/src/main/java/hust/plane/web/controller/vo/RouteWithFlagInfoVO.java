@@ -1,7 +1,6 @@
 package hust.plane.web.controller.vo;
 
 import hust.plane.mapper.pojo.Route;
-import hust.plane.utils.DateKit;
 import hust.plane.utils.LineUtil;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class RouteWithFlagInfoVO {
         if (route.getRoutepathdata() != null) {
             this.routepathdata = LineUtil.stringLineToList(route.getRoutepathdata());
         }
-        if(route.getFlagdata() != null){
+        if (route.getFlagdata() != null) {
             this.flagdata = LineUtil.stringflaginfoToList(route.getFlagdata());
         }
 
@@ -71,10 +70,6 @@ public class RouteWithFlagInfoVO {
     public void setFlagdata(List<String> flagdata) {
         this.flagdata = flagdata;
     }
-
-
-
-
 
 
 }

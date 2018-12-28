@@ -1,8 +1,9 @@
-var WGS84_to_GCJ02 = function() {}
+var WGS84_to_GCJ02 = function () {
+}
 //该类用于纠正GPS与高德地图之间的误差
 WGS84_to_GCJ02.prototype.a = 6378245.0;
 WGS84_to_GCJ02.prototype.ee = 0.00669342162296594323;
-WGS84_to_GCJ02.prototype.transform = function(wgLat, wgLon) {
+WGS84_to_GCJ02.prototype.transform = function (wgLat, wgLon) {
 
     if (this.outOfChina(wgLat, wgLon)) {
         return [wgLat, wgLon];
@@ -23,7 +24,7 @@ WGS84_to_GCJ02.prototype.transform = function(wgLat, wgLon) {
 
 };
 
-WGS84_to_GCJ02.prototype.outOfChina = function(lat, lon) {
+WGS84_to_GCJ02.prototype.outOfChina = function (lat, lon) {
 
     if (lon < 72.004 || lon > 137.8347)
         return true;
@@ -34,7 +35,7 @@ WGS84_to_GCJ02.prototype.outOfChina = function(lat, lon) {
 
 };
 
-WGS84_to_GCJ02.prototype.transformLat = function(x, y) {
+WGS84_to_GCJ02.prototype.transformLat = function (x, y) {
 
     var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
     ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
@@ -45,7 +46,7 @@ WGS84_to_GCJ02.prototype.transformLat = function(x, y) {
 
 };
 
-WGS84_to_GCJ02.prototype.transformLon = function(x, y) {
+WGS84_to_GCJ02.prototype.transformLon = function (x, y) {
 
     var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
     ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;

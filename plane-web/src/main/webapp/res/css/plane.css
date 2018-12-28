@@ -1,6 +1,7 @@
-.modal{
-    display:none;
+.modal {
+    display: none;
 }
+
 .modal .modal-icon {
     vertical-align: middle;
     font-size: 4em;

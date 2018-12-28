@@ -18,7 +18,6 @@ import hust.plane.utils.page.AlarmPojo;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.RouteExcel;
 import hust.plane.utils.pojo.TipException;
-import net.sf.ehcache.search.parser.MValue;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -233,7 +232,7 @@ public class AlarmServiceImpl implements AlarmService {
         for (int i = 0; i < infoPoints.size(); i++) {
             InfoPoint infoPoint = infoPoints.get(i);
             List<Double> position = PointUtil.StringPointToList(infoPoint.getPosition());
-            Double dis = MapUtils.GetDistance(routeExcel.getLongitude(),routeExcel.getLatitude(),position.get(0), position.get(1) );
+            Double dis = MapUtils.GetDistance(routeExcel.getLongitude(), routeExcel.getLatitude(), position.get(0), position.get(1));
 
             if (minDis > dis) {
                 minInfoPoint = infoPoint;

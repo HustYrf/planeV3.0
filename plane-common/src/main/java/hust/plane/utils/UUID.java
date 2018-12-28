@@ -5,9 +5,10 @@ import java.util.Random;
 
 /**
  * UUID工具类
+ *
+ * @param
  * @author rfYang
  * @date 2018/7/3 18:21
- * @param
  * @return
  */
 public abstract class UUID {

@@ -1,8 +1,8 @@
 package hust.plane.mapper.pojo;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 public class Route {
     private Integer id;
@@ -15,7 +15,7 @@ public class Route {
 
     private String description;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     private String flagdata;

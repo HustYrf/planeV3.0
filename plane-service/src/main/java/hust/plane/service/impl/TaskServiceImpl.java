@@ -1,24 +1,22 @@
 package hust.plane.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import hust.plane.mapper.pojo.Uav;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import hust.plane.mapper.mapper.FlyingPathMapper;
 import hust.plane.mapper.mapper.TaskMapper;
 import hust.plane.mapper.mapper.UavMapper;
 import hust.plane.mapper.mapper.UserMapper;
-import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Task;
 import hust.plane.mapper.pojo.TaskExample;
 import hust.plane.mapper.pojo.TaskExample.Criteria;
+import hust.plane.mapper.pojo.Uav;
 import hust.plane.mapper.pojo.User;
 import hust.plane.service.interFace.TaskService;
 import hust.plane.utils.page.TailPage;
 import hust.plane.utils.page.TaskPojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -49,10 +47,10 @@ public class TaskServiceImpl implements TaskService {
                 User user2 = userMapper.selectByPrimaryKey(task.getUserA());
                 User user3 = userMapper.selectByPrimaryKey(task.getUserZ());
 
-                if(task.getUavId()==null || task.getUavId()==0){
+                if (task.getUavId() == null || task.getUavId() == 0) {
                     taskPojo.setUavName("");
                     taskPojo.setDeviceId("");
-                }else{
+                } else {
                     Uav uav = uavMapper.getUavById(task.getUavId());
                     taskPojo.setUavName(uav.getName());
                     taskPojo.setDeviceId(uav.getDeviceid());
@@ -80,9 +78,9 @@ public class TaskServiceImpl implements TaskService {
         int itemsTotalCount = taskMapper.countByTask(task);
 
         //查看当前条目的分页的页数
-        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount/page.getPageSize():itemsTotalCount/page.getPageSize() + 1;
+        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount / page.getPageSize() : itemsTotalCount / page.getPageSize() + 1;
 
-        if(page.getPageNum()== 0 || page.getPageNum() > totalPageNum){
+        if (page.getPageNum() == 0 || page.getPageNum() > totalPageNum) {
             page.setPageNum(1);
         }
 
@@ -97,10 +95,10 @@ public class TaskServiceImpl implements TaskService {
                 User user2 = userMapper.selectByPrimaryKey(task1.getUserA());
                 User user3 = userMapper.selectByPrimaryKey(task1.getUserZ());
 
-                if(task1.getUavId()==null || task1.getUavId()==0){
+                if (task1.getUavId() == null || task1.getUavId() == 0) {
                     taskPojo.setUavName("");
                     taskPojo.setDeviceId("");
-                }else{
+                } else {
                     Uav uav = uavMapper.getUavById(task1.getUavId());
                     taskPojo.setUavName(uav.getName());
                     taskPojo.setDeviceId(uav.getDeviceid());
@@ -177,9 +175,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean setTaskOver(Task task) {
-        if(taskMapper.setTaskOver(task)==1){
+        if (taskMapper.setTaskOver(task) == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -202,9 +200,9 @@ public class TaskServiceImpl implements TaskService {
         int itemsTotalCount = taskMapper.countByTask(task);
 
         //查看当前条目的分页的页数
-        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount/page.getPageSize():itemsTotalCount/page.getPageSize() + 1;
+        int totalPageNum = itemsTotalCount % page.getPageSize() == 0 ? itemsTotalCount / page.getPageSize() : itemsTotalCount / page.getPageSize() + 1;
 
-        if(page.getPageNum()== 0 || page.getPageNum() > totalPageNum){
+        if (page.getPageNum() == 0 || page.getPageNum() > totalPageNum) {
             page.setPageNum(1);
         }
 
@@ -270,17 +268,17 @@ public class TaskServiceImpl implements TaskService {
         return task;
     }
 
-	@Override
-	public List<Task> getFlyingPathByFlyingId(Integer id) {
-		TaskExample example = new TaskExample();
-		Criteria createCriteria = example.createCriteria();
-		createCriteria.andFlyingpathIdEqualTo(id);
-		List<Task> list = taskMapper.selectByExample(example);
-		return list.size()>0?list:null;
-	}
+    @Override
+    public List<Task> getFlyingPathByFlyingId(Integer id) {
+        TaskExample example = new TaskExample();
+        Criteria createCriteria = example.createCriteria();
+        createCriteria.andFlyingpathIdEqualTo(id);
+        List<Task> list = taskMapper.selectByExample(example);
+        return list.size() > 0 ? list : null;
+    }
 
 
-	//根据用户作为任务管理员和正在飞行中的任务查询所有的任务
+    //根据用户作为任务管理员和正在飞行中的任务查询所有的任务
     @Override
     public List<Task> getTaskByCreatorAndStatus(User user, Integer status) {
 
@@ -291,7 +289,7 @@ public class TaskServiceImpl implements TaskService {
         createCriteria.andUsercreatorEqualTo(user.getId());
 
         List<Task> list = taskMapper.selectByExample(example);
-        return list.size()>0?list:null;
+        return list.size() > 0 ? list : null;
 
     }
 

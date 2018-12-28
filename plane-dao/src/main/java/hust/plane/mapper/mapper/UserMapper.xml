@@ -80,8 +80,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, Name, PassWord, NickName, WorkNumber, Email, CreateTime, UpdateTime, Department_id,
-    PhoneOne, PhoneTwo, Icon, TaskNum, Description, HistoryPoint, HistoryZoom
+        id, Name, PassWord, NickName, WorkNumber, Email, CreateTime, UpdateTime, Department_id,
+        PhoneOne, PhoneTwo, Icon, TaskNum, Description, HistoryPoint, HistoryZoom
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="hust.plane.mapper.pojo.UserExample">
         select
@@ -105,19 +105,19 @@
     </select>
 
     <insert id="insert" parameterType="hust.plane.mapper.pojo.User">
-    insert into K_User (id, Name, PassWord,
-      NickName, WorkNumber, Email,
-      CreateTime, UpdateTime, Department_id,
-      PhoneOne, PhoneTwo, Icon,
-      TaskNum, Description, HistoryPoint,
-      HistoryZoom)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{nickname,jdbcType=VARCHAR}, #{worknumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{departmentId,jdbcType=INTEGER},
-      #{phoneone,jdbcType=VARCHAR}, #{phonetwo,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
-      #{tasknum,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{historypoint,jdbcType=OTHER},
-      #{historyzoom,jdbcType=INTEGER})
-  </insert>
+        insert into K_User (id, Name, PassWord,
+        NickName, WorkNumber, Email,
+        CreateTime, UpdateTime, Department_id,
+        PhoneOne, PhoneTwo, Icon,
+        TaskNum, Description, HistoryPoint,
+        HistoryZoom)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{worknumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{departmentId,jdbcType=INTEGER},
+        #{phoneone,jdbcType=VARCHAR}, #{phonetwo,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+        #{tasknum,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{historypoint,jdbcType=OTHER},
+        #{historyzoom,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.User">
         insert into K_User
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -225,7 +225,8 @@
 
     <insert id="insertSelectiveWithIdInc" parameterType="hust.plane.mapper.pojo.User" useGeneratedKeys="true"
             keyProperty="id">
-        insert into K_User(name,password, createtime) values (#{name,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+        insert into K_User(name,password, createtime) values (#{name,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertSelectiveIdInc" parameterType="hust.plane.mapper.pojo.User" useGeneratedKeys="true"
@@ -328,20 +329,20 @@
     </insert>
 
     <select id="selectByUserName" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select count(*) from K_User
-    where name=#{name,jdbcType=VARCHAR}
+        select count(*) from K_User
+        where name=#{name,jdbcType=VARCHAR}
     </select>
 
     <!--<select id="selectByUserNameAndRole" parameterType="java.lang.String" resultType="java.lang.Integer">-->
     <!--select count(*) from K_User-->
     <!--where name=#{param1,jdbcType=VARCHAR} And role = #{param2}-->
-  <!--</select>-->
+    <!--</select>-->
 
     <select id="selectUserCount" resultType="java.lang.Integer">
-    select count(1) from K_User
+        select count(1) from K_User
     </select>
 
-    <select id="selectAllUser" resultMap="BaseResultMap" >
+    <select id="selectAllUser" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from K_User
@@ -356,16 +357,16 @@
     </select>
 
     <!--<select id="selectCountWithRole" parameterType="java.lang.String" resultType="java.lang.Integer">-->
-        <!--select count(*) from user-->
-        <!--where role = #{Role}-->
+    <!--select count(*) from user-->
+    <!--where role = #{Role}-->
     <!--</select>-->
 
     <!--<select id="selectUserByRole" resultMap="BaseResultMap">-->
-        <!--select-->
-        <!--<include refid="Base_Column_List"/>-->
-        <!--from user-->
-        <!--where 1=1 AND role = #{role}-->
-        <!--LIMIT #{page.startIndex, jdbcType=INTEGER} , #{page.pageSize, jdbcType=INTEGER}-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from user-->
+    <!--where 1=1 AND role = #{role}-->
+    <!--LIMIT #{page.startIndex, jdbcType=INTEGER} , #{page.pageSize, jdbcType=INTEGER}-->
     <!--</select>-->
 
 
@@ -499,51 +500,51 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="hust.plane.mapper.pojo.User">
-    update K_User
-    set Name = #{name,jdbcType=VARCHAR},
-      PassWord = #{password,jdbcType=VARCHAR},
-      NickName = #{nickname,jdbcType=VARCHAR},
-      WorkNumber = #{worknumber,jdbcType=VARCHAR},
-      Email = #{email,jdbcType=VARCHAR},
-      CreateTime = #{createtime,jdbcType=TIMESTAMP},
-      UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
-      Department_id = #{departmentId,jdbcType=INTEGER},
-      PhoneOne = #{phoneone,jdbcType=VARCHAR},
-      PhoneTwo = #{phonetwo,jdbcType=VARCHAR},
-      Icon = #{icon,jdbcType=VARCHAR},
-      TaskNum = #{tasknum,jdbcType=INTEGER},
-      Description = #{description,jdbcType=VARCHAR},
-      HistoryPoint = #{historypoint,jdbcType=OTHER},
-      HistoryZoom = #{historyzoom,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update K_User
+        set Name = #{name,jdbcType=VARCHAR},
+        PassWord = #{password,jdbcType=VARCHAR},
+        NickName = #{nickname,jdbcType=VARCHAR},
+        WorkNumber = #{worknumber,jdbcType=VARCHAR},
+        Email = #{email,jdbcType=VARCHAR},
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+        UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+        Department_id = #{departmentId,jdbcType=INTEGER},
+        PhoneOne = #{phoneone,jdbcType=VARCHAR},
+        PhoneTwo = #{phonetwo,jdbcType=VARCHAR},
+        Icon = #{icon,jdbcType=VARCHAR},
+        TaskNum = #{tasknum,jdbcType=INTEGER},
+        Description = #{description,jdbcType=VARCHAR},
+        HistoryPoint = #{historypoint,jdbcType=OTHER},
+        HistoryZoom = #{historyzoom,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from K_User
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from K_User
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="hust.plane.mapper.pojo.UserExample">
         delete from K_User
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-     <select id="getNameByUserId" parameterType="java.lang.Integer"
-		resultType="java.lang.String">
-		select Name
-		from K_User
-		where id=#{id,jdbcType=INTEGER}
-	</select>
+    <select id="getNameByUserId" parameterType="java.lang.Integer"
+            resultType="java.lang.String">
+        select Name
+        from K_User
+        where id=#{id,jdbcType=INTEGER}
+    </select>
     <update id="userAddTasknum" parameterType="hust.plane.mapper.pojo.User">
-    update K_User
-    set TaskNum = TaskNum + 1
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        update K_User
+        set TaskNum = TaskNum + 1
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 
     <update id="userReduceTasknum" parameterType="hust.plane.mapper.pojo.User">
-    update K_User
-    set TaskNum = TaskNum - 1
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        update K_User
+        set TaskNum = TaskNum - 1
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 
     <update id="updateLastTime" parameterType="java.lang.String">
         update K_User
@@ -565,7 +566,7 @@
         select count(*) from K_User
         where Name LIKE concat('%',#{Name},'%')
     </select>
-   <select id="getUserByName" parameterType="java.lang.String" resultType="hust.plane.mapper.pojo.User">
+    <select id="getUserByName" parameterType="java.lang.String" resultType="hust.plane.mapper.pojo.User">
         select id
         from K_User
         where Name = #{name,jdbcType=VARCHAR}

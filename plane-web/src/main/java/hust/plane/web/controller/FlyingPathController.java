@@ -1,25 +1,5 @@
 package hust.plane.web.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import hust.plane.constant.WebConst;
-import hust.plane.utils.AngleUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Route;
 import hust.plane.mapper.pojo.Task;
@@ -31,14 +11,30 @@ import hust.plane.utils.page.TailPage;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.RouteVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class FlyingPathController {
-  private static final Logger logger = LoggerFactory.getLogger(FlyingPathController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlyingPathController.class);
     @Autowired
     private FlyingPathService flyingPathServiceImpl;
 
@@ -51,10 +47,10 @@ public class FlyingPathController {
 	/*@Autowired
 	private AirportService airportServiceImpl;*/
 
-	//跳转飞行路径导入页面
+    //跳转飞行路径导入页面
     @RequestMapping("/flyingPathImport")
-    public String toflyingPathImport(Model model){
-        model.addAttribute("curNav","flyingPathImport");
+    public String toflyingPathImport(Model model) {
+        model.addAttribute("curNav", "flyingPathImport");
         return "importFlyingPath";
     }
 
@@ -62,14 +58,14 @@ public class FlyingPathController {
     @RequestMapping("/flyingPathTemplateDownloed")
     public void flyingPathExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String 	basepath = request.getSession().getServletContext().getRealPath("");
+        String basepath = request.getSession().getServletContext().getRealPath("");
         //String basepath = request.getSession().getServletContext().getRealPath("/WEB-INF/ftl"); 
         File file = null;
         InputStream fin = null;
         ServletOutputStream out = null;
         try {
             // 调用工具类的createDoc方法生成excel文档
-            file = new File(basepath +file.separator+ "flyingpathTemplate.txt");
+            file = new File(basepath + file.separator + "flyingpathTemplate.txt");
             fin = new FileInputStream(file);
 
             response.setCharacterEncoding("utf-8");
@@ -81,12 +77,12 @@ public class FlyingPathController {
             byte[] buffer = new byte[1024];  // 缓冲区
             int bytesToRead = -1;
             // 通过循环将读入的excel文件的内容输出到浏览器中
-            while((bytesToRead = fin.read(buffer)) != -1) {
+            while ((bytesToRead = fin.read(buffer)) != -1) {
                 out.write(buffer, 0, bytesToRead);
             }
         } finally {
-            if(fin != null) fin.close();
-            if(out != null) out.close();
+            if (fin != null) fin.close();
+            if (out != null) out.close();
         }
 
     }

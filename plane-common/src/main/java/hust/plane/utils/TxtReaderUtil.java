@@ -19,7 +19,7 @@ public class TxtReaderUtil {
             fileInputStream = new FileInputStream(f);
             InputStreamReader reader = null; // 建立一个输入流对象reader
             try {
-                reader = new InputStreamReader(fileInputStream,"UTF-8");
+                reader = new InputStreamReader(fileInputStream, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 System.out.println("出现乱码");
                 e.printStackTrace();
@@ -44,7 +44,7 @@ public class TxtReaderUtil {
                 //设定飞行路径名称  这里的中文为啥是乱码呢？？
                 flyingPath.setName(line);
                 while ((line = br.readLine()) != null) {
-                    if (line.length() == 0 ) {
+                    if (line.length() == 0) {
                         continue;
                     }
 
@@ -76,10 +76,10 @@ public class TxtReaderUtil {
                     list.add(routeExcel);
                 }
                 //去掉最后的一个逗号
-                pointTypeList.deleteCharAt(pointTypeList.length()-1);
-                paramOneList.deleteCharAt(paramOneList.length()-1);
-                paramTwoList.deleteCharAt(paramTwoList.length()-1);
-                heightdata.deleteCharAt(heightdata.length()-1);
+                pointTypeList.deleteCharAt(pointTypeList.length() - 1);
+                paramOneList.deleteCharAt(paramOneList.length() - 1);
+                paramTwoList.deleteCharAt(paramTwoList.length() - 1);
+                heightdata.deleteCharAt(heightdata.length() - 1);
 
                 flyingPath.setPathdata(LineUtil.ListToString(list));
                 flyingPath.setPointType(pointTypeList.toString());

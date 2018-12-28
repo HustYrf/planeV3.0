@@ -43,7 +43,7 @@ public class UserGroupServiceImpl implements UserGroupService {
             throw new TipException("用户组设定异常");
         }
         int taskNum = userMapper.selectByPrimaryKey(id).getTasknum();
-        if(taskNum!=0&&!authorityList.contains("ipqc")){
+        if (taskNum != 0 && !authorityList.contains("ipqc")) {
             throw new TipException("该用户有未完成巡视任务，无法取消巡视员身份！");
         }
         List<Integer> groupList = userHasGroupKeyMapper.getGroupIdByUserId(id.intValue());

@@ -1,35 +1,39 @@
 <!-- 这是页面的header公共部分 -->
 <div class="header navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <a class="brand" href="${s.base}/home.html">
-                <img alt="" src="${s.base}/res/i/header.png">
-            </a>
-            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-				<img src="${s.base}/media/image/menu-toggler.png" alt=""  />
-				</a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
+    <div class="navbar-inner">
+        <a class="brand" href="${s.base}/home.html">
+            <img alt="" src="${s.base}/res/i/header.png">
+        </a>
+        <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+            <img src="${s.base}/media/image/menu-toggler.png" alt=""/>
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
 
-            <!-- BEGIN TOP NAVIGATION MENU -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
 
-            <ul class="nav pull-right" style="">
-                <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown user">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <ul class="nav pull-right" style="">
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <#if Session["login_user"].icon ? exists>
-                            <img alt="头像" src=${Session["login_user"].icon} style="width:40px;height:40px;margin-right: 5px;"">
+                            <img alt="头像" src=${Session["login_user"].icon} style="width:40px;height:40px;margin-right:
+                                 5px;"">
                         <#else>
-                            <img alt="头像" src="${s.base}/res/i/defalutIcon.jpg" style="width:40px;height:40px;margin-right: 5px;"">
+                            <img alt="头像" src="${s.base}/res/i/defalutIcon.jpg"
+                                 style="width:40px;height:40px;margin-right: 5px;"">
                         </#if>
-						<span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname!}</#if></span>
-						<i class="icon-angle-down"></i>
-                    </a>
+                    <span class="username"> <#if Session["login_user"]?exists>${Session["login_user"].nickname!}</#if></span>
+                    <i class="icon-angle-down"></i>
+                </a>
 
-                    <ul class="dropdown-menu">
-                        <li><a><i class="icon-user"></i>用户： <#if Session["login_user"]?exists>${Session["login_user"].name}</#if></a></li>
-                        <li><a href="${s.base}/admin/profileEdit"><i class="icon-user-md"></i> 个人信息</a></li>
-                        <li><a href="${s.base}/admin/logout"><i class=" icon-signout"></i> 注销</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+                <ul class="dropdown-menu">
+                    <li><a><i
+                            class="icon-user"></i>用户： <#if Session["login_user"]?exists>${Session["login_user"].name}</#if>
+                    </a></li>
+                    <li><a href="${s.base}/admin/profileEdit"><i class="icon-user-md"></i> 个人信息</a></li>
+                    <li><a href="${s.base}/admin/logout"><i class=" icon-signout"></i> 注销</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>

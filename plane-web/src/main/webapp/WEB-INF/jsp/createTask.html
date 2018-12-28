@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <!-- 引入资源文件 -->
-    <link href="${s.base}/media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${s.base}/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="${s.base}/media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="${s.base}/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
 
-    <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css" />
+    <link href="${s.base}/res/css/plane.css" rel="stylesheet" type="text/css"/>
 
     <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css" />
-    <link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="media/css/bootstrap-toggle-buttons.css" />
+    <link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css"/>
+    <link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="media/css/bootstrap-toggle-buttons.css"/>
 
     <link href="${s.base}/res/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 
@@ -36,67 +36,77 @@
             text-align: right;
             width: 100px;
         }
-        .suggest{
+
+        .suggest {
             border-top: 0;
             width: 384px;
             background-color: #fff;
             display: none;
         }
-        .suggest ul{
+
+        .suggest ul {
             list-style: none;
             margin: 0;
             padding: 0;
         }
-        .suggest ul li{
+
+        .suggest ul li {
             padding: 3px;
             font-size: 14px;
             height: 20px;
             line-height: 20px;
             cursor: pointer;
         }
-        .suggest ul li:hover{
+
+        .suggest ul li:hover {
             background-color: #E0E0E0;
         }
-		.search-div {	  
-		    position:absolute;
-		    z-index:100;
-		    background-color:#FCFCFC;
-		    width:51.2%;
-		    display:none;
-		    border: 1px solid #a6a6a6;
+
+        .search-div {
+            position: absolute;
+            z-index: 100;
+            background-color: #FCFCFC;
+            width: 51.2%;
+            display: none;
+            border: 1px solid #a6a6a6;
             border-top: none;
-            max-height:200px;
-            overflow-y:scroll;
-		    
-		}
-		.search-div::-webkit-scrollbar{  
-			    width: 6px;  /*滚动条宽度*/
-		}
-		.search-div::-webkit-scrollbar-thumb  
-		{  
-		    -webkit-box-shadow: inset 0 0 6px rgba(169,169,169);  	   
-		}  
-		.search-div ul,li{
-                list-style: none;
-                margin: 0;
-                padding: 0;
+            max-height: 200px;
+            overflow-y: scroll;
+
         }
-        .search-div li{
-            line-height:18px;
-            font-size:14px;
-            padding:5px 10px;
+
+        .search-div::-webkit-scrollbar {
+            width: 6px; /*滚动条宽度*/
         }
-        .search-div li.current{
-            background:#CCCCCC;
-            color:#0000FF;
+
+        .search-div::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px rgba(169, 169, 169);
+        }
+
+        .search-div ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-div li {
+            line-height: 18px;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+
+        .search-div li.current {
+            background: #CCCCCC;
+            color: #0000FF;
             cursor: pointer;
         }
-        .search-div li:hover{
-            background:#CCCCCC;
-            color:#0000FF;
+
+        .search-div li:hover {
+            background: #CCCCCC;
+            color: #0000FF;
             cursor: pointer;
         }
-		
+
     </style>
 
 </head>
@@ -108,7 +118,7 @@
         <!-- BEGIN PAGE CONTAINER-->
         <div class="container-fluid">
             <!--  下面这块内容是在页面写死的  -->
-           <!-- <h4 class="page-title">我的任务<small>创建我的任务</small></h4>-->
+            <!-- <h4 class="page-title">我的任务<small>创建我的任务</small></h4>-->
 
             <h4 class="page-title"></h4>
 
@@ -125,140 +135,156 @@
         <!-- END PAGE HEADER-->
         <div id="dashboard">
             <!-- 填充内容 start-->
-                <div class="container-fluid">
-                    <div class="row-fluid" style="width:90%;margin:20px 30px;">
-                        <div class="tab-pane" >
-                            <div class="portlet box yellow">
+            <div class="container-fluid">
+                <div class="row-fluid" style="width:90%;margin:20px 30px;">
+                    <div class="tab-pane">
+                        <div class="portlet box yellow">
 
-                                <div class="portlet-title">
-                                    <div class="caption"><i class="icon-reorder"></i>创建任务</div>
-                                </div>
+                            <div class="portlet-title">
+                                <div class="caption"><i class="icon-reorder"></i>创建任务</div>
+                            </div>
 
-                                <div class="portlet-body form">
+                            <div class="portlet-body form">
 
-                                    <!-- BEGIN FORM-->
-                                    <form action="#" class="form-horizontal form-row-seperated">
+                                <!-- BEGIN FORM-->
+                                <form action="#" class="form-horizontal form-row-seperated">
 
-                                        <div class="control-group">
-                                            <label class="control-label">任务名称</label>
-                                            <div class="controls">
-                                                <input type="text" class="span8" id="taskname" value="${taskvo.name!}">
+                                    <div class="control-group">
+                                        <label class="control-label">任务名称</label>
+                                        <div class="controls">
+                                            <input type="text" class="span8" id="taskname" value="${taskvo.name!}">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">放飞员</label>
+                                        <div class="controls">
+                                            <input type="text" class="span8" id="userA" name="userAName"
+                                                   placeholder="请输入放飞员" value="${taskvo.userAName!}">
+                                            <div class="search-div" id="search-div1">
+                                                <ul id="search-result"></ul>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">放飞员</label>
-                                            <div class="controls">
-                                                <input type="text" class="span8" id="userA" name="userAName" placeholder="请输入放飞员" value="${taskvo.userAName!}">
-                                                <div class="search-div" id="search-div1">
-                                                    <ul id="search-result" ></ul>
-                                                </div>
+                                    <div class="control-group">
+                                        <label class="control-label">接机员</label>
+                                        <div class="controls">
+                                            <input type="text" class="span8" id="userZ" name="userZName"
+                                                   placeholder="请输入接机员" value="${taskvo.userZName!}">
+                                            <div class="search-div" id="search-div2">
+                                                <ul id="search-result2">
+                                                </ul>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">接机员</label>
-                                            <div class="controls">
-                                                <input type="text" class="span8"  id="userZ" name="userZName" placeholder="请输入接机员" value="${taskvo.userZName!}">
-                                                <div class="search-div" id="search-div2">
-                                                    <ul id="search-result2" >
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label">无人机名称</label>
-                                            <div class="controls">
-                                                <div class="select2-wrapper">
-                                                    <select id="uavId" class="span8" name="uavName" type="select">
+                                    <div class="control-group">
+                                        <label class="control-label">无人机名称</label>
+                                        <div class="controls">
+                                            <div class="select2-wrapper">
+                                                <select id="uavId" class="span8" name="uavName" type="select">
                                                         <#if taskvo.uavName?? && taskvo.uavName != "">
-                                                            <option value="${taskvo.uavId!}" selected>${ taskvo.uavName!}</option>
+                                                            <option value="${taskvo.uavId!}"
+                                                                    selected>${ taskvo.uavName!}</option>
                                                         </#if>
-                                                        <option value=""></option>
+                                                    <option value=""></option>
                                                         <#if uavs?? && uavs?size gt 0>
                                                             <#list uavs as uav>
                                                             <option value="${uav.id!}">${uav.name!}</option>
                                                             </#list>
                                                         </#if>
-                                                    </select>
-                                                </div>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">飞行路径</label>
-                                            <div class="controls">
-                                                <div class="select2-wrapper">
-                                                    <select  id="flyingpathid" class="span8" name="flyingpathId" type="select">
+                                    <div class="control-group">
+                                        <label class="control-label">飞行路径</label>
+                                        <div class="controls">
+                                            <div class="select2-wrapper">
+                                                <select id="flyingpathid" class="span8" name="flyingpathId"
+                                                        type="select">
                                                        <#if flyingPath.id ??>
-                                                           <option value="${flyingPath.id!}" >${flyingPath.name!}</option>
+                                                           <option value="${flyingPath.id!}">${flyingPath.name!}</option>
                                                        <#elseif taskvo.flyingpathId ??>
-                                                            <option value="${taskvo.flyingpathId!}" selected>${taskvo.flyingpathName!}</option>
+                                                            <option value="${taskvo.flyingpathId!}"
+                                                                    selected>${taskvo.flyingpathName!}</option>
                                                        </#if>
                                                        <#if planePaths?? && planePaths?size gt 0>
-                                                            <#list planePaths as planePath>
+                                                           <#list planePaths as planePath>
                                                                 <option value="${planePath.id!}">${planePath.name!}</option>
-                                                            </#list>
-                                                        </#if>
-                                                    </select>
-                                                </div>
+                                                           </#list>
+                                                       </#if>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">任务计划开始时间</label>
-                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planstarttime">
-                                                <input type="text" value="${taskvo.planstarttime?datetime!}" class="span8" readonly>
-                                                <span class="add-on"><i class="icon-remove"></i></span>
-                                                <span class="add-on"><i class="icon-th"></i></span>
-                                            </div>
-                                            <input type="hidden" id="planstarttime" value="${taskvo.planstarttime?datetime!}" />
+                                    <div class="control-group">
+                                        <label class="control-label">任务计划开始时间</label>
+                                        <div class="controls date form_datetime" data-date=""
+                                             data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planstarttime">
+                                            <input type="text" value="${taskvo.planstarttime?datetime!}" class="span8"
+                                                   readonly>
+                                            <span class="add-on"><i class="icon-remove"></i></span>
+                                            <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
+                                        <input type="hidden" id="planstarttime"
+                                               value="${taskvo.planstarttime?datetime!}"/>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">任务计划完成时间</label>
-                                            <div class="controls date form_datetime" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planendtime">
-                                                <input type="text" value="${taskvo.planendtime?datetime!}" class="span8" readonly>
-                                                <span class="add-on"><i class="icon-remove"></i></span>
-                                                <span class="add-on"><i class="icon-th"></i></span>
-                                            </div>
-                                            <input type="hidden" id="planendtime" value="${taskvo.planendtime?datetime!}" />
+                                    <div class="control-group">
+                                        <label class="control-label">任务计划完成时间</label>
+                                        <div class="controls date form_datetime" data-date=""
+                                             data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="planendtime">
+                                            <input type="text" value="${taskvo.planendtime?datetime!}" class="span8"
+                                                   readonly>
+                                            <span class="add-on"><i class="icon-remove"></i></span>
+                                            <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
+                                        <input type="hidden" id="planendtime" value="${taskvo.planendtime?datetime!}"/>
+                                    </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label">任务创建时间</label>
-                                            <div class="controls date" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm" data-link-field="createtime">
-                                                <input type="text" value="${taskvo.createtime?datetime!}" class="span8" disabled>
-                                            </div>
-                                            <input type="hidden" id="createtime" value="${taskvo.createtime?datetime!}" />
+                                    <div class="control-group">
+                                        <label class="control-label">任务创建时间</label>
+                                        <div class="controls date" data-date="" data-date-format="yyyy-MM-dd hh:ii:mm"
+                                             data-link-field="createtime">
+                                            <input type="text" value="${taskvo.createtime?datetime!}" class="span8"
+                                                   disabled>
                                         </div>
+                                        <input type="hidden" id="createtime" value="${taskvo.createtime?datetime!}"/>
+                                    </div>
 
-                                        <div class="form-actions">
-                                            <button type="button" class="btn blue" onclick="createtTask()" style="margin:auto 20px;"><i class="icon-pushpin"></i>创建</button>
-                                            <button type="button" class="btn red" onclick="submitTask()"><i class="icon-ok"></i>提交</button>
-                                        </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn blue" onclick="createtTask()"
+                                                style="margin:auto 20px;"><i class="icon-pushpin"></i>创建
+                                        </button>
+                                        <button type="button" class="btn red" onclick="submitTask()"><i
+                                                class="icon-ok"></i>提交
+                                        </button>
+                                    </div>
 
-                                    </form>
-                                    <!-- END FORM-->
-                                </div>
-
+                                </form>
+                                <!-- END FORM-->
                             </div>
 
                         </div>
+
                     </div>
                 </div>
+            </div>
         </div>
-            <!-- 填充内容 end-->
+        <!-- 填充内容 end-->
     </div>
     <!-- END PAGE CONTAINER-->
     <div class="modal" id="ocDialogModal" tabindex="-1" aria-hidden="true">
         <div class="modal_wapper small">
-            <div class="modal-dialog w-4" >
+            <div class="modal-dialog w-4">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                        <div class="modal-title f-16" >提示信息</div>
+                        <div class="modal-title f-16">提示信息</div>
                     </div>
                     <div class="modal-body">
                         <div><span class="color-oc f-16" style="font-size:1.2rem;" id="resText">创建成功!</span></div>
@@ -271,11 +297,11 @@
 <script type="text/javascript" src="${s.base}/res/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="application/javascript">
 
-    window.onload=function(){
+    window.onload = function () {
         $('.form_datetime').datetimepicker({
-            language:  'zh-CN',
+            language: 'zh-CN',
             weekStart: 1,
-            todayBtn:  1,
+            todayBtn: 1,
             autoclose: 1,
             todayHighlight: 1,
             startView: 2,
@@ -285,164 +311,165 @@
         App.init();
 
         //去掉select重复
-        $("#flyingpathid option").each(function() {
+        $("#flyingpathid option").each(function () {
             var val = $(this).val();
-            if ( $("#flyingpathid option[value='" + val + "']").length > 1 )
+            if ($("#flyingpathid option[value='" + val + "']").length > 1)
                 $("#flyingpathid option[value='" + val + "']:gt(0)").remove();
         });
 
-        $("#uavId option").each(function() {
+        $("#uavId option").each(function () {
             var val = $(this).val();
-            if ( $("#uavId option[value='" + val + "']").length > 1 )
+            if ($("#uavId option[value='" + val + "']").length > 1)
                 $("#uavId option[value='" + val + "']:gt(0)").remove();
         });
 
     }
 
 
-	function Redirect() {
-	    window.location = "${s.base}/taskPageList.action";  
-	}  
-     //提交任务
-	function submitTask(){
-		
-		var taskname = $("#taskname").val();
-        if(taskname==null || taskname==""){
+    function Redirect() {
+        window.location = "${s.base}/taskPageList.action";
+    }
+
+    //提交任务
+    function submitTask() {
+
+        var taskname = $("#taskname").val();
+        if (taskname == null || taskname == "") {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务名不能为空!";
+            document.getElementById("resText").innerHTML = "任务名不能为空!";
             return;
         }
-		var userA = $("#userA").val();
-		var userZ = $("#userZ").val();
-		if(userA==""|| userA==null || userZ=="" || userZ==null || userZ == userA){
+        var userA = $("#userA").val();
+        var userZ = $("#userZ").val();
+        if (userA == "" || userA == null || userZ == "" || userZ == null || userZ == userA) {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="放飞员和接机员均不能为空,且不能为同一人!";
+            document.getElementById("resText").innerHTML = "放飞员和接机员均不能为空,且不能为同一人!";
             return;
         }
 
-		var uavId = $("#uavId").val();
-		
-		var flyingpathid = $("#flyingpathid").val();
-		var planstarttime = $("#planstarttime").val().toString();
-		var planendtime = $("#planendtime").val().toString();
+        var uavId = $("#uavId").val();
+
+        var flyingpathid = $("#flyingpathid").val();
+        var planstarttime = $("#planstarttime").val().toString();
+        var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
 
-        var startDate=new Date(planstarttime.replace("-","/"));
-        var endDate=new Date(planendtime.replace("-","/"));
+        var startDate = new Date(planstarttime.replace("-", "/"));
+        var endDate = new Date(planendtime.replace("-", "/"));
         var now = new Date();
 
-        if(startDate < now){
+        if (startDate < now) {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间不得小于当前时间！请重新设置！";
+            document.getElementById("resText").innerHTML = "任务计划开始时间不得小于当前时间！请重新设置！";
             return;
         }
 
-        if(startDate >= endDate){
+        if (startDate >= endDate) {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
+            document.getElementById("resText").innerHTML = "任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
             return;
         }
 
-		$.ajax({
-		    type: "POST",
-		    url: "${s.base}/taskSubmit.action",
-		    dataType: 'json',
-		    data: {
-		        "name":taskname,
-		        "userAName":userA,
-		        "userZName":userZ,
-		        "uavId":uavId,
-		        "flyingpathId":flyingpathid,
-		        "planstarttime":planstarttime,
-                "planendtime":planendtime,
-                "createtime":createtime,
-		    },
-		    success: function (result) {
-		        if (result.errcode == 1) {
-                    Modal.show('ocDialogModal');
-                	document.getElementById("resText").innerHTML=result.message;
-                	setTimeout('Redirect()', 1500); //跳转
-		        }
-		    },
-		    error: function () {
-                $('#ocDialogModal').css('display','block');
-                document.getElementById("resText").innerHTML="提交失败，请重试";
+        $.ajax({
+            type: "POST",
+            url: "${s.base}/taskSubmit.action",
+            dataType: 'json',
+            data: {
+                "name": taskname,
+                "userAName": userA,
+                "userZName": userZ,
+                "uavId": uavId,
+                "flyingpathId": flyingpathid,
+                "planstarttime": planstarttime,
+                "planendtime": planendtime,
+                "createtime": createtime,
             },
-		});		
-	}
-    
-	
+            success: function (result) {
+                if (result.errcode == 1) {
+                    Modal.show('ocDialogModal');
+                    document.getElementById("resText").innerHTML = result.message;
+                    setTimeout('Redirect()', 1500); //跳转
+                }
+            },
+            error: function () {
+                $('#ocDialogModal').css('display', 'block');
+                document.getElementById("resText").innerHTML = "提交失败，请重试";
+            },
+        });
+    }
+
+
     //创建任务 
-    function createtTask(){
-		
-		var taskname = $("#taskname").val();
-		if(taskname==null || taskname==""){
+    function createtTask() {
+
+        var taskname = $("#taskname").val();
+        if (taskname == null || taskname == "") {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务名不能为空!";
-			 return;
-		}
-		var userA = $("#userA").val();
-		var userZ = $("#userZ").val();
-		var uavId = $("#uavId").val();
-        if(userA==""|| userA==null || userZ=="" || userZ==null || userZ == userA){
-            Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="放飞员和接机员均不能为空,且不能为同一人!";
+            document.getElementById("resText").innerHTML = "任务名不能为空!";
             return;
         }
-		var flyingpathid = $("#flyingpathid").val();
+        var userA = $("#userA").val();
+        var userZ = $("#userZ").val();
+        var uavId = $("#uavId").val();
+        if (userA == "" || userA == null || userZ == "" || userZ == null || userZ == userA) {
+            Modal.show('ocDialogModal');
+            document.getElementById("resText").innerHTML = "放飞员和接机员均不能为空,且不能为同一人!";
+            return;
+        }
+        var flyingpathid = $("#flyingpathid").val();
 
         var planstarttime = $("#planstarttime").val().toString();
         var planendtime = $("#planendtime").val().toString();
         var createtime = $("#createtime").val().toString();
 
-        var startDate=new Date(planstarttime.replace("-","/"));
-        var endDate=new Date(planendtime.replace("-","/"));
+        var startDate = new Date(planstarttime.replace("-", "/"));
+        var endDate = new Date(planendtime.replace("-", "/"));
 
         var now = new Date();
 
-        if(startDate < now){
+        if (startDate < now) {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间不得小于当前时间！请重新设置！";
+            document.getElementById("resText").innerHTML = "任务计划开始时间不得小于当前时间！请重新设置！";
             return;
         }
 
-        if(startDate >= endDate){
+        if (startDate >= endDate) {
             Modal.show('ocDialogModal');
-            document.getElementById("resText").innerHTML="任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
+            document.getElementById("resText").innerHTML = "任务计划开始时间不可大于等于任务计划完成时间！请重新设置！";
             return;
         }
 
-		$.ajax({
-		    type: "POST",
-		    url: "${s.base}/taskCreate.action",
-		    dataType: 'json',
-		    data: {
-		        "name":taskname,
-		        "userAName":userA,
-		        "userZName":userZ,
-		        "uavId":uavId,
-		        "flyingpathId":flyingpathid,
-		        "planstarttime":planstarttime,
-                "planendtime":planendtime,
-                "createtime":createtime,
-		    },
-		    success: function (result) {
-		        if (result.errcode == 1) {
+        $.ajax({
+            type: "POST",
+            url: "${s.base}/taskCreate.action",
+            dataType: 'json',
+            data: {
+                "name": taskname,
+                "userAName": userA,
+                "userZName": userZ,
+                "uavId": uavId,
+                "flyingpathId": flyingpathid,
+                "planstarttime": planstarttime,
+                "planendtime": planendtime,
+                "createtime": createtime,
+            },
+            success: function (result) {
+                if (result.errcode == 1) {
                     Modal.show('ocDialogModal');
-                    document.getElementById("resText").innerHTML=result.message;
+                    document.getElementById("resText").innerHTML = result.message;
                     setTimeout('Redirect()', 1500); //跳转
-		        }
-		    },
-		    error: function () {
+                }
+            },
+            error: function () {
                 Modal.show('ocDialogModal');
-                document.getElementById("resText").innerHTML="创建失败，请重试";
-		    },
-		});		
-	}
-     
+                document.getElementById("resText").innerHTML = "创建失败，请重试";
+            },
+        });
+    }
+
 
     //放飞者
-    $(function() {
+    $(function () {
         $("#userA").bind('keyup', function () {
             //$.ajax()远程获取json数据
             $.ajax({
@@ -457,9 +484,9 @@
                     // var text = json_encode(response);
                     if (result.errcode == 0 && result.message == "SUCCESS") {
                         var userStr = JSON.stringify(result.data);
-                        var arr = userStr.substring(1,userStr.length-1).split(',');
-                        for (var j = 0; j < arr.length; j++){
-                            arr[j] = arr[j].substring(1,arr[j].length-1);
+                        var arr = userStr.substring(1, userStr.length - 1).split(',');
+                        for (var j = 0; j < arr.length; j++) {
+                            arr[j] = arr[j].substring(1, arr[j].length - 1);
                         }
                         var html = "";
                         for (var i = 0; i < arr.length; i++) {
@@ -467,92 +494,92 @@
                         }
 
                         $('#search-result').html(html);
-                        $('#search-div1').css('display','block');
-                       
+                        $('#search-div1').css('display', 'block');
+
                     }
                 },
                 error: function () {
                     //Modal.tipFailure('导入失败');
                 }
             });
-     });
-
-/*  var flyer = document.getElementById('Flyer');
-    flyer.onblur = function () {
-        var noContent = $("#Flyer").html();
-        if (noContent == null || noContent.length == 0) {
-            $("#search-div1").css('display', 'none');
-        }
-    }
-
-    var recipient = document.getElementById('Recipient');
-    recipient.onblur = function () {
-        var noContent = $("#Recipient").html();
-        if (noContent == null || noContent.length == 0) {
-            $("#search-div2").css('display', 'none');
-        }
-    } */
-    
-    //接收者
-    $("#userZ").bind('keyup', function () {
-        //$.ajax()远程获取json数据
-        $.ajax({
-            type: "POST",
-            url: "${s.base}/searchFlyer",
-            dataType: 'json',
-            data: {
-                queryString: $("#userZ").val()
-            },
-            success: function (result) {
-                //处理返回的数据
-                // var text = json_encode(response);
-                if (result.errcode == 0 && result.message == "SUCCESS") {
-                    var userStr = JSON.stringify(result.data);
-                    var arr = userStr.substring(1,userStr.length-1).split(',');
-                    for (var j = 0; j < arr.length; j++){
-                        arr[j] = arr[j].substring(1,arr[j].length-1);
-                    }
-                    var html = "";
-                    for (var i = 0; i < arr.length; i++) {
-                        html += "<li>" + arr[i] + "</li>"
-                    }
-                    $('#search-result2').html(html);
-                    $('#search-div2').css('display','block');
-                }
-            },
-            error: function () {
-                //Modal.tipFailure('查询失败');
-            }
         });
-       });
-		   
+
+        /*  var flyer = document.getElementById('Flyer');
+            flyer.onblur = function () {
+                var noContent = $("#Flyer").html();
+                if (noContent == null || noContent.length == 0) {
+                    $("#search-div1").css('display', 'none');
+                }
+            }
+
+            var recipient = document.getElementById('Recipient');
+            recipient.onblur = function () {
+                var noContent = $("#Recipient").html();
+                if (noContent == null || noContent.length == 0) {
+                    $("#search-div2").css('display', 'none');
+                }
+            } */
+
+        //接收者
+        $("#userZ").bind('keyup', function () {
+            //$.ajax()远程获取json数据
+            $.ajax({
+                type: "POST",
+                url: "${s.base}/searchFlyer",
+                dataType: 'json',
+                data: {
+                    queryString: $("#userZ").val()
+                },
+                success: function (result) {
+                    //处理返回的数据
+                    // var text = json_encode(response);
+                    if (result.errcode == 0 && result.message == "SUCCESS") {
+                        var userStr = JSON.stringify(result.data);
+                        var arr = userStr.substring(1, userStr.length - 1).split(',');
+                        for (var j = 0; j < arr.length; j++) {
+                            arr[j] = arr[j].substring(1, arr[j].length - 1);
+                        }
+                        var html = "";
+                        for (var i = 0; i < arr.length; i++) {
+                            html += "<li>" + arr[i] + "</li>"
+                        }
+                        $('#search-result2').html(html);
+                        $('#search-div2').css('display', 'block');
+                    }
+                },
+                error: function () {
+                    //Modal.tipFailure('查询失败');
+                }
+            });
+        });
+
     });
-    
-    $('#search-result').on('click','li',function(){  
-         $("#userA").val($(this).text());
-         $('#search-div1').css('display','none');
-         //$('#search-div1').empty()                        
-     });
 
-     $('#search-result2').on('click','li',function(){
-         //$(this).text();  
-         $("#userZ").val($(this).text());
-         $('#search-div2').css('display','none');
-     });
+    $('#search-result').on('click', 'li', function () {
+        $("#userA").val($(this).text());
+        $('#search-div1').css('display', 'none');
+        //$('#search-div1').empty()
+    });
 
-    $("#userA").bind("input propertychange",function(event){
+    $('#search-result2').on('click', 'li', function () {
+        //$(this).text();
+        $("#userZ").val($(this).text());
+        $('#search-div2').css('display', 'none');
+    });
+
+    $("#userA").bind("input propertychange", function (event) {
         var inputVal = $("#userA").val();
         var str = inputVal.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
         if (str == '' || str == undefined || str == null) {
-            $('#search-div1').css('display','none');
+            $('#search-div1').css('display', 'none');
         }
     });
 
-    $("#userZ").bind("input propertychange",function(event){
+    $("#userZ").bind("input propertychange", function (event) {
         var inputVal = $("#userZ").val();
         var str = inputVal.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
         if (str == '' || str == undefined || str == null) {
-            $('#search-div2').css('display','none');
+            $('#search-div2').css('display', 'none');
         }
     });
 </script>

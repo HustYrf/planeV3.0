@@ -1,5 +1,23 @@
 package hust.plane.web.controller;
 
+import hust.plane.constant.WebConst;
+import hust.plane.mapper.pojo.Route;
+import hust.plane.service.interFace.RouteService;
+import hust.plane.utils.JsonUtils;
+import hust.plane.utils.LineUtil;
+import hust.plane.utils.page.TailPage;
+import hust.plane.utils.pojo.InfoTplData;
+import hust.plane.utils.pojo.JsonView;
+import hust.plane.web.controller.vo.QueryRouteVO;
+import hust.plane.web.controller.vo.RouteVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,68 +26,47 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import hust.plane.constant.WebConst;
-import hust.plane.utils.page.TailPage;
-import hust.plane.utils.pojo.InfoTplData;
-import hust.plane.utils.pojo.JsonView;
-import hust.plane.web.controller.vo.QueryRouteVO;
-import hust.plane.web.controller.vo.RouteVO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import hust.plane.mapper.pojo.Route;
-import hust.plane.service.interFace.RouteService;
-import hust.plane.utils.JsonUtils;
-import hust.plane.utils.LineUtil;
-
 @Controller
 public class RouteController {
 
     @Autowired
     public RouteService routeServiceImpl;
 
-	//提供 光缆模板下载
-	@RequestMapping("/routeExcelDownloed")
-	public void routeExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
-		String 	basepath = request.getSession().getServletContext().getRealPath("");
-		
-		//String basepath = request.getSession().getServletContext().getRealPath("/WEB-INF/ftl"); 
+    //提供 光缆模板下载
+    @RequestMapping("/routeExcelDownloed")
+    public void routeExcelDownloed(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		File file = null;
+        String basepath = request.getSession().getServletContext().getRealPath("");
+
+        //String basepath = request.getSession().getServletContext().getRealPath("/WEB-INF/ftl"); 
+
+        File file = null;
         InputStream fin = null;
         ServletOutputStream out = null;
         try {
             // 调用工具类的createDoc方法生成excel文档
-            file = new File(basepath +file.separator+ "RouteTemplate.xlsx");
+            file = new File(basepath + file.separator + "RouteTemplate.xlsx");
             fin = new FileInputStream(file);
- 
+
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/vnd.ms-excel;charset=utf-8");
             // 设置浏览器以下载的方式处理该文件名
             response.setHeader("Content-Disposition", "attachment;filename=".concat(String.valueOf(URLEncoder.encode("RouteTemplate.xlsx", "UTF-8"))));
- 
+
             out = response.getOutputStream();
             byte[] buffer = new byte[1024];  // 缓冲区
             int bytesToRead = -1;
             // 通过循环将读入的excel文件的内容输出到浏览器中
-            while((bytesToRead = fin.read(buffer)) != -1) {
+            while ((bytesToRead = fin.read(buffer)) != -1) {
                 out.write(buffer, 0, bytesToRead);
             }
         } finally {
-            if(fin != null) fin.close();
-            if(out != null) out.close();
+            if (fin != null) fin.close();
+            if (out != null) out.close();
         }
-				
-	}
-	
+
+    }
+
     // 得到路由分布。解决路径序列
     @RequestMapping("/erouteList")
     public String getAllRoute(Model model) {
@@ -110,21 +107,20 @@ public class RouteController {
     public String listAllRoute(Route route, TailPage<Route> page, Model model) {
 
 
-        if(route.getName()=="" || route.getName()==null)
-        {
+        if (route.getName() == "" || route.getName() == null) {
             route.setName(null);
-        }else {
-            model.addAttribute("inputname",route.getName());
+        } else {
+            model.addAttribute("inputname", route.getName());
         }
-        if(route.getType()==null || route.getType() == -1){
+        if (route.getType() == null || route.getType() == -1) {
             route.setType(null);
-        }else{
-            model.addAttribute("selectStatus",route.getType());
+        } else {
+            model.addAttribute("selectStatus", route.getType());
         }
 
-        page = routeServiceImpl.queryRouteWithPage(route,page);
+        page = routeServiceImpl.queryRouteWithPage(route, page);
 
-        model.addAttribute("page",page);
+        model.addAttribute("page", page);
         model.addAttribute("curNav", "routeList");
         return "routeList";
 
@@ -156,7 +152,7 @@ public class RouteController {
     //删除路由
     @RequestMapping(value = "deleteRoute", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String deleteRoute(Route route){
+    public String deleteRoute(Route route) {
         if (route.getId() != null) {
             if (routeServiceImpl.deleteRouteById(route.getId()) == true) {
                 return new JsonView(0, "SUCCESS", "删除路由成功！").toString();
@@ -168,12 +164,12 @@ public class RouteController {
 
     //查看某条路由详情
     @RequestMapping("showRouteDetail")
-    public String showRouteDetail(Model model,Route route){
+    public String showRouteDetail(Model model, Route route) {
         Route route1;
         RouteVO routeVO;
-        if(route.getName() == null || route.getName()==""){
+        if (route.getName() == null || route.getName() == "") {
             return "common/404";
-        }else{
+        } else {
             route1 = routeServiceImpl.getRouteByName(route.getName());
             routeVO = new RouteVO(route1);
         }
@@ -191,7 +187,7 @@ public class RouteController {
      */
     @RequestMapping(value = "/queryRoute/{id}/{type}", method = RequestMethod.GET)
     public String toRouteQuery(Model model, @PathVariable("id") String id, @PathVariable("type") int type) {
-        List<Route> allRoute =   routeServiceImpl.getRouteByNameAndType(id, type);
+        List<Route> allRoute = routeServiceImpl.getRouteByNameAndType(id, type);
         List<RouteVO> routeList = new ArrayList<RouteVO>();
         for (int i = 0; i < allRoute.size(); i++) {
             RouteVO routeVO = new RouteVO(allRoute.get(i));

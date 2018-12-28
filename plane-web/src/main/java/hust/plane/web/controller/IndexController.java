@@ -1,6 +1,5 @@
 package hust.plane.web.controller;
 
-import com.sun.tools.internal.ws.processor.model.Model;
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.Route;
@@ -37,20 +36,21 @@ public class IndexController {
     public String indexSearch(@RequestParam(value = "queryType") Integer queryType, @RequestParam(value = "queryString") String queryString) {
         List<String> resultList = new ArrayList<>();
         try {
-            switch (queryType){
-                case 1:{   //查询光缆
+            switch (queryType) {
+                case 1: {   //查询光缆
                     resultList = routeServiceImpl.fuzzySearchByName(queryString);
                     break;
                 }
-                case 2:{   //查询飞行路径
+                case 2: {   //查询飞行路径
                     resultList = flyingPathServiceImpl.fuzzySearchByName(queryString);
                     break;
                 }
-                case 3:{   //查询信息点
+                case 3: {   //查询信息点
 
                     break;
                 }
-                default:break;
+                default:
+                    break;
             }
         } catch (Exception e) {
             String msg = "用户模糊搜素失败";
@@ -64,7 +64,7 @@ public class IndexController {
     public String getRouteByName(@RequestParam(value = "name") String name) {
 
         Route route = routeServiceImpl.getRouteByName(name);
-        RouteVO  routeVO = new RouteVO(route);
+        RouteVO routeVO = new RouteVO(route);
 
         return JsonView.render(0, WebConst.SUCCESS_RESULT, routeVO);
     }
@@ -81,7 +81,7 @@ public class IndexController {
 
     //测试视频流界面
     @RequestMapping("test")
-    public String test(){
+    public String test() {
         return "test";
     }
 

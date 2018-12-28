@@ -36,12 +36,25 @@ table.table thead .sorting_desc_disabled {
     *cursor: hand;
 }
 
-table.table thead .sorting { background: url('../image/sort_both.png') no-repeat center right; }
-table.table thead .sorting_asc { background: url('../image/sort_asc.png') no-repeat center right; }
-table.table thead .sorting_desc { background: url('../image/sort_desc.png') no-repeat center right; }
+table.table thead .sorting {
+    background: url('../image/sort_both.png') no-repeat center right;
+}
 
-table.table thead .sorting_asc_disabled { background: url('../image/sort_asc_disabled.png') no-repeat center right; }
-table.table thead .sorting_desc_disabled { background: url('../image/sort_desc_disabled.png') no-repeat center right; }
+table.table thead .sorting_asc {
+    background: url('../image/sort_asc.png') no-repeat center right;
+}
+
+table.table thead .sorting_desc {
+    background: url('../image/sort_desc.png') no-repeat center right;
+}
+
+table.table thead .sorting_asc_disabled {
+    background: url('../image/sort_asc_disabled.png') no-repeat center right;
+}
+
+table.table thead .sorting_desc_disabled {
+    background: url('../image/sort_desc_disabled.png') no-repeat center right;
+}
 
 table.dataTable th:active {
     outline: none;
@@ -73,9 +86,6 @@ div.dataTables_scrollBody tbody tr:first-child td {
 div.dataTables_scrollFoot table {
     border-top: none;
 }
-
-
-
 
 /*
  * TableTools styles
@@ -110,7 +120,6 @@ div.DTTT .btn:hover {
     text-decoration: none !important;
 }
 
-
 ul.DTTT_dropdown.dropdown-menu a {
     color: #333 !important; /* needed only when demo_page.css is included */
 }
@@ -138,8 +147,6 @@ div.DTTT_print_info p {
     font-size: 14px;
     line-height: 20px;
 }
-
-
 
 /*
  * FixedColumns styles

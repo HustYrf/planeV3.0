@@ -6,21 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 
-<link href="${s.base}/media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="${s.base}/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-<link href="${s.base}/media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css" />
-<link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+<link href="${s.base}/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="${s.base}/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+<link href="${s.base}/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
 <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="${s.base}/media/css/uniform.default.css" rel="stylesheet" type="text/css" />
+<link href="${s.base}/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 
 <!-- END PAGE LEVEL STYLES -->
 <link href="${s.base}/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css" />
-<link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="${s.base}/media/css/bootstrap-toggle-buttons.css" />
+<link rel="stylesheet" type="text/css" href="${s.base}/media/css/select2_metro.css"/>
+<link rel="stylesheet" href="${s.base}/media/css/DT_bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="${s.base}/media/css/bootstrap-toggle-buttons.css"/>
 
 <script src="${s.base}/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 <script src="${s.base}/media/js/bootstrap.min.js" type="text/javascript"></script>
@@ -59,7 +59,7 @@
             <div class="container-fluid">
                 <div class="row-fluid" style="width:90%;margin:20px 30px;">
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <div class="portlet box yellow" >
+                    <div class="portlet box yellow">
                         <div class="portlet-title">
                             <div class="caption"><i class="icon-edit"></i>飞行路径导入</div>
                         </div>
@@ -73,7 +73,8 @@
                                     <div class="control-group">
                                         <label class="control-label">飞行路径文件(txt格式)：</label>
                                         <div class="controls">
-                                            <input type="file" id="routePathExcel" name="routePathExcel" class="default" multiple="multiple"
+                                            <input type="file" id="routePathExcel" name="routePathExcel" class="default"
+                                                   multiple="multiple"
                                                    accept="text/plain">
                                         </div>
                                     </div>
@@ -87,20 +88,25 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label"><a href="${s.base}/flyingPathTemplateDownloed.action">飞行路径数据模板下载</a></label>
+                                        <label class="control-label"><a
+                                                href="${s.base}/flyingPathTemplateDownloed.action">飞行路径数据模板下载</a></label>
                                     </div>
 
                                     <!-- tip提示-start -->
                                     <div id="ocAlertTip" class="alert"
                                          style="display:none;">
                                         <button type="button" class="close" onclick="closeAlert()"></button>
-                                        <span id="al_info" >请选择txt格式飞行路径文件</span>
+                                        <span id="al_info">请选择txt格式飞行路径文件</span>
                                     </div>
                                     <!-- tip提示-end -->
 
                                     <div class="form-actions">
-                                        <button type="reset" class="btn" onclick="location.reload()"><i class="icon-ok"></i>重置</button>
-                                        <button type="button" class="btn blue" id="importbtn" onclick="uploadFile()"><i class="icon-ok"></i>导入</button>
+                                        <button type="reset" class="btn" onclick="location.reload()"><i
+                                                class="icon-ok"></i>重置
+                                        </button>
+                                        <button type="button" class="btn blue" id="importbtn" onclick="uploadFile()"><i
+                                                class="icon-ok"></i>导入
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -116,60 +122,61 @@
     jQuery(document).ready(function () {
         App.init();
     });
-    function uploadFile(){
+
+    function uploadFile() {
 
         var pic = $("#routePathExcel").get(0).files;
         var formData = new FormData();
-        for(i=0;i<pic.length;i++){
+        for (i = 0; i < pic.length; i++) {
             formData.append("flyingPathExcel", pic[i]);
         }
-        $("#progressDiv").css('display','block');
-        $('#importbtn').attr('disabled','true');
+        $("#progressDiv").css('display', 'block');
+        $('#importbtn').attr('disabled', 'true');
 
         $.ajax({
             type: "POST",
             url: "${s.base}/flyingPathfileImport.action",
             data: formData,
-            processData : false,
+            processData: false,
             cache: false,
             dataType: 'json',
-            contentType : false ,
-            xhr: function(){
+            contentType: false,
+            xhr: function () {
                 var xhr = $.ajaxSettings.xhr();
-                if(onprogress && xhr.upload) {
-                    xhr.upload.addEventListener("progress" , onprogress, false);
+                if (onprogress && xhr.upload) {
+                    xhr.upload.addEventListener("progress", onprogress, false);
                     return xhr;
                 }
             },
-            success: function(res) {
+            success: function (res) {
                 //$("#progressDiv").css('display','none');  //取消进度条
                 $('#al_info').html(res.message);
-                $('#ocAlertTip').css('display','block');
-            },error:function(){
+                $('#ocAlertTip').css('display', 'block');
+            }, error: function () {
                 $('#al_info').html("飞行路径数据导入出错！");
-                $('#ocAlertTip').css('display','block');
+                $('#ocAlertTip').css('display', 'block');
             }
         });
 
     }
 
     /**侦查附件上传情况  ,这个方法大概0.05-0.1秒执行一次   */
-    function onprogress(evt){
+    function onprogress(evt) {
         var loaded = evt.loaded;                  //已经上传大小情况
         var tot = evt.total;                      //附件总大小
-        var per = Math.floor(100*loaded/tot);     //已经上传的百分比
-        $("#uploadProgress").html( per +"%" );
-        $("#uploadProgress").css("width" , per +"%");
+        var per = Math.floor(100 * loaded / tot);     //已经上传的百分比
+        $("#uploadProgress").html(per + "%");
+        $("#uploadProgress").css("width", per + "%");
     }
 
 
     //显示模态框
-    function showModel()
-    {
+    function showModel() {
         $('#lineModal').modal('show');
     }
-    function closeAlert(){
-        $('#ocAlertTip').css('display','none');
+
+    function closeAlert() {
+        $('#ocAlertTip').css('display', 'none');
     }
 
 </script>

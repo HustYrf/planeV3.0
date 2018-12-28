@@ -14,22 +14,24 @@
         <result column="Route_id" property="routeId" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, Task_id, ImageUrl, AsText(Position) as Position,Description,CreateTime,UpdateTime,Status,InfoName,Route_id
+        id, Task_id, ImageUrl, AsText(Position) as Position,Description,CreateTime,UpdateTime,Status,InfoName,Route_id
     </sql>
     <sql id="Info_Column_List">
         id,ImageUrl,Description
     </sql>
     <select id="selectALLAlarm" resultMap="BaseResultMap">
-		select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
-		from K_Alarm 
-		where 
-		Status = 0
-	</select>
+        select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status,
+        InfoName,Route_id
+        from K_Alarm
+        where
+        Status = 0
+    </select>
 
     <select id="selectAllAlarmByCreateTimeDesc" resultMap="BaseResultMap">
-        select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
-		from K_Alarm 
-		order by CreateTime DESC
+        select id, Task_id, ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status,
+        InfoName,Route_id
+        from K_Alarm
+        order by CreateTime DESC
     </select>
 
     <select id="alarmCount" resultType="java.lang.Integer" parameterType="hust.plane.mapper.pojo.Alarm">
@@ -59,7 +61,8 @@
     </select>
 
     <select id="selectInfoById" resultType="hust.plane.mapper.pojo.Alarm" parameterType="java.lang.Integer">
-        select Task_id as taskId,id,ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status, InfoName,Route_id
+        select Task_id as taskId,id,ImageUrl, AsText(Position) as Position, Description, CreateTime, UpdateTime, Status,
+        InfoName,Route_id
         from K_Alarm
         where id=#{id,jdbcType=INTEGER}
     </select>
@@ -75,7 +78,7 @@
     </select>
 
     <update id="updateByAlarmId" parameterType="java.lang.String">
-    	update K_Alarm set Status=1 where id=#{id}
+        update K_Alarm set Status=1 where id=#{id}
     </update>
 
     <update id="updateDesByAlarmId">

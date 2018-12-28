@@ -1,11 +1,11 @@
 package hust.plane.mapper.pojo;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
 public class User {
-	
+
     private Integer id;
 
     private String name;
@@ -17,11 +17,11 @@ public class User {
     private String worknumber;
 
     private String email;
-    
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
-    
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private Integer departmentId;

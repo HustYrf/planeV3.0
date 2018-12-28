@@ -1,33 +1,16 @@
 package hust.plane.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import hust.plane.mapper.pojo.FlyingPath;
 import hust.plane.mapper.pojo.InfoPoint;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import hust.plane.mapper.pojo.Route;
 import hust.plane.utils.pojo.RouteExcel;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExcelUtil {
 
@@ -189,8 +172,9 @@ public class ExcelUtil {
 
                 for (int k = 4; k < sheet.getPhysicalNumberOfRows(); k++) {
                     // 读取单元格
-                    RouteExcel routeExcel = new RouteExcel();;
-                    InfoPoint infoPoint= new InfoPoint();
+                    RouteExcel routeExcel = new RouteExcel();
+                    ;
+                    InfoPoint infoPoint = new InfoPoint();
 
                     infoPoint.setRouteName(name.toString());  //设置路由名称
                     infoPoint.setAltitude(new Float(0.0));  //预设海拔高度为0

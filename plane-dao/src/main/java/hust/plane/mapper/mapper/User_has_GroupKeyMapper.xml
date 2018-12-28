@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="hust.plane.mapper.mapper.User_has_GroupKeyMapper" >
-  <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.User_has_GroupKey" >
-    <id column="User_id" property="userId" jdbcType="INTEGER" />
-    <id column="Group_id" property="groupId" jdbcType="INTEGER" />
-  </resultMap>
-   <sql id="Base_Column_List" >
-    User_id, Group_id
-  </sql>
-  <select id="getAllGroupByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select	
-		<include refid="Base_Column_List" />
-		from K_User_has_Group
-		where User_id = #{UserId,jdbcType=INTEGER}
-  </select>
+<mapper namespace="hust.plane.mapper.mapper.User_has_GroupKeyMapper">
+    <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.User_has_GroupKey">
+        <id column="User_id" property="userId" jdbcType="INTEGER"/>
+        <id column="Group_id" property="groupId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        User_id, Group_id
+    </sql>
+    <select id="getAllGroupByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from K_User_has_Group
+        where User_id = #{UserId,jdbcType=INTEGER}
+    </select>
 
-    <select id="getGroupIdByUserId"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getGroupIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select Group_id from K_User_has_Group where User_id = #{param1}
     </select>
 
@@ -32,7 +32,7 @@
     <select id="getUserIdByGroupId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select User_id from K_User_has_Group
         where Group_id = #{param1}
-         LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize, jdbcType=INTEGER}
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize, jdbcType=INTEGER}
     </select>
 
     <select id="getAllGroup" parameterType="java.lang.Integer">
