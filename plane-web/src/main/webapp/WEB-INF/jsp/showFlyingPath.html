@@ -23,47 +23,7 @@
                         <input type="checkbox" id="infoPointbtn" value="option1" onchange="showInfoPoint(this)"> 信息点图层
                     </label>
                 </div>
-                <!-- UI组件库 1.0 -->
-                <#--<script>-->
-                    <#--var style = {-->
-                        <#--url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',-->
-                        <#--anchor: new AMap.Pixel(6, 6),-->
-                        <#--size: new AMap.Size(11, 11)-->
-                    <#--};-->
-                    <#--var mass;-->
-                    <#--var pointmarker;-->
-
-                    <#--function showInfoPoint(obj) {-->
-                        <#--if (obj.checked) {-->
-                            <#--$.ajax({-->
-                                <#--type: "POST",-->
-                                <#--url: "${s.base}/showInfoPoint.action",-->
-                                <#--dataType: 'json',-->
-                                <#--success: function (result) {-->
-                                    <#--//处理返回的数据-->
-                                    <#--mass = new AMap.MassMarks(result, {-->
-                                        <#--opacity: 0.8,-->
-                                        <#--zIndex: 111,-->
-                                        <#--cursor: 'pointer',-->
-                                        <#--style: style-->
-                                    <#--});-->
-                                    <#--pointmarker = new AMap.Marker({content: ' ', map: map});-->
-                                    <#--mass.on('mouseover', function (e) {-->
-                                        <#--// console.log(e);-->
-                                        <#--pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat-->
-                                        <#--pointmarker.setLabel({content: e.data.name})-->
-                                    <#--});-->
-                                    <#--mass.setMap(map);-->
-                                <#--},-->
-                                <#--error: function () {-->
-                                    <#--alert("信息点图层显示失败");-->
-                                <#--}-->
-                            <#--});-->
-                        <#--} else {-->
-                            <#--map.remove(mass);-->
-                        <#--}-->
-                    <#--}-->
-                <#--</script>-->
+                <!-- UI组件库 1.0 -->     
                 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
                 <script type="text/javascript">
 
@@ -264,6 +224,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

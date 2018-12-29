@@ -52,10 +52,11 @@ public class UserServiceImpl implements UserService {
         criteria.andNameEqualTo(username);
         int count = userDao.countByExample(example);
         if (count < 1) {
-            throw new TipException("没有该用户");
+            //throw new TipException("没有该用户");
+        	throw new TipException("用户名密码错误或没有该用户");
         }
-        String pwd = PlaneUtils.MD5encode(username + password);
-        criteria.andPasswordEqualTo(pwd);
+//        String pwd = PlaneUtils.MD5encode(username + password);
+        criteria.andPasswordEqualTo(password);
         // criteria.andRoleEqualTo("0");
         List<User> userList = userDao.selectByExample(example);
         if (userList.size() != 1) {

@@ -120,31 +120,10 @@
                     content.push("创建时间：" + planePath.createtime);
                     content.push("更新时间：" + planePath.updatetime);
                     end.content = createInfoWindow(title, content.join("<br/>"));
-                    end.on('click', markerClick);
-
-                <#--if(flagdataList.length>0){-->
-                <#--for(var i=0;i<flagdataList.length;i++){-->
-                <#--for(var j=0;j<flagdataList[i].routepathdata.length;j++){-->
-
-                <#--var flagmarker = new AMap.Marker({-->
-                <#--map: map,-->
-                <#--position: flagdataList[i].routepathdata[j],-->
-                <#--icon: new AMap.Icon({-->
-                <#--size: new AMap.Size(12, 12), //图标大小-->
-                <#--image: '${s.base}/i/circle-12.png',-->
-                <#--offset: new AMap.Pixel(-6, -6), // 相对于基点的偏移位置-->
-                <#--}),-->
-                <#--});-->
-
-                <#--var title = '<span>信息点：' + flagdataList[i].flagdata[j] + '</span>';-->
-                <#--flagmarker.content = createInfoWindowtwo(title);-->
-                <#--flagmarker.on('click', markerClick);-->
-                <#--}-->
-                <#--}-->
-                <#--}-->
+                    end.on('click', markerClick);           
 
                     if (alarmList.length == 0 || alarmList == null) {
-                        alert("没有告警数据！");
+                        //alert("没有告警数据！");
                     } else {
                         for (var i = 0; i < alarmList.length; i++) {
 
