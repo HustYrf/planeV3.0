@@ -89,7 +89,7 @@
                                            placeholder=" 请输入任务名称" style="margin-bottom: 8px;">
                                     <input type="submit" class="btn green" value="搜索"
                                            style="height: 30px;margin-bottom: 8px;">
-                                <#-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 8px;">创建时间逆序查看</button>-->
+                                <!-- <button type="button" id="timeReverseView" class="btn red " style="height: 30px;margin-bottom: 8px;">创建时间逆序查看</button>-->
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable "
                                        id="sample_editable_1">
@@ -428,6 +428,27 @@
     </div>
 </div>
 <!-- 任务归档确认 -->
+<!-- 任务批准起飞确认 -->
+<div class="modal fade" id="onsureFlyModel" tabindex="-1" aria-hidden="true">
+    <div class="modal_wapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">起飞批准确认</h4>
+            </div>
+            <div class="modal-body" style="font-size:1.2rem;">
+                <p id="tip">您确认要起飞吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>    <!-- 用于隐藏信息 -->
+                <button type="button" class="btn blue" data-dismiss="modal">取消</button>
+                <a onclick="onsureFlyByTaskId()" class="btn red" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+        <input type="text" id="onsureFlyTaskId" style="display:none"/>
+    </div>
+</div>
+<!-- 任务批准起飞确认 -->
 <!-- 信息删除确认 -->
 <div class="modal fade" id="deleltconfirmModel" tabindex="-1" aria-hidden="true">
     <div class="modal_wapper">
@@ -588,6 +609,12 @@
         Modal.show('reStartTaskModel');
     }
 
+    //起飞确认
+    function onsureFly(taskid){
+    	$('#onsureFlyTaskId').val(taskid);
+    	Modal.show('onsureFlyModel');
+    }
+    
     function cancel() {
 
         $.ajax({
@@ -634,12 +661,12 @@
     }
 
     //允许放飞
-    function onsureFly(taskid) {
+    function onsureFlyByTaskId(taskid) {
         $.ajax({
             type: "post",
             url: "${s.base}/onsureFly.action",
             data: {
-                'id': taskid,
+                'id': $('#onsureFlyTaskId').val()
             },
             success: function (result) {
 
@@ -647,9 +674,7 @@
                     $("#resText").text(result.message);
                     Modal.show('ocDialogModal');
                     setTimeout("document.location.reload();", 1000);
-
                 }
-
             }
         });
     }
