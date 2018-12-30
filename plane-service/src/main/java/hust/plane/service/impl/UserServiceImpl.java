@@ -4,7 +4,7 @@ import hust.plane.constant.WebConst;
 import hust.plane.mapper.mapper.GroupMapper;
 import hust.plane.mapper.mapper.UserMapper;
 import hust.plane.mapper.mapper.User_has_GroupKeyMapper;
-import hust.plane.mapper.pojo.Group;
+//import hust.plane.mapper.pojo.Group;
 import hust.plane.mapper.pojo.User;
 import hust.plane.mapper.pojo.UserExample;
 import hust.plane.service.interFace.UserService;
@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User();
         user.setName(username);
-        user.setPassword(PlaneUtils.MD5encode(username + password));
+        //user.setPassword(PlaneUtils.MD5encode(username + password));
+        user.setPassword(password);    //该部分的密码已在前端进行MD5加密，在此出不需MD5加密
         // 注册不能成为管理员
         // user.setRole("0");
         Date date = new Date();
@@ -129,11 +130,11 @@ public class UserServiceImpl implements UserService {
             throw new TipException("旧密码和新密码不能为空");
         }
         User user = PlaneUtils.getLoginUser(request);
-        oldpassword = PlaneUtils.MD5encode(user.getName() + oldpassword);
+        //oldpassword = PlaneUtils.MD5encode(user.getName() + oldpassword);
         if (!oldpassword.equals(user.getPassword())) {
             throw new TipException("输入的原密码不正确");
         }
-        password = PlaneUtils.MD5encode(user.getName() + password);
+        //password = PlaneUtils.MD5encode(user.getName() + password);
         if (oldpassword.equals(password)) {
             throw new TipException("新密码不能和原密码相同");
         }

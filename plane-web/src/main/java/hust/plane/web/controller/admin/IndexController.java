@@ -100,9 +100,12 @@ public class IndexController {
                 throw new TipException("用户登录时间修改异常");
             }
             // 把用户保存在session中
-
-            user.setIcon(BASE_IMAGE_URL + USER_DIR + user.getIcon()); // 添加图片服务器位置
-
+            if(user.getIcon()==null || user.getIcon().equals("")) {  //如果头像为空
+            	 user.setIcon("res/i/defaultIcon.jpg"); // 设置默认头像
+            }else {
+            	 user.setIcon(BASE_IMAGE_URL + USER_DIR + user.getIcon()); // 添加图片服务器位置
+            }
+           
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
             List<Integer> groupIdList = userGroupService.selectGroupIdWithUserId(user.getId());
             if (groupIdList.contains(Integer.valueOf(1))) {
@@ -293,6 +296,7 @@ public class IndexController {
     public String doEditPwd(@RequestParam String oldpassword, @RequestParam String password,
                             HttpServletRequest request) {
         try {
+        	System.out.println(oldpassword);
             userService.modifyPwd(request, oldpassword, password);
         } catch (Exception e) {
             String msg = "密码更改失败";

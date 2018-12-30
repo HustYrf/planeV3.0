@@ -10,8 +10,9 @@
     <!-- 引入资源文件 -->
     <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-    <script type="text/javascript" src="${s.base}/res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/jquery.form.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/jquery.md5.js"></script>
     <script type="text/javascript" src="${s.base}/res/js/bootstrap.min.js"></script>
     <link rel="icon" type="image/png" href="${s.base}/res/i/ico.png" sizes="16x16">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -335,6 +336,7 @@
 
                         var username = $("#username").val();
                         var password = $("#password").val();
+                        var md5Pwd = $.md5(username+password);
                         var worknumber = $("#worknumber").val();
 
                         $.ajax({
@@ -342,7 +344,7 @@
                             type: 'POST',
                             data: {
                                 'name': username,
-                                'password': password,
+                                'password': md5Pwd,
                                 'worknumber': worknumber,
                             },
                             timeout: 5000, //超时时间
@@ -364,7 +366,7 @@
                                 console.log(textStatus)
                             }
 
-                        })
+                        });
 
                     }
                 });
