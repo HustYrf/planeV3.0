@@ -304,12 +304,12 @@
                 fightGrVAgl = document.getElementById("fightGrVAgl");
 
                 data = ${uavlist!};
-                taskdata = ${tasklist};
-                flyingpathdata =${flyingPath};
+                taskdata = ${tasklist!};
+                flyingpathdata =${flyingPath!};
 
-                if (data != null) {
+                if (data != null && data !='') {
                     selectStatus.value = data[0].deviceid
-                }
+                } 
                 //创建地图
                 var map = new AMap.Map('container', {
                     zoom: 15,
