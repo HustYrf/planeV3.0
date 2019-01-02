@@ -247,6 +247,10 @@
         App.init();
     });
 
+    $(function(){
+        $("#userProfileDepartment").find("option[value = '"+${user.departmentId!}+"']").attr("selected","selected");
+    })
+
     //初始化验证规则函数
     $("#modify").on("click", function () {
         //获取表单对象
