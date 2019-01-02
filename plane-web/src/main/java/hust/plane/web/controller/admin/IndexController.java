@@ -233,7 +233,7 @@ public class IndexController {
     // 修改个人信息 Ajax请求
     @RequestMapping(value = "/doprofileEdit", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public String profileEdit(HttpServletRequest request, User user2) {
+    public String profileEdit(HttpServletRequest request, User user2,@RequestParam String userProfileDepartment) {
 
         User user = PlaneUtils.getLoginUser(request);
 
@@ -277,7 +277,7 @@ public class IndexController {
         }
 
         user2.setId(user.getId());
-
+        user2.setDepartmentId(Integer.valueOf(userProfileDepartment));
         if (userService.updateByUser(user2) == true)
         //更新session内容
         {
