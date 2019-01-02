@@ -9,7 +9,7 @@
     <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
-<#-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<！-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
  <link href="${s.base}/res/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">-->
 
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
@@ -98,8 +98,13 @@
                 <form class="form-horizontal" method="post" id="profileForm" role="form" enctype="multipart/form-data">
                     <div style="width:150px;margin:10px 240px;">
                         <div style="width:100%;height:150px;background-color:blue; border-radius:75px;overflow: hidden;">
+                            <#if Session["login_user"].icon?exists && Session["login_user"].icon != "">
                             <img src=${Session["login_user"].icon} id="image"
                                  style="height: 100%;width: 100%;" alt="">
+                            <#else>
+                            <img src="${s.base}/res/i/defaultIcon.jpg" id="image"
+                                 style="height: 100%;width: 100%;" alt="">
+                            </#if>                           
                         </div>
                         <center style="margin-top:20px;">
                             <input type="file" name="file" id="file" class="inputfile"
