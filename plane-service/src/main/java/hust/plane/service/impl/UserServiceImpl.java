@@ -1,10 +1,12 @@
 package hust.plane.service.impl;
 
 import hust.plane.constant.WebConst;
+import hust.plane.mapper.mapper.DepartmentMapper;
 import hust.plane.mapper.mapper.GroupMapper;
 import hust.plane.mapper.mapper.UserMapper;
 import hust.plane.mapper.mapper.User_has_GroupKeyMapper;
 //import hust.plane.mapper.pojo.Group;
+import hust.plane.mapper.pojo.Department;
 import hust.plane.mapper.pojo.User;
 import hust.plane.mapper.pojo.UserExample;
 import hust.plane.service.interFace.UserService;
@@ -34,6 +36,8 @@ public class UserServiceImpl implements UserService {
     private GroupMapper groupMapper;
     @Resource
     private User_has_GroupKeyMapper user_has_groupKeyMapper;
+    @Resource
+    private DepartmentMapper departmentMapper;
 
     /**
      * 登陆
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
         int count = userDao.countByExample(example);
         if (count < 1) {
             //throw new TipException("没有该用户");
-        	throw new TipException("用户名密码错误或没有该用户");
+            throw new TipException("用户名密码错误或没有该用户");
         }
 //        String pwd = PlaneUtils.MD5encode(username + password);
         criteria.andPasswordEqualTo(password);
@@ -170,7 +174,8 @@ public class UserServiceImpl implements UserService {
             Iterator<User> iterable = userList.iterator();
             while (iterable.hasNext()) {
                 User user = iterable.next();
-                UserPojo userPojo = new UserPojo(user);
+                String description = departmentMapper.getDepartmentDescriptionById(user.getDepartmentId());
+                UserPojo userPojo = new UserPojo(user,description);
                 userVoList.add(userPojo);
             }
         }
@@ -195,7 +200,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int addUserWithInfo(String addUsername, String addUserPaw, String addUserWorkNumber, String addUserNickname, String addUserEmail, String addUserPhone) {
+    public int addUserWithInfo(String addUsername, String addUserPaw, String addUserWorkNumber, String addUserDepartment, String addUserNickname, String addUserEmail, String addUserPhone) {
         User user = new User();
         if (StringUtils.isBlank(addUsername)) {
             throw new TipException("新增用户名获取失败");
@@ -217,6 +222,9 @@ public class UserServiceImpl implements UserService {
                 throw new TipException("新增用户工号已注册");
             }
             user.setWorknumber(addUserWorkNumber);
+        }
+        if (StringUtils.isNotBlank(addUserDepartment)){
+            user.setDepartmentId(Integer.valueOf(addUserDepartment));
         }
         if (StringUtils.isNotBlank(addUserNickname)) {
             user.setNickname(addUserNickname);
@@ -289,7 +297,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateSelectiveWithUserId(Integer id, String nickName, String email, String phoneNumber) {
+    public int updateSelectiveWithUserId(Integer id, String nickName, String email, String phoneNumber,String departmentId) {
         User user = new User();
         if (id == null) {
             throw new TipException("修改用户id为空");
@@ -310,6 +318,9 @@ public class UserServiceImpl implements UserService {
             throw new TipException("修改用户电话号码获取失败");
         } else {
             user.setPhoneone(phoneNumber);
+        }
+        if(StringUtils.isNotBlank(departmentId)){
+            user.setDepartmentId(Integer.valueOf(departmentId));
         }
         return userDao.updateByPrimaryKeySelective(user) == 1 ? 1 : 0;
     }
@@ -354,7 +365,8 @@ public class UserServiceImpl implements UserService {
                 Iterator<User> iterable = userList.iterator();
                 while (iterable.hasNext()) {
                     User user = iterable.next();
-                    UserPojo userPojo = new UserPojo(user);
+                    String description = departmentMapper.getDepartmentDescriptionById(user.getDepartmentId());
+                    UserPojo userPojo = new UserPojo(user,description);
                     userVoList.add(userPojo);
                 }
             }
@@ -416,7 +428,8 @@ public class UserServiceImpl implements UserService {
                 Iterator<User> iterable = userList.iterator();
                 while (iterable.hasNext()) {
                     User user = iterable.next();
-                    UserPojo userPojo = new UserPojo(user);
+                    String description = departmentMapper.getDepartmentDescriptionById(user.getDepartmentId());
+                    UserPojo userPojo = new UserPojo(user,description);
                     userVoList.add(userPojo);
                 }
             }

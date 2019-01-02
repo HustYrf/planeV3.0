@@ -81,9 +81,6 @@ public class UserController {
 //                userPojo.setPosition("巡检员");
             }
             userPojo.setPosition(userPosition.toString());
-            if (userPojo.getDepartmentId() != null) {
-                userPojo.setDepartmentName(departmentService.getUserDepartmentNameWithPartId(userPojo.getDepartmentId()));
-            }
         }
         page.setItems(pojoList);
         if (StringUtils.isNotBlank(userName) && !userName.equals(WebConst.SEARCH_NO_USERNAME)) {
@@ -115,9 +112,10 @@ public class UserController {
     @RequestMapping(value = "modifyUser", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String deModifyUser(@RequestParam(value = "id") Integer id, @RequestParam(value = "nickName") String nickName,
-                               @RequestParam(value = "email") String email, @RequestParam(value = "phone") String phoneNumber) {
+                               @RequestParam(value = "email") String email, @RequestParam(value = "phone") String phoneNumber,
+                               @RequestParam(value = "departmentId") String departmentId) {
         try {
-            int updateCount = userService.updateSelectiveWithUserId(id, nickName, email, phoneNumber);
+            int updateCount = userService.updateSelectiveWithUserId(id, nickName, email, phoneNumber,departmentId);
             if (updateCount == 0) {
                 throw new TipException("用户修改异常");
             }
@@ -136,11 +134,12 @@ public class UserController {
     @RequestMapping(value = "addUser", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doAddUser(@RequestParam String addUsername, @RequestParam String addUserPaw,
-                            @RequestParam String addUserWorkNumber, @RequestParam(required = false) String addUserNickname,
+                            @RequestParam String addUserWorkNumber,@RequestParam String addUserDepartment,
+                            @RequestParam(required = false) String addUserNickname,
                             @RequestParam(required = false) String addUserEmail, @RequestParam(required = false) String addUserPhone,
                             @RequestParam(required = false) String authority) {
         try {
-            int userCount = userService.addUserWithInfo(addUsername, addUserPaw, addUserWorkNumber, addUserNickname, addUserEmail, addUserPhone);
+            int userCount = userService.addUserWithInfo(addUsername, addUserPaw, addUserWorkNumber,addUserDepartment,addUserNickname, addUserEmail, addUserPhone);
             if (userCount == 1 && StringUtils.isNotBlank(authority)) {
                 userService.addUserAuthorityWithUserName(addUsername, authority);
             }

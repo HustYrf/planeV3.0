@@ -3,16 +3,22 @@
 <mapper namespace="hust.plane.mapper.mapper.DepartmentMapper">
     <resultMap id="BaseResultMap" type="hust.plane.mapper.pojo.Department">
         <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="Parent_id" property="parentId" jdbcType="INTEGER"/>
         <result column="Name" property="name" jdbcType="VARCHAR"/>
         <result column="Description" property="description" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, Name, Description
+        id,Parent_id,Name, Description
     </sql>
     <select id="getDepartmentById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from K_Department
         where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getDepartmentDescriptionById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select Description from K_Department
+        where id = #{departmentId,jdbcType=INTEGER}
     </select>
 </mapper>

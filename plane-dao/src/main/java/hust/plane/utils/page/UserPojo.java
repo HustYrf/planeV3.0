@@ -39,7 +39,7 @@ public class UserPojo {
 
     private int historyzoom;
 
-    public UserPojo(User user) {
+    public UserPojo(User user,String description) {
         this.id = user.getId();
         if (StringUtils.isNotBlank(user.getName())) {
             this.name = user.getName();
@@ -60,6 +60,9 @@ public class UserPojo {
         }
         if (StringUtils.isNotBlank(user.getWorknumber())) {
             this.worknumber = user.getWorknumber();
+        }
+        if(StringUtils.isNotBlank(description)){
+            this.departmentName=description;
         }
     }
 

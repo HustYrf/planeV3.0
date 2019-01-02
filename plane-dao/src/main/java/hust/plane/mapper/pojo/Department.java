@@ -4,6 +4,8 @@ public class Department {
 
     private Integer id;
 
+    private Integer parentId;
+
     private String name;
 
     private String description;
@@ -31,4 +33,12 @@ public class Department {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
 }

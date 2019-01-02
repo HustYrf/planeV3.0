@@ -58,6 +58,30 @@
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户部门：</label>
+                <div class="controls">
+                    <select class="medium m-wrap" tabindex="1">
+                        <option value="1">广西壮族自治区</option>
+                    </select>
+                    <select class="small m-wrap" tabindex="1" name="addUserDepartment" id="addUserDepartment">
+                        <option value="2">南宁市</option>
+                        <option value="3">桂林市</option>
+                        <option value="4">崇左市</option>
+                        <option value="5">柳州市</option>
+                        <option value="6">来宾市</option>
+                        <option value="7">梧州市</option>
+                        <option value="8">贺州市</option>
+                        <option value="9">玉林市</option>
+                        <option value="10">贵港市</option>
+                        <option value="11">百色市</option>
+                        <option value="12">钦州市</option>
+                        <option value="13">河池市</option>
+                        <option value="14">北海市</option>
+                        <option value="15">防城港市</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label" style="white-space:nowrap">用户昵称：</label>
                 <div class="controls">
                     <input type="text" class="form-control" name="addUserNickname" id="addUserNickname"
@@ -127,6 +151,7 @@
                            readonly="readonly">
                 </div>
             </div>
+
             <div class="control-group">
                 <label class="control-label" style="white-space:nowrap">用户昵称：</label>
                 <div class="controls">
@@ -145,6 +170,30 @@
                 <label class="control-label" style="white-space:nowrap">电话号码：</label>
                 <div class="controls">
                     <input type="text" class="form-control" id="phone" placeholder="输入电话号码" maxlength="13" required/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" style="white-space:nowrap">用户部门：</label>
+                <div class="controls">
+                    <select class="medium m-wrap" tabindex="1">
+                        <option value="1">广西壮族自治区</option>
+                    </select>
+                    <select class="small m-wrap" tabindex="1" name="modifyUserDepartment" id="modifyUserDepartment">
+                        <option value="2">南宁市</option>
+                        <option value="3">桂林市</option>
+                        <option value="4">崇左市</option>
+                        <option value="5">柳州市</option>
+                        <option value="6">来宾市</option>
+                        <option value="7">梧州市</option>
+                        <option value="8">贺州市</option>
+                        <option value="9">玉林市</option>
+                        <option value="10">贵港市</option>
+                        <option value="11">百色市</option>
+                        <option value="12">钦州市</option>
+                        <option value="13">河池市</option>
+                        <option value="14">北海市</option>
+                        <option value="15">防城港市</option>
+                    </select>
                 </div>
             </div>
         </form>
@@ -466,6 +515,7 @@
         var nickName = $("#Nickname").val();
         var email = $("#Email").val();
         var phone = $('#phone').val();
+        var departmentId = $('#modifyUserDepartment').val();
         $("#modify").attr('disabled', 'true');
         $.ajax({
             url: "${s.base}/modifyUser.action",
@@ -474,7 +524,8 @@
                 id: id,
                 nickName: nickName,
                 email: email,
-                phone: phone
+                phone: phone,
+                departmentId:departmentId
             },
             async: true,
             success: function (result) {
