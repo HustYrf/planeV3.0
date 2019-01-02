@@ -9,8 +9,8 @@
     <link href="${s.base}/media/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="${s.base}/media/css/light.css" rel="stylesheet" type="text/css"/>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="${s.base}/res/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">-->
+<#-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+ <link href="${s.base}/res/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">-->
 
     <link rel="icon" type="image/png" href="${s.base}/i/ico.png" sizes="16x16">
     <!-- BEGIN PAGE LEVEL STYLES -->
@@ -143,6 +143,30 @@
                         </div>
                     </div>
 
+            <div class="control-group form-group has-feedback">
+                <label class="control-label" style="white-space:nowrap">部门</label>
+                <div class="controls">
+                    <select class="medium m-wrap" tabindex="1" style="width: 300px !important;">
+                        <option value="1">广西壮族自治区</option>
+                    </select>
+                    <select class="small m-wrap" tabindex="1" name="userProfileDepartment" id="userProfileDepartment" style="width: 207px !important;">
+                        <option value="2">南宁市</option>
+                        <option value="3">桂林市</option>
+                        <option value="4">崇左市</option>
+                        <option value="5">柳州市</option>
+                        <option value="6">来宾市</option>
+                        <option value="7">梧州市</option>
+                        <option value="8">贺州市</option>
+                        <option value="9">玉林市</option>
+                        <option value="10">贵港市</option>
+                        <option value="11">百色市</option>
+                        <option value="12">钦州市</option>
+                        <option value="13">河池市</option>
+                        <option value="14">北海市</option>
+                        <option value="15">防城港市</option>
+                    </select>
+                </div>
+            </div>
                     <div class="control-group form-group has-feedback">
                         <label for="nickname" class="control-label">昵称</label>
                         <div class="controls form-control">
@@ -222,6 +246,10 @@
     jQuery(document).ready(function () {
         App.init();
     });
+
+    $(function(){
+        $("#userProfileDepartment").find("option[value = '"+${user.departmentId!}+"']").attr("selected","selected");
+    })
 
     //初始化验证规则函数
     $("#modify").on("click", function () {
@@ -371,3 +399,4 @@
 </script>
 </body>
 </html>
+

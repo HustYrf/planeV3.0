@@ -504,7 +504,7 @@ select.m-wrap {
     background-color: #ffffff;
     background-image: none !important;
     filter: none !important;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #ccc;
     outline: none;
 }
 
@@ -623,7 +623,7 @@ select.m-wrap.small {
 }
 
 select.m-wrap.medium {
-    width: 220px !important;
+    width: 177px !important;
 }
 
 select.m-wrap.large {
