@@ -32,6 +32,7 @@ import java.util.*;
 
 @Controller
 public class TaskController {
+	
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
     @Value(value = "${BASE_IMAGE_URL}")    //访问图片的地址
     private String BASE_IMAGE_URL;
@@ -48,15 +49,12 @@ public class TaskController {
     @Value(value = "${uploadLocalHost}")
     private String FILE_UPLOAD_HOST;
 
-    @Value(value = "${LOCAL_ALARM_DIR}")
-    private String LOCAL_ALARM_DIR;
-
-    @Value(value = "${SERVER_NAME}")
-    private String SERVER_NAME;
-
     @Value(value = "${DETECT_SERVER}")
     private String DETECT_SERVER;
 
+    @Value(value="${SERVER_TYPE}")
+    private String SERVER_TYPE;
+    
     @Autowired
     private TaskService taskServiceImpl;
     @Autowired
@@ -69,8 +67,6 @@ public class TaskController {
     private AlarmService alarmserviceImpl;
     @Autowired
     private AlarmService alarmService;
-    @Autowired
-    private InfoPointService infoPointServiceImpl;
     @Autowired
     private UserGroupService userGroupService;
 
@@ -610,7 +606,7 @@ public class TaskController {
         List<Alarm> alarms = alarmserviceImpl.getAlarmsByTaskId(task2.getId());
         List<AlarmVO> alarmVos = new ArrayList<AlarmVO>();
 
-        String webappRoot = WordUtils.getRootPath();
+//        String webappRoot = WordUtils.getRootPath();
         if (alarms.size() > 0) {
             for (int i = 0; i < alarms.size(); ++i) {
                 AlarmVO alarmVo = new AlarmVO(alarms.get(i));
@@ -770,22 +766,15 @@ public class TaskController {
     @ResponseBody
     public String recongizePicture(Task task) {
 
-
-        //       Detector detector = new Detector();
-        //       生成源文件的地址和告警图片的地址
-//        String sourcePath = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_SOURCE;
-//        String imageAlarm = BASE_IMAGE_URL + imgPath + task.getId() + "/" + IMAGE_ALARM;
-//        detector.run(sourcePath, imageAlarm);
-//       taskServiceImpl.setStatusTaskByTask(task, 12);
-
-        //跨域请求进行识别
+        //httpclient跨域请求进行识别
         String url = DETECT_SERVER + "createAlarm.action";
         Task task1 = taskServiceImpl.getTaskByTask(task);
         Map<String, String> params = new HashMap<String, String>();
         params.put("taskId", "" + task1.getId());
         params.put("missionId", "" + task1.getMissionId());
+            
         String alarmlistString = HttpClientUtil.doPost(url, params);    //httpclient远程访问
-        //System.out.println(alarmlistString);
+       
         if (alarmlistString.equals("success")) {
             taskServiceImpl.setStatusTaskByTask(task, 12);
             return JsonView.render(0, "识别完成!");
@@ -793,10 +782,6 @@ public class TaskController {
             return JsonView.render(0, "识别未完成！");
         }
 
-        //读取告警图片并且添加告警点数据库
-//        String alarmDir = LOCAL_ALARM_DIR + task.getId() + "/" +  IMAGE_ALARM;
-//        alarmService.insertAlarm(task,alarmDir);
-//        return JsonView.render(0, "识别完成!");
     }
 
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -305,12 +304,12 @@
                 fightGrVAgl = document.getElementById("fightGrVAgl");
 
                 data = ${uavlist!};
-                taskdata = ${tasklist};
-                flyingpathdata =${flyingPath};
+                taskdata = ${tasklist!};
+                flyingpathdata =${flyingPath!};
 
-                if (data != null) {
+                if (data != null && data !='') {
                     selectStatus.value = data[0].deviceid
-                }
+                } 
                 //创建地图
                 var map = new AMap.Map('container', {
                     zoom: 15,
@@ -391,8 +390,8 @@
                 }
 
                 function connect(contentss) {
-                     var ws = new WebSocket("ws:///127.0.0.1:17020");
-                    //var ws = new WebSocket("ws:///218.65.240.246:7020");
+                    // var ws = new WebSocket("ws:///127.0.0.1:17020");
+                    var ws = new WebSocket("ws:///218.65.240.246:7020");
                     ws.onopen = function () {
                         ws.send(contentss);
                     }

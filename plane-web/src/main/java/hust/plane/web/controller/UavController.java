@@ -70,36 +70,43 @@ public class UavController {
             //是观察者
             role = "2";
         }
-        List<Task> taskList = taskService.getTaskByCreatorAndStatus(user, 9);
-
+        List<Task> taskList  = taskService.getTaskByCreatorAndStatus(user, 9);
+      
         List<FlyingPathVO> flyingPathVOList = new ArrayList<FlyingPathVO>();   //初始化向前台传送的数据
-        List<UavVO> planeList = new ArrayList<>();
+        List<UavVO> planeVOList = new ArrayList<>();
         List<TaskVO> taskVOList = new ArrayList<>();
 
+        if(taskList!=null) {
+        	for (int i = 0; i < taskList.size(); i++) {
 
-        for (int i = 0; i < taskList.size(); i++) {
+                FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(taskList.get(i).getFlyingpathId());
+                FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
+                flyingPathVOList.add(flyingPathVO);
 
-            FlyingPath flyingPath = flyingPathServiceImpl.selectByFlyingPathId(taskList.get(i).getFlyingpathId());
-            FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
-            flyingPathVOList.add(flyingPathVO);
+                Task tasktemp = taskList.get(i);
+                TaskVO taskVO = new TaskVO();
+                taskVO.setTaskVO(tasktemp);
 
-            Task tasktemp = taskList.get(i);
-            TaskVO taskVO = new TaskVO();
-            taskVO.setTaskVO(tasktemp);
+                taskVO.setFlyingpathName(flyingPath.getName());
+                taskVO.setUserAName(userServiceImpl.getNameByUserId(tasktemp.getUserA()));
+                taskVO.setUserZName(userServiceImpl.getNameByUserId(tasktemp.getUserZ()));
+                taskVO.setUserCreatorName(userServiceImpl.getNameByUserId(tasktemp.getUsercreator()));
+                taskVOList.add(taskVO);
 
-            taskVO.setFlyingpathName(flyingPath.getName());
-            taskVO.setUserAName(userServiceImpl.getNameByUserId(tasktemp.getUserA()));
-            taskVO.setUserZName(userServiceImpl.getNameByUserId(tasktemp.getUserZ()));
-            taskVO.setUserCreatorName(userServiceImpl.getNameByUserId(tasktemp.getUsercreator()));
-            taskVOList.add(taskVO);
-
-            Uav uav = uavServiceimpl.getUavById(taskList.get(i).getUavId());
-            UavVO planevo = new UavVO(uav);
-            planeList.add(planevo);
+                Uav uav = uavServiceimpl.getUavById(taskList.get(i).getUavId());
+                UavVO planevo = new UavVO(uav);
+                planeVOList.add(planevo);
+            }
+        	
+        }else {   
+        	taskList  = new ArrayList<Task>();
         }
+      
+        
         model.addAttribute("tasklist", JsonUtils.objectToJson(taskVOList));
         model.addAttribute("flyingPath", JsonUtils.objectToJson(flyingPathVOList));
-        model.addAttribute("uavlist", JsonUtils.objectToJson(planeList));
+        model.addAttribute("uavlist", JsonUtils.objectToJson(planeVOList));
+        
         model.addAttribute("curNav", "uavAllList");
 
         return "uavListMap";

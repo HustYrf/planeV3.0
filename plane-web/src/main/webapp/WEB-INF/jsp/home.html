@@ -7,7 +7,7 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
-<#--<#include "common/res.html" />-->
+    <!--<#include "common/res.html" />-->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
@@ -140,7 +140,7 @@
                         <ul class="dropdown-menu" id="type-selections">
                             <li><a href="#"><i class="icon-link"></i>光缆</a></li>
                             <li><a href="#"><i class="icon-link"></i>飞行路径</a></li>
-                        <#--<li><a href="#"><i class="icon-map-marker"></i>信息点</a></li>-->
+                          <!--   <li><a href="#"><i class="icon-map-marker"></i>信息点</a></li> -->
                         </ul>
                         <input type="hidden" id="search-type" value="1">
                     </div>
@@ -229,7 +229,7 @@
                 AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
 
                     if (alarmList.length == 0 || alarmList == null) {
-                        alert("没有告警数据！");
+                        //alert("没有告警数据！");
                     } else {
                         for (var i = 0; i < alarmList.length; i++) {
 
@@ -449,7 +449,10 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
-
+        
+        
+        var colors = ['#1ef22a', '#260cff', '#eb0aff'];
+        var routeStatusCode = ['混合光缆', '一干光缆', '二干光缆'];
         var searchResultMarker = new Array();
 
         $("ul#type-selections").on("click", "li", function () {
@@ -463,14 +466,17 @@
                     break;
                 }
                 case '飞行路径': {
-                    $('#search-option').html('<i class="icon-link"></i>飞行路径&nbsp;&nbsp;<i class="icon-angle-down"></i>');
+                    $('#search-option').html('<i class="icon-link"></i> 飞行路径&nbsp;&nbsp;<i class="icon-angle-down"></i>');
                     $("#search-type").val(2);
                     $("#search-target").val('');   //清空输入的内容
                     $('#search-div-1').css('display', 'none');
                     break;
                 }
                 case '信息点': {
+                	$('#search-option').html('<i class="icon-map-marker"></i> 信息点&nbsp;&nbsp;<i class="icon-angle-down"></i>');
                     $("#search-type").val(3);
+                    $("#search-target").val('');   //清空输入的内容
+                    $('#search-div-1').css('display', 'none');
                     break;
                 }
                 default:
@@ -480,7 +486,7 @@
 
 
         $("#search-target").bind('keyup', function () {
-            // type = 1 查询光缆
+            //  type = 1 查询光缆
             //  type = 2 查询飞行路径
             //  type =3 查询信息点
             var reg = /^[\s]*$/;     //判断是否全是空格，减少查询次数
@@ -550,7 +556,6 @@
                                     strokeDasharray: [10, 5] //补充线样式
                                 });
                                 searchResultMarker.push(polyline);
-
                             }
                         },
                         error: function () {
