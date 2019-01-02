@@ -159,8 +159,27 @@
                                     <div class="control-group">
                                         <label class="control-label">放飞员</label>
                                         <div class="controls">
+                                            <select class="medium m-wrap" tabindex="1" style="width: 300px !important;">
+                                                <option value="1">广西壮族自治区</option>
+                                            </select>
+                                            <select class="small m-wrap" tabindex="1" name="flyerDepartmentId" id="flyerDepartmentId" style="width: 207px !important;">
+                                                <option value="2">南宁市</option>
+                                                <option value="3">桂林市</option>
+                                                <option value="4">崇左市</option>
+                                                <option value="5">柳州市</option>
+                                                <option value="6">来宾市</option>
+                                                <option value="7">梧州市</option>
+                                                <option value="8">贺州市</option>
+                                                <option value="9">玉林市</option>
+                                                <option value="10">贵港市</option>
+                                                <option value="11">百色市</option>
+                                                <option value="12">钦州市</option>
+                                                <option value="13">河池市</option>
+                                                <option value="14">北海市</option>
+                                                <option value="15">防城港市</option>
+                                            </select>
                                             <input type="text" class="span8" id="userA" name="userAName"
-                                                   placeholder="请输入放飞员" value="${taskvo.userAName!}">
+                                                   placeholder="请输入放飞员" value="${taskvo.userAName!}" style="height: 34px;width: 355px !important;"/>
                                             <div class="search-div" id="search-div1">
                                                 <ul id="search-result"></ul>
                                             </div>
@@ -170,8 +189,27 @@
                                     <div class="control-group">
                                         <label class="control-label">接机员</label>
                                         <div class="controls">
+                                            <select class="medium m-wrap" tabindex="1" style="width: 300px !important;">
+                                                <option value="1">广西壮族自治区</option>
+                                            </select>
+                                            <select class="small m-wrap" tabindex="1" name="receptorDepartmentId" id="receptorDepartmentId" style="width: 207px !important;">
+                                                <option value="2">南宁市</option>
+                                                <option value="3">桂林市</option>
+                                                <option value="4">崇左市</option>
+                                                <option value="5">柳州市</option>
+                                                <option value="6">来宾市</option>
+                                                <option value="7">梧州市</option>
+                                                <option value="8">贺州市</option>
+                                                <option value="9">玉林市</option>
+                                                <option value="10">贵港市</option>
+                                                <option value="11">百色市</option>
+                                                <option value="12">钦州市</option>
+                                                <option value="13">河池市</option>
+                                                <option value="14">北海市</option>
+                                                <option value="15">防城港市</option>
+                                            </select>
                                             <input type="text" class="span8" id="userZ" name="userZName"
-                                                   placeholder="请输入接机员" value="${taskvo.userZName!}">
+                                                   placeholder="请输入接机员" value="${taskvo.userZName!}" style="height: 34px;width: 355px !important;"/>
                                             <div class="search-div" id="search-div2">
                                                 <ul id="search-result2">
                                                 </ul>
@@ -472,12 +510,14 @@
     $(function () {
         $("#userA").bind('keyup', function () {
             //$.ajax()远程获取json数据
+            var flyerDepartmentId = $("#flyerDepartmentId option:selected").val();
             $.ajax({
                 type: "POST",
                 url: "${s.base}/searchFlyer.action",
                 dataType: 'json',
                 data: {
-                    queryString: $("#userA").val()
+                    queryString: $("#userA").val(),
+                    departmentId: flyerDepartmentId
                 },
                 success: function (result) {
                     //处理返回的数据
@@ -523,12 +563,14 @@
         //接收者
         $("#userZ").bind('keyup', function () {
             //$.ajax()远程获取json数据
+            var receptorDepartmentId = $("#receptorDepartmentId option:selected").val();
             $.ajax({
                 type: "POST",
                 url: "${s.base}/searchFlyer",
                 dataType: 'json',
                 data: {
-                    queryString: $("#userZ").val()
+                    queryString: $("#userZ").val(),
+                    departmentId: receptorDepartmentId
                 },
                 success: function (result) {
                     //处理返回的数据

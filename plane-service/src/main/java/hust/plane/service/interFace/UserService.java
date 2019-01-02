@@ -33,7 +33,7 @@ public interface UserService {
 
     User getUserById(Integer userbid);
 
-    List<User> fuzzySearchWithUser(String queryString);
+    List<User> fuzzySearchWithUser(String queryString,String departmentId);
 
     int modifyUpdateTimeWithUserName(String name);
 
