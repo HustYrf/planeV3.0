@@ -654,10 +654,10 @@ public class TaskController {
      */
     @RequestMapping(value = "searchFlyer", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String searchFlyerTips(@RequestParam(value = "queryString") String queryString) {
+    public String searchFlyerTips(@RequestParam(value = "queryString") String queryString,@RequestParam(value="departmentId") String departmentId) {
         List<String> userNameList = new ArrayList<>();
         try {
-            List<User> bUserList = userServiceImpl.fuzzySearchWithUser(queryString);
+            List<User> bUserList = userServiceImpl.fuzzySearchWithUser(queryString,departmentId);
             for (User user : bUserList) {
                 userNameList.add(user.getName());
             }

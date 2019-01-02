@@ -271,12 +271,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> fuzzySearchWithUser(String queryString) {
+    public List<User> fuzzySearchWithUser(String queryString,String departmentId) {
         if (StringUtils.isBlank(queryString)) {
             throw new TipException("用户输入的放飞员为空");
         }
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentIdEqualTo(Integer.valueOf(departmentId));
         criteria.andNameLike("%" + queryString + "%");
         List<User> bUserList = userDao.selectByExample(example);
         List<User> routingInspectionList = new ArrayList<>();
