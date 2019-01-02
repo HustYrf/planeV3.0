@@ -2,12 +2,14 @@ package hust.plane.web.controller;
 
 import hust.plane.constant.WebConst;
 import hust.plane.mapper.pojo.FlyingPath;
+import hust.plane.mapper.pojo.InfoPoint;
 import hust.plane.mapper.pojo.Route;
 import hust.plane.service.interFace.FlyingPathService;
 import hust.plane.service.interFace.InfoPointService;
 import hust.plane.service.interFace.RouteService;
 import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
+import hust.plane.web.controller.vo.InfoPointVO;
 import hust.plane.web.controller.vo.RouteVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -46,7 +49,7 @@ public class IndexController {
                     break;
                 }
                 case 3: {   //查询信息点
-
+                	resultList = infoPointServiceImpl.fuzzySearchByName(queryString);
                     break;
                 }
                 default:
@@ -68,6 +71,22 @@ public class IndexController {
 
         return JsonView.render(0, WebConst.SUCCESS_RESULT, routeVO);
     }
+    
+    //获取信息点名字
+    @RequestMapping(value = "getInfoPointByName", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String getInfoPointByNameSearch(@RequestParam(value = "name") String name) {
+    	
+        //List<InfoPoint> infoPoints = new ArrayList<>();
+        List<InfoPoint> infoPoints = infoPointServiceImpl.selectInfoPointByName(name);
+        List<InfoPointVO> infoPointVOs = new ArrayList<>();
+        Iterator<InfoPoint> iterator = infoPoints.iterator();
+        while (iterator.hasNext()) {
+			InfoPointVO infoPointVO = new InfoPointVO(iterator.next());
+			infoPointVOs.add(infoPointVO);
+		}
+        return JsonView.render(0, WebConst.SUCCESS_RESULT, infoPointVOs);
+    }
 
     @RequestMapping(value = "getFlyingPathByName", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -77,12 +96,6 @@ public class IndexController {
         FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
 
         return JsonView.render(0, WebConst.SUCCESS_RESULT, flyingPathVO);
-    }
-
-    //测试视频流界面
-    @RequestMapping("test")
-    public String test() {
-        return "test";
     }
 
 }

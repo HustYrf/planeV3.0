@@ -8,4 +8,9 @@ public interface InfoPointService {
 
     List<InfoPoint> getAllInfoPoint();
 
+	List<InfoPoint> selectInfoPointByName(String name);
+
+	List<String> fuzzySearchByName(String queryString);
+
+
 }

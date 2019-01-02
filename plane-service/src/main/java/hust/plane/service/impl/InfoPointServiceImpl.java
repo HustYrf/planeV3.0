@@ -22,4 +22,16 @@ public class InfoPointServiceImpl implements InfoPointService {
     public List<InfoPoint> getAllInfoPoint() {
         return infoPointMapper.selectAllInfoPoint();
     }
+
+	@Override
+	public List<InfoPoint> selectInfoPointByName(String name) {
+		
+		return infoPointMapper.selectInfoPointsByName(name);
+	}
+
+	@Override
+	public List<String> fuzzySearchByName(String queryString) {
+		
+		return infoPointMapper.fuzzySearchByName(queryString);
+	}
 }

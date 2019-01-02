@@ -12,4 +12,8 @@ public interface InfoPointMapper {
     int insertInfoPointList(@Param("infoPoints") List<InfoPoint> infoPoints);
 
     List<InfoPoint> selectAllInfoPoint();
+
+	List<InfoPoint> selectInfoPointsByName(String name);
+
+	List<String> fuzzySearchByName(String name);
 }

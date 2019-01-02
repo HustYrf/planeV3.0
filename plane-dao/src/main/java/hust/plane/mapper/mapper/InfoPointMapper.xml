@@ -42,7 +42,7 @@
         </foreach>
     </insert>
 
-    <select id="getNearPointByGeohash" parameterType="java.util.List" resultType="hust.plane.mapper.pojo.InfoPoint">
+    <select id="getNearPointByGeohash" parameterType="java.util.List" resultMap="BaseResultMap">
         select distinct
         <include refid="Base_Column_List"/>
         from K_InfoPoint
@@ -52,9 +52,23 @@
         </foreach>
     </select>
 
-    <select id="selectAllInfoPoint" resultType="hust.plane.mapper.pojo.InfoPoint">
+    <select id="selectAllInfoPoint" resultMap="BaseResultMap">
         select id, Name, AsText(Position) as Position
         from K_InfoPoint
+    </select>
+    
+    <select id="fuzzySearchByName" parameterType="java.lang.String" resultType="java.lang.String">
+        select Name
+        from K_InfoPoint
+        where Name LIKE CONCAT(#{name,jdbcType=VARCHAR},'%')
+        limit 0,10 
+    </select>
+    
+     <select id="selectInfoPointsByName"  parameterType="java.lang.String" resultMap="BaseResultMap">
+        select 
+        id, Name, AsText(Position) as Position, Altitude, Route_id, Route_name
+        from K_InfoPoint
+        where Name = #{name,jdbcType=VARCHAR}
     </select>
 
     <insert id="insertSelective" parameterType="hust.plane.mapper.pojo.InfoPoint">
