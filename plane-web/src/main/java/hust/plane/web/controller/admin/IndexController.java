@@ -101,7 +101,7 @@ public class IndexController {
             }
             // 把用户保存在session中
             if(user.getIcon()==null || user.getIcon().equals("")) {  //如果头像为空
-            	 user.setIcon("res/i/defaultIcon.jpg"); // 设置默认头像
+            	 //user.setIcon("res/i/defaultIcon.jpg"); // 设置默认头像
             }else {
             	 user.setIcon(BASE_IMAGE_URL + USER_DIR + user.getIcon()); // 添加图片服务器位置
             }
@@ -282,7 +282,11 @@ public class IndexController {
         //更新session内容
         {
             User user3 = userService.getUserById(user.getId());
-            user3.setIcon(BASE_IMAGE_URL + USER_DIR + user3.getIcon());
+            if(user3.getIcon()==null || user3.getIcon().equals("")) {  //如果头像为空
+           	 //user3.setIcon("res/i/defaultIcon.jpg"); // 设置默认头像
+            }else {
+           	 user3.setIcon(BASE_IMAGE_URL + USER_DIR + user.getIcon()); // 添加图片服务器位置
+            }
             request.getSession().removeAttribute(WebConst.LOGIN_SESSION_KEY);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user3);
 

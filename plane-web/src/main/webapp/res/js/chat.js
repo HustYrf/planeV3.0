@@ -13,8 +13,9 @@ var WebSocketUtil = {
     isActive: true,
     connect: function () {
         //部署的时候该ip改成固定ip
-        WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:7020");
-        //WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+        //WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:7020");
+        WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+
         WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
         WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
         WebSocketUtil.webSocket.onclose = WebSocketUtil.onClose;
@@ -82,10 +83,9 @@ var PlaneHandleServiceUtil = {
         var value2 = mes[1] * 1;
         data[0] = value;
         data[1] = value2;
-        //新加入start，待验证
-        var oldPosition = planeMarker.getPosition();  //旧点
         
-        //下面为新版的marker移动代码
+        var oldPosition = planeMarker.getPosition();  //旧点
+
 	    var realdata = wgs84_to_gcj02.transform(data[0],data[1]);
 	    var linedata = [oldPosition, realdata];
 	    var polyline = new AMap.Polyline({
