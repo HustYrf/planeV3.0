@@ -32,6 +32,7 @@ public interface TaskMapper {
     int updateByPrimaryKey(Task record);
 
     //以下为自定义查询方法
+    int updateByPrimaryKeyTaskCreate(Task record);
 
     int countByTask(Task task);
 

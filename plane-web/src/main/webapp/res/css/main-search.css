@@ -4,10 +4,14 @@
     padding: 0;
     display: inline-block;
     float: right;
-    padding-right: 20px;
+    margin-right: 1px;
 }
 
-.search-forms div, button {
+.search-forms div {
+    float: left;
+    margin: 0;
+}
+.search-forms button {
     float: left;
     margin: 0;
 }

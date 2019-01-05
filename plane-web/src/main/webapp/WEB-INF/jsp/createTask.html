@@ -154,7 +154,7 @@
                                     <div class="control-group">
                                         <label class="control-label">任务名称</label>
                                         <div class="controls">
-                                            <input type="text" class="span8" id="taskname" value="${taskvo.name!}">
+                                            <input type="text" class="span8" id="taskname" auto-complete="new-password" value="${taskvo.name!}">
                                         </div>
                                     </div>
 
@@ -182,7 +182,7 @@
                                             </select>
                                          
                                             <input type="text" class="span5" id="userA" name="userAName"
-                                                   placeholder="请输入放飞员" value="${taskvo.userAName!}" style="height: 34px;"/>
+                                                   placeholder="请输入放飞员" value="${taskvo.userAName!}" style="height: 34px;" auto-complete="new-password"/>
                                             <div class="search-div" id="search-div1">
                                                 <ul id="search-result"></ul>
                                             </div>
@@ -212,7 +212,7 @@
                                                 <option value="15">防城港市</option>
                                             </select>
                                             <input type="text" class="span5" id="userZ" name="userZName"
-                                                   placeholder="请输入接机员" value="${taskvo.userZName!}" style="height: 34px;"/>
+                                                   placeholder="请输入接机员" value="${taskvo.userZName!}" style="height: 34px;" auto-complete="new-password"/>
                                             <div class="search-div" id="search-div2">
                                                 <ul id="search-result2">
                                                 </ul>
@@ -229,7 +229,7 @@
                                                             <option value="${taskvo.uavId!}"
                                                                     selected>${ taskvo.uavName!}</option>
                                                         </#if>
-                                                    <option value=""></option>
+                                                        <option value=""></option>
                                                         <#if uavs?? && uavs?size gt 0>
                                                             <#list uavs as uav>
                                                             <option value="${uav.id!}">${uav.name!}</option>
@@ -309,9 +309,7 @@
                                 </form>
                                 <!-- END FORM-->
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -512,7 +510,7 @@
 
     //放飞者
     $(function () {
-        $("#userA").bind('keyup', function () {
+        $("#userA").bind('input onchange', function () {
             //$.ajax()远程获取json数据
             var flyerDepartmentId = $("#flyerDepartmentId option:selected").val();
             $.ajax({
@@ -565,7 +563,7 @@
             } */
 
         //接收者
-        $("#userZ").bind('keyup', function () {
+        $("#userZ").bind('input onchange', function () {
             //$.ajax()远程获取json数据
             var receptorDepartmentId = $("#receptorDepartmentId option:selected").val();
             $.ajax({

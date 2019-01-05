@@ -136,7 +136,7 @@ public class TaskServiceImpl implements TaskService {
             }
         } else {
             task.setId(task2.getId());
-            if (taskMapper.updateByPrimaryKeySelective(task) == 1) {
+            if (taskMapper.updateByPrimaryKeyTaskCreate(task) == 1) {
                 return true;
             } else {
                 return false;

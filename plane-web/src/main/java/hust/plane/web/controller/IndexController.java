@@ -11,6 +11,8 @@ import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.InfoPointVO;
 import hust.plane.web.controller.vo.RouteVO;
+import io.netty.handler.codec.http.HttpContentEncoder.Result;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +63,47 @@ public class IndexController {
         }
         return JsonView.render(0, WebConst.SUCCESS_RESULT, resultList);
     }
+    
+    @RequestMapping(value="indexSearchbtn",method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String indexSearchbtn(@RequestParam(value = "queryType") Integer queryType, @RequestParam(value = "queryString") String queryString) {
+    	
+    	try {
+            switch (queryType) {
+                case 1: {   //查询光缆
+                	
+                	Route route = routeServiceImpl.getRouteByName(queryString);
+                    RouteVO routeVO = new RouteVO(route);
+                    return JsonView.render(0, WebConst.SUCCESS_RESULT, routeVO);
+                
+                }
+                case 2: {   //查询飞行路径
+                	FlyingPath flyingPath = flyingPathServiceImpl.getFlyingPathByName(queryString);
+                    FlyingPathVO flyingPathVO = new FlyingPathVO(flyingPath);
+                    return JsonView.render(0, WebConst.SUCCESS_RESULT, flyingPathVO);               
+                  
+                }
+                case 3: {   //查询信息点
+                	List<InfoPoint> infoPoints = infoPointServiceImpl.selectInfoPointByName(queryString);
+                    List<InfoPointVO> infoPointVOs = new ArrayList<>();
+                    Iterator<InfoPoint> iterator = infoPoints.iterator();
+                    while (iterator.hasNext()) {
+            			InfoPointVO infoPointVO = new InfoPointVO(iterator.next());
+            			infoPointVOs.add(infoPointVO);
+            		}
+                    return JsonView.render(0, WebConst.SUCCESS_RESULT, infoPointVOs);               
+                }
+                default:{
+                	String msg = "用户模糊搜素失败";
+                    return JsonView.render(1, msg);
+                }             	
+            }
+        } catch (Exception e) {
+            String msg = "用户模糊搜素失败";
+            return JsonView.render(1, msg);
+        }
+        	
+    }
 
     @RequestMapping(value = "getRouteByName", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -72,7 +115,7 @@ public class IndexController {
         return JsonView.render(0, WebConst.SUCCESS_RESULT, routeVO);
     }
     
-    //获取信息点名字
+    //根据信息点名字获取所有的信息点，信息点名字可重复
     @RequestMapping(value = "getInfoPointByName", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getInfoPointByNameSearch(@RequestParam(value = "name") String name) {

@@ -29,7 +29,8 @@
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <link rel="stylesheet" href="${s.base}/res/css/common.css">
-	<link rel="stylesheet" href="${s.base}/res/css/main-search.css">
+    <!-- 全局搜索的css -->
+	<link rel="stylesheet" href="${s.base}/res/css/main-search.css">	
 </head>
 <body class="page-header-fixed">
 <#include "common/header.html" />
@@ -72,14 +73,15 @@
                         <input type="hidden" id="search-type" value="1">
                     </div>
                     <div class="input-cont">
+                        <label style="display:none;"><span>去除自动填充</span><input type="text" name="hidden1" ></label>
                         <input type="text" class="m-wrap" placeholder="Search..." id="search-target"
-                               style="width: 520px;"/>
+                               style="width: 520px;" auto-complete="new-password"/>
                         <div class="search-div" id="search-div-1">
                             <ul id="search-result">
                             </ul>
                         </div>
                     </div>
-                    <button type="button" class="btn buttonright green">查找 &nbsp;<i class=" icon-search m-icon-green"></i>
+                    <button type="button" class="btn buttonright green" onclick="searchbtn()">查找 &nbsp;<i class=" icon-search m-icon-green"></i>
                     </button>
                 </form>
             </div>
@@ -373,6 +375,7 @@
 <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="media/js/app.js" type="text/javascript"></script>
+ <!-- 全局搜索的js -->
 <script src="${s.base}/res/js/search.js" type="text/javascript"></script>
 <script>
     jQuery(document).ready(function () {

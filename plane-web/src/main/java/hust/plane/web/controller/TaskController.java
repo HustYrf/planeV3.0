@@ -300,6 +300,8 @@ public class TaskController {
         }
         if (taskVO.getUavId() != null && taskVO.getUavId() != 0) {
             task.setUavId(taskVO.getUavId());
+        }else {
+        	task.setUavId(null);
         }
         if (taskVO.getFlyingpathId() != null && taskVO.getFlyingpathId() != 0) {
             task.setFlyingpathId(taskVO.getFlyingpathId());
@@ -774,7 +776,7 @@ public class TaskController {
         params.put("missionId", "" + task1.getMissionId());
             
         String alarmlistString = HttpClientUtil.doPost(url, params);    //httpclient远程访问
-       
+
         if (alarmlistString.equals("success")) {
             taskServiceImpl.setStatusTaskByTask(task, 12);
             return JsonView.render(0, "识别完成!");

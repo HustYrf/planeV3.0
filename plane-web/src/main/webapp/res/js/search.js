@@ -2,13 +2,26 @@
  * 搜索功能API
  */
 var searchColors = ['#1ef22a', '#260cff', '#eb0aff'];
-var searchRouteStatusCode = ['混合光缆', '一干光缆', '二干光缆'];
+var searchRouteStatusCode = ['混合', '一干', '二干'];
 var searchResultMarker = new Array();
 
 var searchWindow = new AMap.InfoWindow({
     isCustom: true,
     offset: new AMap.Pixel(20, -35)
 });
+
+//右键菜单选项
+var flyingpathId = null;
+var contextMenu = new AMap.ContextMenu();
+contextMenu.addItem("创建任务", function () {
+   //alert(flyingpathId);
+	window.location='toTaskCreate.action?flyingpathId='+flyingpathId;	
+}, 0);
+//继续添加右键菜单 addItem
+//contextMenu.addItem("创建任务", function () {
+//	   //alert(flyingpathId);
+//}, 0);
+
 //构建自定义信息窗体
 function createSearchWindow(title, content) {
     var info = document.createElement("div");
@@ -78,8 +91,8 @@ $("ul#type-selections").on("click", "li", function () {
     }
 });
 
-
-$("#search-target").bind('keyup', function () {
+$("#search-target").bind('input onchange', function () {   //监控输入框输入改变事件
+//$("#search-target").bind('keyup', function () {
     // type = 1 查询光缆
     //  type = 2 查询飞行路径
     //  type =3 查询信息点
@@ -119,140 +132,243 @@ $("#search-target").bind('keyup', function () {
     });
 });
 
+function searchbtn(){
+	
+//	var searchstr =  $("#search-target").val();
+	 $.ajax({
+	        type: "POST",
+	        url: "indexSearchbtn.action",
+	        dataType: 'json',
+	        data: {
+	            queryType: $("#search-type").val(),
+	            queryString: $("#search-target").val()
+	        },
+	        success: function (result) {
+	            //处理返回的数据
+	            if (result.errcode == 0 && result.message == "SUCCESS") {
+	            	showSearchData(result.data);     	           	
+	            }else{
+	            	//没有查询到该条数据	            	
+	            }
+	        },
+	        error: function () {
+	            //Modal.tipFailure('导入失败');
+	        }
+	    });
+	
+}
+
 $('#search-result').on('click', 'li', function () {
     $("#search-target").val($(this).text());
-    $('#search-div-1').css('display', 'none');
     //把选择的数据放入到地图中
-    //map.remove(searchResultMarker);
-    while (searchResultMarker.length > 0) {   //把标记删除
-        var markeritem = searchResultMarker.pop();
-        map.remove(markeritem);
-    }
-    
     switch ($("#search-type").val()) {
-        case '1': {
-        	
-            $.ajax({
-                type: "POST",
-                url: "getRouteByName.action",
-                dataType: 'json',
-                data: {
-                   name:$(this).text()
-                },
-                success: function (result) {
-                
-                    if (result.errcode == 0 && result.message == "SUCCESS") {
-                        //var center = JSON.parse(JSON.stringify(result.data.routepathdata[0]))
-                        map.setCenter(result.data.routepathdata[0]);
-                        
-                        var polyline = new AMap.Polyline({
-                            map: map,
-                            path: result.data.routepathdata, //设置线覆盖物路径
-                            strokeColor: searchColors[parseInt(data.type)], //线颜色
-                            strokeOpacity: 1, //线透明度
-                            strokeWeight: 5, //线宽
-                            strokeStyle: "solid", //线样式
-                            strokeDasharray: [10, 5] //补充线样式
-                        });
-                        searchResultMarker.push(polyline);
-
-                    }
-                },
-                error: function () {
-                    //Modal.tipFailure('导入失败');
+    case '1': {
+        $.ajax({
+            type: "POST",
+            url: "getRouteByName.action",
+            dataType: 'json',
+            data: {
+               name:$(this).text()
+            },
+            success: function (result) {
+                if (result.errcode == 0 && result.message == "SUCCESS") {
+                    //var center = JSON.parse(JSON.stringify(result.data.routepathdata[0]))
+                	showSearchData(result.data);                                     
                 }
-            });
-            break;
-        }
-        case '2': {
-            $.ajax({
-                type: "POST",
-                url: "/getFlyingPathByName.action",
-                dataType: 'json',
-                data: {name: $(this).text()},
-                success: function (result) {
-                    if (result.errcode == 0 && result.message == "SUCCESS") {
-                        map.setCenter(result.data.pathdata[0]);
-                        var polyline = new AMap.Polyline({
-                            map: map,
-                            path: result.data.pathdata, //设置线覆盖物路径
-                            strokeColor: '#ff6700', //线颜色
-                            strokeOpacity: 1, //线透明度
-                            strokeWeight: 5, //线宽
-                            strokeStyle: "solid", //线样式
-                            strokeDasharray: [10, 5] //补充线样式
-                        });
-                        searchResultMarker.push(polyline);
-                    }
-                },
-                error: function () {
-                    //Modal.tipFailure('导入失败');
-                }
-            });
-            break;
-        }
-        case '3': {
-        	
-        	$.ajax({
-                type: "POST",
-                url: "/getInfoPointByName.action",
-                dataType: 'json',
-                data: {name: $(this).text()},
-                success: function (result) {
-                    if (result.errcode == 0 && result.message == "SUCCESS") {
-                        //显示数据
-                    	var infoPointdata = result.data;
-                    	AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
-                    		
-                    		var i=0;
-                    		console.log(infoPointdata);
-                        	for(i=0;i<infoPointdata.length;i++){
-                        		
-                        		var infoPointMarker = new SimpleMarker({
-                                    //前景文字
-                                    map: map,
-                                    iconLabel: {
-                                        innerHTML: '<i>桩</i>', //设置文字内容
-                                        style: {
-                                            color: 'white' //设置文字颜色
-                                        }
-                                    },
-                                    iconTheme: 'fresh',
-                                    iconStyle: 'orange',
-                                    position: infoPointdata[i].lnglat,
-                                    animation: 'AMAP_ANIMATION_DROP',
-                                });
-                        		if(i==0){
-                        			map.setCenter(infoPointdata[i].lnglat);
-                        		}
-                        	
-                        		var title = '信息点编号：<span>' + infoPointdata[i].id + '</span>';
-                                var content = [];
-                                content.push("信息点名称：" + infoPointdata[i].name);
-                                content.push("海拔高度：" +infoPointdata[i].altitude);
-                                content.push("所属路由Id：" + infoPointdata[i].routeId);
-                                content.push("所属路由：" + infoPointdata[i].routeName);                                                
-                                infoPointMarker.content = createSearchWindow(title, content.join("<br/>"));
-                                infoPointMarker.on('click', searchMarkerClick);
-                        		
-                        		searchResultMarker.push(infoPointMarker);
-                    	    }
-                        	                 
-                    	});
-                    	           	
-                    }
-                },
-                error: function () {
-                    //Modal.tipFailure('导入失败');
-                }
-            });
-            break;
-        }
-        default:
-            break;
+            },
+            error: function () {
+                //Modal.tipFailure('导入失败');
+            }
+        });
+        break;
     }
-
+    case '2': {
+        $.ajax({
+            type: "POST",
+            url: "/getFlyingPathByName.action",
+            dataType: 'json',
+            data: {name: $(this).text()},
+            success: function (result) {
+                if (result.errcode == 0 && result.message == "SUCCESS") {
+                	showSearchData(result.data);           
+                }
+            },
+            error: function () {
+                //Modal.tipFailure('查询失败');
+            }
+        });
+        break;
+    }
+    case '3': {  	
+    	$.ajax({
+            type: "POST",
+            url: "/getInfoPointByName.action",
+            dataType: 'json',
+            data: {name: $(this).text()},
+            success: function (result) {
+                if (result.errcode == 0 && result.message == "SUCCESS") {
+                    //显示数据
+                	showSearchData(result.data);             	           	
+                }
+            },
+            error: function () {
+                //Modal.tipFailure('查询失败');
+            }
+        });
+        break;
+    }
+    default:
+        break;
+}	
+    
+    
 });
+
+function showSearchData(data){
+	
+	  
+	    $('#search-div-1').css('display', 'none');
+	    //把选择的数据放入到地图中
+	    //map.remove(searchResultMarker);
+	    while (searchResultMarker.length > 0) {   //把标记删除
+	        var markeritem = searchResultMarker.pop();
+	        map.remove(markeritem);
+	    }
+	   
+	    if(data == null || data=="")return;
+	    switch ($("#search-type").val()) {
+	        case '1': {            
+	                //var center = JSON.parse(JSON.stringify(result.data.routepathdata[0]))
+	                map.setCenter(data.routepathdata[0]);
+	                
+	                var polyline = new AMap.Polyline({
+	                    map: map,
+	                    path: data.routepathdata, //设置线覆盖物路径
+	                    strokeColor: searchColors[parseInt(data.type)], //线颜色
+	                    strokeOpacity: 1, //线透明度
+	                    strokeWeight: 5, //线宽
+	                    strokeStyle: "solid", //线样式
+	                    strokeDasharray: [10, 5] //补充线样式
+	                });
+	                searchResultMarker.push(polyline);
+	                AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+	                	
+	                	var lineMarker = new SimpleMarker({
+	                        //前景文字
+	                        map: map,
+	                        iconLabel: {
+	                            innerHTML: '<i>'+searchRouteStatusCode[parseInt(data.type)]+'</i>', 
+	                            style: {
+	                                color: 'white' //设置文字颜色
+	                            }
+	                        },
+	                        iconTheme: 'fresh',
+	                        iconStyle: 'orange',
+	                        position: data.routepathdata[0],
+	                        animation: 'AMAP_ANIMATION_DROP',
+	                    });
+	            		                   	
+	            		var title = '光缆编号：<span>' + data.id + '</span>';
+	                    var content = [];
+	                    content.push("光缆名称：" + data.name);
+	                    content.push("光缆描述：" + data.description);
+	                    content.push("光缆类型：" + searchRouteStatusCode[parseInt(data.type)]);                                                                           
+	                    lineMarker.content = createSearchWindow(title, content.join("<br/>"));
+	                    lineMarker.on('click', searchMarkerClick);
+	            		
+	            		searchResultMarker.push(lineMarker);                      	                      	
+	                });
+	                break;
+	        }
+	        case '2': {
+	           
+	                map.setCenter(data.pathdata[0]);
+	                var polyline = new AMap.Polyline({
+	                    map: map,
+	                    path: data.pathdata, //设置线覆盖物路径
+	                    strokeColor: '#ff6700', //线颜色
+	                    strokeOpacity: 1, //线透明度
+	                    strokeWeight: 5, //线宽
+	                    strokeStyle: "solid", //线样式
+	                    strokeDasharray: [10, 5] //补充线样式
+	                });
+	                
+	                searchResultMarker.push(polyline);
+	                AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+	                	
+	                	var lineMarker = new SimpleMarker({
+	                        //前景文字
+	                        map: map,
+	                        iconLabel: {
+	                            innerHTML: '<i>起</i>', 
+	                            style: {
+	                                color: 'white' //设置文字颜色
+	                            }
+	                        },
+	                        iconTheme: 'fresh',
+	                        iconStyle: 'orange',
+	                        position: data.pathdata[0],
+	                        animation: 'AMAP_ANIMATION_DROP',
+	                    });
+	                	flyingpathId = data.id;//把飞行路径记录下来             	
+	            		var title = '飞行路径编号：<span>' + data.id + '</span>';
+	                    var content = [];
+	                    content.push("飞行路径名称：" + data.name);                                                                                            
+	                    lineMarker.content = createSearchWindow(title, content.join("<br/>"));
+	                    lineMarker.on('click', searchMarkerClick);
+	                    
+	                    //绑定鼠标右击事件——弹出右键菜单
+	                    lineMarker.on('rightclick', function (e) {
+	                        contextMenu.open(map, e.lnglat);
+	                    });
+	                    //contextMenu.open(map, lnglat);
+	            		searchResultMarker.push(lineMarker);                      	                      	
+	                });
+	                break;
+	        }
+	        case '3': {
+	        	
+	            	AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {          		
+	            		var i=0;           	
+	                	for(i=0;i<data.length;i++){
+	                		
+	                		var infoPointMarker = new SimpleMarker({
+	                            //前景文字
+	                            map: map,
+	                            iconLabel: {
+	                                innerHTML: '<i>桩</i>', //设置文字内容
+	                                style: {
+	                                    color: 'white' //设置文字颜色
+	                                }
+	                            },
+	                            iconTheme: 'fresh',
+	                            iconStyle: 'orange',
+	                            position: data[i].lnglat,
+	                            animation: 'AMAP_ANIMATION_DROP',
+	                        });
+	                		if(i==0){
+	                			map.setCenter(data[i].lnglat);
+	                		}
+	                	
+	                		var title = '信息点编号：<span>' + data[i].id + '</span>';
+	                        var content = [];
+	                        content.push("信息点名称：" + data[i].name);
+	                        content.push("海拔高度：" +data[i].altitude);
+	                        content.push("所属路由Id：" + data[i].routeId);
+	                        content.push("所属路由：" + data[i].routeName);                                                
+	                        infoPointMarker.content = createSearchWindow(title, content.join("<br/>"));
+	                        infoPointMarker.on('click', searchMarkerClick);
+	                		
+	                		searchResultMarker.push(infoPointMarker);
+	            	    }
+	            	});
+	            break;
+	        }
+	        default:
+	            break;
+	    }	
+	
+}
 
 $("#search-target").bind("input propertychange", function (event) {
     var inputVal = $("#search-target").val();

@@ -341,6 +341,64 @@
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
+     <update id="updateByPrimaryKeyTaskCreate" parameterType="hust.plane.mapper.pojo.Task">
+        update K_Task
+        <set>
+            <if test="name != null">
+                Name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="missionId != null">
+                Mission_id = #{missionId,jdbcType=VARCHAR},
+            </if>
+            <if test="usercreator != null">
+                UserCreator = #{usercreator,jdbcType=INTEGER},
+            </if>
+            <if test="userA != null">
+                User_A = #{userA,jdbcType=INTEGER},
+            </if>
+            <if test="userZ != null">
+                User_Z = #{userZ,jdbcType=INTEGER},
+            </if>
+            <if test="flyingpathId != null">
+                FlyingPath_id = #{flyingpathId,jdbcType=INTEGER},
+            </if>        
+            <if test="uavId != null">
+                Uav_id = #{uavId,jdbcType=INTEGER},
+            </if>
+             <!-- 若uavId为空则将该字段设置为null -->
+            <if test="uavId == null">
+                Uav_id = null,
+            </if>
+            <if test="createtime != null">
+                CreateTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planstarttime != null">
+                PlanStartTime = #{planstarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planendtime != null">
+                PlanEndTime = #{planendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executestarttime != null">
+                ExecuteStartTime = #{executestarttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="executeendtime != null">
+                ExecuteEndTime = #{executeendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                Status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="finishstatus != null">
+                FinishStatus = #{finishstatus,jdbcType=INTEGER},
+            </if>
+            <if test="imgfolder != null">
+                ImgFolder = #{imgfolder,jdbcType=VARCHAR},
+            </if>
+            <if test="reporturl != null">
+                ReportUrl = #{reporturl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
     <update id="updateByPrimaryKeySelective" parameterType="hust.plane.mapper.pojo.Task">
         update K_Task
         <set>

@@ -8,14 +8,16 @@
                 </li>
             </#if>
 			<#list page.showNums as n>
-                <#if page.showDot && n_index == 6>
+			   <#if n gt 0>    
+			       <#if page.showDot && n_index == 6>
 					<span class="page-omit">...</span>
-                </#if>
-                <#if page.pageNum == n>
-				<li><a class="page-cur" href="javascript:void(0);" style="background-color: darkgrey">${n}</a></li>
-                <#else>
-				<li><a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
-                </#if>
+	                </#if>
+	                <#if page.pageNum == n>
+					<li><a class="page-cur" href="javascript:void(0);" style="background-color: darkgrey">${n}</a></li>
+	                <#else>
+					<li><a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
+	                </#if>
+			   </#if>              
             </#list>
 			<#if !page.lastPage>
 			<li><a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum+1}')">下一页</a></li>
