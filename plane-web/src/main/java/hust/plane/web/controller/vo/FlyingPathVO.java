@@ -52,9 +52,10 @@ public class FlyingPathVO {
             String slist[] = sub.split(",");
             String pointType[] = flyingPath.getPointType().split(",");
             for (int i = 0; i < slist.length; i++) {
-                if (pointType[i].equals("20") || pointType[i].equals("178") || pointType[i].equals("206") || pointType[i].equals("189") || pointType[i].equals("208")) {
+                if (pointType[i].equals("22") || pointType[i].equals("20") || pointType[i].equals("178") || pointType[i].equals("206") || pointType[i].equals("189") || pointType[i].equals("208")) {
                     continue;
                 }
+                //此处增加22号航点过滤
                 ArrayList<Double> point = new ArrayList<Double>();
                 point.add(Double.parseDouble(slist[i].split(" ")[0]));
                 point.add(Double.parseDouble(slist[i].split(" ")[1]));

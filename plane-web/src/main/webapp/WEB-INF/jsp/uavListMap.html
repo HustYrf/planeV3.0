@@ -422,7 +422,7 @@
 
                 function connect(contentss) {
                     // var ws = new WebSocket("ws:///127.0.0.1:17020");
-                    var ws = new WebSocket("ws:///218.65.240.246:17020");
+                    var ws = new WebSocket("ws:///218.65.240.246:7020");
                     ws.onopen = function () {
                         ws.send(contentss);
                     }
@@ -474,7 +474,7 @@
                             strokeDasharray: [10, 5] //补充线样式
                         });
                         nowMarker.setPosition(realdata);
-                        nowMarker.setAngle(messageType[3]);
+                        nowMarker.setAngle(parseInt(messageType[3]));  //强制转换成数字
                         markerlistMap.set(uavDecivedId, nowMarker);
 
                     }

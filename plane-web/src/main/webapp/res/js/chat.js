@@ -1,4 +1,4 @@
-var angle = 0;//定义全局变量飞机角度，待验证
+//var angle = 0;//定义全局变量飞机角度，待验证
 var wgs84_to_gcj02 = new WGS84_to_GCJ02();
 var WebTypeUtil =
     {
@@ -13,8 +13,8 @@ var WebSocketUtil = {
     isActive: true,
     connect: function () {
         //部署的时候该ip改成固定ip
-        //WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:7020");
-        WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
+          WebSocketUtil.webSocket = new WebSocket("ws:///218.65.240.246:7020");
+//        WebSocketUtil.webSocket = new WebSocket("ws:///127.0.0.1:17020");
 
         WebSocketUtil.webSocket.onopen = WebSocketUtil.onOpen;
         WebSocketUtil.webSocket.onmessage = WebSocketUtil.onMessage;
@@ -99,7 +99,8 @@ var PlaneHandleServiceUtil = {
         });
 	    map.setCenter(realdata); 		   
 	    planeMarker.setPosition(realdata);
-	    planeMarker.setAngle(GPS_HDG); 
+	    planeMarker.setAngle(parseInt(GPS_HDG));   //需要转换成数字
+	  
     }
 
 

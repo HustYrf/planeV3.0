@@ -11,7 +11,6 @@ import hust.plane.utils.pojo.JsonView;
 import hust.plane.web.controller.vo.FlyingPathVO;
 import hust.plane.web.controller.vo.InfoPointVO;
 import hust.plane.web.controller.vo.RouteVO;
-import io.netty.handler.codec.http.HttpContentEncoder.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -140,5 +140,5 @@ public class IndexController {
 
         return JsonView.render(0, WebConst.SUCCESS_RESULT, flyingPathVO);
     }
-
+      
 }

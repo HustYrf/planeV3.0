@@ -167,6 +167,7 @@ public class FileController {
         return "file";
     }
 
+    //测试文件上传
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     @ResponseBody
     public String upload(@RequestParam(value = "files", required = true) MultipartFile[] files,

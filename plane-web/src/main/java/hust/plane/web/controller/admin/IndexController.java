@@ -273,9 +273,13 @@ public class IndexController {
                     resource.put(String.class, fbytes);
                     user2.setIcon(newFileName + suffix);
                 }
+            }else {
+            	user2.setIcon(null);   //如果未上传头像
             }
+        }else {
+        	user2.setIcon(null);   //如果未上传头像
         }
-
+        
         user2.setId(user.getId());
         user2.setDepartmentId(Integer.valueOf(userProfileDepartment));
         if (userService.updateByUser(user2) == true)

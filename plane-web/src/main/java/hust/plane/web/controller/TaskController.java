@@ -777,8 +777,8 @@ public class TaskController {
             
         String alarmlistString = HttpClientUtil.doPost(url, params);    //httpclient远程访问
 
-        if (alarmlistString.equals("success")) {
-            taskServiceImpl.setStatusTaskByTask(task, 12);
+        if (alarmlistString.equals("success")) {                 
+            taskServiceImpl.setStatusTaskByTask(task, 12);    //为了保证同步，可以考虑把改变工单的状态放在在detect里面
             return JsonView.render(0, "识别完成!");
         } else {
             return JsonView.render(0, "识别未完成！");
