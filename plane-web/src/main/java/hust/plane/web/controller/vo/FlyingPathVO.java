@@ -57,8 +57,15 @@ public class FlyingPathVO {
                 }
                 //此处增加22号航点过滤
                 ArrayList<Double> point = new ArrayList<Double>();
-                point.add(Double.parseDouble(slist[i].split(" ")[0]));
-                point.add(Double.parseDouble(slist[i].split(" ")[1]));
+                /*
+                 * 还可以根据纬度来判断航线是在哪个区域（南宁，桂林，武汉..），
+                 * 再加或减不同的数值
+                 */
+                
+                //经度纠偏
+                point.add(Double.parseDouble(slist[i].split(" ")[0]) + 0.000637);
+                //纬度纠偏
+                point.add(Double.parseDouble(slist[i].split(" ")[1]) - 0.001596);
                 this.pathdata.add(point);
             }
         } else if (flyingPath.getPathdata() != null && flyingPath.getPointType() == null) {
@@ -68,8 +75,8 @@ public class FlyingPathVO {
             String slist[] = sub.split(",");
             for (int i = 0; i < slist.length; i++) {
                 ArrayList<Double> point = new ArrayList<Double>();
-                point.add(Double.parseDouble(slist[i].split(" ")[0]));
-                point.add(Double.parseDouble(slist[i].split(" ")[1]));
+                point.add(Double.parseDouble(slist[i].split(" ")[0]) + 0.000637);
+                point.add(Double.parseDouble(slist[i].split(" ")[1]) - 0.001596);
                 this.pathdata.add(point);
             }
 
