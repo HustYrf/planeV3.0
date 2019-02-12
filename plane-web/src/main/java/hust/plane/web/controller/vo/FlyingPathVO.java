@@ -50,12 +50,17 @@ public class FlyingPathVO {
             this.pathdata = new ArrayList<ArrayList<Double>>();
             String sub = flyingPath.getPathdata().substring(11, flyingPath.getPathdata().length() - 1);
             String slist[] = sub.split(",");
-            String pointType[] = flyingPath.getPointType().split(",");
+//            String pointType[] = flyingPath.getPointType().split(",");
+            String flyPathCoordinate[] = flyingPath.getPathdata().split(",");
             for (int i = 0; i < slist.length; i++) {
-                if (pointType[i].equals("22") || pointType[i].equals("20") || pointType[i].equals("178") || pointType[i].equals("206") || pointType[i].equals("189") || pointType[i].equals("208")) {
-                    continue;
-                }
-                //此处增加22号航点过滤
+//              if (pointType[i].equals("22") || pointType[i].equals("20") || pointType[i].equals("178") || pointType[i].equals("206") || pointType[i].equals("189") || pointType[i].equals("208")) {
+//              continue;
+//          }
+//          此处增加22号航点过滤
+      	//直接过滤坐标点为00的数据,考虑到系统暂时只会在中国内运行,可以直接这样做
+          if (flyPathCoordinate[i].equals("0 0") || flyPathCoordinate[i].equals("LINESTRING(0 0") || flyPathCoordinate[i].equals("0 0)")) {
+				continue;
+			}
                 ArrayList<Double> point = new ArrayList<Double>();
                 /*
                  * 还可以根据纬度来判断航线是在哪个区域（南宁，桂林，武汉..），
