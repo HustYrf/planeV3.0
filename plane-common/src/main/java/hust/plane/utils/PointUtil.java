@@ -27,8 +27,9 @@ public class PointUtil {
     public static List<Double> StringPointToList(String s) {
         List<Double> list = new ArrayList<Double>();
         String sub = s.substring(6, s.length() - 1);
-        double x = Double.parseDouble(sub.split(" ")[0]);
-        double y = Double.parseDouble(sub.split(" ")[1]);
+        //交换经和纬，变为经在前纬在后
+        double y = Double.parseDouble(sub.split(" ")[0]);
+        double x = Double.parseDouble(sub.split(" ")[1]);
         list.add(x);
         list.add(y);
         return list;
