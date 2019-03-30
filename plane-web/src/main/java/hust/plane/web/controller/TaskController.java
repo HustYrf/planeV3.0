@@ -770,6 +770,8 @@ public class TaskController {
 
         //httpclient跨域请求进行识别
         String url = DETECT_SERVER + "createAlarm.action";
+        url = "http://localhost:8080/detect/createAlarm.action"; //测试
+        
         Task task1 = taskServiceImpl.getTaskByTask(task);
         Map<String, String> params = new HashMap<String, String>();
         params.put("taskId", "" + task1.getId());
@@ -785,5 +787,5 @@ public class TaskController {
         }
 
     }
-
+    
 }
