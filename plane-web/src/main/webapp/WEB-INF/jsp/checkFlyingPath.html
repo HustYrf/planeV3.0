@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>路径航迹检查</title>
+<link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
+<link rel="stylesheet"
+	href="http://cache.amap.com/lbs/static/main1119.css" />
+<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+<script
+	src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+<link href="res/css/common.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"
+	src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="block span6">
+					<div id="container"></div>
+					<div id="showSelections">
+						<label class="checkbox-inline"> <input type="checkbox"
+							id="infoPointbtn" value="option1" onchange="showInfoPoint(this)">
+							信息点图层
+						</label> 
+						<!-- <a href="javascript:routePlay()">
+							<h2 class="ca-main">一键起飞</h2>
+						</a> -->
+					</div>
+					<!-- UI组件库 1.0 -->
+					<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+					<script type="text/javascript">
+
+                    /*  var planePath = {
+                         planepathid: '2',
+                         status: '0',
+                         plongda: [
+                             [107.79962, 23.06691], // 2144  起飞点
+                             [107.79985, 23.06666], // 2143
+                             [107.80006, 23.06645], // 2142
+                         ],
+                         descripte: '看天上有个大飞机，快看，要掉下来了',
+                         createtime: '2018-8-1',
+                         updatetime: '2018-8-1',
+                     }; */
+                    var planePath =${PlanePath};
+
+                    //创建一个地图
+                    var map = new AMap.Map('container', {
+                        resizeEnable: true,
+                        center: planePath.pathdata[0],
+                        zoom: 16
+                    });
+
+                    map.plugin(["AMap.ToolBar", "AMap.Scale"], function () {
+                        var scale = new AMap.Scale({          //生成 比例尺插件
+                            visible: true,
+                            position: 'LB',
+                        });
+                        map.addControl(scale);
+                        scale.show();
+                        map.addControl(new AMap.ToolBar());    //生成 比例尺滚动条
+                    });
+                    if (location.href.indexOf('&guide=1') !== -1) {
+                        map.setStatus({scrollWheel: false})
+                    }
+                    
+                    AMapUI.loadUI(['control/BasicControl'], function (BasicControl) {
+                        var layerCtrl1 = new BasicControl.LayerSwitcher({
+                            position: 'tr'
+                        });
+                        map.addControl(layerCtrl1);
+                    });
+
+                    var infoWindow = new AMap.InfoWindow({
+                        isCustom: true,
+                        offset: new AMap.Pixel(20, -35)
+                    });
+
+                    var polyline = new AMap.Polyline({
+                        map: map,
+                        path: planePath.pathdata, //设置线覆盖物路径
+                        strokeColor: '#ff6700', //线颜色
+                        strokeOpacity: 1, //线透明度
+                        strokeWeight: 3, //线宽
+                        strokeStyle: "solid", //线样式
+                        strokeDasharray: [10, 5] //补充线样式
+                    });
+					
+                    AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+
+                        //启动页面
+                        var start = new SimpleMarker({
+                            //前景文字
+                            map: map,
+                            iconLabel: {
+                                innerHTML: '<i>起</i>', //设置文字内容
+                                style: {
+                                    color: 'white' //设置文字颜色
+                                }
+                            },
+                            iconTheme: 'fresh',
+                            //背景图标样式
+                            iconStyle: 'darkblue',
+                            position: planePath.pathdata[0],
+                            animation: 'AMAP_ANIMATION_DROP',
+                        });
+                        var title = '飞行路径编号：<span>' + planePath.id + '</span>';
+                        var content = [];
+                        content.push("名称：" + planePath.name);
+                        content.push("描述：" + planePath.description);
+                        content.push("创建时间：" + planePath.createtime);
+                        content.push("更新时间：" + planePath.updatetime);
+                        start.content = createInfoWindow(title, content.join("<br/>"));
+                        start.on('click', markerClick);
+                        
+                        var pos = planePath.pathdata.length - 1;
+                        var end = new SimpleMarker({
+                            //前景文字
+                            map: map,
+                            iconLabel: {
+                                innerHTML: '<i>终</i>', //设置文字内容
+                                style: {
+                                    color: 'white' //设置文字颜色
+                                }
+                            },
+                            iconTheme: 'fresh',
+                            //背景图标样式
+                            iconStyle: 'orange',
+                            position: planePath.pathdata[pos],
+                            animation: 'AMAP_ANIMATION_DROP',
+                        });
+                        var title = '飞行路径编号：<span>' + planePath.id + '</span>';
+                        var content = [];
+                        content.push("名称：" + planePath.name);
+                        content.push("描述：" + planePath.description);
+                        content.push("创建时间：" + planePath.createtime);
+                        content.push("更新时间：" + planePath.updatetime);
+                        end.content = createInfoWindow(title, content.join("<br/>"));
+                        end.on('click', markerClick);
+
+                    });
+                    
+                   	/*
+                   	  显示航点数标签
+                   	*/
+          		 	/* AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+                			 
+                			var i = 1; 
+                			var int=self.setInterval(function(){
+                         	//启动页面
+                         	var start = new SimpleMarker({
+                         	
+                             	//前景文字
+	                            map: map,
+	                            iconLabel: {
+	                                innerHTML: i, //设置文字内容
+	                                style: {
+	                                    color: 'white' //设置文字颜色
+	                                }
+	                            },
+	                            iconTheme: 'fresh',
+	                            //背景图标样式
+	                            iconStyle: 'darkblue',
+	                            position: planePath.pathdata[i],
+	                            animation: 'AMAP_ANIMATION_DROP',
+                         	});
+                       
+               				//alert(planePath.heightdata);
+                   			i++;
+                   			if(i>planePath.pathdata.length-2){int=window.clearInterval(int);};
+                           	
+           					},100);
+               			}
+               		);  */
+               		
+               		/*
+               		  飞行预览
+               		*/
+               		function routePlay(fileURL) {
+
+               	        AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function (PathSimplifier, $) {
+               	            if (!PathSimplifier.supportCanvas) {
+               	                alert('当前环境不支持 Canvas！');
+               	                return;
+               	            }
+               	            var pathSimplifierIns = new PathSimplifier({
+               	                zIndex: 100,
+               	                autoSetFitView:false,
+               	                map: map, //所属的地图实例
+
+               	                getPath: function(pathData, pathIndex) {
+               	                    return pathData.path;
+               	                },
+               	                getHoverTitle: function(pathData, pathIndex, pointIndex) {
+
+               	                    if (pointIndex >= 0) {
+               	                        //point
+               	                        return pathData.name + '，航点：' + pointIndex + '/' + pathData.path.length;
+               	                    }
+               	                    return pathData.name + '，航点数量' + pathData.path.length;
+               	                },
+               	                renderOptions: {
+               	                    renderAllPointsIfNumberBelow: 100 //绘制路线节点，如不需要可设置为-1
+               	                }
+               	            });
+
+               	            window.pathSimplifierIns = pathSimplifierIns;
+
+               	            //设置数据
+               	            pathSimplifierIns.setData([{
+               	                name: planePath.name,
+               	                path: planePath.pathdata
+               	            }]);
+
+               	            function onload() {
+               	                pathSimplifierIns.renderLater();
+               	            }
+
+               	            function onerror(e) {
+               	                alert('图片加载失败！');
+               	            }
+
+               	            //对第一条线路（即索引 0）创建一个巡航器
+           	                var navg1 = pathSimplifierIns.createPathNavigator(0, {
+           	                    loop: false, //循环播放
+           	                    speed: 1000, //巡航速度，单位千米/小时
+           	                    pathNavigatorStyle: {
+           	                        width: 40,
+           	                        height: 40,
+           	                        //使用图片
+           	                        content: PathSimplifier.Render.Canvas.getImageContent('http://webapi.amap.com/ui/1.0/ui/misc/PathSimplifier/examples/imgs/plane.png', onload, onerror),
+           	                        strokeStyle: null,
+           	                        fillStyle: null,
+           	                        //经过路径的样式
+           	                        pathLinePassedStyle: {
+           	                            lineWidth: 8,
+           	                            strokeStyle: 'blue',
+           	                            dirArrowStyle: {
+           	                                stepSpace: 15,
+           	                                strokeStyle: 'blue'
+           	                            }
+           	                        } //  content: 'defaultPathNavigator' // 'defaultPathNavigator', 'defaultArrow', 'circle', 'none'
+           	                    }
+           	                });
+               	            //飞行开始
+           	                navg1.start();
+               	        });
+               	    }
+               		javascript:routePlay();
+
+               		
+                    //构建自定义信息窗体
+                    function createInfoWindow(title, content) {
+                        var info = document.createElement("div");
+                        info.className = "info";
+
+                        //可以通过下面的方式修改自定义窗体的宽高
+                        //info.style.width = "400px";
+                        // 定义顶部标题
+                        var top = document.createElement("div");
+                        var titleD = document.createElement("div");
+                        var closeX = document.createElement("img");
+                        top.className = "info-top";
+                        titleD.innerHTML = title;
+                        closeX.src = "res/i/close2.gif";
+                        closeX.onclick = closeInfoWindow;
+
+                        top.appendChild(titleD);
+                        top.appendChild(closeX);
+                        info.appendChild(top);
+
+                        // 定义中部内容
+                        var middle = document.createElement("div");
+                        middle.className = "info-middle";
+                        middle.style.backgroundColor = 'white';
+                        middle.innerHTML = content;
+                        info.appendChild(middle);
+                        return info;
+                    }
+
+                    //打开信息窗体
+                    function markerClick(e) {
+
+                        infoWindow.setContent(e.target.content);
+                        infoWindow.open(map, e.target.getPosition());
+
+                    }
+
+                    //关闭信息窗体
+                    function closeInfoWindow() {
+                        map.clearInfoWindow();
+                    }
+                </script>
+					<script src="${s.base}/res/js/infoPoint.js"></script>
+					<script>
+                    var style = [ {
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass1.png',
+                        anchor: new AMap.Pixel(4, 4),
+                        size: new AMap.Size(7, 7)
+                    },{
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass2.png',
+                        anchor: new AMap.Pixel(3, 3),
+                        size: new AMap.Size(5, 5)
+                    },{
+                        url: 'https://a.amap.com/jsapi_demos/static/images/mass0.png',
+                        anchor: new AMap.Pixel(6, 6),
+                        size: new AMap.Size(11, 11)
+                    }];
+                    var mass = new AMap.MassMarks(city, {
+                        opacity: 0.8,
+                        zIndex: 111,
+                        cursor: 'pointer',
+                        style: style
+                    });
+                    var pointmarker = new AMap.Marker({content: ' ', map: map});
+                    mass.on('mouseover', function (e) {
+                        pointmarker.setPosition(e.data.lnglat);   //api规定要用位置字段名称为：lnglat
+                        pointmarker.setLabel({content: e.data.name})
+                    });
+
+                    function showInfoPoint(obj){
+                        if (obj.checked){
+                            //显示信息点
+                            mass.setMap(map);
+                        }else{
+                            //隐藏信息点
+                            map.remove(mass);
+                        }
+                    }
+                </script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

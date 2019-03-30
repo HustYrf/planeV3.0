@@ -110,7 +110,10 @@
                                                            onclick='deletePlanePath("${planepath.id!}")'>删除路径</a>
                                                         <a class="btn blue"
                                                            onclick='exportPlanePath(${planepath.id!},${planepath.heightdata!})'
-                                                           style="cursor: pointer;">导出路径</a></td>
+                                                           style="cursor: pointer;">导出路径</a>
+                                                        <a href="${s.base}/checkPlanePath.action?id=${planepath.id}"
+                                                           class="btn yellow" target="_blank">航迹检查</a>  
+                                                     </td>
                                                     </#if>
                                                     </tr>
                                                 </#list>
